@@ -1,6 +1,6 @@
 # BondTrace — checkpoint 8 октября 2026
 
-Backend B01–B05 выполнен для разрешённой localnet демонстрации KASE. Пользователь остановил дальнейшее расширение дизайна; сохранены готовый issuer UI и необходимые API/recovery связи. Текущая цель завершится после сохранения private checkpoint. Не начинать выбор идеи заново; прежний Prompt1-only gate заменён явным запросом полноценного KASE-проекта.
+Backend B01–B05 выполнен для разрешённой localnet демонстрации KASE. Пользователь остановил дальнейшее расширение дизайна; сохранены готовый issuer UI и необходимые API/recovery связи. Backend scope выполнен; independent review и private checkpoint завершены. Не начинать выбор идеи заново; прежний Prompt1-only gate заменён явным запросом полноценного KASE-проекта.
 
 ## Обязательные правила продолжения
 
@@ -46,3 +46,5 @@ Main Colosseum registration/project/submission не подтверждены. Co
 Devnet payerBWpCPnVVzxPA1oTebFyfCjbk8wgTXLdjQWwY1ckjzqHS последний known read0; rent2.35423964testSOL +fees. Две airdrop Internal error/429 остановлены. Async funding/registration/public-visibility вопросы уже отправлены; не дублировать, отсутствие ответа не approval. Deployment signature отсутствует. Human-wallet signing/cancel ещё не проверены.
 
 Следующий разрешённый шаг после owner response: public source/demo links и verified global entry/конкурсная подача с согласиями; либо devnet при бесплатном test funding. Backend-ready не означает автоматически public/submitted. Сохранять AGENTS mandatory skill rule при любом handoff/новом чате. До ответа продолжать только независимо разрешённые задачи; не менять visibility и не подписывать реальные активы.
+
+Финальный checkpoint: implementation commit99b5c6d сохранён и pushed в private main dimik98330. Final staged scan106files/86text/20binary/17JSON,findings0; diffcheckpassed. All current source51Git-normalized entries входят в reviewedmanifest; originalqualityrepair/source сохранены, v2accepted8/8checks,globaldraft2of3. ExactrepairedAPIrestart+completedsameIDreplay/HTTP снова exit0. Goal backend выполнен в localnet scope, externalgatesнеподменяютсяcompleted. Передновойработой читатьAGENTS/skillsиэтотcheckpoint; новыхсайтов/регистраций/visibilitychangesавтоматическинет.
