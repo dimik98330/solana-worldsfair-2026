@@ -30,7 +30,7 @@ Anchor1.1.2, classic SPL Token, максимум16 зарегистрирова�
 | P07 голосование | Passed localnet | Вес10, повторный ballot rejected |
 | P08 UI | Passed в проверенном scope | Весь цикл через браузер;375/768/1280; Escape/no-wallet |
 | P09 integration | Passed localnet; devnet blocked | Два разных сохранённых цикла, Node9/9 +UI5/5 |
-| P10 материалы | Финальная сборка и review | Видео174.021s и локальная страница готовы; независимое финальное review идёт |
+| P10 материалы | Локальный комплект завершён; внешние gates впереди | Видео174.021s, страница, English overview и независимое review завершены; application needs work |
 
 Program ID B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8.
 SBF SHA25615525ec2de285e7cc3065f7ec8ce47bfe81d1ed2837754b85b8cf2598c935dc2.
@@ -62,3 +62,13 @@ Devnet payer BWpCPnVVzxPA1oTebFyfCjbk8wgTXLdjQWwY1ckjzqHS: последний re
 В новом чате читать AGENTS, START, STATE и актуальные spec/architecture/UX/security/plan, git status и последние commits. Перед существенной задачей выбрать и прочитать профильные установленные SKILL.md: ProofPilot coach для продукта/readiness/submission, solana-dev для chain/tooling, frontend/design для UI, профильные проверки. Передавать правило всем субагентам и сохранять checkpoint.
 
 Lead отвечает за root dependencies/config/Git/API/docs; program agent — programs/Rust tests/docs09/11; frontend — apps/web/docs10; demo agent — artifacts/demo и docs18; critic — отдельный report. Не допускать одновременных edits одной зоны. Architecture review initial+2 repairs завершён, бюджет не сбрасывать. Integration review initial+repair1 завершён; новые browser/video данные — отдельное финальное evidence, не попытка поднять старый score. Initial Prompt1 accepted — история, не сертификат KASE readiness.
+
+## Финальный checkpoint
+
+Реализация/материалы сохранены и pushed в private dimik98330 repository: commit51b0ce4021e9d134aeaccbc508c2fd95cf5b921a, remote main совпал. Staged scan166files, findings0; frozen delivery13files и demo17assets совпали byte/SHA после Git staging. .gitattributes сохраняет frozen CRLF bytes, чтобы manifest был воспроизводим. Ни ключи, ни .local/node_modules/target/raw capture/render intermediates не опубликованы.
+
+ProofPilot application quality policy4: initial draft1, separate-context review8/8, issues0, disposition accepted. Accepted относится к честному локальному отчёту docs/19-READINESS.md, не к допуску/подаче. Application status остаётся needs work. Report docs/research/kase-submission-readiness.md; safe review/status docs/review/kase-*.json. Старые review budgets сохранены.
+
+Ближайшее действие: решение владельца о public repo + бесплатной static GitHub Pages странице с recorded video/evidence; это не размещение signing backend. Запрос основной регистрации/profile/project ссылок уже отправлен async, как и предыдущий запрос free test SOL. Не дублировать вопросы/airdrops. При funding перед devnet seed обеспечить fee balances generated holders из test issuer: stock seed пытается requestAirdrop при <0.1SOL, поэтому нельзя запускать его с нулевыми role balances после уже остановленного429. Предварительное bounded test-SOL funding владельцем/issuer требуется отдельно от rent deploy; mainnet/покупки запрещены.
+
+Chrome повторная form inspection недоступна из-за browser-service policy failure, два одинаковых вызова остановлены. Login ранее подтверждён, повторного входа не требовать автоматически. Локальный IAB работает; built app3000 и submission preview5180 оставлены deliverables. Повторный footer read подтвердил Redeemed18/coupon900/vault0.

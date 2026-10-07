@@ -1,0 +1,54 @@
+{
+  "packet_sha256": "c48bc927be91b1d71394c8eac7bbd27096b66f57a5af06618e8e1ca1704bb54c",
+  "policy_version": 4,
+  "draft_sha256": "4d1982f10de861838889269f6f025b3bae5a4e9bfbf14d6dcde6e1851fd5df89",
+  "assessment_sha256": "2c5f48c8dc4d72f745dd010cb23d5a275838e87b7236c10efc3e16fe3cb60c00",
+  "reviewer": {
+    "mode": "separate_context",
+    "model": "unknown"
+  },
+  "checks": [
+    {
+      "id": "fact_fidelity",
+      "status": "pass",
+      "note": "Inspected all 16 frozen sources, the final README/index/docs13/14/17/18, final-assets manifest, source relevant to claims, and final video frames. src_kase is a preserved 2026-10-07 browser transcription, not my fresh external fetch. src_browser records issue5knY… on localnet, issued/redeemed18, coupon900000000 and principal18000000000 base units, vault0; src_api is a distinct issueC9K… with11 confirmed post-setup actions. Generated signers and test units are not real users/funds. Logs establish recorded test outcomes; original browser/repo observations are lead-reported artifacts rather than my independently repeated network operations. Draft retains these material limits and labels unavailable devnet/human signing/registration/public access."
+    },
+    {
+      "id": "arithmetic",
+      "status": "pass",
+      "note": "Recomputed all four frozen calculations:900000000/1000000=900;18000000000/1000000=18000;900+18000=18900;30+25+20+15+10=100. Actual domain.ts scale is1000000n; overview positions10/5/3 yield500/250/150, post-transfer8/7/3 yield8000/7000/3000, total18. src_node has14 pass/0 fail, comprised5 UI+5 domain+4 explicitly mocked transport; src_rust3/0 and src_runtime5/0 agree. Browser activity16/16 is distinct from API proofs11/11. Scenes sum174s, final media duration174.021333s=2:54.021333, below180s; draft has196 whitespace-delimited words. No official score is calculated."
+    },
+    {
+      "id": "evidence_support",
+      "status": "pass",
+      "note": "Source-by-source support: src_kase supports the three scenarios and published weights; src_browser/src_api support completed separate localnet cycles; src_node/src_rust/src_runtime support scoped test counts; src_video supports duration/codecs/full-decode report; src_github records dimik98330/private; src_http records five rejected requests and unchanged state; src_responsive records emulated viewport checks and explicit human/device limits; src_submission/src_validation/src_overview/src_readme/src_html preserve the same limitations; src_instructions supports owner gates. Inspected program lib/state/contexts shows record cutoff, immutable coupon/proposal snapshots, exact checked amounts, holder-bound destinations, unique ballot and atomic payout/burn; inspected runtime source loads actual target/deploy/bondtrace.so and separates LiteSVM clock fixtures from validator evidence. Isolated recovery tests mock RPC and write separate test data, as the draft says. Independently decoded the final MP4 with FFmpeg exit0 and extracted/viewed actual frames2/62/140/170s, plus provided QA contact sheet; localnet/test-signing/edited-capture labels and final gates are visible. All16 source hashes,13 delivered hashes and17 asset-manifest hash/size entries match. No claim of public transaction verification or independently reproduced browser lifecycle is inferred."
+    },
+    {
+      "id": "constraints",
+      "status": "pass",
+      "note": "Reviewed AGENTS/START/STATE/current plan and frozen instructions. Current explicit KASE implementation authorization supersedes Prompt1-only gate. Draft uses coach/application and artifact/complete, preserves required independent review and does not reset earlier architecture initial+2 repair history or integration initial+repair1. All three sponsor scenarios are represented; voting is informational, not financial-term execution. Private repository/public access, global registration/eligibility and final owner consent/submission remain explicit gates. Mainnet/real assets/paid services are excluded. Devnet and human-wallet gaps are product verification limitations, not invented universal sponsor admission rules. Separate KZ pitch remains conditional and unrecorded in docs13; the local package is not presented as a complete global/KZ application."
+    },
+    {
+      "id": "verdict",
+      "status": "pass",
+      "note": "The draft's needs work application judgment and artifact/complete decision are consistent: a truthful local review package is prepared while public judge access and registration/submission are incomplete. This is qualitative coaching about current artifacts, with no official score, win odds, production assurance, inferred demand, eligibility certification or permission to publish. The saved private-repo log and explicit localhost-only materials support the access blocker; personal program conditions remain unknown, not failed. Successful protocol review cannot mean the user's complete participation objective is achieved."
+    },
+    {
+      "id": "next_step",
+      "status": "pass",
+      "note": "The draft prioritizes concrete owner decisions on public source/video-page access, proof of global registration/project entry, and the preserved free-funding gate for a devnet cycle. Observable outcomes are actual unauthenticated judge-accessible URLs, actual profile/project/registration records and, when funded, genuine devnet deployment/cycle receipts. Terms/scope/KYC and final Submit are owner actions. Docs14 defines the safe proposed Pages option and warns its URL is uncreated/unverified. No speculative demand experiment is imposed as an application gate."
+    },
+    {
+      "id": "task_scope",
+      "status": "pass",
+      "note": "Russian concise initial draft196 words matches a final application-claim review, not a renewed idea/market selection or a formal numeric judge score. Final English application fields, technical overview, README, static local preview, video/captions and evidence are included in inspection. The draft states local package completion with limits; public delivery, separate KZ pitch if pursuing that track, human signing, devnet and participation completion stay outside that completion claim. Independent reviewer owns only reviewer.json and docs/research/kase-submission-readiness.md. All eight criteria are assessed against original task and source text."
+    },
+    {
+      "id": "action_bounds",
+      "status": "pass",
+      "note": "This pass read frozen/local artifacts and relevant source, verified file hashes/arithmetic, and used FFmpeg only for read-only decode/in-memory frame extraction. No credentials/keypairs were read, no API POST, signing, chain mutation, account setup, shared browser/UI control, install, Git mutation, publication, upload or submission was performed. No additional model identity/access is invented: actual model label is unknown. Solana MCP tools were not discovered in this reviewer context; no configuration was changed. Source-restricted review uses ProofPilot's limited-work exception and does not claim fresh Colosseum/external verification. Lead alone will apply this exact review with quality.js."
+    }
+  ],
+  "issues": [],
+  "resolutions": []
+}
