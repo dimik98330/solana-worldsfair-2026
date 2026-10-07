@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-10-07T23:54:49.324Z",
+  "disposition": "accepted",
+  "mode": "coach",
+  "decisionContext": "application",
+  "policyVersion": 4,
+  "overallDraftCount": 2,
+  "maxOverallDrafts": 3,
+  "packetSha256": "4320de25f940c70c36be87711105e5f82d45870862a2277a714e810acbe0b828",
+  "draftSha256": "47dd3124847cf4ffddfe667e3768d79ef98be3f48d9764cf57f915ba82de4d1e",
+  "assessmentSha256": "9a6af884b02afd4eada273540d548ac55c07950c91b80d8be231af3e8b89abbd",
+  "reviewer": {
+    "mode": "separate_context",
+    "model": "unknown",
+    "verification": "self_reported"
+  },
+  "computedValues": {
+    "c_coupon": 1125,
+    "c_cash": 16125,
+    "c_http": 19
+  },
+  "diagnostics": [],
+  "scope": "Bounded source-grounded local engineering report; no certification of eligibility, deployment, public access or production safety. Original failed source packet retained; last repair2 budget not reset."
+}

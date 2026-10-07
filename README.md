@@ -17,15 +17,15 @@ This is a permissioned prototype for **test assets**. Its complete guided cycle 
 ## Watch and inspect
 
 - [Product demonstration](artifacts/demo/bondtrace-product-demo.mp4), with English narration and [captions](artifacts/demo/bondtrace-product-demo.en.srt).
-- [Technical overview](docs/18-TECHNICAL-OVERVIEW.md): architecture, record dates, entitlements, settlement and trust assumptions.
+- [Current backend verification](docs/22-BACKEND-READINESS.md) and [API contract](docs/15-API-CONTRACT.md): coherent chain reads, exact financial reconciliation and durable recovery. The [original technical overview](docs/18-TECHNICAL-OVERVIEW.md) is retained with the earlier demo snapshot.
 - [Browser-driven lifecycle evidence](docs/evidence/browser-cycle-localnet.json) and [API lifecycle evidence](docs/evidence/full-smoke-localnet.json). These are **different** test issues; each retains its own signatures and timestamps.
-- [Validation and remaining gates](docs/17-VALIDATION.md), [deployment checkpoint](docs/16-DEPLOYMENT.md), [submission materials](docs/14-SUBMISSION.md).
+- [Historical validation](docs/17-VALIDATION.md), [deployment checkpoint](docs/16-DEPLOYMENT.md), [submission materials](docs/14-SUBMISSION.md). Current results and continuation are in [STATE](docs/00-STATE.md).
 
 The video shows real UI actions and chain results using generated test signers. Idle waiting is edited; the recording is not a human-wallet signing test. Local Explorer links require a validator on the viewer's machine and are not publicly verifiable devnet receipts.
 
 ## Run on the prepared Windows workspace
 
-Node 22.12+ and PowerShell 7 are required. Program tooling is installed in Ubuntu WSL: Anchor 1.1.2, Agave 3.1.10 and Rust 1.91.0. This project does not change global CLI network settings.
+Node 22.14+ and PowerShell 7 are required. Public metadata uses built-in SQLite (experimental in this verified Node runtime), with no added database dependency. Program tooling is installed in Ubuntu WSL: Anchor 1.1.2, Agave 3.1.10 and Rust 1.91.0. This project does not change global CLI network settings.
 
 ```powershell
 cd C:\Users\dmitrii\Documents\solana
@@ -48,6 +48,8 @@ npm run dev
 Visit **http://127.0.0.1:5173**. In **Guided demo**, create the test issue, then switch between Issuer and Investors 01–03. On an already settled issue, use **New demo issue** to create a new instrument; earlier chain transactions are preserved. Review each operation before clicking **Submit test transaction**.
 
 The schedule uses actual chain time: local record date is about 90 seconds after setup, coupon payment five seconds later, and maturity five minutes after the record date. Capture the coupon before transferring or opening redemption. In the voting view, create a proposal before maturity and cast an investor vote. Claim coupon and principal separately as each holder.
+
+The **Issuer desk** also creates an issue with1–8 fixed coupons, registers holders, issues exact bond units, funds the displayed complete reserve gap and activates it. Normal wallet mode prepares an unsigned exact message for external signing; generated demo mode is explicit. Coupon payments remain accessible after bond redemption.
 
 For a built, single-origin app:
 
@@ -78,11 +80,15 @@ npm run test:ui          # formatting, safe proof URLs and UTF-8 proposal limits
 npm run typecheck
 npm run build
 npm run test:program     # real SBF + SPL runtime tests in WSL
+npm run metadata:check   # SQLite integrity and storage diagnostics; no keys/RPC mutation
+npm run metadata:backup  # consistent ignored public-metadata snapshot; no automatic restore
 ```
 
 `npm run smoke` creates a **new local test issue**, waits for real record/maturity deadlines and writes a complete API/chain report. Do not run it during a demonstration you want to preserve. Its fixtures are test wallets, not users.
 
-Current results: **9 client/recovery tests, 5 UI tests, 3 Rust unit tests and 5 SBF runtime tests passed**. Both an API cycle and a full browser-guided cycle settled 900 coupon units and 18,000 principal units, burned all 18 bonds and ended with zero vault balance. The model supports up to 16 registered holders and 8 coupons; the demo uses 3 holders and 1 coupon. Full prefunding is required, and excess funds have no withdrawal path.
+The [current backend lifecycle](docs/evidence/backend-lifecycle-localnet.json) has19 confirmed operations, two coupons totaling1125 test units,15000 principal paid,15 bonds burned and zero final vault. Unsigned preparation survived an API restart;164 concurrent reads reconciled every observed supply/holder/context response. An earlier full browser cycle settled900 coupon and18000 principal with18 burns; these are separate issues. Current Node/UI check counts are recorded in the backend report. Rust unit3/3 and SBF runtime7/7 passed, including16 positive holders,8 coupons and rollback after a failed payment CPI; measured maximum transaction996 bytes / observed108899 CU. Full prefunding is required, and excess funds have no withdrawal path.
+
+`npm run smoke:issuer` reproduces the external generated test signer relay through the built app. It creates a new local issue and waits for actual deadlines; it is not a human-wallet test. Metadata/receipts are transactional, with chain and local projection statuses separate. Pending/unknown signed records are retained; original JSON files are imported once and remain byte-for-byte unchanged. After bootstrap interruption, **Resume test setup** explicitly resumes the same persisted plan; unresolved child receipts block another send.
 
 ## Structure and disclosure
 

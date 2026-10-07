@@ -1,16 +1,17 @@
 export type DemoRole = 'issuer' | 'investor1' | 'investor2' | 'investor3';
-export type View = 'overview' | 'registry' | 'payments' | 'portfolio' | 'voting';
-export type ActionName = 'capture_coupon' | 'claim_coupon' | 'begin_redemption' | 'redeem_principal' | 'create_vote' | 'cast_vote' | 'transfer_bonds' | 'fund_vault';
+export type View = 'overview' | 'registry' | 'payments' | 'portfolio' | 'voting' | 'issuer';
+export type ActionName = 'capture_coupon' | 'claim_coupon' | 'begin_redemption' | 'redeem_principal' | 'create_vote' | 'cast_vote' | 'transfer_bonds' | 'fund_vault' | 'initialize_issue' | 'register_holder' | 'issue_units' | 'seal_issue';
 export type TxStatus = 'review' | 'preparing' | 'signing' | 'pending' | 'confirmed' | 'error' | 'cancelled' | 'unknown';
 export interface Instrument {
   address: string; name: string; symbol: string; issuer: string; bondMint: string; settlementMint: string;
   faceValueMinor: string; rateBps: number; couponFrequency: number; status: 'draft' | 'active' | 'redeeming' | 'redeemed';
   issuedSupply: string; redeemedSupply: string; recordAt: string; paymentAt: string; maturityAt: string; vaultBalanceMinor: string;
+  seriesId?: string; couponUnitMinor?: string; requiredReserveMinor?: string; fundingGapMinor?: string; settlementBalanceMinor?: string;
 }
 export interface Holder { wallet: string; label: string; units: string }
 export interface Entitlement { wallet: string; units: string; amountMinor: string; claimed: boolean }
 export interface Coupon {
-  id: string; snapshotAddress: string; recordAt: string; paymentAt: string; recordSlot: string | number;
+  id: string; snapshotAddress: string; recordAt: string; paymentAt: string; recordSlot: string | number; unitAmountMinor?: string; capturedAt?: string | null;
   totalMinor: string; paidMinor: string; status: 'scheduled' | 'recorded' | 'funded' | 'completed'; entitlements: Entitlement[];
 }
 export interface Redemption { snapshotAddress: string; totalMinor: string; paidMinor: string; entitlements: Entitlement[] }
@@ -24,10 +25,11 @@ export interface ChainState {
   instrument: Instrument | null; holders: Holder[]; coupons: Coupon[]; redemption: Redemption | null;
   proposals: Proposal[]; activity: Activity[];
   demo: { available: boolean; ready: boolean; accelerated: boolean; roleWallets: Partial<Record<DemoRole, string>> };
+  instruments?: {address:string;name:string;source:string;issuer:string}[];
 }
 export interface ActionRequest { action: ActionName | 'bootstrap'; params: Record<string, string>; title: string; explanation: string; amountMinor?: string; reset?: boolean }
 export interface ActionSummary {
-  network: string; action: string; signer: string; amountMinor?: string; token?: string;
+  network: string; action: string; signer: string; instrumentAddress?: string; issueTerms?: {name:string;faceValueMinor:string;maturityTs:string;coupons:{recordTs:string;paymentTs:string;unitAmount:string}[]}; amountMinor?: string; token?: string;
   recipients?: string[]; tokenDecimals?: 0 | 6; feeMinor?: string; feeLamports?: string; simulation?: { success: boolean; message?: string };
 }
 export interface PreparedAction { operationId: string; transactionBase64: string; lastValidBlockHeight: number; summary: ActionSummary }

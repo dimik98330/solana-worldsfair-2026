@@ -1,0 +1,542 @@
+{
+  "checkedAt": "2026-10-07T22:57:48.751Z",
+  "scope": "Four concurrent built-origin read requests throughout an actual localnet lifecycle. Every response independently reconciles exact supply, holder sums and the common context; no additional transactions.",
+  "instrument": "68tCZNkPhRdjUits3iPNh4E4nYQseSqppSAghUi21w2z",
+  "reads": 164,
+  "concurrency": 4,
+  "samples": [
+    {
+      "slot": "32475",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32482",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32491",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32499",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32505",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32512",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32520",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32528",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32535",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32542",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32549",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32557",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32566",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "10",
+        "5"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32573",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32580",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32587",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32595",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32603",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32610",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32617",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32625",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32632",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32639",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32642",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32650",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32658",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32665",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32673",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32681",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32688",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32696",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32703",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32709",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32716",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32723",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32731",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32739",
+      "status": "active",
+      "issued": "15",
+      "redeemed": "0",
+      "holdings": [
+        "8",
+        "7"
+      ],
+      "cashPaid": "0",
+      "remaining": "16125000000",
+      "vault": "16125000000"
+    },
+    {
+      "slot": "32747",
+      "status": "redeeming",
+      "issued": "15",
+      "redeemed": "8",
+      "holdings": [
+        "0",
+        "7"
+      ],
+      "cashPaid": "8000000000",
+      "remaining": "8125000000",
+      "vault": "8125000000"
+    },
+    {
+      "slot": "32756",
+      "status": "redeemed",
+      "issued": "15",
+      "redeemed": "15",
+      "holdings": [
+        "0",
+        "0"
+      ],
+      "cashPaid": "15500000000",
+      "remaining": "625000000",
+      "vault": "625000000"
+    },
+    {
+      "slot": "32765",
+      "status": "redeemed",
+      "issued": "15",
+      "redeemed": "15",
+      "holdings": [
+        "0",
+        "0"
+      ],
+      "cashPaid": "15950000000",
+      "remaining": "175000000",
+      "vault": "175000000"
+    },
+    {
+      "slot": "32772",
+      "status": "redeemed",
+      "issued": "15",
+      "redeemed": "15",
+      "holdings": [
+        "0",
+        "0"
+      ],
+      "cashPaid": "16125000000",
+      "remaining": "0",
+      "vault": "0"
+    }
+  ]
+}

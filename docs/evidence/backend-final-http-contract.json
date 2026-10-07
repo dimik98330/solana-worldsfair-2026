@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-10-07T23:53:17.933Z",
+  "scope": "Actual built HTTP request identity and streaming JSON checks; only an unsigned simulated preview, no relay/chain writes.",
+  "checks": [
+    {
+      "name": "missing bootstrap recovery ID",
+      "status": 400,
+      "code": "MISSING_OPERATION_ID"
+    },
+    {
+      "name": "numeric bootstrap recovery ID",
+      "status": 400,
+      "code": "INVALID_OPERATION_ID"
+    },
+    {
+      "name": "null bootstrap recovery ID",
+      "status": 400,
+      "code": "INVALID_OPERATION_ID"
+    },
+    {
+      "name": "missing action recovery ID",
+      "status": 400,
+      "code": "MISSING_OPERATION_ID"
+    },
+    {
+      "name": "UTF-8 multibyte character split across HTTP chunks",
+      "status": 200,
+      "exactNamePreserved": true,
+      "unsignedOnly": true
+    },
+    {
+      "name": "MIME prefix rejected",
+      "status": 415
+    },
+    {
+      "name": "Malformed UTF-8 rejected",
+      "status": 400
+    }
+  ],
+  "chainStateUnchanged": true
+}

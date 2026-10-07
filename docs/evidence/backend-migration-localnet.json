@@ -1,0 +1,73 @@
+{
+  "checkedAt": "2026-10-07T22:53:53.284Z",
+  "scope": "Read-only financial comparison of three existing localnet issues before/after transactional metadata migration; no key reads or chain sends.",
+  "originalPublicMetadataFilesPreserved": 7,
+  "storage": {
+    "databasePath": "ignored local metadata.sqlite",
+    "schemaVersion": 1,
+    "sqliteVersion": "3.47.2",
+    "journalMode": "delete",
+    "synchronous": 3,
+    "busyTimeoutMs": 5000,
+    "documentCount": 152,
+    "migrationCount": 7,
+    "integrityCheck": []
+  },
+  "issues": [
+    {
+      "instrument": "5knY93zt91XKMqnxz2ukXGHVzx6Ro9vgKsrcrT3RbhJU",
+      "status": "redeemed",
+      "context": {
+        "commitment": "confirmed",
+        "slot": "32284",
+        "clockSlot": "32284",
+        "chainTimestamp": "1791413631",
+        "accountCount": 11
+      },
+      "financialDataUnchanged": true,
+      "reconciliationStatus": "verified",
+      "paidCouponsMinor": [
+        "900000000"
+      ],
+      "paidPrincipalMinor": "18000000000",
+      "vaultMinor": "0"
+    },
+    {
+      "instrument": "HvArwiNhkrvxm2Wot8FKtaatRBs8Utyqge2g2Ai1oJmi",
+      "status": "redeemed",
+      "context": {
+        "commitment": "confirmed",
+        "slot": "32285",
+        "clockSlot": "32285",
+        "chainTimestamp": "1791413631",
+        "accountCount": 11
+      },
+      "financialDataUnchanged": true,
+      "reconciliationStatus": "verified",
+      "paidCouponsMinor": [
+        "750000000",
+        "375000000"
+      ],
+      "paidPrincipalMinor": "15000000000",
+      "vaultMinor": "0"
+    },
+    {
+      "instrument": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+      "status": "redeemed",
+      "context": {
+        "commitment": "confirmed",
+        "slot": "32286",
+        "clockSlot": "32286",
+        "chainTimestamp": "1791413631",
+        "accountCount": 9
+      },
+      "financialDataUnchanged": true,
+      "reconciliationStatus": "verified",
+      "paidCouponsMinor": [
+        "150000000"
+      ],
+      "paidPrincipalMinor": "3000000000",
+      "vaultMinor": "0"
+    }
+  ]
+}

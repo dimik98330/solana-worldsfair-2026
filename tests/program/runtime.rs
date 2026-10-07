@@ -874,3 +874,537 @@ fn invalid_terms_fail_before_creating_a_new_issue() {
         );
     }
 }
+
+// Measure the complete v0 bundles used by the application: compute-budget
+// instruction, optional idempotent ATA creation, and the program instruction.
+// The actual actor pays/signs; these are ephemeral LiteSVM keys, never RPC keys.
+#[derive(Default)]
+struct LimitMeasurements(std::collections::BTreeMap<&'static str, (usize, u64, usize)>);
+
+impl Fixture {
+    fn run_v0_measured(
+        &mut self,
+        instructions: Vec<Instruction>,
+        actor: Actor,
+        label: &'static str,
+        measurements: &mut LimitMeasurements,
+    ) -> litesvm::types::TransactionMetadata {
+        use solana_message::{v0, VersionedMessage};
+        use solana_transaction::versioned::VersionedTransaction;
+
+        self.svm.expire_blockhash();
+        let signer: &dyn Signer = match actor {
+            Actor::Issuer => &self.issuer,
+            Actor::Holder(index) => &self.holders[index],
+            Actor::Outsider => &self.outsider,
+        };
+        let build = |limit: u32| {
+            let mut data = vec![2]; // SetComputeUnitLimit.
+            data.extend_from_slice(&limit.to_le_bytes());
+            let mut bundle = vec![Instruction {
+                program_id: "ComputeBudget111111111111111111111111111111"
+                    .parse()
+                    .unwrap(),
+                accounts: vec![],
+                data,
+            }];
+            bundle.extend(instructions.clone());
+            let message = v0::Message::try_compile(
+                &signer.pubkey(),
+                &bundle,
+                &[], // No ALT; the application also uses static addresses here.
+                self.svm.latest_blockhash(),
+            )
+            .unwrap();
+            VersionedTransaction::try_new(VersionedMessage::V0(message), &[signer]).unwrap()
+        };
+        let simulated = self.svm.simulate_transaction(build(1_400_000)).unwrap();
+        // Same measured 20% margin + 1,000 CU used by server/transactions.ts.
+        let used = simulated.meta.compute_units_consumed;
+        let limit = (((used * 120 + 99) / 100) + 1_000).clamp(10_000, 1_400_000) as u32;
+        let transaction = build(limit);
+        let bytes = bincode::serialize(&transaction).unwrap().len();
+        let accounts = transaction.message.static_account_keys().len();
+        assert!(
+            bytes <= 1232,
+            "{label} v0 bundle exceeds packet limit: {bytes}"
+        );
+        assert!(accounts <= 64, "{label} exceeds 64 static accounts");
+        let metadata = self.svm.send_transaction(transaction).unwrap();
+        assert!(metadata.compute_units_consumed <= u64::from(limit));
+        assert!(
+            metadata.compute_units_consumed < 200_000,
+            "{label} exceeds measured CU guard"
+        );
+        let maximum = measurements.0.entry(label).or_default();
+        maximum.0 = maximum.0.max(bytes);
+        maximum.1 = maximum.1.max(metadata.compute_units_consumed);
+        maximum.2 = maximum.2.max(accounts);
+        metadata
+    }
+
+    fn ensure_settlement_ix(&self, holder: usize) -> Instruction {
+        spl_associated_token_account::instruction::create_associated_token_account_idempotent(
+            &pk(&self.holders[holder]),
+            &pk(&self.holders[holder]),
+            &self.settlement,
+            &token::ID,
+        )
+    }
+
+    fn maximum_fixture(measurements: &mut LimitMeasurements) -> Self {
+        let mut svm = LiteSVM::new();
+        svm.add_program_from_file(
+            ad(bondtrace::ID),
+            format!(
+                "{}/../../target/deploy/bondtrace.so",
+                env!("CARGO_MANIFEST_DIR")
+            ),
+        )
+        .unwrap();
+        let issuer = Keypair::new();
+        let outsider = Keypair::new();
+        let holders: Vec<_> = (0..16).map(|_| Keypair::new()).collect();
+        for wallet in std::iter::once(&issuer)
+            .chain(std::iter::once(&outsider))
+            .chain(holders.iter())
+        {
+            svm.airdrop(&wallet.pubkey(), 10_000_000_000).unwrap();
+        }
+        let mut clock: Clock = svm.get_sysvar();
+        clock.unix_timestamp = 100;
+        svm.set_sysvar(&clock);
+        let bond = Pubkey::find_program_address(
+            &[b"bond", pk(&issuer).as_ref(), &1_u64.to_le_bytes()],
+            &bondtrace::ID,
+        )
+        .0;
+        let mint = Pubkey::find_program_address(&[b"bond_mint", bond.as_ref()], &bondtrace::ID).0;
+        let vault = Pubkey::find_program_address(&[b"vault", bond.as_ref()], &bondtrace::ID).0;
+        let settlement = pk(&Keypair::new());
+        let source = get_associated_token_address(&pk(&issuer), &settlement);
+        mint_fixture(&mut svm, settlement, pk(&issuer), 6);
+        token_fixture(&mut svm, source, settlement, pk(&issuer), 1_000_000_000_000);
+        let holdings = holders
+            .iter()
+            .map(|holder| get_associated_token_address(&pk(holder), &mint))
+            .collect();
+        let destinations = holders
+            .iter()
+            .map(|holder| get_associated_token_address(&pk(holder), &settlement))
+            .collect();
+        let mut f = Self {
+            svm,
+            issuer,
+            holders,
+            outsider,
+            bond,
+            mint,
+            settlement,
+            vault,
+            source,
+            holdings,
+            destinations,
+        };
+        let terms: Vec<_> = (0..8)
+            .map(|index| CouponTerms {
+                record_ts: 120 + index * 30,
+                payment_ts: 130 + index * 30,
+                unit_amount: (index as u64 + 1) * 1_000_000,
+            })
+            .collect();
+        let name = "Қ".repeat(32);
+        assert_eq!(name.len(), 64, "UTF-8 limit is bytes, not characters");
+        let mut initialize = f.init_ix(1_000_000_000, terms.clone());
+        let arguments = |name: String, coupons: Vec<CouponTerms>| {
+            bondtrace::instruction::InitializeIssue {
+                series_id: 1,
+                name,
+                face_value: 1_000_000_000,
+                maturity_ts: 400,
+                coupons,
+            }
+            .data()
+        };
+        initialize.data = arguments(format!("{name}X"), terms.clone());
+        let invalid_name = f.run(initialize.clone(), Actor::Issuer).unwrap_err();
+        assert!(invalid_name
+            .meta
+            .logs
+            .iter()
+            .any(|line| line.contains("Error Code: InvalidTerms.")));
+        assert!(
+            f.svm.get_account(&ad(f.bond)).is_none(),
+            "invalid initialization must roll back"
+        );
+        let mut nine_terms = terms.clone();
+        nine_terms.push(CouponTerms {
+            record_ts: 360,
+            payment_ts: 370,
+            unit_amount: 9_000_000,
+        });
+        initialize.data = arguments(name.clone(), nine_terms);
+        let too_many_coupons = f.run(initialize.clone(), Actor::Issuer).unwrap_err();
+        assert!(too_many_coupons
+            .meta
+            .logs
+            .iter()
+            .any(|line| line.contains("Error Code: InvalidTerms.")));
+        assert!(f.svm.get_account(&ad(f.bond)).is_none());
+        initialize.data = arguments(name, terms);
+        f.run_v0_measured(
+            vec![initialize],
+            Actor::Issuer,
+            "initialize_name64_coupons8",
+            measurements,
+        );
+        for index in 0..16 {
+            let create = spl_associated_token_account::instruction::create_associated_token_account_idempotent(
+                &pk(&f.issuer), &pk(&f.holders[index]), &f.mint, &token::ID,
+            );
+            f.run_v0_measured(
+                vec![create, f.register_ix(index, false)],
+                Actor::Issuer,
+                "register_with_new_ata",
+                measurements,
+            );
+        }
+        f
+    }
+}
+
+#[test]
+fn maximum_parameters_complete_all_holders_coupons_and_v0_bundles() {
+    let mut measurements = LimitMeasurements::default();
+    let mut f = Fixture::maximum_fixture(&mut measurements);
+    let terms = f.decode::<Bond>(f.bond).coupon_terms;
+    let mut units: Vec<u64> = (1..=16).collect();
+    let total_units: u64 = units.iter().sum();
+    let coupon_per_unit = terms
+        .iter()
+        .try_fold(0_u64, |sum, term| sum.checked_add(term.unit_amount))
+        .unwrap();
+    let unit_reserve = 1_000_000_000_u64.checked_add(coupon_per_unit).unwrap();
+    let full_reserve = total_units.checked_mul(unit_reserve).unwrap();
+    assert_eq!(full_reserve, 140_896_000_000);
+    for (holder, amount) in units.iter().enumerate() {
+        f.run_v0_measured(
+            vec![f.issue_ix(holder, *amount, false)],
+            Actor::Issuer,
+            "issue_units",
+            &mut measurements,
+        );
+        assert_eq!(f.balance(f.holdings[holder]), *amount);
+    }
+    assert_eq!(f.supply(), total_units);
+    assert_eq!(f.decode::<Bond>(f.bond).holder_wallets.len(), 16);
+    // Supply a valid seventeenth wallet/ATA so rejection exercises RegistryFull.
+    let extra = Keypair::new();
+    f.svm.airdrop(&extra.pubkey(), 1_000_000_000).unwrap();
+    let extra_ata = get_associated_token_address(&pk(&extra), &f.mint);
+    token_fixture(&mut f.svm, extra_ata, f.mint, pk(&extra), 0);
+    f.holders.push(extra);
+    f.holdings.push(extra_ata);
+    let registry_full = f.run(f.register_ix(16, false), Actor::Issuer).unwrap_err();
+    assert!(registry_full
+        .meta
+        .logs
+        .iter()
+        .any(|line| line.contains("Error Code: RegistryFull.")));
+    f.holders.pop();
+    f.holdings.pop();
+    assert_eq!(f.decode::<Bond>(f.bond).holder_wallets.len(), 16);
+
+    let fund = |f: &Fixture, amount| {
+        ix(
+            bondtrace::accounts::FundVault {
+                funder: pk(&f.issuer),
+                bond: f.bond,
+                settlement_mint: f.settlement,
+                source: f.source,
+                vault: f.vault,
+                token_program: token::ID,
+            },
+            bondtrace::instruction::FundVault { amount },
+        )
+    };
+    f.run_v0_measured(
+        vec![fund(&f, full_reserve - 1)],
+        Actor::Issuer,
+        "fund_vault",
+        &mut measurements,
+    );
+    assert!(
+        f.run(f.seal_ix(), Actor::Issuer).is_err(),
+        "one base-unit reserve shortfall must fail"
+    );
+    assert_eq!(f.decode::<Bond>(f.bond).state, bondtrace::DRAFT);
+    f.run_v0_measured(
+        vec![fund(&f, 1)],
+        Actor::Issuer,
+        "fund_vault",
+        &mut measurements,
+    );
+    f.run_v0_measured(
+        vec![f.seal_ix()],
+        Actor::Issuer,
+        "seal_exact_reserve",
+        &mut measurements,
+    );
+    assert_eq!(f.balance(f.vault), full_reserve);
+
+    let title = "Қ".repeat(48);
+    assert_eq!(title.len(), 96);
+    let mut proposal_ix = f.proposal_ix();
+    proposal_ix.data = bondtrace::instruction::CreateProposal {
+        proposal_id: 1,
+        title: format!("{title}X"),
+        closes_at: 390,
+    }
+    .data();
+    let invalid_title = f.run(proposal_ix.clone(), Actor::Issuer).unwrap_err();
+    assert!(invalid_title
+        .meta
+        .logs
+        .iter()
+        .any(|line| line.contains("Error Code: InvalidTerms.")));
+    assert!(f.svm.get_account(&ad(f.proposal())).is_none());
+    proposal_ix.data = bondtrace::instruction::CreateProposal {
+        proposal_id: 1,
+        title: title.clone(),
+        closes_at: 390,
+    }
+    .data();
+    f.run_v0_measured(
+        vec![proposal_ix],
+        Actor::Issuer,
+        "proposal_title96_holders16",
+        &mut measurements,
+    );
+    let proposal: Proposal = f.decode(f.proposal());
+    assert_eq!(proposal.title, title);
+    assert_eq!(proposal.units, units);
+    for holder in (0..16).rev() {
+        f.run_v0_measured(
+            vec![f.vote_ix(holder, holder % 2 == 0)],
+            Actor::Holder(holder),
+            "vote",
+            &mut measurements,
+        );
+        if holder == 15 {
+            assert_eq!(f.decode::<Proposal>(f.proposal()).ballot_mask, 1 << 15);
+            assert!(f
+                .run(f.vote_ix(holder, true), Actor::Holder(holder))
+                .is_err());
+        }
+    }
+    let proposal: Proposal = f.decode(f.proposal());
+    assert_eq!(proposal.ballot_mask, u16::MAX);
+    assert_eq!((proposal.yes_units, proposal.no_units), (64, 72));
+
+    let ensure_bond_destination =
+        spl_associated_token_account::instruction::create_associated_token_account_idempotent(
+            &pk(&f.holders[15]),
+            &pk(&f.holders[0]),
+            &f.mint,
+            &token::ID,
+        );
+    f.run_v0_measured(
+        vec![ensure_bond_destination, f.transfer_ix(15, 0, 1)],
+        Actor::Holder(15),
+        "transfer_with_existing_ata",
+        &mut measurements,
+    );
+    units[0] += 1;
+    units[15] -= 1;
+    assert!(units.iter().all(|amount| *amount > 0));
+    assert_eq!(f.balance(f.holdings[0]), units[0]);
+    assert_eq!(f.balance(f.holdings[15]), units[15]);
+
+    for (index, term) in terms.iter().enumerate() {
+        f.now(term.record_ts);
+        f.run_v0_measured(
+            vec![f.capture_ix(index as u8)],
+            Actor::Issuer,
+            "capture_holders16",
+            &mut measurements,
+        );
+        let coupon: Coupon = f.decode(f.coupon(index as u8));
+        assert_eq!(coupon.units, units);
+        assert_eq!(coupon.total_units, total_units);
+        assert_eq!(coupon.claimed_mask, 0);
+    }
+    assert_eq!(f.decode::<Bond>(f.bond).next_coupon_index, 8);
+    f.now(400);
+    f.run_v0_measured(
+        vec![f.begin_ix()],
+        Actor::Issuer,
+        "begin_redemption_holders16",
+        &mut measurements,
+    );
+    assert_eq!(f.decode::<Bond>(f.bond).redemption_units, units);
+    for holder in (0..16).rev() {
+        f.run_v0_measured(
+            vec![f.ensure_settlement_ix(holder), f.redeem_ix(holder)],
+            Actor::Holder(holder),
+            "principal_with_new_ata",
+            &mut measurements,
+        );
+        assert_eq!(f.balance(f.holdings[holder]), 0);
+        assert_eq!(
+            f.balance(f.destinations[holder]),
+            units[holder] * 1_000_000_000
+        );
+        if holder == 15 {
+            assert_eq!(f.decode::<Bond>(f.bond).principal_claimed_mask, 1 << 15);
+            assert!(f.run(f.redeem_ix(holder), Actor::Holder(holder)).is_err());
+        }
+    }
+    let bond: Bond = f.decode(f.bond);
+    assert_eq!(bond.name.len(), 64);
+    assert_eq!(bond.state, REDEEMED);
+    assert_eq!(bond.total_redeemed, total_units);
+    assert_eq!(bond.principal_claimed_mask, u16::MAX);
+    assert_eq!(f.supply(), 0);
+    assert_eq!(f.balance(f.vault), total_units * coupon_per_unit);
+
+    // All 128 historical entitlements remain payable after all 136 units burn.
+    for index in (0..8).rev() {
+        for holder in (0..16).rev() {
+            f.run_v0_measured(
+                vec![f.ensure_settlement_ix(holder), f.claim_ix_at(holder, index)],
+                Actor::Holder(holder),
+                "coupon_with_existing_ata",
+                &mut measurements,
+            );
+            if holder == 15 {
+                assert_eq!(f.decode::<Coupon>(f.coupon(index)).claimed_mask, 1 << 15);
+                assert!(f
+                    .run(f.claim_ix_at(holder, index), Actor::Holder(holder))
+                    .is_err());
+            }
+        }
+        let coupon: Coupon = f.decode(f.coupon(index));
+        assert_eq!(coupon.claimed_mask, u16::MAX);
+        assert_eq!(
+            coupon.paid_total,
+            total_units * terms[index as usize].unit_amount
+        );
+    }
+    assert_eq!(f.balance(f.vault), 0);
+    assert_eq!(f.balance(f.source), 1_000_000_000_000 - full_reserve);
+    for holder in 0..16 {
+        assert_eq!(
+            f.balance(f.destinations[holder]),
+            units[holder] * unit_reserve
+        );
+    }
+    for (label, (bytes, cu, accounts)) in measurements.0 {
+        println!("MEASURED maximum {label}={bytes}bytes/{cu}CU/{accounts}accounts v0 actor-payer budget+actual-bundle");
+    }
+    println!("PROVEN maximum holders=16 positive=16 coupons=8 name_utf8_bytes=64 title_utf8_bytes=96 units=136 reserve=140896000000 votes=16 principal=16 coupon_claims=128 final_supply=0 final_vault=0");
+}
+
+#[test]
+fn failed_settlement_cpi_after_burn_rolls_back_principal_and_all_token_state() {
+    let mut f = Fixture::new(2);
+    // Only a fixture mint authority is added; the deployed program is unchanged.
+    let mut settlement_account = f.svm.get_account(&ad(f.settlement)).unwrap();
+    let mut settlement_mint =
+        token::spl_token::state::Mint::unpack(&settlement_account.data).unwrap();
+    settlement_mint.freeze_authority = COption::Some(pk(&f.issuer));
+    token::spl_token::state::Mint::pack(settlement_mint, &mut settlement_account.data).unwrap();
+    f.svm
+        .set_account(ad(f.settlement), settlement_account)
+        .unwrap();
+    f.run(f.issue_ix(0, 3, false), Actor::Issuer).unwrap();
+    f.fund(3_150_000_000);
+    f.run(f.seal_ix(), Actor::Issuer).unwrap();
+    f.now(200);
+    f.run(f.capture_ix(0), Actor::Issuer).unwrap();
+    f.now(400);
+    f.run(f.begin_ix(), Actor::Issuer).unwrap();
+    let freeze = token::spl_token::instruction::freeze_account(
+        &token::ID,
+        &f.destinations[0],
+        &f.settlement,
+        &pk(&f.issuer),
+        &[],
+    )
+    .unwrap();
+    f.run(freeze, Actor::Issuer).unwrap();
+    let keys = [
+        f.bond,
+        f.mint,
+        f.holdings[0],
+        f.vault,
+        f.destinations[0],
+        f.coupon(0),
+    ];
+    let before: Vec<_> = keys
+        .iter()
+        .map(|key| f.svm.get_account(&ad(*key)).unwrap())
+        .collect();
+    let failed = f.run(f.redeem_ix(0), Actor::Holder(0)).unwrap_err();
+    let logs = &failed.meta.logs;
+    let burn = logs
+        .iter()
+        .position(|line| line.contains("Instruction: Burn"))
+        .expect("burn CPI must execute before failure");
+    let payout = logs
+        .iter()
+        .position(|line| line.contains("Instruction: TransferChecked"))
+        .expect("payment CPI must be reached");
+    assert!(burn < payout);
+    let token_success = format!("Program {} success", token::ID);
+    assert!(
+        logs[burn + 1..payout]
+            .iter()
+            .any(|line| line == &token_success),
+        "SPL burn must have succeeded before payout"
+    );
+    let token_failure = format!("Program {} failed: custom program error: 0x11", token::ID);
+    assert!(
+        logs[payout..].iter().any(|line| line == &token_failure),
+        "payment must fail with SPL AccountFrozen (17), not a pre-burn validation"
+    );
+    for (key, original) in keys.iter().zip(&before) {
+        assert_eq!(
+            f.svm.get_account(&ad(*key)).unwrap(),
+            *original,
+            "failed transaction must restore every affected program/token account"
+        );
+    }
+    let bond: Bond = f.decode(f.bond);
+    assert_eq!(bond.principal_claimed_mask, 0);
+    assert_eq!(bond.total_redeemed, 0);
+    assert_eq!(bond.state, bondtrace::REDEEMING);
+    assert_eq!(f.balance(f.holdings[0]), 3);
+    assert_eq!(f.supply(), 3);
+    assert_eq!(f.balance(f.vault), 3_150_000_000);
+    assert_eq!(f.balance(f.destinations[0]), 0);
+    let thaw = token::spl_token::instruction::thaw_account(
+        &token::ID,
+        &f.destinations[0],
+        &f.settlement,
+        &pk(&f.issuer),
+        &[],
+    )
+    .unwrap();
+    f.run(thaw, Actor::Issuer).unwrap();
+    f.run(f.redeem_ix(0), Actor::Holder(0)).unwrap();
+    assert_eq!(f.supply(), 0);
+    assert_eq!(f.balance(f.holdings[0]), 0);
+    assert_eq!(f.balance(f.destinations[0]), 3_000_000_000);
+    assert_eq!(f.balance(f.vault), 150_000_000);
+    assert_eq!(f.decode::<Bond>(f.bond).principal_claimed_mask, 1);
+    assert_eq!(f.decode::<Bond>(f.bond).state, REDEEMED);
+    assert!(
+        f.run(f.redeem_ix(0), Actor::Holder(0)).is_err(),
+        "retry after successful redemption cannot pay twice"
+    );
+    f.run(f.claim_ix(0), Actor::Holder(0)).unwrap();
+    assert_eq!(f.balance(f.destinations[0]), 3_150_000_000);
+    assert_eq!(f.balance(f.vault), 0);
+    println!("PROVEN rollback burn-CPI-success -> SPL-TransferChecked-AccountFrozen17 -> all-6-account-bytes-restored failed_CU={} thaw+retry_once=paid coupon=paid final_supply=0 final_vault=0", failed.meta.compute_units_consumed);
+}

@@ -1,0 +1,411 @@
+{
+  "checkedAt": "2026-10-07T22:26:06.303Z",
+  "scope": "Actual browser-guided full issuer and corporate-action flow; generatedtest signers/localnet, nothuman wallet/devnet.",
+  "state": {
+    "network": "localnet",
+    "rpcUrl": "http://127.0.0.1:8899",
+    "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+    "connected": true,
+    "instrument": {
+      "address": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+      "name": "BondTrace · Guided issuance",
+      "symbol": "BOND·TEST",
+      "issuer": "B3zQc5gQUsHSSCrxP8f7KFUMUYvf6WN87GNZeZQ8kZyp",
+      "bondMint": "8GUMa9qUzdsbvs8euKUeLkbvUwjzHtpn6gLUjxASD5zL",
+      "settlementMint": "7aBNe5u2WodHfuBYsnysQFGMRGXk9tBZgxYxCFYZ571V",
+      "settlementDecimals": 6,
+      "faceValueMinor": "1000000000",
+      "faceValueDecimal": "1000.000000",
+      "seriesId": "117401717326177873",
+      "rateBps": 0,
+      "couponFrequency": 0,
+      "rateBasis": "local-display-metadata",
+      "couponUnitMinor": "50000000",
+      "status": "redeemed",
+      "issuedSupply": "3",
+      "redeemedSupply": "3",
+      "recordAt": "2026-10-07T21:37:06.000Z",
+      "paymentAt": "2026-10-07T21:47:06.000Z",
+      "maturityAt": "2026-10-07T21:57:06.000Z",
+      "vaultBalanceMinor": "0",
+      "vaultBalanceDecimal": "0.000000",
+      "requiredReserveMinor": "0",
+      "fundingGapMinor": "0",
+      "settlementBalanceMinor": "105125000000",
+      "settlementBalanceDecimal": "105125.000000",
+      "settlementAccountAvailable": true
+    },
+    "holders": [
+      {
+        "wallet": "4N6e6BdqdieLJPAqdZJRdmVX1GV4JE5dDGL1t6X7bwZA",
+        "label": "Guided test holder",
+        "units": "0",
+        "tokenAccount": "FdkiZfTiQGDmr7RafCcLXCbsgGV3u5zMKTFYXUiTrgYA",
+        "accountState": "frozen"
+      }
+    ],
+    "coupons": [
+      {
+        "id": "0",
+        "snapshotAddress": "5BhGvs2SFoGHmSPc5HQr2F6747SQTd9NqRMsUDe58yK2",
+        "recordAt": "2026-10-07T21:37:06.000Z",
+        "paymentAt": "2026-10-07T21:47:06.000Z",
+        "unitAmountMinor": "50000000",
+        "unitAmountDecimal": "50.000000",
+        "capturedAt": "2026-10-07T21:44:06.000Z",
+        "recordSlot": 23809,
+        "recordSlotSource": "recorded-confirmation",
+        "basis": "immutable-record-date-snapshot",
+        "totalMinor": "150000000",
+        "totalDecimal": "150.000000",
+        "paidMinor": "150000000",
+        "paidDecimal": "150.000000",
+        "remainingMinor": "0",
+        "claimableMinor": "0",
+        "status": "completed",
+        "entitlements": [
+          {
+            "wallet": "4N6e6BdqdieLJPAqdZJRdmVX1GV4JE5dDGL1t6X7bwZA",
+            "units": "3",
+            "amountMinor": "150000000",
+            "amountDecimal": "150.000000",
+            "claimed": true,
+            "basis": "immutable-record-date-snapshot",
+            "claimableNow": false
+          }
+        ]
+      }
+    ],
+    "redemption": {
+      "snapshotAddress": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+      "basis": "immutable-maturity-snapshot",
+      "totalMinor": "3000000000",
+      "totalDecimal": "3000.000000",
+      "paidMinor": "3000000000",
+      "paidDecimal": "3000.000000",
+      "remainingMinor": "0",
+      "claimableMinor": "0",
+      "entitlements": [
+        {
+          "wallet": "4N6e6BdqdieLJPAqdZJRdmVX1GV4JE5dDGL1t6X7bwZA",
+          "units": "3",
+          "amountMinor": "3000000000",
+          "amountDecimal": "3000.000000",
+          "claimed": true
+        }
+      ]
+    },
+    "proposals": [
+      {
+        "id": "1",
+        "title": "Approve the next disclosure pack",
+        "snapshotAddress": "CP5TEcmN9Dymd4NoyvBThbUQ1CUAWCA91fSUdXpUDmDz",
+        "deadlineAt": "2026-10-07T21:57:06.000Z",
+        "yesWeight": "3",
+        "noWeight": "0",
+        "eligibleWeights": [
+          {
+            "wallet": "4N6e6BdqdieLJPAqdZJRdmVX1GV4JE5dDGL1t6X7bwZA",
+            "units": "3"
+          }
+        ],
+        "votedWallets": [
+          "4N6e6BdqdieLJPAqdZJRdmVX1GV4JE5dDGL1t6X7bwZA"
+        ],
+        "status": "closed"
+      }
+    ],
+    "activity": [
+      {
+        "signature": "xY9LWT1zjtfxGTxoZ4jrJKBcbE4baxTfdQBRo5xjQo4EcrbvUSg4Yowb8qrpBp8B3mWM6b1LG9n8z7og2DWfVEm",
+        "time": "2026-10-07T22:01:43.054Z",
+        "kind": "redeem_principal",
+        "status": "confirmed",
+        "explorerUrl": "https://explorer.solana.com/tx/xY9LWT1zjtfxGTxoZ4jrJKBcbE4baxTfdQBRo5xjQo4EcrbvUSg4Yowb8qrpBp8B3mWM6b1LG9n8z7og2DWfVEm?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+        "account": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "bond": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "slot": 26053
+      },
+      {
+        "signature": "3gB2DcFmaGMrcNu3o5FC7EBvkLmDUjuqvbhyJXwNwcTpgGtgXkPMtzj7GYBey9Lyw3ksyhLn6eBzF3MXTSytZwP5",
+        "time": "2026-10-07T22:01:29.180Z",
+        "kind": "begin_redemption",
+        "status": "confirmed",
+        "explorerUrl": "https://explorer.solana.com/tx/3gB2DcFmaGMrcNu3o5FC7EBvkLmDUjuqvbhyJXwNwcTpgGtgXkPMtzj7GYBey9Lyw3ksyhLn6eBzF3MXTSytZwP5?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+        "account": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "bond": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "slot": 26023
+      },
+      {
+        "signature": "9gMrFc8cKeun6ZpymAtgndgt21t2XiTYFvuiHGyab4CuWzsW8iFCJM2pHLLpqHBKw7kCgAGFNFJCARfdnoUecH9",
+        "time": "2026-10-07T22:01:12.268Z",
+        "kind": "claim_coupon",
+        "status": "confirmed",
+        "explorerUrl": "https://explorer.solana.com/tx/9gMrFc8cKeun6ZpymAtgndgt21t2XiTYFvuiHGyab4CuWzsW8iFCJM2pHLLpqHBKw7kCgAGFNFJCARfdnoUecH9?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+        "account": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "bond": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "slot": 25986
+      },
+      {
+        "signature": "4q7pseKB3d6VNAAmo5QS2gpaPBU8yk92bYh2snDHVNusSgiyGHPw3QoCBH9eihiE4WvFW6HvU2P5xRXrhWA1e3ck",
+        "time": "2026-10-07T21:44:37.417Z",
+        "kind": "cast_vote",
+        "status": "confirmed",
+        "explorerUrl": "https://explorer.solana.com/tx/4q7pseKB3d6VNAAmo5QS2gpaPBU8yk92bYh2snDHVNusSgiyGHPw3QoCBH9eihiE4WvFW6HvU2P5xRXrhWA1e3ck?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+        "account": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "bond": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "slot": 23871
+      },
+      {
+        "signature": "2DPVLerUN14snucz2hHVqcG2yEEPhKcdw5GBtDYyLyUHMhxv8oLRDCWVcr6bX1PhZp6xaPkS5KLsoBi3t6pkoHDC",
+        "time": "2026-10-07T21:44:24.604Z",
+        "kind": "create_vote",
+        "status": "confirmed",
+        "explorerUrl": "https://explorer.solana.com/tx/2DPVLerUN14snucz2hHVqcG2yEEPhKcdw5GBtDYyLyUHMhxv8oLRDCWVcr6bX1PhZp6xaPkS5KLsoBi3t6pkoHDC?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+        "account": "CP5TEcmN9Dymd4NoyvBThbUQ1CUAWCA91fSUdXpUDmDz",
+        "bond": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "slot": 23844
+      },
+      {
+        "signature": "2ETvVeVKejsjxhmRR4hDPUofrinSPPJftR8k3NKcu5MJw3nCLHsY7bVeVhqZuGekJYJrPcu5kP15NhqwXW6P4jkf",
+        "time": "2026-10-07T21:44:08.083Z",
+        "kind": "capture_coupon",
+        "status": "confirmed",
+        "explorerUrl": "https://explorer.solana.com/tx/2ETvVeVKejsjxhmRR4hDPUofrinSPPJftR8k3NKcu5MJw3nCLHsY7bVeVhqZuGekJYJrPcu5kP15NhqwXW6P4jkf?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+        "account": "5BhGvs2SFoGHmSPc5HQr2F6747SQTd9NqRMsUDe58yK2",
+        "bond": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "slot": 23809
+      },
+      {
+        "signature": "CRGZHfGragPTNT5CoNDHUw6Sqiw6t7cDqSm8yTQ9gqVVASsgAhhQXYJQMAjvjMUryKCWVasEGSMRM4Xo8z36Vfn",
+        "time": "2026-10-07T21:27:47.989Z",
+        "kind": "seal_issue",
+        "status": "confirmed",
+        "explorerUrl": "https://explorer.solana.com/tx/CRGZHfGragPTNT5CoNDHUw6Sqiw6t7cDqSm8yTQ9gqVVASsgAhhQXYJQMAjvjMUryKCWVasEGSMRM4Xo8z36Vfn?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+        "account": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "bond": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "slot": 21705
+      },
+      {
+        "signature": "3mBgwMUZ8gX9qxj5iRR2w8bYL4h3Tka3vrffknxHTXgguhFY14tTQa4mrq1kfEBcLe16wM1Za5Lem3dwZKtcAMrg",
+        "time": "2026-10-07T21:26:59.892Z",
+        "kind": "fund_vault",
+        "status": "confirmed",
+        "explorerUrl": "https://explorer.solana.com/tx/3mBgwMUZ8gX9qxj5iRR2w8bYL4h3Tka3vrffknxHTXgguhFY14tTQa4mrq1kfEBcLe16wM1Za5Lem3dwZKtcAMrg?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+        "account": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "bond": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "slot": 21599
+      },
+      {
+        "signature": "25Ee7aRG2hj9NvQmGKgueKkuwwsvVa2sJJ5HhmL8LtMzQUk68mwNDWUwPk8ttqYg1J41ohRBR4nfgm7pCJJyZv8V",
+        "time": "2026-10-07T21:26:50.912Z",
+        "kind": "issue_units",
+        "status": "confirmed",
+        "explorerUrl": "https://explorer.solana.com/tx/25Ee7aRG2hj9NvQmGKgueKkuwwsvVa2sJJ5HhmL8LtMzQUk68mwNDWUwPk8ttqYg1J41ohRBR4nfgm7pCJJyZv8V?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+        "account": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "bond": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "slot": 21579
+      },
+      {
+        "signature": "3VzMQzwT8827nhzMeZpG2aVAhf5unzCpE285QBzX62xCqEG1ECmLj7izVAC7V7VSoZX4ArD93VhV8WMQx1TYS4mC",
+        "time": "2026-10-07T21:26:10.364Z",
+        "kind": "register_holder",
+        "status": "confirmed",
+        "explorerUrl": "https://explorer.solana.com/tx/3VzMQzwT8827nhzMeZpG2aVAhf5unzCpE285QBzX62xCqEG1ECmLj7izVAC7V7VSoZX4ArD93VhV8WMQx1TYS4mC?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+        "account": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "bond": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "slot": 21486
+      },
+      {
+        "signature": "2stVct4a4MeFR6wtM5UFEvskf8YNm96F2udLj7v7twGZGqfDUVC8pVucFwVQAzVMXmd1nrT5C1QqfkS1jvZr8gEj",
+        "time": "2026-10-07T21:23:39.422Z",
+        "kind": "initialize_issue",
+        "status": "confirmed",
+        "explorerUrl": "https://explorer.solana.com/tx/2stVct4a4MeFR6wtM5UFEvskf8YNm96F2udLj7v7twGZGqfDUVC8pVucFwVQAzVMXmd1nrT5C1QqfkS1jvZr8gEj?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+        "account": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "bond": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "slot": 21146
+      }
+    ],
+    "instruments": [
+      {
+        "address": "6u2T8w8NuwLCX78b2kAumNNETGCxKEksDo538i4XPGFV",
+        "name": "BondTrace · Guided issuance",
+        "issuer": "B3zQc5gQUsHSSCrxP8f7KFUMUYvf6WN87GNZeZQ8kZyp",
+        "source": "demo"
+      },
+      {
+        "address": "HvArwiNhkrvxm2Wot8FKtaatRBs8Utyqge2g2Ai1oJmi",
+        "name": "BondTrace · Operator lifecycle",
+        "issuer": "B3zQc5gQUsHSSCrxP8f7KFUMUYvf6WN87GNZeZQ8kZyp",
+        "source": "demo"
+      },
+      {
+        "address": "5knY93zt91XKMqnxz2ukXGHVzx6Ro9vgKsrcrT3RbhJU",
+        "name": "BondTrace · Test Series",
+        "issuer": "B3zQc5gQUsHSSCrxP8f7KFUMUYvf6WN87GNZeZQ8kZyp",
+        "source": "demo"
+      }
+    ],
+    "demo": {
+      "available": true,
+      "ready": true,
+      "accelerated": false,
+      "roleWallets": {
+        "issuer": "B3zQc5gQUsHSSCrxP8f7KFUMUYvf6WN87GNZeZQ8kZyp",
+        "investor1": "4N6e6BdqdieLJPAqdZJRdmVX1GV4JE5dDGL1t6X7bwZA",
+        "investor2": "6cTaXVmZcMSzPiy9xbTGxJhrepdSLPTKYXYRnJRwZBtC",
+        "investor3": "Bf5wLLZuPqX4FDgCq7PrWPJPvAEuLRWtoRmHHb5tsztA"
+      }
+    },
+    "slot": "29086",
+    "context": {
+      "commitment": "confirmed",
+      "slot": "29086",
+      "clockSlot": "29086",
+      "chainTimestamp": "1791411964",
+      "accountCount": 9
+    },
+    "serverTime": "2026-10-07T22:26:04.000Z",
+    "reconciliation": {
+      "status": "verified",
+      "basis": "single-confirmed-rpc-context",
+      "contextSlot": "29086",
+      "clockSlot": "29086",
+      "chainTimestamp": "1791411964",
+      "supply": {
+        "issuedUnits": "3",
+        "redeemedUnits": "3",
+        "currentUnits": "0",
+        "mintSupplyUnits": "0"
+      },
+      "principal": {
+        "basis": "immutable-maturity-snapshot",
+        "total": {
+          "baseUnits": "3000000000",
+          "decimal": "3000.000000",
+          "decimals": 6
+        },
+        "paid": {
+          "baseUnits": "3000000000",
+          "decimal": "3000.000000",
+          "decimals": 6
+        },
+        "remaining": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "claimable": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        }
+      },
+      "coupons": [
+        {
+          "index": "0",
+          "basis": "immutable-record-date-snapshot",
+          "captured": true,
+          "total": {
+            "baseUnits": "150000000",
+            "decimal": "150.000000",
+            "decimals": 6
+          },
+          "paid": {
+            "baseUnits": "150000000",
+            "decimal": "150.000000",
+            "decimals": 6
+          },
+          "remaining": {
+            "baseUnits": "0",
+            "decimal": "0.000000",
+            "decimals": 6
+          },
+          "fixedAccrued": {
+            "baseUnits": "150000000",
+            "decimal": "150.000000",
+            "decimals": 6
+          },
+          "claimable": {
+            "baseUnits": "0",
+            "decimal": "0.000000",
+            "decimals": 6
+          }
+        }
+      ],
+      "totals": {
+        "contractual": {
+          "baseUnits": "3150000000",
+          "decimal": "3150.000000",
+          "decimals": 6
+        },
+        "principalPaid": {
+          "baseUnits": "3000000000",
+          "decimal": "3000.000000",
+          "decimals": 6
+        },
+        "couponPaid": {
+          "baseUnits": "150000000",
+          "decimal": "150.000000",
+          "decimals": 6
+        },
+        "cashPaid": {
+          "baseUnits": "3150000000",
+          "decimal": "3150.000000",
+          "decimals": 6
+        },
+        "remainingObligations": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "scheduledCouponForecast": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "fixedAccruedCoupon": {
+          "baseUnits": "150000000",
+          "decimal": "150.000000",
+          "decimals": 6
+        },
+        "claimableNow": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "vault": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "fundingGap": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "surplus": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        }
+      },
+      "proposals": [
+        {
+          "id": "1",
+          "eligibleUnits": "3",
+          "votedUnits": "3",
+          "yesUnits": "3",
+          "noUnits": "0",
+          "remainingUnits": "0",
+          "choiceEvidence": "proposal-aggregate-only"
+        }
+      ],
+      "missingProposalIds": [],
+      "proposalCoverageComplete": true,
+      "proposalDiscovery": "local-catalog-identifiers-only"
+    },
+    "missingProposalIds": []
+  }
+}

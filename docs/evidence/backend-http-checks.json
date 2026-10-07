@@ -1,0 +1,72 @@
+{
+  "checkedAt": "2026-10-07T23:33:27.408Z",
+  "origin": "http://127.0.0.1:3000",
+  "builtApp": true,
+  "network": "localnet",
+  "issue": "6ETHnfS6DNv28X22BbZqHd9s3T36wG2zLhE4bKgTqG2x",
+  "status": "redeemed",
+  "checks": [
+    {
+      "name": "JSON null",
+      "status": 400,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "name": "JSON array",
+      "status": 400,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "name": "malformed JSON",
+      "status": 400,
+      "code": "INVALID_JSON"
+    },
+    {
+      "name": "content type",
+      "status": 415,
+      "code": "CONTENT_TYPE"
+    },
+    {
+      "name": "foreign origin",
+      "status": 403,
+      "code": "ORIGIN_DENIED"
+    },
+    {
+      "name": "missing funding amount",
+      "status": 400,
+      "code": "INVALID_AMOUNT"
+    },
+    {
+      "name": "fractional money",
+      "status": 400,
+      "code": "INVALID_AMOUNT"
+    },
+    {
+      "name": "numeric money",
+      "status": 400,
+      "code": "INVALID_AMOUNT"
+    },
+    {
+      "name": "conflicting instrument aliases",
+      "status": 400,
+      "code": "PARAMETER_CONFLICT"
+    },
+    {
+      "name": "missing proposal identity",
+      "status": 400,
+      "code": "INVALID_AMOUNT"
+    },
+    {
+      "name": "conflicting vote aliases",
+      "status": 400,
+      "code": "PARAMETER_CONFLICT"
+    },
+    {
+      "name": "unsupported request field",
+      "status": 400,
+      "code": "UNEXPECTED_PARAMETER"
+    }
+  ],
+  "chainStateUnchanged": true,
+  "scope": "Built same-origin app and rejected malformed/foreign-origin requests; no signing or chain mutation."
+}

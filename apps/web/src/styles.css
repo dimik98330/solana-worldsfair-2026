@@ -501,3 +501,12 @@ td.numeric { font-size: 12px; }
   .dialog-actions .button { flex: 1; }
   .review-facts > div { flex-wrap: wrap; gap: var(--space-2); }
 }
+
+.instrument-context { flex-wrap: wrap; }
+.instrument-context .role-select { margin-left: 0; min-width: 0; flex: 1; }
+.instrument-context select { min-width: 0; max-width: 100%; width: min(320px, 100%); }
+.issuer-reviewed-terms { padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-control); margin-bottom: var(--space-4); }
+.issuer-reviewed-terms h3 { margin: var(--space-2) 0; font-size: 16px; }
+.issuer-reviewed-terms p, .issuer-reviewed-terms li { font-size: 13px; }
+.issuer-reviewed-terms ol { padding-left: var(--space-5); margin-top: var(--space-3); }
+@media (max-width: 620px) { .instrument-context .eyebrow { width: 100%; } }

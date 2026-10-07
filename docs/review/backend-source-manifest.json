@@ -1,0 +1,261 @@
+{
+  "checkedAt": "2026-10-07T23:50:19.244Z",
+  "scope": "Corrected exact staged Git-normalized source: atomic bootstrap marker update/assertActive, added deterministic two-process regression and EOF whitespace trim. Original frozen run/snapshot retained; same final technical review pass.",
+  "files": [
+    {
+      "file": "apps/web/src/App.tsx",
+      "bytes": 59346,
+      "sha256": "08250dc4cd1ff8b3b28a7807eebf345aeeb7be3c3535ce562fdc5b09cc15cdfc"
+    },
+    {
+      "file": "apps/web/src/IssuerSetup.tsx",
+      "bytes": 29719,
+      "sha256": "ca8a9d64aea02420881b2bb0965b2c7352288bda7b2b2da724ba95e246a4d1e2"
+    },
+    {
+      "file": "apps/web/src/NextActionDesk.tsx",
+      "bytes": 3600,
+      "sha256": "7b688a8144c14410ef8406fabcda377fdd67fa24399ca1c44ace9cf472bdcd23"
+    },
+    {
+      "file": "apps/web/src/action-desk.test.ts",
+      "bytes": 1681,
+      "sha256": "f45cee1e0acc6937872b69ad93be40d5f5c7a06e758cf390b4d6cfd089f9fb6a"
+    },
+    {
+      "file": "apps/web/src/action-desk.ts",
+      "bytes": 1064,
+      "sha256": "94ccabdef76468230c6ba67d184c6ce254edcb2b23af6c5de8bbb50e5ccbf5d3"
+    },
+    {
+      "file": "apps/web/src/api.ts",
+      "bytes": 3022,
+      "sha256": "562502d6dd3204b696eea9908789474df8b66f7d71b032bdce367c34c76db009"
+    },
+    {
+      "file": "apps/web/src/data-reader.test.ts",
+      "bytes": 1433,
+      "sha256": "01f8546cc2339b204d7ac6a0ee4ba40d46d4f365256864cdbacf977b984ea02f"
+    },
+    {
+      "file": "apps/web/src/data-reader.ts",
+      "bytes": 967,
+      "sha256": "33d836bb236be1aad7f7967a1564f02ec6e8eada7c5bc2ed0469045bf530707d"
+    },
+    {
+      "file": "apps/web/src/issuer-validation.test.ts",
+      "bytes": 6847,
+      "sha256": "13989370849f0c0922617df2a93adde0220bc440484e379becb8347dc4facfa8"
+    },
+    {
+      "file": "apps/web/src/issuer-validation.ts",
+      "bytes": 10189,
+      "sha256": "36e3db49a225d2e6c0f56abfddfdcbd166048c34049c1fb03b1f99f55e35803d"
+    },
+    {
+      "file": "apps/web/src/issuer.css",
+      "bytes": 14284,
+      "sha256": "6197aef3e83852651f0833261d381fd6a0ce910edaa405d8110e8bf0bbd2ee9d"
+    },
+    {
+      "file": "apps/web/src/styles.css",
+      "bytes": 41334,
+      "sha256": "a88d8c7083f175033672414a9e6ef132f14b6b98d83056a645835f62a0ffd698"
+    },
+    {
+      "file": "apps/web/src/types.ts",
+      "bytes": 3632,
+      "sha256": "560dfd9e3e9f43adea1ddb468ed50e52b132eb2dc77598c22c164be17d9d0540"
+    },
+    {
+      "file": "scripts/demo-seed.ts",
+      "bytes": 594,
+      "sha256": "7e04b6f698802a48c0c7d8bf606ed0e5898bcbc146fc3c5162a54dd614200b05"
+    },
+    {
+      "file": "scripts/full-smoke.ts",
+      "bytes": 4755,
+      "sha256": "9409f9aea8e95a4e0a94da8622f5cba1255a99ee205bbff071e944bcb5b3abd3"
+    },
+    {
+      "file": "scripts/issuer-smoke.ts",
+      "bytes": 7924,
+      "sha256": "09dc189113cebe3046890813c03ea0aac53b6f952a1e446b8dbe821f607ee642"
+    },
+    {
+      "file": "scripts/metadata-check.ts",
+      "bytes": 735,
+      "sha256": "073a9d30dcb09d3bfa7283c024060d049f42adbe644239cb9dd8b2d155e1ce71"
+    },
+    {
+      "file": "scripts/verify-http.mjs",
+      "bytes": 3593,
+      "sha256": "82a0be1585df177d6b97fda694bc540b911895133e684d2d9e63dfd056a7026b"
+    },
+    {
+      "file": "server/actions.ts",
+      "bytes": 12812,
+      "sha256": "2b0b7289a2ae22db5f5986f30124c8b42c476730f80746de7ee21195913ade55"
+    },
+    {
+      "file": "server/admin.ts",
+      "bytes": 18214,
+      "sha256": "87185e0cebdea337e50d3f611071fb8a5a172cc78f350d20c754fb1b8c310e1b"
+    },
+    {
+      "file": "server/catalog.ts",
+      "bytes": 6528,
+      "sha256": "fd78cef6ddb1f99bd44412d38a3a1b1dbe6ef55966b134faf45133e213da18be"
+    },
+    {
+      "file": "server/chain-identity.ts",
+      "bytes": 1671,
+      "sha256": "3fd49774929bd5d57eae34aa67d404bb3ee7e35b5ceff73b7c396e1abffbbcbf"
+    },
+    {
+      "file": "server/chain-view.ts",
+      "bytes": 11503,
+      "sha256": "2a3d44404b48275099d6f2438cc5f084ca0febbb1df06f6ef312c9dc469c24eb"
+    },
+    {
+      "file": "server/demo-identities.ts",
+      "bytes": 247,
+      "sha256": "e87e8c761c0aff53839c865d3468c5abce12a944a97b888d3d33363fb7c93cb4"
+    },
+    {
+      "file": "server/effects.ts",
+      "bytes": 1799,
+      "sha256": "bf9e22688e4f1ed1bb143f0680e21b5fef585b86ab4bd87cca408743c3b8d1e0"
+    },
+    {
+      "file": "server/index.ts",
+      "bytes": 6855,
+      "sha256": "ad8ef0dcbf9afc61c073ffb0a24f7cc3da118b2dde82bcc1a4f9823901962378"
+    },
+    {
+      "file": "server/journal.ts",
+      "bytes": 4321,
+      "sha256": "ec9879848228df02456eab458795fb26666cfe21f22a1cf1c8145f8448706641"
+    },
+    {
+      "file": "server/operations.ts",
+      "bytes": 6215,
+      "sha256": "aee46c92027d33df6e3d802798dbb916c899ef57f3f7df7c2bc261af60dffc2f"
+    },
+    {
+      "file": "server/prepared.ts",
+      "bytes": 3274,
+      "sha256": "ddf50f2fe9bff451937ceb54e73e618efadd7c0b7e8180f10e9199bf0a97ba5b"
+    },
+    {
+      "file": "server/reconciliation.ts",
+      "bytes": 10893,
+      "sha256": "662edae337fa37a1d5773f3791a5ed85f90391ad23d571eff678949f97f7482a"
+    },
+    {
+      "file": "server/request-contract.ts",
+      "bytes": 7854,
+      "sha256": "0e3fcf91641eb776fd5a73830c8411b80a84ba1ff9a54660e0dd4795d07a9aa1"
+    },
+    {
+      "file": "server/rpc.ts",
+      "bytes": 10942,
+      "sha256": "cd00e0368debe59f316d93ada42212badccec579822707313562406456889726"
+    },
+    {
+      "file": "server/seed.ts",
+      "bytes": 26886,
+      "sha256": "1c78182ccc4dd7576cee410134fc63f2361914ed830ecad1b5ddd4a452e23ec8"
+    },
+    {
+      "file": "server/state.ts",
+      "bytes": 9490,
+      "sha256": "e46f436921a5fdbc5ea7e4d83f54fe2907ee9f8d904defbf2b99270abb4914c9"
+    },
+    {
+      "file": "server/storage.ts",
+      "bytes": 17507,
+      "sha256": "6065f601b993969ed7cfbdaa9884781173f424d6b9159a00f0ebcef2503d8286"
+    },
+    {
+      "file": "server/store.ts",
+      "bytes": 2236,
+      "sha256": "382b8350f1eff98a5ac732f2ddeb9cbb984fa9f46c6ca788525850a8798f1726"
+    },
+    {
+      "file": "server/transactions.ts",
+      "bytes": 12232,
+      "sha256": "93415af42cf7d1b25e79d3b6540bcf0184cc2e080f95976f7761206fef08b989"
+    },
+    {
+      "file": "tests/client/admin-recovery.test.ts",
+      "bytes": 15582,
+      "sha256": "9954c26e2a2881744cfecff070a9aeb0e1c30b708e43f842976bee125e2a6e87"
+    },
+    {
+      "file": "tests/client/admin.test.ts",
+      "bytes": 20110,
+      "sha256": "3d77e6ad93b0c0e4395cc4b8b7b5934a854f3f497ca474fb78ece8c12a94128f"
+    },
+    {
+      "file": "tests/client/backend-journal.test.ts",
+      "bytes": 25760,
+      "sha256": "b89680b2a67f9bac44e4598824590d0d202790e6ca542736f17b289ee61a9165"
+    },
+    {
+      "file": "tests/client/bootstrap-marker.test.ts",
+      "bytes": 4653,
+      "sha256": "11af256317ff162f74e0215f6ea28ca3cd338fa50ac7eabc3b8bd912dde8601e"
+    },
+    {
+      "file": "tests/client/bootstrap-recovery.test.ts",
+      "bytes": 15370,
+      "sha256": "043643ede163936ae3be24a428eb85d0bebc4ac2bc098ae6d0eebb0d515e54f1"
+    },
+    {
+      "file": "tests/client/chain-view.test.ts",
+      "bytes": 15916,
+      "sha256": "9f6b6afbbd0a27e688738d8edf8e5c010873a3129edbf45adc652aa05c54bc44"
+    },
+    {
+      "file": "tests/client/demo-binding.test.ts",
+      "bytes": 1665,
+      "sha256": "f3dd7874dd33539666e89b48c9d53359f38cfd112324a1cc2f2c1e8933901f0d"
+    },
+    {
+      "file": "tests/client/demo-identities.test.ts",
+      "bytes": 591,
+      "sha256": "66a2fa5c99c58327fde5cf9f3d34376caf86f1cd892935495554cef8102038f7"
+    },
+    {
+      "file": "tests/client/demo-lease.test.ts",
+      "bytes": 3469,
+      "sha256": "b8e620a705415b46f5d67cc22347a1213f7297a2706bb98e7d96eee2ab268b7e"
+    },
+    {
+      "file": "tests/client/reconciliation.test.ts",
+      "bytes": 8344,
+      "sha256": "e3bad2e986f74f90f6c399d6e0b3223bf38ea022a8002c6c5dafa93cce14c9cb"
+    },
+    {
+      "file": "tests/client/recovery.test.ts",
+      "bytes": 8791,
+      "sha256": "b18bae1c393a3d71df22c12c9e197e63a7a5dbc4db9840b5c3d278f0e6ee275e"
+    },
+    {
+      "file": "tests/client/request-contract.test.ts",
+      "bytes": 2700,
+      "sha256": "e083fa8b19dd0f32ee9e7080c339fd319df1f7e43a7257620ef655ea020e0484"
+    },
+    {
+      "file": "tests/client/storage.test.ts",
+      "bytes": 20708,
+      "sha256": "16ab91e9600fb48f434569ebc6d5223fe09de4cf83a8a5ed595c29fc38ac3745"
+    },
+    {
+      "file": "tests/program/runtime.rs",
+      "bytes": 49546,
+      "sha256": "7a7118c88c0c3a6be26a4348927a9e9d609c0f86c2d26449781f6f527452dfb1"
+    }
+  ]
+}

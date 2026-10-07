@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-10-07T23:53:16.275Z",
+  "scope": "Actual fresh Node API process over the same preserved SQLite and localnet ledger after final workflows. Reads and same-ID completed bootstrap replay; no second chain send.",
+  "verified": [
+    {
+      "bond": "68tCZNkPhRdjUits3iPNh4E4nYQseSqppSAghUi21w2z",
+      "source": "backend-lifecycle-localnet",
+      "slot": "39734",
+      "status": "redeemed",
+      "couponPaid": [
+        "750000000",
+        "375000000"
+      ],
+      "principalPaid": "15000000000",
+      "burned": "15",
+      "vault": "0",
+      "receiptVerification": "recorded-confirmation"
+    },
+    {
+      "bond": "6ETHnfS6DNv28X22BbZqHd9s3T36wG2zLhE4bKgTqG2x",
+      "source": "backend-guided-cycle-localnet",
+      "slot": "39735",
+      "status": "redeemed",
+      "couponPaid": [
+        "900000000"
+      ],
+      "principalPaid": "18000000000",
+      "burned": "18",
+      "vault": "0",
+      "receiptVerification": "recorded-confirmation"
+    },
+    {
+      "bond": "AjoDma5n9RAyTgEiuP8S6DGSJCkPZAeFv1VAVZ5qGXAW",
+      "source": "backend-lease-lifecycle-localnet",
+      "slot": "39737",
+      "status": "redeemed",
+      "couponPaid": [
+        "50000"
+      ],
+      "principalPaid": "1000000",
+      "burned": "1",
+      "vault": "0",
+      "receiptVerification": "recorded-confirmation"
+    }
+  ],
+  "bootstrapOperationId": "live_bootstrap_d535183e-5483-4e9d-88bd-8b1e46ad289c",
+  "bootstrapSignature": "5JNL6niScFtCReMGjE9ozzzFHSbiWT1e2RwCBkXCagqLm7C59Y6dJB1CmAWpr3tKNk9AdbE6yhcc779xuEb15TFS",
+  "stepsRetained": 11,
+  "noNewBootstrapSignature": true
+}

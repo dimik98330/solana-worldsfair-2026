@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-10-07T23:50:19.248Z",
+  "technicalAssessment": {
+    "initial": "docs/research/kase-backend-finance-audit.md",
+    "repair1": "docs/research/kase-backend-finance-repair1.md",
+    "finalRepair2": "docs/research/kase-backend-finance-repair2.md",
+    "additionalAssessmentBudget": false
+  },
+  "quality": {
+    "mode": "coach",
+    "decisionContext": "application",
+    "overallDraftCount": 2,
+    "maxOverallDrafts": 3,
+    "originalRun": "ignored .local/backend-focus/final-quality-run",
+    "originalDisposition": "repair",
+    "originalHashes": {
+      "packet": "97e52975fee704da80624a7924b13523355ee825ce17a1683112ecb01479a67a",
+      "draft": "47dd3124847cf4ffddfe667e3768d79ef98be3f48d9764cf57f915ba82de4d1e",
+      "assessment": "9e497a0851514e27a47031abbea2b220f8411fbd237f8ada0d67d262299744c4"
+    },
+    "correctedRun": "ignored .local/backend-focus/final-quality-corrected-run",
+    "reason": "Actual new concurrency counterexample and corrected code/regression changed the evidence snapshot. Original frozen sources/facts/review were not overwritten; missing existing KASE/Git mappings corrected in the versioned packet. Overall draft/repair limits carry across runs.",
+    "issues": [
+      {
+        "id": "BQR-COVERAGE",
+        "criterion": "evidence_support",
+        "severity": "material",
+        "repair": "Add exact source-derived KASE rule/allowed simulated-rail facts and claim mappings, plus the inspected Git identity/private repository source/fact/claim. Preserve eligibility/public-access unknowns and original frozen run/hashes. If genuine changed code evidence requires a new packet, disclose the delta and carry original issues plus the total draft bound; do not silently replace facts or reset budgets."
+      },
+      {
+        "id": "BQR-BOOTSTRAP",
+        "criterion": "verdict",
+        "severity": "material",
+        "repair": "Hold transactionSync across child latest-read/metadata-merge/write and assertActive before that update. Add a deterministic isolated two-process stale-metadata/faucet-marker regression proving the marker survives and no second faucet request occurs; no liveRPC needed. Recheck the exact small source delta and retain old snapshot/run evidence in the same final technical review pass."
+      }
+    ],
+    "resolutions": [
+      {
+        "id": "BQR-COVERAGE",
+        "status": "fixed",
+        "basis": "Exact published KASE rule/fiat facts and fresh dimik/private Git identity were added with claim mappings. Eligibility remains unknown; original frozen run is retained."
+      },
+      {
+        "id": "BQR-BOOTSTRAP",
+        "status": "fixed",
+        "basis": "The corrected staged seed latest-read/merge/write holds transactionSync and assertActive; deterministic two-process actual runStep marker regression passed, old source retained."
+      }
+    ]
+  }
+}
