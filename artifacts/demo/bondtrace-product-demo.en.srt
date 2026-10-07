@@ -1,0 +1,175 @@
+1
+00:00:00,650 --> 00:00:03,544
+BondTrace makes corporate actions traceable.
+
+2
+00:00:03,704 --> 00:00:07,258
+Localnet, test assets and generated signers.
+
+3
+00:00:07,418 --> 00:00:09,892
+An edited prototype demonstration.
+
+4
+00:00:11,650 --> 00:00:14,964
+BondTrace handles three corporate actions on Solana.
+
+5
+00:00:15,124 --> 00:00:18,328
+This walkthrough uses captured prototype screens.
+
+6
+00:00:18,488 --> 00:00:21,922
+Issuer and investor views share authoritative chain state.
+
+7
+00:00:24,650 --> 00:00:28,039
+Three generated investors receive eighteen test bonds.
+
+8
+00:00:28,199 --> 00:00:31,058
+Holdings begin at ten, five and three.
+
+9
+00:00:31,218 --> 00:00:34,522
+All coupon and principal obligations are prefunded.
+
+10
+00:00:34,682 --> 00:00:38,251
+Reserve: eighteen thousand nine hundred test units.
+
+11
+00:00:40,650 --> 00:00:44,124
+At record date, transfers stop until capture.
+
+12
+00:00:44,284 --> 00:00:47,233
+A complete snapshot fixes coupon rights.
+
+13
+00:00:47,393 --> 00:00:50,307
+Eighteen bonds earn nine hundred test units.
+
+14
+00:00:50,467 --> 00:00:53,736
+Real chain time enforces this accelerated schedule.
+
+15
+00:00:57,650 --> 00:01:00,094
+Two bonds move after the snapshot.
+
+16
+00:01:00,254 --> 00:01:03,048
+The first investor now holds eight bonds.
+
+17
+00:01:03,208 --> 00:01:05,972
+Ten recorded bonds still earn five hundred.
+
+18
+00:01:06,132 --> 00:01:09,451
+Coupon ownership survives later changes in holdings.
+
+19
+00:01:13,650 --> 00:01:16,759
+Before signing, inspect the exact action.
+
+20
+00:01:16,919 --> 00:01:20,328
+Check signer, recipient, network and fee.
+
+21
+00:01:20,488 --> 00:01:23,862
+Simulation runs against the actual local validator.
+
+22
+00:01:24,022 --> 00:01:25,916
+Generated test signer.
+
+23
+00:01:27,650 --> 00:01:30,879
+Claims transfer actual test settlement tokens.
+
+24
+00:01:31,039 --> 00:01:34,153
+The historical five hundred coupon is confirmed.
+
+25
+00:01:34,313 --> 00:01:36,827
+Repeated coupon claims are rejected.
+
+26
+00:01:36,987 --> 00:01:40,296
+Recovery reuses the original transaction signature.
+
+27
+00:01:42,650 --> 00:01:45,604
+Votes use a separate immutable holder snapshot.
+
+28
+00:01:45,764 --> 00:01:48,243
+The saved ballot has a ten-bond weight.
+
+29
+00:01:48,403 --> 00:01:50,912
+Each voter can cast only one ballot.
+
+30
+00:01:51,072 --> 00:01:55,061
+Voting is informational, without changing financial terms.
+
+31
+00:01:58,650 --> 00:02:02,289
+Maturity locks transfers and fixes redemption positions.
+
+32
+00:02:02,449 --> 00:02:05,178
+The positions are eight, seven and three.
+
+33
+00:02:05,338 --> 00:02:08,352
+Principal totals eighteen thousand test units.
+
+34
+00:02:08,512 --> 00:02:11,846
+Accelerated deadlines; idle waiting is cut.
+
+35
+00:02:14,650 --> 00:02:17,344
+Principal payment and bond burn are atomic.
+
+36
+00:02:17,504 --> 00:02:19,978
+All eighteen test bonds are retired.
+
+37
+00:02:20,138 --> 00:02:23,102
+Remaining supply and settlement vault reach zero.
+
+38
+00:02:23,262 --> 00:02:25,821
+Repeated principal claims are rejected.
+
+39
+00:02:30,650 --> 00:02:34,339
+Saved integration evidence records eleven confirmed actions.
+
+40
+00:02:34,499 --> 00:02:38,773
+Receipts retain signatures, slots and recovery identifiers.
+
+41
+00:02:38,933 --> 00:02:41,597
+This is verified localnet evidence.
+
+42
+00:02:41,757 --> 00:02:44,661
+Inspect the source and reproduce the lifecycle.
+
+43
+00:02:46,650 --> 00:02:49,564
+Review the source and replay BondTrace locally.
+
+44
+00:02:49,724 --> 00:02:52,538
+Judge access and submission are still pending.

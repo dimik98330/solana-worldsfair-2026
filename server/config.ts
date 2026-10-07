@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+export const network = process.env.BONDTRACE_NETWORK ?? 'localnet';
+if (!['localnet','devnet'].includes(network)) throw new Error('Only localnet/devnet are supported');
+export const rpcUrl = process.env.SOLANA_RPC_URL ?? (network === 'devnet' ? 'https://api.devnet.solana.com' : 'http://127.0.0.1:8899');
+const rpcOrigin = new URL(rpcUrl);
+if (network==='localnet' && !['127.0.0.1','localhost','[::1]'].includes(rpcOrigin.hostname)) throw new Error('Localnet RPC must be loopback');
+if (network==='devnet' && rpcUrl !== 'https://api.devnet.solana.com') throw new Error('Use the verified public devnet RPC; mainnet/custom origins are excluded');
+export const port = Number(process.env.PORT ?? 3000);
+export const demoEnabled = process.env.BONDTRACE_ENABLE_DEMO !== 'false';
+export const localDir = process.env.BONDTRACE_DATA_DIR ? path.resolve(process.env.BONDTRACE_DATA_DIR) : path.resolve('.local/bondtrace',network);
+if(!localDir.startsWith(path.resolve('.local')+path.sep))throw new Error('Project data directory must stay inside the ignored .local workspace');
+fs.mkdirSync(localDir,{recursive:true});
+export const fixtureFile = path.join(localDir,'fixture.json');
+export const activityFile = path.join(localDir,'activity.json');

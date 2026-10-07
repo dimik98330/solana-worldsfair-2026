@@ -1,0 +1,92 @@
+{
+  "status": "artifact_complete",
+  "frozenAt": "2026-10-07T20:14:19.988109+00:00",
+  "scope": "Local recorded prototype materials only; no publication, devnet deployment, human-wallet signing or external submission implied. Independent application review remains separate.",
+  "files": [
+    {
+      "path": "artifacts/demo/bondtrace-product-demo.mp4",
+      "bytes": 8326931,
+      "sha256": "dea318affc6ab6c1286f2a2cf749ce8e4d6348491e32f75e3b6fd41c57b6440c"
+    },
+    {
+      "path": "artifacts/demo/bondtrace-product-demo.en.srt",
+      "bytes": 3693,
+      "sha256": "503d27cf4c4826141707ef17c1fb652cc8419e331a512fa7c2c0ea22cdaddeed"
+    },
+    {
+      "path": "artifacts/demo/bondtrace-product-demo.en.vtt",
+      "bytes": 3703,
+      "sha256": "22181fcd09664c97756fcfcd0d4ec946f0ef52958ddad9e1f9f158d9526e2fbd"
+    },
+    {
+      "path": "artifacts/demo/poster.png",
+      "bytes": 444624,
+      "sha256": "1f24f86f80e6ac62f60d0f51d4a1ec40a0bb5e68ee3c55415c2ec038053a5154"
+    },
+    {
+      "path": "artifacts/demo/scenes.json",
+      "bytes": 11242,
+      "sha256": "2edcd4b6ccf5c38da3e7095902fed4e68ca5a776e12774011caec56ad12c37c6"
+    },
+    {
+      "path": "artifacts/demo/frozen-inputs.json",
+      "bytes": 3020,
+      "sha256": "9d43be467322a4141e3e4b08529c0c38914e04cc00259905c95cdb31487f03da"
+    },
+    {
+      "path": "artifacts/demo/input-provenance.json",
+      "bytes": 8165,
+      "sha256": "9900764888fe2b64d13e3d1d2762a364323f3955d7b5b02b93b57f97196cfd79"
+    },
+    {
+      "path": "artifacts/demo/render-validation.json",
+      "bytes": 5398,
+      "sha256": "c6123f2555ed8285e140e06f2adbc946d285129d643c45409155efdc1674ae3e"
+    },
+    {
+      "path": "artifacts/demo/render_demo.py",
+      "bytes": 18895,
+      "sha256": "fa9da71e77079419c9422124c3328a9f050d8d786551ab058adb7c8de54b4ae2"
+    },
+    {
+      "path": "artifacts/demo/narrate.ps1",
+      "bytes": 1399,
+      "sha256": "69e950253855bbe2f6082d8354c6cdee4b7de5d7666e7b913b09c813b9056c69"
+    },
+    {
+      "path": "artifacts/demo/capture_clips.py",
+      "bytes": 3280,
+      "sha256": "f78f954411ac735c6734da31873348c9eb35c0a5b796b05b029af0085bd72119"
+    },
+    {
+      "path": "artifacts/demo/SCENE-PLAN.md",
+      "bytes": 4460,
+      "sha256": "2bb0d10ef0135d4bb721b3af8eefe053708e8178b14a3dad449929ba01d6ec66"
+    },
+    {
+      "path": "artifacts/demo/README.md",
+      "bytes": 6136,
+      "sha256": "eba2cbae432618fbd380bd8bba97125a61ac77035d1e1f9b9b1b0311e4b36c70"
+    },
+    {
+      "path": "artifacts/demo/HANDOFF.md",
+      "bytes": 5190,
+      "sha256": "7128c99ddafe81258b749d48b882f2a7d7973b754604d07febbef7f8e4205fc8"
+    },
+    {
+      "path": "artifacts/demo/evidence/full-smoke-localnet-2026-10-07.json",
+      "bytes": 7940,
+      "sha256": "0c339d9c5b13f8f921fec764008a4be754c836871da79607109fd1a5adaff993"
+    },
+    {
+      "path": "artifacts/demo/evidence/browser-cycle-localnet-2026-10-07.json",
+      "bytes": 11936,
+      "sha256": "b0072ca7eeb66171cdadc3f7c8fe81cff0df86498bb107c5f562e60a878bd9c7"
+    },
+    {
+      "path": "docs/18-TECHNICAL-OVERVIEW.md",
+      "bytes": 13904,
+      "sha256": "c1c92baca42d91c6a15a6bd2cc7c1d37abc80ac07935f4bc2259fd98fe55487f"
+    }
+  ]
+}

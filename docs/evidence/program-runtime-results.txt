@@ -1,0 +1,10 @@
+
+running 5 tests
+test draft_authority_and_record_date_cannot_be_bypassed ... ok
+test invalid_terms_fail_before_creating_a_new_issue ... ok
+test sequential_coupons_use_different_record_owners_and_must_capture_before_redemption ... ok
+test sixteen_holder_full_flow_preserves_old_coupon_after_transfer_and_redemption ... MEASURED holders16 proposal=884bytes/66584CU capture=839bytes/68376CU redemption=772bytes/62263CU principal=47643CU
+ok
+test wrong_claim_destination_is_rejected_without_burning_or_paying ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.55s

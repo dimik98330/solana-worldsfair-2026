@@ -1,0 +1,63 @@
+{
+  "capturedAt": "2026-10-07T19:54:21.758Z",
+  "measurements": [
+    {
+      "documentWidth": 360,
+      "overflow": false,
+      "smallTargets": [
+        {
+          "height": 44,
+          "label": "Voting",
+          "width": 33.375
+        }
+      ],
+      "view": "overview",
+      "width": 375
+    },
+    {
+      "documentWidth": 360,
+      "overflow": false,
+      "view": "Holder registry",
+      "width": 375
+    },
+    {
+      "documentWidth": 360,
+      "overflow": false,
+      "view": "Payments",
+      "width": 375
+    },
+    {
+      "documentWidth": 360,
+      "overflow": false,
+      "view": "My portfolio",
+      "width": 375
+    },
+    {
+      "documentWidth": 360,
+      "overflow": false,
+      "view": "Voting",
+      "width": 375
+    },
+    {
+      "documentWidth": 753,
+      "overflow": false,
+      "smallTargets": [],
+      "view": "overview",
+      "width": 768
+    },
+    {
+      "documentWidth": 1265,
+      "overflow": false,
+      "smallTargets": [],
+      "view": "overview",
+      "width": 1280
+    }
+  ],
+  "repair": "375px Voting target widened to40px; verified40x44.",
+  "cancel": "Escape closed unsubmitted bootstrap review; focus returned to New demo issue.",
+  "wallet": "No compatible wallet detected; My wallet mode disables issuer actions without connection.",
+  "limits": [
+    "Human wallet signature/cancellation not exercised",
+    "Mobile OS device not tested; viewport emulation only"
+  ]
+}

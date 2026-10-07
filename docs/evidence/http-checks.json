@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-10-07T20:19:34.335Z",
+  "origin": "http://127.0.0.1:3000",
+  "builtApp": true,
+  "network": "localnet",
+  "issue": "5knY93zt91XKMqnxz2ukXGHVzx6Ro9vgKsrcrT3RbhJU",
+  "status": "redeemed",
+  "checks": [
+    {
+      "name": "JSON null",
+      "status": 400,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "name": "JSON array",
+      "status": 400,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "name": "malformed JSON",
+      "status": 400,
+      "code": "INVALID_JSON"
+    },
+    {
+      "name": "content type",
+      "status": 415,
+      "code": "CONTENT_TYPE"
+    },
+    {
+      "name": "foreign origin",
+      "status": 403,
+      "code": "ORIGIN_DENIED"
+    }
+  ],
+  "chainStateUnchanged": true,
+  "scope": "Built same-origin app and rejected malformed/foreign-origin requests; no signing or chain mutation."
+}

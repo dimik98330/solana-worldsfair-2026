@@ -1,0 +1,234 @@
+{
+  "manifest_sha256": "2edcd4b6ccf5c38da3e7095902fed4e68ca5a776e12774011caec56ad12c37c6",
+  "sources": [
+    {
+      "scene": "scene-01",
+      "kind": "captured_ui",
+      "input": "artifacts/demo/inputs/run2-overview.jpg",
+      "original_capture": "docs/evidence/ui/run2-overview.jpg",
+      "sha256": "f03f07d419a93fdab833b9dc672bf4a6840081151ba639559c2823dc61db0eb3",
+      "crop": [
+        0.17,
+        0.15,
+        0.99,
+        1
+      ],
+      "clip_crop": null
+    },
+    {
+      "scene": "scene-02",
+      "kind": "captured_ui",
+      "input": "artifacts/demo/inputs/run2-overview.jpg",
+      "original_capture": "docs/evidence/ui/run2-overview.jpg",
+      "sha256": "f03f07d419a93fdab833b9dc672bf4a6840081151ba639559c2823dc61db0eb3",
+      "crop": [
+        0.17,
+        0.12,
+        0.995,
+        1
+      ],
+      "clip_crop": null,
+      "actual_clip": "artifacts/demo/clips/bootstrap.mp4",
+      "clip_sha256": "cdb24cb6f9101e7d65a109cf163aac439f9d2eea0827d40447dd9ac75a555fb6",
+      "frame_provenance": "artifacts/demo/clips/bootstrap.provenance.json",
+      "frame_provenance_sha256": "c25b7863cc2984844fe918d48875ae0cf01e71b70ffd4c7da42459ba1d41e361",
+      "captured_clip_duration": 4.666667
+    },
+    {
+      "scene": "scene-03",
+      "kind": "captured_ui",
+      "input": "artifacts/demo/inputs/run2-registry.jpg",
+      "original_capture": "docs/evidence/ui/run2-registry.jpg",
+      "sha256": "8790c2f409baf804ac703dbb0989ace274b000581c0c266dbc758d4aed1cf2f6",
+      "crop": [
+        0.185,
+        0.43,
+        0.977,
+        1.0
+      ],
+      "clip_crop": null
+    },
+    {
+      "scene": "scene-04",
+      "kind": "captured_ui",
+      "input": "artifacts/demo/inputs/run2-fixed-rights-registry.jpg",
+      "original_capture": "docs/evidence/ui/run2-fixed-rights-registry.jpg",
+      "sha256": "5ed2c60fa2c70090709a5b8120015ed544d2a0a0d2654575d6068a78d7568982",
+      "crop": [
+        0.58,
+        0.535,
+        0.973,
+        0.976
+      ],
+      "clip_crop": [
+        0.17,
+        0,
+        0.995,
+        1
+      ],
+      "actual_clip": "artifacts/demo/clips/capture-record.mp4",
+      "clip_sha256": "2dbc58461b94477191aabbde2a05afccd47e61fb2e76c26989b2d38bdac9dd29",
+      "frame_provenance": "artifacts/demo/clips/capture-record.provenance.json",
+      "frame_provenance_sha256": "bc93bd1d72d759aeb70c5737b5f48a2a98091758ff8e77a450d67156b0af096f",
+      "captured_clip_duration": 2.533333
+    },
+    {
+      "scene": "scene-05",
+      "kind": "captured_ui",
+      "input": "artifacts/demo/inputs/run2-portfolio-fixed-rights.jpg",
+      "original_capture": "docs/evidence/ui/run2-portfolio-fixed-rights.jpg",
+      "sha256": "574cf23379ee84f2fbf6b08fe63b4fd1dc69a855cd388bbf102c07a7600a8acd",
+      "crop": [
+        0.185,
+        0.285,
+        0.978,
+        0.953
+      ],
+      "clip_crop": [
+        0.17,
+        0,
+        0.995,
+        1
+      ],
+      "actual_clip": "artifacts/demo/clips/transfer-bonds.mp4",
+      "clip_sha256": "f60a3d60f6726afca70e9bcb60bf96fa75ad9d0baab5169bfe17df5241996c7f",
+      "frame_provenance": "artifacts/demo/clips/transfer-bonds.provenance.json",
+      "frame_provenance_sha256": "066ef78287ecc729ecd0ec49a867b72492986975103d68c38ddb176d462a0e05",
+      "captured_clip_duration": 2.533333
+    },
+    {
+      "scene": "scene-06",
+      "kind": "captured_ui",
+      "input": "artifacts/demo/inputs/run2-coupon-preview.jpg",
+      "original_capture": "docs/evidence/ui/run2-coupon-preview.jpg",
+      "sha256": "0d30c434a9c39b95c85b58fcd4a43abd53bde2436f0eb277fd5fcdaa9e6b367b",
+      "crop": [
+        0.292,
+        0.395,
+        0.688,
+        0.811
+      ],
+      "clip_crop": null
+    },
+    {
+      "scene": "scene-07",
+      "kind": "captured_ui",
+      "input": "artifacts/demo/inputs/run2-coupon-paid.jpg",
+      "original_capture": "docs/evidence/ui/run2-coupon-paid.jpg",
+      "sha256": "e941f56e9559fc372632c199a5c91285dd3e417b78cd81a58bb6a002ea28d338",
+      "crop": [
+        0.185,
+        0.285,
+        0.978,
+        0.953
+      ],
+      "clip_crop": [
+        0.17,
+        0,
+        0.995,
+        1
+      ],
+      "actual_clip": "artifacts/demo/clips/claim-coupon.mp4",
+      "clip_sha256": "30be934911b9242bfe77ad3320d71389cafae1bac71858ff80262a56ce3d9063",
+      "frame_provenance": "artifacts/demo/clips/claim-coupon.provenance.json",
+      "frame_provenance_sha256": "b7fe6d01597142cc4dcc6727e4b90738386b7f35816ee6a338fb50d093dd802e",
+      "captured_clip_duration": 2.5
+    },
+    {
+      "scene": "scene-08",
+      "kind": "captured_ui",
+      "input": "artifacts/demo/inputs/run2-voting-result.jpg",
+      "original_capture": "docs/evidence/ui/run2-voting-result.jpg",
+      "sha256": "0a454f2e1c6056979451872f0f61d5a93815716abddeb272af36e65dd195ff8e",
+      "crop": [
+        0.185,
+        0.157,
+        0.977,
+        0.85
+      ],
+      "clip_crop": [
+        0.17,
+        0,
+        0.995,
+        1
+      ],
+      "actual_clip": "artifacts/demo/clips/cast-vote.mp4",
+      "clip_sha256": "6cc398e9af01fa49a8c172fdd3d494c2b1e9c02efc989a54efddc8b6e2298c6b",
+      "frame_provenance": "artifacts/demo/clips/cast-vote.provenance.json",
+      "frame_provenance_sha256": "e288d5e53480cdcc4d4c0084ff077b646407e75d9c32b79c463f5ce8e83fb062",
+      "captured_clip_duration": 2.533333
+    },
+    {
+      "scene": "scene-09",
+      "kind": "captured_ui",
+      "input": "artifacts/demo/inputs/run2-principal-preview.jpg",
+      "original_capture": "docs/evidence/ui/run2-principal-preview.jpg",
+      "sha256": "b561a1a744c1424a85bfe43cfdbdb5451db6726ea09b78432c5e6252beea6e9a",
+      "crop": [
+        0.292,
+        0.395,
+        0.688,
+        0.811
+      ],
+      "clip_crop": [
+        0.17,
+        0,
+        0.995,
+        1
+      ],
+      "actual_clip": "artifacts/demo/clips/open-redemption.mp4",
+      "clip_sha256": "14f2713a6893d56c21df215d865de4f5139e28215ece4a0613863fe996c8f532",
+      "frame_provenance": "artifacts/demo/clips/open-redemption.provenance.json",
+      "frame_provenance_sha256": "74a74db253904a577aacc39a887ae723c92bba0805e80dcad9be2076ec777c70",
+      "captured_clip_duration": 2.533333
+    },
+    {
+      "scene": "scene-10",
+      "kind": "captured_ui",
+      "input": "artifacts/demo/inputs/run2-redeemed-overview.jpg",
+      "original_capture": "docs/evidence/ui/run2-redeemed-overview.jpg",
+      "sha256": "348872dc9f9e91dd6836358160de90b98a4242288162d787b9631aa469628cc4",
+      "crop": [
+        0.185,
+        0.255,
+        0.977,
+        0.985
+      ],
+      "clip_crop": [
+        0.17,
+        0,
+        0.995,
+        1
+      ],
+      "actual_clip": "artifacts/demo/clips/redeem-principal-investor3.mp4",
+      "clip_sha256": "8f7ce6cd3d7cadf59d0e7d7c615aede596bb1f4bdaacf512be7356a70b6abe83",
+      "frame_provenance": "artifacts/demo/clips/redeem-principal-investor3.provenance.json",
+      "frame_provenance_sha256": "86cec5b833ec3d5893f4c03741b5ea19103b3582e1b79bcf41cb2d0768235bdd",
+      "captured_clip_duration": 1.833333
+    },
+    {
+      "scene": "scene-11",
+      "kind": "evidence",
+      "input": "artifacts/demo/evidence/full-smoke-localnet-2026-10-07.json",
+      "original_capture": null,
+      "sha256": "0c339d9c5b13f8f921fec764008a4be754c836871da79607109fd1a5adaff993",
+      "crop": null,
+      "clip_crop": null
+    },
+    {
+      "scene": "scene-12",
+      "kind": "captured_ui",
+      "input": "artifacts/demo/inputs/run2-proof.jpg",
+      "original_capture": "docs/evidence/ui/run2-proof.jpg",
+      "sha256": "e79b811448157a579083414f8ffe0565fe9018b1a0714d59954022c767357a5c",
+      "crop": [
+        0.631,
+        0.524,
+        0.975,
+        0.777
+      ],
+      "clip_crop": null
+    }
+  ],
+  "scope": "Edited captured localnet prototype; test tokens; generated test signers; accelerated chain-clock deadlines; idle waiting cut. Not continuous capture, human-wallet signing, devnet deployment, real securities or external submission."
+}

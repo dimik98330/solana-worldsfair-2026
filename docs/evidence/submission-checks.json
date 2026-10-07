@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-10-07T20:25:57.367Z",
+  "deliveredStagedHashes": 13,
+  "demoFrozenHashes": 17,
+  "checks": [
+    {
+      "route": "/",
+      "status": 200
+    },
+    {
+      "route": "/artifacts/demo/poster.png",
+      "status": 200
+    },
+    {
+      "route": "/artifacts/demo/bondtrace-product-demo.en.vtt",
+      "status": 200
+    },
+    {
+      "route": "/docs/evidence/browser-cycle-localnet.json",
+      "status": 200
+    }
+  ],
+  "videoRange206": true,
+  "privateRoutes404": true,
+  "scope": "Local static preview only; not public availability."
+}

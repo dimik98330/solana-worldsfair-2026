@@ -1,0 +1,70 @@
+{
+  "frozenAt": "2026-10-07T19:57:28.007540+00:00",
+  "inputs": [
+    {
+      "path": "artifacts/demo/inputs/run2-overview.jpg",
+      "origin": "docs/evidence/ui/run2-overview.jpg",
+      "sha256": "f03f07d419a93fdab833b9dc672bf4a6840081151ba639559c2823dc61db0eb3"
+    },
+    {
+      "path": "artifacts/demo/inputs/run2-overview.jpg",
+      "origin": "docs/evidence/ui/run2-overview.jpg",
+      "sha256": "f03f07d419a93fdab833b9dc672bf4a6840081151ba639559c2823dc61db0eb3"
+    },
+    {
+      "path": "artifacts/demo/inputs/run2-registry.jpg",
+      "origin": "docs/evidence/ui/run2-registry.jpg",
+      "sha256": "8790c2f409baf804ac703dbb0989ace274b000581c0c266dbc758d4aed1cf2f6"
+    },
+    {
+      "path": "artifacts/demo/inputs/run2-fixed-rights-registry.jpg",
+      "origin": "docs/evidence/ui/run2-fixed-rights-registry.jpg",
+      "sha256": "5ed2c60fa2c70090709a5b8120015ed544d2a0a0d2654575d6068a78d7568982"
+    },
+    {
+      "path": "artifacts/demo/inputs/run2-portfolio-fixed-rights.jpg",
+      "origin": "docs/evidence/ui/run2-portfolio-fixed-rights.jpg",
+      "sha256": "574cf23379ee84f2fbf6b08fe63b4fd1dc69a855cd388bbf102c07a7600a8acd"
+    },
+    {
+      "path": "artifacts/demo/inputs/run2-coupon-preview.jpg",
+      "origin": "docs/evidence/ui/run2-coupon-preview.jpg",
+      "sha256": "0d30c434a9c39b95c85b58fcd4a43abd53bde2436f0eb277fd5fcdaa9e6b367b"
+    },
+    {
+      "path": "artifacts/demo/inputs/run2-coupon-paid.jpg",
+      "origin": "docs/evidence/ui/run2-coupon-paid.jpg",
+      "sha256": "e941f56e9559fc372632c199a5c91285dd3e417b78cd81a58bb6a002ea28d338"
+    },
+    {
+      "path": "artifacts/demo/inputs/run2-voting-result.jpg",
+      "origin": "docs/evidence/ui/run2-voting-result.jpg",
+      "sha256": "0a454f2e1c6056979451872f0f61d5a93815716abddeb272af36e65dd195ff8e"
+    },
+    {
+      "path": "artifacts/demo/inputs/run2-principal-preview.jpg",
+      "origin": "docs/evidence/ui/run2-principal-preview.jpg",
+      "sha256": "b561a1a744c1424a85bfe43cfdbdb5451db6726ea09b78432c5e6252beea6e9a"
+    },
+    {
+      "path": "artifacts/demo/inputs/run2-redeemed-overview.jpg",
+      "origin": "docs/evidence/ui/run2-redeemed-overview.jpg",
+      "sha256": "348872dc9f9e91dd6836358160de90b98a4242288162d787b9631aa469628cc4"
+    },
+    {
+      "path": "artifacts/demo/inputs/run2-proof.jpg",
+      "origin": "docs/evidence/ui/run2-proof.jpg",
+      "sha256": "e79b811448157a579083414f8ffe0565fe9018b1a0714d59954022c767357a5c"
+    }
+  ],
+  "capture_fixture": {
+    "network": "localnet",
+    "issue": "5knY93zt91XKMqnxz2ukXGHVzx6Ro9vgKsrcrT3RbhJU",
+    "checkedAt": "2026-10-07T19:40:55.4418372Z",
+    "report": "artifacts/demo/evidence/browser-cycle-localnet-2026-10-07.json",
+    "activityCount": 16,
+    "recordAt": "2026-10-07T19:28:42Z",
+    "maturityAt": "2026-10-07T19:33:42Z",
+    "scope": "Browser-driven generated test-signer cycle; real accelerated Clock deadlines; distinct from earlier 11-action smoke fixture."
+  }
+}

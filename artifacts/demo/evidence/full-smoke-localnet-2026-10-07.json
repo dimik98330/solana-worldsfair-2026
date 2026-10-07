@@ -1,0 +1,200 @@
+{
+  "checkedAt": "2026-10-07T18:46:40.523Z",
+  "origin": "http://127.0.0.1:3000",
+  "network": "localnet",
+  "instrument": {
+    "address": "C9KpFDHagCG3sNi6FJqFx3RTaUW38oLqkUFkxpFLUuhN",
+    "name": "BondTrace · тестовый выпуск",
+    "symbol": "BOND·TEST",
+    "issuer": "B3zQc5gQUsHSSCrxP8f7KFUMUYvf6WN87GNZeZQ8kZyp",
+    "bondMint": "HdQc91xfM95SGyQ78XC1Ga4b2KkgUEvLnwAjxTgZei2R",
+    "settlementMint": "7aBNe5u2WodHfuBYsnysQFGMRGXk9tBZgxYxCFYZ571V",
+    "faceValueMinor": "1000000000",
+    "rateBps": 1000,
+    "couponFrequency": 2,
+    "status": "redeemed",
+    "issuedSupply": "18",
+    "redeemedSupply": "18",
+    "recordAt": "2026-10-07T18:45:05.000Z",
+    "paymentAt": "2026-10-07T18:45:10.000Z",
+    "maturityAt": "2026-10-07T18:46:35.000Z",
+    "vaultBalanceMinor": "0"
+  },
+  "checks": {
+    "exactEntitlement": true,
+    "historicalCouponAfterTransfer": true,
+    "oneBallot": true,
+    "duplicateCouponRejected": true,
+    "recoveryAndReplay": true,
+    "atomicPrincipalAndBurn": true,
+    "duplicatePrincipalRejected": true,
+    "zeroFinalSupplyAndVault": true
+  },
+  "proofs": [
+    {
+      "action": "create_vote",
+      "role": "issuer",
+      "signature": "5iqdkoXxyPmHsYPRM1QsbckG5Ae7Lp3TeZpmvm6vYBmZ3v8bwQBwywZUgx59abH42mAh5DrFXtBKYevkUdswsHSm",
+      "status": "confirmed",
+      "slot": 1297,
+      "error": null,
+      "explorerUrl": "https://explorer.solana.com/tx/5iqdkoXxyPmHsYPRM1QsbckG5Ae7Lp3TeZpmvm6vYBmZ3v8bwQBwywZUgx59abH42mAh5DrFXtBKYevkUdswsHSm?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+      "simulation": {
+        "success": true,
+        "computeUnits": "23501"
+      },
+      "bytes": 527,
+      "operationId": "ea68d5c4-f180-4284-af22-6ce21578b03d"
+    },
+    {
+      "action": "cast_vote",
+      "role": "investor1",
+      "signature": "5m7wDh9gK5ArFxgWt5G1y9PXsjWRZCR4HNpwqTNw2KbdgPqK99evDH8QYMrBxr5tiDXZQ4vo7FUoHFFQH6qxkrSS",
+      "status": "confirmed",
+      "slot": 1299,
+      "error": null,
+      "explorerUrl": "https://explorer.solana.com/tx/5m7wDh9gK5ArFxgWt5G1y9PXsjWRZCR4HNpwqTNw2KbdgPqK99evDH8QYMrBxr5tiDXZQ4vo7FUoHFFQH6qxkrSS?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+      "simulation": {
+        "success": true,
+        "computeUnits": "17372"
+      },
+      "bytes": 353,
+      "operationId": "fb17bbe9-1f1c-4757-a668-d2288eea0655"
+    },
+    {
+      "action": "capture_coupon",
+      "role": "issuer",
+      "signature": "4o74dpSppXmJvMVSmQDr8XtAihTVzWJeAEUHijFihKjkXBAugAfuhAjvFm2FmrVYEfzmBzM87y7bzZxpFtQ9ZbGs",
+      "status": "confirmed",
+      "slot": 1503,
+      "error": null,
+      "explorerUrl": "https://explorer.solana.com/tx/4o74dpSppXmJvMVSmQDr8XtAihTVzWJeAEUHijFihKjkXBAugAfuhAjvFm2FmrVYEfzmBzM87y7bzZxpFtQ9ZbGs?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+      "simulation": {
+        "success": true,
+        "computeUnits": "24166"
+      },
+      "bytes": 452,
+      "operationId": "7098368a-38c4-4234-ad07-23647e3a9807"
+    },
+    {
+      "action": "transfer_bonds",
+      "role": "investor1",
+      "signature": "jkGmkGKNUWJaJGUZJvNoAzD4pQxx4uNJwb15gWNUmLetv2URAngwNLYZTQbXJHZdYDNmUaYWzx9zrfvup5bpog9",
+      "status": "confirmed",
+      "slot": 1504,
+      "error": null,
+      "explorerUrl": "https://explorer.solana.com/tx/jkGmkGKNUWJaJGUZJvNoAzD4pQxx4uNJwb15gWNUmLetv2URAngwNLYZTQbXJHZdYDNmUaYWzx9zrfvup5bpog9?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+      "simulation": {
+        "success": true,
+        "computeUnits": "52135"
+      },
+      "bytes": 499,
+      "operationId": "8b4cd224-9345-4b4b-9519-59f7ae70a9cd"
+    },
+    {
+      "action": "claim_coupon",
+      "role": "investor1",
+      "signature": "2NFX5hU5WtN5EJwbAreDXVGtSc7uc7NcdjBuHcSksGiT98X5VG3SW7L1TtpMrNUJdnL2fwu9VffhyCqLb4WuJVUj",
+      "status": "confirmed",
+      "slot": 1511,
+      "error": null,
+      "explorerUrl": "https://explorer.solana.com/tx/2NFX5hU5WtN5EJwbAreDXVGtSc7uc7NcdjBuHcSksGiT98X5VG3SW7L1TtpMrNUJdnL2fwu9VffhyCqLb4WuJVUj?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+      "simulation": {
+        "success": true,
+        "computeUnits": "28000"
+      },
+      "bytes": 493,
+      "operationId": "d97f0322-5b9f-4f1b-96b5-87b0697d0e1c"
+    },
+    {
+      "action": "claim_coupon",
+      "role": "investor2",
+      "signature": "4foiudx7ne3cxbfRDM8AC8ps8YZ8z9UaXaGejjJN5rtG1q4mbLus8Yoxrskn4bST1BUWJPmDw9xV9b9h4Fd6YXYX",
+      "status": "confirmed",
+      "slot": 1512,
+      "error": null,
+      "explorerUrl": "https://explorer.solana.com/tx/4foiudx7ne3cxbfRDM8AC8ps8YZ8z9UaXaGejjJN5rtG1q4mbLus8Yoxrskn4bST1BUWJPmDw9xV9b9h4Fd6YXYX?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+      "simulation": {
+        "success": true,
+        "computeUnits": "28008"
+      },
+      "bytes": 493,
+      "operationId": "07352520-4bd1-4d88-9e39-07da193150f7"
+    },
+    {
+      "action": "claim_coupon",
+      "role": "investor3",
+      "signature": "2wYb2UwHGyDY6eAHBqkVfXD4FcSGm8FMPVHK642vmMWXX2JhtBNBA9uJuWQQ73GWFNAnmQsc1KTFDHY4w3fcEvKG",
+      "status": "confirmed",
+      "slot": 1514,
+      "error": null,
+      "explorerUrl": "https://explorer.solana.com/tx/2wYb2UwHGyDY6eAHBqkVfXD4FcSGm8FMPVHK642vmMWXX2JhtBNBA9uJuWQQ73GWFNAnmQsc1KTFDHY4w3fcEvKG?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+      "simulation": {
+        "success": true,
+        "computeUnits": "31016"
+      },
+      "bytes": 493,
+      "operationId": "8f68533c-d873-4c7c-8f3a-2d1dc189b102"
+    },
+    {
+      "action": "begin_redemption",
+      "role": "issuer",
+      "signature": "5VT2jooZ3hu2q8ch8ehzdBEiLeNBqLwSt2ZphwYmRKFhD53RLsDb6yfWqj6XXyGBhKZAKUq8uxysvEMLwR1so5F2",
+      "status": "confirmed",
+      "slot": 1714,
+      "error": null,
+      "explorerUrl": "https://explorer.solana.com/tx/5VT2jooZ3hu2q8ch8ehzdBEiLeNBqLwSt2ZphwYmRKFhD53RLsDb6yfWqj6XXyGBhKZAKUq8uxysvEMLwR1so5F2?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+      "simulation": {
+        "success": true,
+        "computeUnits": "17773"
+      },
+      "bytes": 385,
+      "operationId": "a8e2594c-61c9-4afd-aa37-eb41978ba8d7"
+    },
+    {
+      "action": "redeem_principal",
+      "role": "investor1",
+      "signature": "4w5BmvbnAxdEykpXhUR3quTe4n3vpXcqpkYqZ4x1812Y8RhpUyx3cuiZnBKzxSd5QZj9Uw5h7XzkeiRBU2331jED",
+      "status": "confirmed",
+      "slot": 1715,
+      "error": null,
+      "explorerUrl": "https://explorer.solana.com/tx/4w5BmvbnAxdEykpXhUR3quTe4n3vpXcqpkYqZ4x1812Y8RhpUyx3cuiZnBKzxSd5QZj9Uw5h7XzkeiRBU2331jED?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+      "simulation": {
+        "success": true,
+        "computeUnits": "50317"
+      },
+      "bytes": 525,
+      "operationId": "4b387eb1-644b-4e4e-b865-0918bdcd3a3f"
+    },
+    {
+      "action": "redeem_principal",
+      "role": "investor2",
+      "signature": "61VNWu76cZqY25RfDWEUKyshnwCs5S4uVDMDwxad12QDHxorCS3VyHGx7zea6mvSQXPd59ozAwfvnUwBss5571NG",
+      "status": "confirmed",
+      "slot": 1717,
+      "error": null,
+      "explorerUrl": "https://explorer.solana.com/tx/61VNWu76cZqY25RfDWEUKyshnwCs5S4uVDMDwxad12QDHxorCS3VyHGx7zea6mvSQXPd59ozAwfvnUwBss5571NG?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+      "simulation": {
+        "success": true,
+        "computeUnits": "51825"
+      },
+      "bytes": 525,
+      "operationId": "c58cf74d-7db1-4c05-a66b-07fd6c8fc4ae"
+    },
+    {
+      "action": "redeem_principal",
+      "role": "investor3",
+      "signature": "5kH4Jc3LunbSew6hn57rsFU5DRELXs16gt7uSmGGdUnoDtR3cfjsyj27cXhHgYt2rqw6pDB9sE2j6gKJAnhiu93C",
+      "status": "confirmed",
+      "slot": 1719,
+      "error": null,
+      "explorerUrl": "https://explorer.solana.com/tx/5kH4Jc3LunbSew6hn57rsFU5DRELXs16gt7uSmGGdUnoDtR3cfjsyj27cXhHgYt2rqw6pDB9sE2j6gKJAnhiu93C?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+      "simulation": {
+        "success": true,
+        "computeUnits": "54835"
+      },
+      "bytes": 525,
+      "operationId": "20a1c373-5368-414d-ac53-a006f0a09d5e"
+    }
+  ]
+}

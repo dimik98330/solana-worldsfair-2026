@@ -1,50 +1,64 @@
-# Состояние: промпт 1, выбор идеи
+# BondTrace — состояние на 8 октября 2026
 
-Дата: **07.10.2026**, Казахстан UTC+5. Промпт 1 завершён; независимая проверка отчёта принята quality helper (accepted, draft_count=1). Промпты 2–5 не запускались, идея и план не одобрены, приложение не создавалось.
+Пользователь выбрал KASE и поручил полноценный проект с красивым интерфейсом и подготовкой подачи. Прежний этап «только промпт 1» завершён; выбор A/B/C сохранён как история. Продолжать текущую реализацию, не начинать исследование заново.
 
-## Абсолютные пути и аккаунт
+## Пути и разрешения
 
-- Продукт: `C:\Users\dmitrii\Documents\solana`.
-- Source ProofPilot: `C:\Users\dmitrii\Documents\proofpilot-source`; commit e6c2a3c7af6b509cd5648884a017a610e68c739c, package 0.3.0 + раскрытый Windows fsync patch.
-- Skill root: `C:\Users\dmitrii\Documents\solana\.agents\skills`; основной entrypoint proofpilot/SKILL.md.
-- Единственный GitHub owner: **dimik98330**. [Приватный репозиторий](https://github.com/dimik98330/solana-worldsfair-2026), id1409138286. Research scaffold отправлен: initial commit a1b20d5. REST подтвердил owner/private=true; local/remote HEAD совпали. Позднейший checkpoint-коммит содержит только итоги проверки, не изменения продукта.
-- Коннектор приложения сообщил zi-radio; для записи не использовался. Выбран существующий Git Credential Manager dimik98330; account selection и commit author настроены только локально.
+- Корень: C:\Users\dmitrii\Documents\solana.
+- ProofPilot source: C:\Users\dmitrii\Documents\proofpilot-source; v0.3.0, commit e6c2a3c7af6b509cd5648884a017a610e68c739c, раскрытая Windows-поправка fsync.
+- Skills: C:\Users\dmitrii\Documents\solana\.agents\skills; 42 обнаруженных хостом скилла. Установка полная и повторного запуска не требует.
+- GitHub: только dimik98330. Origin https://dimik98330@github.com/dimik98330/solana-worldsfair-2026.git, репозиторий private. Connector zi-radio не использовать для записи.
+- Разрешены локальная реализация, localnet/devnet, бесплатные инструменты и отдельные тестовые подписанты. Mainnet, реальные активы, платные услуги и публикация private-репозитория не разрешены.
+- Superteam login подтверждён в Chrome, форма KASE прочитана. Ничего не отправлялось; согласия не принимались. IAB имеет отдельную неавторизованную сессию.
 
-## Выполнение промпта 1
+## Работающий продукт
 
-| Раздел | Результат | Свидетельство |
+BondTrace — кабинет корпоративных действий для permissioned тестовых облигаций. Купонные права фиксируются на record date и сохраняются после перевода/погашения. Principal выплачивается текущему держателю с атомарным burn. Голосование использует собственный snapshot и один ballot на владельца; оно информационное.
+
+Anchor1.1.2, classic SPL Token, максимум16 зарегистрированных держателей/8 купонов. Полное prefunding principal + всех купонов перед seal; нет issuer withdrawal. React19.3/Vite8.3/TS7, Kit8.4/Wallet Standard, loopback Node API. Guided demo с generated test signers явно отделён от My wallet.
+
+## Этапы и доказательства
+
+| Этап | Статус | Проверка |
 |---|---|---|
-| А: среда | Native Windows, PS7.6.5, Node22.14.0, npm10.9.2, Git2.54, Codex0.154.0 | 02-ENVIRONMENT.md |
-| А: ProofPilot | main+5 profiles+36 support;12 assets; complete=true | dependencies/status + capabilities |
-| А: discovery | Все42 project skills enabled; errors=[] | app-server skills/list с forceReload |
-| Б: Colosseum | Владелец завершил browser flow; V2 evidence read HTTP200;6 searches+3 details HTTP200 | research/colosseum-findings.md |
-| Б: MCP/browser | Solana3 read tools; HTTP initialize/tools/list/list_sections passed; DOM+screenshot passed | 02 |
-| В: изоляция | Исходный пустой корень; отдельный Git; приватный repo создан | README, .gitignore, origin |
-| Г: условия | Регистрация8окт; DemoDay10окт; global12окт23:59PT=13окт11:59UTC+5 | 01-HACKATHON.md |
-| Д: отбор | 6 направлений,3 условных финалиста, реальные аналоги | 03,04 и research notes |
-| Д: review | Product/Solana/UX отдельно; критик с новым контекстом | 05-REVIEW.md |
-| Е: остановка | Пользователь выбирает A/B/C; реализации нет | 06-DECISION.md |
+| P01 требования/форма | Завершён, подача впереди | docs08/14; обязательны все3 действия |
+| P02 архитектура/ревью | Завершён в пределах прототипа | docs09/11; исходный review +2 repairs |
+| P03 compiler/SBF/IDL | Passed; новые WSL build/test wrappers также проверены | Реальный SBF463096bytes, generated IDL |
+| P04 вертикальный срез | Passed localnet | Реальные подписи, preview, simulation, confirmed state |
+| P05 купон | Passed localnet | 10 recorded →500; после transfer8 current, право остаётся500 |
+| P06 погашение | Passed localnet | 18000 principal paid,18 burned, supply/vault0 |
+| P07 голосование | Passed localnet | Вес10, повторный ballot rejected |
+| P08 UI | Passed в проверенном scope | Весь цикл через браузер;375/768/1280; Escape/no-wallet |
+| P09 integration | Passed localnet; devnet blocked | Два разных сохранённых цикла, Node9/9 +UI5/5 |
+| P10 материалы | Финальная сборка и review | Видео174.021s и локальная страница готовы; независимое финальное review идёт |
 
-## Проверки и ограничения
+Program ID B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8.
+SBF SHA25615525ec2de285e7cc3065f7ec8ce47bfe81d1ed2837754b85b8cf2598c935dc2.
+Rust unit3/3, SBF runtime5/5. Измеренная транзакция максимум884bytes/84584CU в документированных запусках. В16-holder fixture первоначально только2 nonzero holders; все16 positive/8 coupons/max title не benchmarked.
 
-npm ci --ignore-scripts и inspect прошли. Полный npm test источника **FAILED**: CRLF generated-doc comparison, затем locale-dependent digest fixture. Установка потребовала HTTPS fallback по pinned commits (283 файла с проверкой Git blob hash) и минимального Windows fsync fix. Узкий flush-test passed, байты неизменны; flush и права Codex не обходились. Ownership/transaction/completeness штатного installPackage сохранены. Это локально исправленный snapshot, не успешный полный test suite. Патч и provenance сохранены в docs/setup. Прежние installer/fetch процессы завершены или остановлены; повторять установку не нужно.
+API cycle: docs/evidence/full-smoke-localnet.json, issue C9KpFDHagCG3sNi6FJqFx3RTaUW38oLqkUFkxpFLUuhN,11 confirmed actions после setup.
+Browser cycle: docs/evidence/browser-cycle-localnet.json, issue5knY93zt91XKMqnxz2ukXGHVzx6Ro9vgKsrcrT3RbhJU;16 activity после создания, включая setup. Купон900, principal18000,18 burned/vault0, yes weight10. Не смешивать доказательства разных выпусков.
+Screenshots docs/evidence/ui; raw actual-action frames ignored в docs/evidence/ui/recording. Responsive — эмуляция viewport, не физический телефон. Human-wallet signing и отмена реальной подписи ещё не проверены.
 
-Solana MCP добавлен штатно, существующие серверы сохранены, allowlist ограничен тремя read tools; global permissions не менялись. HTTP smoke выполнен, но автоматическое появление MCP-tools в уже открытом чате не доказано. Если после продолжения tools отсутствуют, один раз перезапустить Codex и прочитать этот checkpoint. Skills discovery реально подтверждён, основной установленный SKILL.md явно применён.
+Transport regression4 tests используют isolated mocked RPC, не добавляют фиктивные receipts в demo fixture. Unknown после потерянного RPC response сохраняет signature и блокирует новую подпись. Null после срока blockhash не доказывает, что транзакция не исполнилась. Историческая recorded-confirmation отдельно от свежего live-rpc read.
 
-Colosseum verified в этом сеансе; credentials у официального helper. После долгой паузы проверять setup.js --status/--check-colosseum по необходимости. Не удалять connection и не повторять login из-за сетевой ошибки. Скриншот callback не копировался в Git.
+## Процессы
 
-User-reported: совершеннолетие/18+ на14сент; проживание/нахождение в Казахстане; нет другой команды/проекта. Регистрация в конкурсе/региональной программе, остальные eligibility условия и доступ жюри **не подтверждены**. Copilot login не регистрирует проект.
+- Validator: отдельный скрытый Windows process22584, WSL Ubuntu, ledger .local/bondtrace-validator. RPC127.0.0.1:8899, WS8900. Сохранённый ledger восстановлен с исходным относительным путём; reset/delete не выполнялись.
+- API/Vite: exec session43602, API127.0.0.1:3000 и web5173. Нужны для текущего UI; не дублировать.
+- Страница материалов: exec session51503, http://127.0.0.1:5180. Native video playback/byte ranges/VTT и375px layout проверены; это локальный preview, не public site.
+- Toolchain только WSL в /home/dmitrii/.local/bondtrace-tools и /home/dmitrii/.cargo; Codex и Node native Windows.
 
-KASE в итоге полностью прочитан через browser: купон+погашение+ещё действие. External/fiat rails можно моделировать, entitlement/Solana flow должны работать. API/sandbox/партнёр не указаны как требования. Причина отложить — объём и предметная сложность; ранние записи о недоступной странице устарели.
+## Внешние gates
 
-## Следующий шаг
+Devnet payer BWpCPnVVzxPA1oTebFyfCjbk8wgTXLdjQWwY1ckjzqHS: последний read balance0. Rent2.35423964 test SOL плюс fees; рекомендуются3 test SOL. Две airdrop попытки закончились Internal error/429, повторы остановлены. Read-only PoW feasibility не дала применимого бесплатного funding. Владельцу уже отправлена async-инструкция official faucet; ждать ответа, не спрашивать повторно. Подготовлен funding-gated ignored deploy script; devnet deployment signature отсутствует.
 
-Первый условный тест — **A: собственный checkout совместного game asset pack**; B — разбор сбойной API-оплаты; C — issuer/отзыв истории ремонта. Ни у одного нет доказанной уникальности, спроса или преимущества. Тест A:5 разных команд,105 минут сессий/сводки без рекрутинга; полные пороги/исходы в06. Доступ к людям и реальные часы неизвестны. Готовность к10окт не обещана; global резерв11окт обсуждён в06.
+Регистрация/проект/подача в основном Colosseum не подтверждены. Copilot authorization не является регистрацией. Сегодня8окт — ближайший опубликованный день регистрации KZ, час неизвестен. Global deadline12окт23:59PT =13окт11:59UTC+5. KASE публичные материалы и подтверждение global участия обязательны.
 
-**Дождаться выбора A/B/C или отказа от направлений.** После выбора — промпт2 только по команде; после одобрения плана — промпт3. Ближайшую регистрацию владелец проходит отдельно, не ждёт разработки. Outreach, финальная подача, публичный repo, mainnet, реальные деньги и платные сервисы не разрешены.
+Частный repo не становится public автоматически. Перед изменением visibility или public hosting подготовить конкретный безопасный вариант и запросить решение владельца в самом конце. Final Terms, scope и Kazakhstan KYC checkboxes — владелец подтверждает при действии. Не нажимать Submit до готовых материалов и согласий.
 
-## Скиллы и преемственность
+## Преемственность
 
-Перед существенной задачей читать AGENTS и подходящие реально установленные SKILL.md. Product decisions — ProofPilot coach; Solana — solana-dev; UX/design — product-review/frontend-design-guidelines и выбранные design skills; проверки — профильные skills по риску. В этом этапе использованы openai-docs, skill-installer, ProofPilot, competitive-landscape, validate-idea, solana-dev, product-review, frontend-design-guidelines и frontend-design. Правило передано всем субагентам и сохранено в handoffs. В новом чате читать актуальные docs и git status; не загружать весь bundle без нужды.
+В новом чате читать AGENTS, START, STATE и актуальные spec/architecture/UX/security/plan, git status и последние commits. Перед существенной задачей выбрать и прочитать профильные установленные SKILL.md: ProofPilot coach для продукта/readiness/submission, solana-dev для chain/tooling, frontend/design для UI, профильные проверки. Передавать правило всем субагентам и сохранять checkpoint.
 
-Quality run: .local/quality-run, accepted на исходном draft1, repairs=0. Итог записан в docs/review/quality-status.json; не сбрасывать историю ради оценки. Это source-grounded проверка отчёта, не доказательство рынка или допуск жюри. Ограничения в05. HTML — статическое представление03/06, не продукт; desktop DOM/screenshot просмотрены, продуктовый mobile flow не тестировался.
+Lead отвечает за root dependencies/config/Git/API/docs; program agent — programs/Rust tests/docs09/11; frontend — apps/web/docs10; demo agent — artifacts/demo и docs18; critic — отдельный report. Не допускать одновременных edits одной зоны. Architecture review initial+2 repairs завершён, бюджет не сбрасывать. Integration review initial+repair1 завершён; новые browser/video данные — отдельное финальное evidence, не попытка поднять старый score. Initial Prompt1 accepted — история, не сертификат KASE readiness.

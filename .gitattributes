@@ -1,4 +1,15 @@
 * text=auto eol=lf
 *.png binary
 *.jpg binary
+*.jpeg binary
+*.mp4 binary
+*.wav binary
 *.pdf binary
+# Keep frozen evidence/caption bytes identical to their recorded SHA256 manifests.
+artifacts/demo/** -text whitespace=cr-at-eol
+artifacts/demo/*.srt -text whitespace=cr-at-eol,-blank-at-eof
+artifacts/demo/*.vtt -text whitespace=cr-at-eol,-blank-at-eof
+docs/evidence/** -text whitespace=cr-at-eol
+docs/13-DEMO.md -text whitespace=cr-at-eol
+docs/14-SUBMISSION.md -text whitespace=cr-at-eol
+docs/17-VALIDATION.md -text whitespace=cr-at-eol

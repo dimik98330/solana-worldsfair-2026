@@ -1,0 +1,80 @@
+TAP version 13
+# Subtest: settlement formatting preserves six decimals beyond Number.MAX_SAFE_INTEGER
+ok 1 - settlement formatting preserves six decimals beyond Number.MAX_SAFE_INTEGER
+  ---
+  duration_ms: 2.081
+  ...
+# Subtest: financial preview uses integer arithmetic and exact input parsing
+ok 2 - financial preview uses integer arithmetic and exact input parsing
+  ---
+  duration_ms: 0.9122
+  ...
+# Subtest: proof URLs accept the intended HTTPS explorer only
+ok 3 - proof URLs accept the intended HTTPS explorer only
+  ---
+  duration_ms: 0.3307
+  ...
+# Subtest: proposal titles enforce the 96-byte boundary for ASCII, Cyrillic and emoji
+ok 4 - proposal titles enforce the 96-byte boundary for ASCII, Cyrillic and emoji
+  ---
+  duration_ms: 1.9506
+  ...
+# Subtest: proposal validation handles empty input and measures the actual trimmed title
+ok 5 - proposal validation handles empty input and measures the actual trimmed title
+  ---
+  duration_ms: 0.5079
+  ...
+# Subtest: KASE coupon and principal are exact integer settlement amounts
+ok 6 - KASE coupon and principal are exact integer settlement amounts
+  ---
+  duration_ms: 1.5502
+  ...
+# Subtest: rejects fractional base-unit coupons and invalid/overflowing amounts
+ok 7 - rejects fractional base-unit coupons and invalid/overflowing amounts
+  ---
+  duration_ms: 1.1838
+  ...
+# Subtest: all 16 claim positions remain distinct including highest bit
+ok 8 - all 16 claim positions remain distinct including highest bit
+  ---
+  duration_ms: 0.6415
+  ...
+# Subtest: manual adapter instruction discriminators agree with actual generated IDL
+ok 9 - manual adapter instruction discriminators agree with actual generated IDL
+  ---
+  duration_ms: 4.751
+  ...
+# Subtest: decoder rejects invalid discriminators and truncated state
+ok 10 - decoder rejects invalid discriminators and truncated state
+  ---
+  duration_ms: 0.788
+  ...
+# Subtest: ambiguous send retains its exact signature before network response and can recover
+ok 11 - ambiguous send retains its exact signature before network response and can recover
+  ---
+  duration_ms: 60.8691
+  ...
+# Subtest: confirmation-read outage remains UNKNOWN_STATUS with recoverable prepared signature
+ok 12 - confirmation-read outage remains UNKNOWN_STATUS with recoverable prepared signature
+  ---
+  duration_ms: 21.6064
+  ...
+# Subtest: definitive rejection is terminal; unavailable receipt after lifetime remains unknown
+ok 13 - definitive rejection is terminal; unavailable receipt after lifetime remains unknown
+  ---
+  duration_ms: 35.6488
+  ...
+# Subtest: confirmed prepared proposal is discoverable in the selected fixture
+ok 14 - confirmed prepared proposal is discoverable in the selected fixture
+  ---
+  duration_ms: 22.0737
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 958.1938

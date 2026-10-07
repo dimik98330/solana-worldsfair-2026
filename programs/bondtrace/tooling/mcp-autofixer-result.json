@@ -1,0 +1,15 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"issues\":[],\"suggestions\":[],\"framework_detected\":\"anchor\",\"false_positive_hints\":{},\"require_another_tool_call_after_fixing\":false}"
+    }
+  ],
+  "structuredContent": {
+    "issues": [],
+    "suggestions": [],
+    "framework_detected": "anchor",
+    "false_positive_hints": {},
+    "require_another_tool_call_after_fixing": false
+  }
+}

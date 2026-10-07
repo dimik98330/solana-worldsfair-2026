@@ -1,0 +1,46 @@
+{
+  "name": "bondtrace-kase",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.12" },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "tsc --noEmit && vite build",
+    "build:program": "pwsh -NoProfile -File scripts/build-program.ps1",
+    "typecheck": "tsc --noEmit",
+    "start": "node --env-file-if-exists=.env --import tsx server/index.ts",
+    "test": "node --import tsx --test tests/client/*.test.ts",
+    "test:program": "pwsh -NoProfile -File scripts/test-program.ps1",
+    "test:ui": "node --import tsx --test apps/web/src/*.test.ts",
+    "localnet": "pwsh -NoProfile -File scripts/localnet.ps1",
+    "demo:seed": "node --import tsx scripts/demo-seed.ts",
+    "smoke": "node --import tsx scripts/full-smoke.ts",
+    "submission:preview": "node scripts/preview-submission.mjs",
+    "verify:http": "node scripts/verify-http.mjs",
+    "report": "node scripts/build-research-report.mjs"
+  },
+  "dependencies": {
+    "@solana/kit": "8.4.0",
+    "@solana/react": "8.4.0",
+    "@solana/kit-plugin-rpc": "0.19.0",
+    "@solana/kit-plugin-signer": "0.19.0",
+    "@solana/kit-plugin-wallet": "0.21.0",
+    "@solana/wallet-standard-features": "1.5.0",
+    "@solana-program/token": "0.17.0",
+    "@solana-program/system": "0.15.0",
+    "@solana-program/compute-budget": "0.19.0",
+    "lucide-react": "1.52.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vite": "8.3.3"
+  }
+}

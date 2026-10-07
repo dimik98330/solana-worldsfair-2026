@@ -1,0 +1,223 @@
+{
+  "scope": "Edited captured localnet prototype; test tokens; generated test signers; accelerated chain-clock deadlines; idle waiting cut. Not continuous capture, human-wallet signing, devnet deployment, real securities or external submission.",
+  "capture_inputs": "Pending verified lead filenames; draft is usable for local narration only.",
+  "scenes": [
+    {
+      "id": "scene-01",
+      "duration": 11,
+      "image": "docs/evidence/ui/run2-overview.jpg",
+      "eyebrow": "PRODUCT WALKTHROUGH",
+      "title": "BondTrace",
+      "fact": "Corporate actions,\nclearly.",
+      "note": "Edited captures\nGenerated test signers",
+      "provenance": "Actual prototype UI \u00b7 localnet",
+      "cues": [
+        "BondTrace makes corporate actions traceable.",
+        "Localnet, test assets and generated signers.",
+        "An edited prototype demonstration."
+      ],
+      "crop": [
+        0.17,
+        0.15,
+        0.99,
+        1
+      ]
+    },
+    {
+      "id": "scene-02",
+      "duration": 13,
+      "image": "docs/evidence/ui/run2-bootstrap-confirmed.jpg",
+      "eyebrow": "01 / ISSUE CONSOLE",
+      "title": "One clear\nlifecycle",
+      "fact": "Coupon\nPrincipal\nVote",
+      "note": "Anchor rules\nSPL test tokens",
+      "provenance": "Captured local UI \u00b7 generated test signers",
+      "cues": [
+        "BondTrace handles three corporate actions on Solana.",
+        "This walkthrough uses captured prototype screens.",
+        "Issuer and investor views share authoritative chain state."
+      ],
+      "crop": [
+        0.17,
+        0.12,
+        0.995,
+        1
+      ],
+      "clip": "artifacts/demo/clips/bootstrap.mp4"
+    },
+    {
+      "id": "scene-03",
+      "duration": 16,
+      "image": "docs/evidence/ui/run2-registry.jpg",
+      "eyebrow": "02 / HOLDER REGISTRY",
+      "title": "Fully\nprefunded",
+      "fact": "18 bonds\n18,900 reserved",
+      "note": "Three generated investors\nPositions: 10 / 5 / 3",
+      "provenance": "Initial allocation \u00b7 test settlement units",
+      "cues": [
+        "Three generated investors receive eighteen test bonds.",
+        "Holdings begin at ten, five and three.",
+        "All coupon and principal obligations are prefunded.",
+        "Reserve: eighteen thousand nine hundred test units."
+      ],
+      "crop": [
+        0.185,
+        0.43,
+        0.977,
+        1.0
+      ]
+    },
+    {
+      "id": "scene-04",
+      "duration": 17,
+      "image": null,
+      "eyebrow": "03 / RECORD DATE",
+      "title": "Rights,\nrecorded",
+      "fact": "900 coupon\n18 recorded bonds",
+      "note": "Immutable snapshot\nReal chain clock",
+      "provenance": "Accelerated record date \u00b7 idle waiting cut",
+      "cut": true,
+      "cues": [
+        "At record date, transfers stop until capture.",
+        "A complete snapshot fixes coupon rights.",
+        "Eighteen bonds earn nine hundred test units.",
+        "Real chain time enforces this accelerated schedule."
+      ]
+    },
+    {
+      "id": "scene-05",
+      "duration": 16,
+      "image": null,
+      "eyebrow": "04 / HISTORICAL RIGHTS",
+      "title": "Eight now.\nTen then.",
+      "fact": "500 coupon\n8 current bonds",
+      "note": "Two bonds transferred\nOld rights preserved",
+      "provenance": "After record-date transfer \u00b7 historical coupon rights",
+      "cues": [
+        "Two bonds move after the snapshot.",
+        "The first investor now holds eight bonds.",
+        "Ten recorded bonds still earn five hundred.",
+        "Coupon ownership survives later changes in holdings."
+      ]
+    },
+    {
+      "id": "scene-06",
+      "duration": 14,
+      "image": null,
+      "eyebrow": "05 / SIGNING PREVIEW",
+      "title": "Inspect,\nthen sign",
+      "fact": "Exact message\nReal simulation",
+      "note": "Generated test signer\nNo human signature claimed",
+      "provenance": "Actual action preview \u00b7 generated test signer",
+      "cues": [
+        "Before signing, inspect the exact action.",
+        "Check signer, recipient, network and fee.",
+        "Simulation runs against the actual local validator.",
+        "Generated test signer."
+      ]
+    },
+    {
+      "id": "scene-07",
+      "duration": 15,
+      "image": null,
+      "eyebrow": "06 / COUPON PAYMENT",
+      "title": "Payment,\nconfirmed",
+      "fact": "500 paid\nOld coupon rights",
+      "note": "Test settlement tokens\nOne-shot claim protection",
+      "provenance": "Confirmed local coupon \u00b7 test tokens only",
+      "cues": [
+        "Claims transfer actual test settlement tokens.",
+        "The historical five hundred coupon is confirmed.",
+        "Repeated coupon claims are rejected.",
+        "Recovery reuses the original transaction signature."
+      ]
+    },
+    {
+      "id": "scene-08",
+      "duration": 16,
+      "image": "docs/evidence/ui/run2-voting-result.jpg",
+      "eyebrow": "07 / HOLDER VOTING",
+      "title": "Weighted.\nOne ballot.",
+      "fact": "10-bond weight\n1 recorded ballot",
+      "note": "Immutable proposal rights\nCash terms stay fixed",
+      "provenance": "Actual local proposal \u00b7 separate holder snapshot",
+      "cues": [
+        "Votes use a separate immutable holder snapshot.",
+        "The saved ballot has a ten-bond weight.",
+        "Each voter can cast only one ballot.",
+        "Voting is informational, without changing financial terms."
+      ],
+      "clip": "artifacts/demo/clips/cast-vote.mp4",
+      "crop": [
+        0.17,
+        0,
+        0.995,
+        1
+      ]
+    },
+    {
+      "id": "scene-09",
+      "duration": 16,
+      "image": null,
+      "eyebrow": "08 / MATURITY",
+      "title": "Current\nholders paid",
+      "fact": "18,000 principal\nPositions 8 / 7 / 3",
+      "note": "Accelerated maturity\nCurrent ownership snapshot",
+      "provenance": "Accelerated maturity \u00b7 idle waiting cut",
+      "cut": true,
+      "cues": [
+        "Maturity locks transfers and fixes redemption positions.",
+        "The positions are eight, seven and three.",
+        "Principal totals eighteen thousand test units.",
+        "Accelerated deadlines; idle waiting is cut."
+      ]
+    },
+    {
+      "id": "scene-10",
+      "duration": 16,
+      "image": null,
+      "eyebrow": "09 / REDEMPTION",
+      "title": "Pay. Burn.\nReconcile.",
+      "fact": "18 bonds retired\n0 supply \u00b7 0 vault",
+      "note": "Atomic principal and burn\nDuplicate claims rejected",
+      "provenance": "Completed local lifecycle \u00b7 all test bonds retired",
+      "cues": [
+        "Principal payment and bond burn are atomic.",
+        "All eighteen test bonds are retired.",
+        "Remaining supply and settlement vault reach zero.",
+        "Repeated principal claims are rejected."
+      ]
+    },
+    {
+      "id": "scene-11",
+      "duration": 16,
+      "image": "artifacts/demo/evidence/full-smoke-localnet-2026-10-07.json",
+      "eyebrow": "10 / SAVED PROOF",
+      "title": "Receipts,\nverifiable",
+      "fact": "11 confirmed\nactions",
+      "note": "Saved integration run\n7 Oct 2026 \u00b7 localnet",
+      "provenance": "Saved smoke evidence \u00b7 7 Oct 2026 18:46:40 UTC",
+      "cues": [
+        "Saved integration evidence records eleven confirmed actions.",
+        "Receipts retain signatures, slots and recovery identifiers.",
+        "This is verified localnet evidence.",
+        "Inspect the source and reproduce the lifecycle."
+      ],
+      "kind": "evidence"
+    },
+    {
+      "id": "scene-12",
+      "duration": 8,
+      "image": null,
+      "eyebrow": "REPRODUCIBLE PROTOTYPE",
+      "title": "Review\nand replay.",
+      "fact": "Localnet verified\nDevnet pending",
+      "note": "Judge access pending\nOwner controls submission",
+      "provenance": "Captured prototype \u00b7 no public deployment asserted",
+      "cues": [
+        "Review the source and replay BondTrace locally.",
+        "Judge access and submission are still pending."
+      ]
+    }
+  ]
+}

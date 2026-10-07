@@ -4,6 +4,13 @@
 .proofpilot/
 .local/
 node_modules/
+target/
+dist/
+apps/web/dist/
+coverage/
+.brand-preview/
+*.tsbuildinfo
+test-ledger/
 .env
 .env.*
 !.env.example
@@ -15,3 +22,13 @@ auth.json
 *.key
 *.log
 CODEX_SOLANA_WORLDSFAIR_START (1).md
+# Raw capture/render intermediates are local; final video, captions and provenance are deliverables.
+docs/evidence/ui/recording/
+artifacts/demo/__pycache__/
+artifacts/demo/audio/
+artifacts/demo/clips/
+artifacts/demo/inputs/
+artifacts/demo/rendered/
+artifacts/demo/qa/
+artifacts/demo/test-*.json
+artifacts/demo/head-scenes.json

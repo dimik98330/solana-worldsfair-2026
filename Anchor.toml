@@ -1,0 +1,20 @@
+[toolchain]
+anchor_version = "1.1.2"
+solana_version = "3.1.10"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.localnet]
+bondtrace = "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8"
+
+[programs.devnet]
+bondtrace = "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8"
+
+[provider]
+cluster = "Localnet"
+wallet = ".local/bondtrace/localnet/keys/issuer-keypair.json"
+
+[scripts]
+test = "npm run test:program"
