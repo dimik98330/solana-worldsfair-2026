@@ -1,0 +1,685 @@
+{
+  "schema": "product-research-evidence-v1",
+  "mode": "coach",
+  "stages": [
+    "discover",
+    "validate"
+  ],
+  "decision_context": "general",
+  "sources": [
+    {
+      "id": "splits",
+      "url": "https://splits.org/protocol/help/split-contract/",
+      "kind": "current_primary",
+      "claim": "Документация описывает распределение ETH/ERC20 по долям и изменяемую/неизменяемую конфигурацию.",
+      "quote": "Split distributes ETH and ERC20 tokens according to pre-defined ownership shares.",
+      "stance": "contradicts_generic_novelty",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "streamflow",
+      "url": "https://streamflow.finance/",
+      "kind": "current_primary",
+      "claim": "Первичная страница описывает Solana distribution, vesting, выплаты и SDK.",
+      "quote": "Manage token distribution with the Streamflow application and SDK.",
+      "stance": "substitute",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "itch",
+      "url": "https://itch.io/docs/creators/payments",
+      "kind": "current_primary",
+      "claim": "Direct mode платит одному аккаунту; collected mode поддерживает co-op bundles.",
+      "quote": "No support for co-op bundles",
+      "quote_context": "Ограничение относится только к Direct to you. Collected by itch.io поддерживает promotions that split payments across multiple sellers.",
+      "stance": "substitute",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "x402_receipts",
+      "url": "https://docs.x402.org/extensions/offer-receipt",
+      "kind": "current_primary",
+      "claim": "Официальное расширение x402 уже предоставляет подписанные предложения и receipts.",
+      "quote": "Signed offers and receipts are portable, verifiable artifacts that any third party can check.",
+      "stance": "contradicts_generic_novelty",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "x402_idempotency",
+      "url": "https://docs.x402.org/extensions/payment-identifier",
+      "kind": "current_primary",
+      "claim": "В официальной документации есть расширение Payment-Identifier (Idempotency).",
+      "quote": "Payment-Identifier (Idempotency)",
+      "stance": "contradicts_generic_novelty",
+      "scope": "Открыта страница; runtime/API не тестировались.",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "x402api",
+      "url": "https://x402api.com/docs/payments/x402/receipts",
+      "kind": "current_primary",
+      "claim": "Vendor описывает signed finalized-payment record с business bindings.",
+      "quote": "A production x402 receipt is an immutable, Ed25519-signed record of one exact finalized payment.",
+      "stance": "direct_competitor",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "p402",
+      "url": "https://p402.io/receipts",
+      "kind": "current_primary",
+      "claim": "Vendor описывает per-event settlement receipts для AI на Base.",
+      "quote": "Issue receipts for every payable AI work item.",
+      "stance": "direct_competitor",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "repairdesk",
+      "url": "https://help.repairdesk.co/portal/en/kb/articles/asset-management",
+      "kind": "current_primary",
+      "claim": "Учет устройства включает repair history, IMEI/serial, tickets и activity log.",
+      "quote": "Track work history of a device",
+      "stance": "noncrypto_substitute",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "arianee",
+      "url": "https://www.arianee.com/en/platform",
+      "kind": "current_primary",
+      "claim": "Vendor описывает паспорт, lifecycle history, ownership transfer, technician/reseller role.",
+      "quote": "DPP data consultation, maintenance history, ownership transfer.",
+      "stance": "direct_adjacent",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "arianee_protocol",
+      "url": "https://docs.arianee.org/docs/new-retrieve-databuild-wallet",
+      "kind": "current_primary",
+      "claim": "Документация сочетает onchain и offchain passport data.",
+      "quote": "These events are attached to the Digital Passport History.",
+      "stance": "technical_context",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "guarantix_repo",
+      "url": "https://github.com/guarantixnftdev/GuarantiX",
+      "kind": "current_primary",
+      "claim": "Публичная страница репозитория открыта; наличие страницы не подтверждает runtime или все обещанные функции.",
+      "quote": null,
+      "stance": "precedent_locator",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "gigsafe",
+      "url": "https://gigsafe.pixxmo.com/",
+      "kind": "current_primary",
+      "claim": "Страница с меткой DEVNET описывает gig, escrow funding, milestones, approval/release.",
+      "quote": "Client deposits USDC/SOL into a smart contract escrow.",
+      "stance": "contradicts_generic_escrow_novelty",
+      "caution": "Маркетинговые заявления об устранении всех counterparty risks и сравнения комиссий не принимались за факт.",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "solia",
+      "url": "https://freelance.solia.network/",
+      "kind": "current_primary",
+      "claim": "Страница описывает создать deal, fund escrow, complete/release.",
+      "quote": "Set terms, scope, and milestones before work starts",
+      "stance": "direct_competitor",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "trustlesswork",
+      "url": "https://github.com/Trustless-Work/trustlesswork-solana",
+      "kind": "current_primary",
+      "claim": "Репозиторий описывает Solana milestone escrow и одно-/многоэтапные инструкции.",
+      "quote": "Trustless Work — Escrow-as-a-Service on Solana",
+      "stance": "direct_competitor",
+      "caution": "Не запускался, аудит и production status не проверены.",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "hedera",
+      "url": "https://docs.tokenization-studio.hedera.com/ats/user-guides/corporate-actions/",
+      "kind": "current_primary",
+      "claim": "Официальная документация ATS описывает coupons, record dates, holder snapshots.",
+      "quote": "For bond tokens, execute periodic interest payments to bondholders.",
+      "stance": "adjacent_substitute",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "tokeny",
+      "url": "https://docs.tokeny.com/docs/solutions-overview-1",
+      "kind": "current_primary",
+      "claim": "Enterprise tokenization suite; EVM и permissioned tokens.",
+      "quote": "Tokeny provides an enterprise-grade set of solutions to issue, manage and transfer tokenized securities.",
+      "stance": "adjacent_substitute",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "phantom",
+      "url": "https://help.phantom.com/articles/19142125651731",
+      "kind": "current_primary",
+      "claim": "Официальная помощь Phantom направляет Solana пользователя к Famous Fox's Revoker.",
+      "quote": "Open Famous Fox's Revoker.",
+      "stance": "existing_solution",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "compass",
+      "url": "https://solanacompass.com/tools/revoke-token-approvals-solana",
+      "kind": "current_primary",
+      "claim": "Vendor описывает delegate scan, amounts, batch revoke, SPL и Token-2022.",
+      "quote": "Covers both SPL Token and Token-2022 accounts",
+      "stance": "direct_competitor",
+      "caution": "Runtime не проверялся; некорректное обобщение vendor every dApp approval не использовано как техническое утверждение.",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    },
+    {
+      "id": "superteam_ideas",
+      "url": "https://superteam.fun/build/ideas",
+      "kind": "current_primary",
+      "claim": "Открытая страница дала оболочку каталога без конкретных карточек идей.",
+      "quote": null,
+      "stance": "coverage_gap",
+      "retrieved_at": "2026-10-07",
+      "retrieval_window_utc": "17:23–17:29",
+      "evidence_type": "inspected_public_page",
+      "confidence": "high_for_page_content_only",
+      "runtime_verified": false
+    }
+  ],
+  "corpus_searches": [
+    {
+      "operation": "search-projects",
+      "checked_at": "2026-10-07T17:27:05.477Z",
+      "http_status": 200,
+      "query": "repair warranty product passport issuer",
+      "results": [
+        {
+          "name": "Smart Product Passport ",
+          "slug": "smart-product-passport",
+          "url": "https://colosseum.com/projects/explore/smart-product-passport",
+          "hackathon": "Breakout",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:41:03.906Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "GuarantiX",
+          "slug": "guarantix",
+          "url": "https://colosseum.com/projects/explore/guarantix",
+          "hackathon": "Breakout",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:40:43.153Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "Safeout",
+          "slug": "safeout-1",
+          "url": "https://colosseum.com/projects/explore/safeout-1",
+          "hackathon": "Breakout",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:41:01.014Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "CERTIFY",
+          "slug": "certify",
+          "url": "https://colosseum.com/projects/explore/certify",
+          "hackathon": "Renaissance",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:43:33.061Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "QR Auth",
+          "slug": "qr-auth",
+          "url": "https://colosseum.com/projects/explore/qr-auth",
+          "hackathon": "Breakout",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:40:30.086Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "search-projects",
+      "checked_at": "2026-10-07T17:27:09.412Z",
+      "http_status": 200,
+      "query": "one milestone freelance escrow",
+      "results": [
+        {
+          "name": "PIVOX",
+          "slug": "pivox",
+          "url": "https://colosseum.com/projects/explore/pivox",
+          "hackathon": "Breakout",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:40:19.974Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "WorkProof Pay",
+          "slug": "workproof-pay",
+          "url": "https://colosseum.com/projects/explore/workproof-pay",
+          "hackathon": "Frontier",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:38:57.583Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "SHIELD-PAY",
+          "slug": "shield-pay",
+          "url": "https://colosseum.com/projects/explore/shield-pay",
+          "hackathon": "Frontier",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:37:47.987Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "Trustless Work ",
+          "slug": "trustless-work",
+          "url": "https://colosseum.com/projects/explore/trustless-work",
+          "hackathon": "Breakout",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:40:00.714Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "Nexcrow",
+          "slug": "nexcrow",
+          "url": "https://colosseum.com/projects/explore/nexcrow",
+          "hackathon": "Breakout",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:41:13.427Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "search-projects",
+      "checked_at": "2026-10-07T17:27:13.08Z",
+      "http_status": 200,
+      "query": "AI agent API payment receipts audit",
+      "results": [
+        {
+          "name": "AgentGate",
+          "slug": "agentgate",
+          "url": "https://colosseum.com/projects/explore/agentgate",
+          "hackathon": "Frontier",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:39:06.166Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "AgentPay",
+          "slug": "agentpay-5",
+          "url": "https://colosseum.com/projects/explore/agentpay-5",
+          "hackathon": "Frontier",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:38:51.408Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "Payjent",
+          "slug": "payjent",
+          "url": "https://colosseum.com/projects/explore/payjent",
+          "hackathon": "Frontier",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:39:15.101Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "OpenSecondBrain: Pay Memory for AI Agents",
+          "slug": "opensecondbrain:-pay-memory-for-ai-agents",
+          "url": "https://colosseum.com/projects/explore/opensecondbrain:-pay-memory-for-ai-agents",
+          "hackathon": "Frontier",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:39:23.004Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "Prova",
+          "slug": "prova-1",
+          "url": "https://colosseum.com/projects/explore/prova-1",
+          "hackathon": "Frontier",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:37:40.722Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "search-projects",
+      "checked_at": "2026-10-07T17:27:16.006Z",
+      "http_status": 200,
+      "query": "tokenized bond coupon corporate actions",
+      "results": [
+        {
+          "name": "Lacus",
+          "slug": "lacus",
+          "url": "https://colosseum.com/projects/explore/lacus",
+          "hackathon": "Frontier",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:39:44.261Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "Bond Hive",
+          "slug": "bond-hive",
+          "url": "https://colosseum.com/projects/explore/bond-hive",
+          "hackathon": "Renaissance",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:43:16.069Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "Action Finance",
+          "slug": "action-finance",
+          "url": "https://colosseum.com/projects/explore/action-finance",
+          "hackathon": "Frontier",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:39:09.705Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "Moose.Capital / Blinks",
+          "slug": "moose.capital-blinks",
+          "url": "https://colosseum.com/projects/explore/moose.capital-blinks",
+          "hackathon": "Radar",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:42:08.692Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "20APY",
+          "slug": "20apy",
+          "url": "https://colosseum.com/projects/explore/20apy",
+          "hackathon": "Radar",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:42:19.457Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "search-projects",
+      "checked_at": "2026-10-07T17:27:19.046Z",
+      "http_status": 200,
+      "query": "token delegate approval revocation wallet",
+      "results": [
+        {
+          "name": "Blockpal Smart Delegation",
+          "slug": "blockpal-smart-delegation",
+          "url": "https://colosseum.com/projects/explore/blockpal-smart-delegation",
+          "hackathon": "Breakout",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:40:37.124Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "Flame App",
+          "slug": "flame-app",
+          "url": "https://colosseum.com/projects/explore/flame-app",
+          "hackathon": "Radar",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:42:40.19Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "SMART WALLET ",
+          "slug": "smart-wallet",
+          "url": "https://colosseum.com/projects/explore/smart-wallet",
+          "hackathon": "Radar",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:42:38.425Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "OrbLocker",
+          "slug": "orblocker",
+          "url": "https://colosseum.com/projects/explore/orblocker",
+          "hackathon": "Frontier",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:36:55.178Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        },
+        {
+          "name": "Multisig Wallet",
+          "slug": "multisig-wallet",
+          "url": "https://colosseum.com/projects/explore/multisig-wallet",
+          "hackathon": "Radar",
+          "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+          "freshness": {
+            "projectsSyncedAt": "2026-09-29T16:42:11.319Z",
+            "embeddingsVersion": "1",
+            "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+          }
+        }
+      ]
+    }
+  ],
+  "corpus_details": [
+    {
+      "slug": "fideox",
+      "checked_at": "2026-10-07T17:27:57.705Z",
+      "http_status": 200,
+      "url": "https://colosseum.com/projects/explore/fideox",
+      "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+      "freshness": {
+        "projectsSyncedAt": "2026-09-29T16:38:16.326Z",
+        "embeddingsVersion": "1",
+        "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+      },
+      "limitations": "Карточка и archive-generated summaries прочитаны. Исходные videos/runtime самостоятельно не проверялись."
+    },
+    {
+      "slug": "guarantix",
+      "checked_at": "2026-10-07T17:28:00.618Z",
+      "http_status": 200,
+      "url": "https://colosseum.com/projects/explore/guarantix",
+      "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+      "freshness": {
+        "projectsSyncedAt": "2026-09-29T16:40:43.153Z",
+        "embeddingsVersion": "1",
+        "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+      },
+      "limitations": "Карточка и archive-generated summaries прочитаны. Исходные videos/runtime самостоятельно не проверялись."
+    },
+    {
+      "slug": "agentgate",
+      "checked_at": "2026-10-07T17:28:03.839Z",
+      "http_status": 200,
+      "url": "https://colosseum.com/projects/explore/agentgate",
+      "corpus_revision": "e10bd0f2ecb268e18c06e26ad2e62f9de16ee5643478cb5e0b7e0d50baba5982",
+      "freshness": {
+        "projectsSyncedAt": "2026-09-29T16:39:06.166Z",
+        "embeddingsVersion": "1",
+        "archiveIngestedAt": "2026-10-07T08:42:40.567Z"
+      },
+      "limitations": "Карточка и archive-generated summaries прочитаны. Исходные videos/runtime самостоятельно не проверялись."
+    }
+  ],
+  "first_corpus_search": {
+    "query": "revenue split game team payment",
+    "checked_at": "2026-10-07T17:26:33.562Z",
+    "http_status": 200,
+    "names": [
+      "Splitter",
+      "Fideox",
+      "SplitPact",
+      "Fuel-app",
+      "Koltena"
+    ],
+    "urls": [
+      "https://colosseum.com/projects/explore/splitter",
+      "https://colosseum.com/projects/explore/fideox",
+      "https://colosseum.com/projects/explore/splitpact",
+      "https://colosseum.com/projects/explore/fuel-app",
+      "https://colosseum.com/projects/explore/koltena"
+    ]
+  },
+  "unavailable": [
+    {
+      "url": "https://famousfoxes.com/revoke",
+      "state": "web_open_failed",
+      "conclusion": "Не проверено напрямую; подтверждено лишь направление из Phantom help."
+    },
+    {
+      "url": "https://docs.streamflow.finance/en/articles/9672916-token-payments",
+      "state": "web_open_failed",
+      "conclusion": "Использована доступная главная страница."
+    }
+  ],
+  "not_checked": [
+    "User interviews and actual recruitment",
+    "Competitor runtimes and onchain code audits",
+    "KASE API/sandbox and domain-expert access; full KASE listing read by lead, not this role",
+    "DeFi TVL/financial metrics: not needed for this shortlist",
+    "Dead project causes: no primary shutdown/postmortem evidence"
+  ],
+  "secrets_included": false
+}

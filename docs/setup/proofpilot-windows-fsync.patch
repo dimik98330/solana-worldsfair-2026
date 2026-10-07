@@ -1,0 +1,23 @@
+diff --git a/skills/proofpilot/scripts/install-dependencies.js b/skills/proofpilot/scripts/install-dependencies.js
+index 9a1e54a..e255dfc 100755
+--- a/skills/proofpilot/scripts/install-dependencies.js
++++ b/skills/proofpilot/scripts/install-dependencies.js
+@@ -908,7 +908,8 @@ export function syncPreparedTree(location) {
+     for (const name of fs.readdirSync(location)) syncPreparedTree(path.join(location, name));
+     syncInstallDirectory(location);
+   } else if (stat.isFile()) {
+-    const handle = fs.openSync(location, "r");
++    // Windows FlushFileBuffers requires a write-capable handle; preserve the flush.
++    const handle = fs.openSync(location, process.platform === "win32" ? "r+" : "r");
+     try { fs.fsyncSync(handle); } finally { fs.closeSync(handle); }
+   } else throw new Error(`Cannot persist unsupported special file: ${location}`);
+ }
+@@ -996,7 +997,7 @@ function copyPathDurably(source, destination, { symlinkTypes, onCreated } = {},
+     }
+     fs.copyFileSync(source, destination, fs.constants.COPYFILE_EXCL);
+     fs.chmodSync(destination, stat.mode & 0o777);
+-    const handle = fs.openSync(destination, "r");
++    const handle = fs.openSync(destination, process.platform === "win32" ? "r+" : "r");
+     try { fs.fsyncSync(handle); } finally { fs.closeSync(handle); }
+     return;
+   }

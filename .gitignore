@@ -1,0 +1,17 @@
+# Local capabilities and integration state are reproducibly installed outside Git.
+.agents/
+.codex/
+.proofpilot/
+.local/
+node_modules/
+.env
+.env.*
+!.env.example
+*keypair*.json
+id.json
+credentials*
+auth.json
+*.pem
+*.key
+*.log
+CODEX_SOLANA_WORLDSFAIR_START (1).md

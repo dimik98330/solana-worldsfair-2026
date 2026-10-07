@@ -1,0 +1,42 @@
+[
+  {
+    "id": "solana-new",
+    "repo": "sendaifun/solana-new",
+    "commit": "e81c261645035c0e902eaaa518ff58722d188bb7",
+    "tree": "60fce1f71bcb9f7968e2f25d65e1cdc9f77cb0ae",
+    "verifiedFiles": 221,
+    "bytes": 3286578
+  },
+  {
+    "id": "solana-dev",
+    "repo": "solana-foundation/solana-dev-skill",
+    "commit": "bb24c39dbdfc3afd27eb0540b9fdd2e4482c4e25",
+    "tree": "35a3f4f2eea5bfead4ec5cc023e62da71b409bdd",
+    "verifiedFiles": 34,
+    "bytes": 451596
+  },
+  {
+    "id": "colosseum-copilot",
+    "repo": "ColosseumOrg/colosseum-copilot",
+    "commit": "079bd44b0d4d221d6a893764d8ec6f5f4845707e",
+    "tree": "fe726259a1472cd9f494aefaa00dd9158ce924e0",
+    "verifiedFiles": 14,
+    "bytes": 141579
+  },
+  {
+    "id": "ethglobal-skills",
+    "repo": "ethglobal-skills/repo",
+    "commit": "88cc3afde25691a7a48ae9391ff6689f1ed00ddd",
+    "tree": "6f28bcde97ad3a1813b826dc1db1ec2dd3fb6725",
+    "verifiedFiles": 4,
+    "bytes": 18197
+  },
+  {
+    "id": "openai-docs",
+    "repo": "openai/skills",
+    "commit": "49f948faa9258a0c61caceaf225e179651397431",
+    "tree": "224b363928698e143876aef008232ed73d8e6f81",
+    "verifiedFiles": 10,
+    "bytes": 79418
+  }
+]
