@@ -7,7 +7,7 @@
 - Продукт: `C:\Users\dmitrii\Documents\solana`.
 - Source ProofPilot: `C:\Users\dmitrii\Documents\proofpilot-source`; commit e6c2a3c7af6b509cd5648884a017a610e68c739c, package 0.3.0 + раскрытый Windows fsync patch.
 - Skill root: `C:\Users\dmitrii\Documents\solana\.agents\skills`; основной entrypoint proofpilot/SKILL.md.
-- Единственный GitHub owner: **dimik98330**. [Приватный репозиторий](https://github.com/dimik98330/solana-worldsfair-2026), id1409138286. REST identity и private=true проверены; push после staging/review.
+- Единственный GitHub owner: **dimik98330**. [Приватный репозиторий](https://github.com/dimik98330/solana-worldsfair-2026), id1409138286. Research scaffold отправлен: initial commit a1b20d5. REST подтвердил owner/private=true; local/remote HEAD совпали. Позднейший checkpoint-коммит содержит только итоги проверки, не изменения продукта.
 - Коннектор приложения сообщил zi-radio; для записи не использовался. Выбран существующий Git Credential Manager dimik98330; account selection и commit author настроены только локально.
 
 ## Выполнение промпта 1
