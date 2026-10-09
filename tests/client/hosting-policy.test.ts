@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
-import {hostingAuthorized,persistentMountPresent,readHostingPolicy} from '../../server/hosting-policy.ts';
+import {hostingAuthorized,requiresOperatorAuthorization,persistentMountPresent,readHostingPolicy} from '../../server/hosting-policy.ts';
 const root=path.resolve('.local/tests/hosting-policy');
 const credentials={user:'jury-test',password:'only-a-synthetic-test-password-123'};
 const valid:NodeJS.ProcessEnv={BONDTRACE_DEPLOYMENT:'hosted',BONDTRACE_NETWORK:'devnet',BONDTRACE_ENABLE_DEMO:'false',BONDTRACE_PUBLIC_ORIGIN:'https://bondtrace.example.com',BONDTRACE_HTTP_USER:credentials.user,BONDTRACE_HTTP_PASSWORD:credentials.password,BONDTRACE_PERSISTENT_ROOT:'.local/hosted',BONDTRACE_DATA_DIR:'.local/hosted/devnet'};
@@ -26,6 +26,11 @@ test('hosted basic authentication refuses missing, wrong and noncanonical input'
  assert.equal(hostingAuthorized(policy,auth),true);
  for(const value of [undefined,'Bearer token','Basic !!!',auth+' ',auth.slice(0,-4),'Basic '+Buffer.from('other:'+credentials.password).toString('base64')])assert.equal(hostingAuthorized(policy,value),false);
  assert.equal(JSON.stringify(policy).includes(credentials.password),false);
+});
+test('operator HTTP auth protects only metadata and readiness, preserving ordinary public wallet routes',()=>{
+ for(const route of ['/api/metadata','/api/metadata/backup','/api/metadata/future-operation','/api/runtime/readiness'])assert.equal(requiresOperatorAuthorization(route),true,route);
+ for(const route of ['/','/assets/entry.js','/healthz','/api/health','/api/state','/api/program','/api/actions/prepare','/api/transactions/submit','/api/demo/bootstrap','/api/metadatabase/backup'])assert.equal(requiresOperatorAuthorization(route),false,route);
+ const policy=readHostingPolicy(valid,root);assert.equal(hostingAuthorized(policy,undefined),false,'Mandatory operator credentials remain enforced');
 });
 test('durability check requires exact mount and rejects ephemeral filesystem claims',()=>{
  const line='29 23 0:26 / /app/.local/hosted rw,relatime - ext4 /dev/sdb rw';

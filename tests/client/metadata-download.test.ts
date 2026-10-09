@@ -12,6 +12,7 @@ import {DatabaseSync} from 'node:sqlite';
 async function start(options:{hosted?:boolean;large?:boolean;unsafeBackups?:boolean;holdBackupResponse?:boolean}={}){
   const directory=path.resolve('.local/tests/metadata-download-'+crypto.randomUUID()),data=path.join(directory,'data');
   fs.mkdirSync(data,{recursive:true});
+  const build=path.join(directory,'ui');fs.mkdirSync(path.join(build,'assets'),{recursive:true});fs.writeFileSync(path.join(build,'index.html'),'<html>Public hosted fixture</html>');fs.writeFileSync(path.join(build,'assets','entry.js'),'console.log("public fixture")');
   // Malformed sentinels are synthetic test data, never actual credential material.
   fs.mkdirSync(path.join(data,'keys'));fs.writeFileSync(path.join(data,'keys','do-not-export.json'),'SYNTHETIC-NONPUBLIC-SENTINEL');
   fs.writeFileSync(path.join(data,'.env'),'SYNTHETIC-NONPUBLIC-SENTINEL');
@@ -24,7 +25,7 @@ async function start(options:{hosted?:boolean;large?:boolean;unsafeBackups?:bool
   // completion/abort boundary deterministic on fast loopback kernels.
   const hold=`import http from 'node:http';const end=http.ServerResponse.prototype.end;http.ServerResponse.prototype.end=function(...args){if(this.req.url==='/api/metadata/backup'&&this.statusCode===200){this.flushHeaders();setTimeout(()=>{if(!this.destroyed)end.apply(this,args);},2000);return this;}return end.apply(this,args);};await import('./server/index.ts');`;
   const args=options.holdBackupResponse?['--import','tsx','--input-type=module','--eval',hold]:['--import','tsx','server/index.ts'];
-  const child=spawn(process.execPath,args,{cwd:process.cwd(),windowsHide:true,env:{...process.env,PORT:String(port),BONDTRACE_DATA_DIR:data,BONDTRACE_WEB_DIST:undefined,
+  const child=spawn(process.execPath,args,{cwd:process.cwd(),windowsHide:true,env:{...process.env,PORT:String(port),BONDTRACE_DATA_DIR:data,BONDTRACE_WEB_DIST:build,
     BONDTRACE_DEPLOYMENT:options.hosted?'hosted':'local',BONDTRACE_NETWORK:options.hosted?'devnet':'localnet',SOLANA_RPC_URL:options.hosted?'https://api.devnet.solana.com':'http://127.0.0.1:9',BONDTRACE_ENABLE_DEMO:'false',BONDTRACE_STORAGE_BACKEND:options.hosted?'postgres':'sqlite',
     BONDTRACE_PUBLIC_ORIGIN:'https://bondtrace-test.example',BONDTRACE_HTTP_USER:credentials.user,BONDTRACE_HTTP_PASSWORD:credentials.password,
     DATABASE_URL:options.hosted?'postgresql://synthetic:synthetic@127.0.0.1:9/synthetic?sslmode=require':undefined,BONDTRACE_DATABASE_TLS:'verify-full',BONDTRACE_DATABASE_NAMESPACE:'metadata-download-test'}});
@@ -46,7 +47,7 @@ async function waitClean(data:string){
 test('portable HTTP backup contains a consistent verified SQLite and safe manifest without keys or local paths',async()=>{
   const app=await start({large:true});
   try{
-    const response=await app.get('/api/metadata/backup');assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'no-store');assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.match(response.headers.get('content-disposition')??'',/^attachment; filename="bondtrace-metadata-.*\.sqlite\.json"$/);
+    const response=await app.get('/api/metadata/backup',{authorization:app.authorization});assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'no-store');assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.match(response.headers.get('content-disposition')??'',/^attachment; filename="bondtrace-metadata-.*\.sqlite\.json"$/);
     const envelope=await response.json();assert.equal(envelope.schema,'bondtrace.metadata-download.v1');assert.equal(envelope.database.encoding,'base64');assert.deepEqual(envelope.manifest.integrityCheck,['ok']);assert.equal(envelope.manifest.source.backend,'sqlite');
     const bytes=Buffer.from(envelope.database.data,'base64'),hash=createHash('sha256').update(bytes).digest('hex');assert.equal(bytes.toString('base64'),envelope.database.data);assert.equal(hash,envelope.manifest.sha256);assert.equal(hash,response.headers.get('x-bondtrace-sqlite-sha256'));assert.equal(bytes.length,envelope.manifest.bytes);assert.equal(bytes.subarray(0,16).toString(),'SQLite format 3\0');
     const serialized=JSON.stringify(envelope);assert.equal(serialized.includes(app.directory),false);assert.equal(serialized.includes('SYNTHETIC-NONPUBLIC-SENTINEL'),false);assert.equal('path' in envelope.manifest,false);assert.equal('path' in envelope.manifest.source,false);
@@ -61,16 +62,33 @@ test('portable HTTP backup contains a consistent verified SQLite and safe manife
     const replay=await app.get('/api/metadata/backup');assert.equal(replay.status,200);await replay.arrayBuffer();await waitClean(app.data);
   }finally{await app.close();}
 });
-test('hosted HTTP backup inherits global Basic auth while public health remains data-free',async()=>{
+test('hosted HTTP protects operator backup and readiness while ordinary application routes stay public',async()=>{
   const app=await start({hosted:true});
   try{
     assert.deepEqual(await(await app.get('/healthz')).json(),{status:'alive'});
+    const html=await app.get('/');assert.equal(html.status,200);assert.equal(html.headers.has('www-authenticate'),false);assert.match(await html.text(),/Public hosted fixture/);
+    const staleLogin=await app.get('/',{authorization:'Basic stale-browser-login'});assert.equal(staleLogin.status,200);assert.equal(staleLogin.headers.has('www-authenticate'),false);
+    const asset=await app.get('/assets/entry.js');assert.equal(asset.status,200);assert.equal(asset.headers.has('www-authenticate'),false);assert.match(await asset.text(),/public fixture/);
+    const invalidReference=await app.get('/api/operations/x');assert.equal(invalidReference.status,400);assert.equal((await invalidReference.json()).error.code,'INVALID_OPERATION_ID');assert.equal(invalidReference.headers.has('www-authenticate'),false);
     for(const authorization of [undefined,'Basic !!!','Basic '+Buffer.from('synthetic:wrong').toString('base64')]){
       const response=await app.get('/api/metadata/backup',authorization?{authorization}:{});assert.equal(response.status,401);assert.match(response.headers.get('www-authenticate')??'',/^Basic /);assert.equal((await response.json()).error.code,'AUTH_REQUIRED');
     }
+    const readiness=await fetch(app.origin+'/api/runtime/readiness',{method:'POST',headers:{'content-type':'application/json'},body:'{}',signal:AbortSignal.timeout(5000)});assert.equal(readiness.status,401);assert.equal((await readiness.json()).error.code,'AUTH_REQUIRED');
     // Authenticated input rejection happens before opening any remote database.
     const authenticated=await app.get('/api/metadata/backup?file=anything',{authorization:app.authorization});assert.equal(authenticated.status,400);assert.equal((await authenticated.json()).error.code,'INVALID_REQUEST');
     assert.equal(fs.existsSync(path.join(app.data,'backups')),false);assert.equal(fs.existsSync(path.join(app.data,'metadata.sqlite')),false);
+  }finally{await app.close();}
+});
+test('public hosted transaction routes retain origin, demo and unsigned-message rejection without HTTP passwords',async()=>{
+  const app=await start({hosted:true});
+  const post=(route:string,value:unknown,origin='https://bondtrace-test.example')=>fetch(app.origin+route,{method:'POST',headers:{'content-type':'application/json',origin},body:JSON.stringify(value),signal:AbortSignal.timeout(5000)});
+  try{
+    const foreign=await post('/api/actions/prepare',{},'https://foreign.invalid');assert.equal(foreign.status,403);assert.equal((await foreign.json()).error.code,'ORIGIN_DENIED');
+    const demo=await post('/api/demo/bootstrap',{operationId:'public-demo-rejection'});assert.equal(demo.status,403);assert.equal((await demo.json()).error.code,'DEMO_DISABLED');
+    const malformed=await post('/api/transactions/submit',{signedTransactionBase64:'!!!'});assert.equal(malformed.status,400);assert.equal((await malformed.json()).error.code,'INVALID_TRANSACTION');
+    const unsigned=await post('/api/transactions/submit',{});assert.equal(unsigned.status,400);assert.equal((await unsigned.json()).error.code,'INVALID_TRANSACTION');
+    for(const response of [foreign,demo,malformed,unsigned])assert.equal(response.headers.has('www-authenticate'),false);
+    assert.equal(fs.existsSync(path.join(app.data,'metadata.sqlite')),false);assert.equal(fs.existsSync(path.join(app.data,'backups')),false);
   }finally{await app.close();}
 });
 test('backup rejects user paths and foreign origins before touching export scratch',async()=>{

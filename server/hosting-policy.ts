@@ -27,6 +27,10 @@ export function readHostingPolicy(env:NodeJS.ProcessEnv=process.env,root=process
   return {mode:'hosted',bindHost:'0.0.0.0',publicOrigin:origin.origin,authorizationDigest:authDigest(user+':'+password),persistentRoot:persistent,dataDirectory:data,storageBackend:'sqlite'};
 }
 function authDigest(value:string){return createHash('sha256').update(value).digest();}
+/** Public application routes use wallet authorization; these operator routes retain HTTP auth. */
+export function requiresOperatorAuthorization(pathname:string){
+  return pathname==='/api/runtime/readiness'||pathname==='/api/metadata'||pathname.startsWith('/api/metadata/');
+}
 export function hostingAuthorized(policy:HostingPolicy,authorization:string|undefined){
   if(policy.mode==='local')return true;
   if(!authorization||authorization.length>2048||!authorization.startsWith('Basic '))return false;

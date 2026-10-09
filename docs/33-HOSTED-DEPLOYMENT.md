@@ -2,6 +2,14 @@
 
 Stage: owner explicitly authorized free Neon + Render deployment, with owner-operated account login. This supersedes the earlier preparation-only hosting gate. Public repository visibility, paid plans, mainnet/real assets and final contest submission remain unauthorized.
 
+## Latest actual stage
+
+Render Free nativeNode service `srv-db4g7oqd0e5s73espfqg`, Blueprint `exs-db4g3enlk1mc73fu3kf0`, actual URL https://bondtrace-devnet.onrender.com created. Deployed11b01f8. Actual HTTPS liveness, entryJS/CSS hashes, Neon16.15 verifiedTLS, devnetgenesis, correctorigin and disabledgeneratedsigning passed; financialReady:false because the frozen Solana program is not deployed yet. Initial origin-editor failure retained separately; a verified field input plus redeploy repaired it.
+
+Owner rejected the user-facing HTTP login wall. The application/ordinary API becomes public, financial Ed25519/role checks unchanged; BasicAuth remains only on operator metadata/readiness.14targeted tests/typecheck passed and fresh source critic found no P0/P1. Publicpreview/status metadata and free-resource availability remain bounded prototype limits. Actual public-auth redeploy/HTTP readback is the next check.
+
+Owner-operated GitHub/CAPTCHA faucet funded the isolated6fK…payer5testSOL; liveRPC confirmed. Two bounded CLI uploads left a valid persistent bufferE7… with partial exact code. Same-buffer paced repair is in progress; no new rent deposit or source/program-ID substitution. Program upload is not complete until the full canonical deployed payload equals frozenSHA761… and the hosted API reports known-match. Original upload failures/signatures/buffer/key material remain preserved in ignored evidence; no ephemeral recovery mnemonic printed.
+
 Lead applied installed ProofPilot coach, solana-dev, ECC deployment-patterns and documented CUA browser controls; a disjoint read-only devnet release check used ProofPilot/Solana security. Existing source commit9c9a6bb and private repository were clean at entry. No original localnet ledger, signer or public evidence was replaced.
 
 ## Neon

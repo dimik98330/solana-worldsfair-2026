@@ -10,7 +10,7 @@ import {getProgramIdentity} from './program-identity.ts';
 import {runCouponSettlement} from './coupon-run.ts';
 import {planLifecycleRun,runLifecycle,lifecycleRunStatus} from './lifecycle-run.ts';
 import {resolveStaticBuild,staticAssetInside} from './static-build.ts';
-import {hostingAuthorized} from './hosting-policy.ts';
+import {hostingAuthorized,requiresOperatorAuthorization} from './hosting-policy.ts';
 import {receipt} from './journal.ts';
 import {captureRetainedProof,publicExecutionProof} from './proof-retention.ts';
 import {bootstrap} from './seed.ts';
@@ -93,7 +93,7 @@ const server=http.createServer(async(req,res)=>{
   try{
     const url=new URL(req.url??'/','http://127.0.0.1');
     if(req.method==='GET'&&url.pathname==='/healthz')return send(res,200,{status:'alive'});
-    if(!hostingAuthorized(hosting,req.headers.authorization)){res.setHeader('www-authenticate','Basic realm="BondTrace", charset="UTF-8"');throw new AppError('AUTH_REQUIRED','Authenticate to this private test deployment',401);}
+    if(requiresOperatorAuthorization(url.pathname)&&!hostingAuthorized(hosting,req.headers.authorization)){res.setHeader('www-authenticate','Basic realm="BondTrace operator", charset="UTF-8"');throw new AppError('AUTH_REQUIRED','Authenticate to access operator controls',401);}
     if(req.method==='POST'&&req.headers.origin&&!allowedOrigins.has(req.headers.origin))throw new AppError('ORIGIN_DENIED','Use the configured BondTrace application origin',403);
     if(req.method==='GET'&&url.pathname==='/api/metadata/backup')return downloadMetadataBackup(req,res,url);
     if(req.method==='GET'&&url.pathname==='/api/health'){const chain=await chainIdentity(),program=await getProgramIdentity();return send(res,200,{status:program.signingAllowed?'ok':'read-only',demo:demoEnabled,storage:storageDiagnostics(),chain,program});}
