@@ -47,8 +47,10 @@ export async function tokenAmount(key: string, mint: string, allowClosedCanonica
   return decoded.amount;
 }
 export async function getState(selected?: string) {
-  const f = fixture(), key = selected ?? f?.bond;
-  const result: any = {network, rpcUrl, programId: PROGRAM_ID, connected: true, instrument: null, holders: [], coupons: [], redemption: null, proposals: [], activity: activities(), instruments: listCatalog().map(item => ({address: item.bond, name: item.name, issuer: item.roles.issuer, source: item.source})), demo: {available: demoEnabled, ready: false, accelerated: true, roleWallets: f?.roles ?? {}}};
+  const f = fixture(), catalog = listCatalog().sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt) || (a.bond < b.bond ? -1 : a.bond > b.bond ? 1 : 0));
+  // Catalog metadata selects an address only; the same coherent chain validation below remains mandatory.
+  const key = selected ?? f?.bond ?? catalog[0]?.bond;
+  const result: any = {network, rpcUrl, programId: PROGRAM_ID, connected: true, instrument: null, holders: [], coupons: [], redemption: null, proposals: [], activity: activities(), instruments: catalog.map(item => ({address: item.bond, name: item.name, issuer: item.roles.issuer, source: item.source})), demo: {available: demoEnabled, ready: false, accelerated: true, roleWallets: f?.roles ?? {}}};
   if (!key) { const clock = await chainClock(); result.serverTime = isoTimestamp(clock.timestamp); return result; }
   const view = await readChainView(key, {proposalIds: () => readCatalog(key)?.proposalIds ?? []});
   const {bond, address: bondAddress, clock} = view, meta = metadata(key, bond), reconciliation = reconcile(view);

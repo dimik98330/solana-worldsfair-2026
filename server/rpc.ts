@@ -5,6 +5,7 @@ import {readJson,writeJson,transactionSync,assertStorageRelayReady} from './stor
 import {receipt,updateReceipt,saveReceipt,boundReceiptFinality,retainedReceiptFinality,type ReceiptRecord,type FinalityObservation,type FinalityLevel} from './journal.ts';
 import {chainIdentity} from './chain-identity.ts';
 import {getSignatureFromTransaction, getTransactionDecoder} from '@solana/kit';
+import {createRpcControl,RpcControlError} from './rpc-control.ts';
 export class AppError extends Error { constructor(readonly code:string,message:string,readonly status=400,readonly retryable=false,readonly definitive=false){super(message);} }
 // Pinned Kit RPC TransactionError shape. Unknown variants fail closed rather
 // than turning a malformed transport response into a financial rejection.
@@ -20,10 +21,11 @@ export function validTransactionError(value:unknown):boolean{
  return false;
 }
 let next=0;
+const rpcControl=createRpcControl();
 export async function rpc<T=any>(method:string,params:unknown[]=[],timeoutMs=18000):Promise<T>{
   const id=++next;
-  if(method==='sendTransaction')assertStorageRelayReady();
-  let response:Response;try{response=await fetch(rpcUrl,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id,method,params}),redirect:'error',signal:AbortSignal.timeout(timeoutMs)});}catch{throw new AppError('RPC_UNAVAILABLE','The configured test RPC did not respond',503,true);}
+  let body:string;try{body=JSON.stringify({jsonrpc:'2.0',id,method,params});}catch{throw new AppError('RPC_UNAVAILABLE','The configured test RPC did not respond',503,true);}
+  try{return await rpcControl.request({network,url:rpcUrl,method,body,timeoutMs,beforeSend:method==='sendTransaction'?assertStorageRelayReady:undefined},async response=>{
   if(!response.ok)throw new AppError(response.status===429?'RPC_RATE_LIMITED':'RPC_UNAVAILABLE',`RPC returned HTTP ${response.status}`,503,true);
   let result:any;try{result=await response.json();}catch{throw new AppError('RPC_INVALID','The RPC response is not valid JSON',503,true);}
   if(!result||typeof result!=='object'||Array.isArray(result)||result.jsonrpc!=='2.0'||result.id!==id||(('result' in result)===('error' in result)))throw new AppError('RPC_INVALID','The RPC envelope does not match this request',503,true);
@@ -33,6 +35,7 @@ export async function rpc<T=any>(method:string,params:unknown[]=[],timeoutMs=180
     throw new AppError(definitive?'PREFLIGHT_REJECTED':'RPC_ERROR',definitive?'The chain preflight rejected this transaction; it was not relayed.':'The RPC could not complete this read. Retain any existing recovery identifier.',definitive?400:503,!definitive,definitive);
   }
   return result.result;
+  });}catch(error){if(error instanceof RpcControlError)throw new AppError(error.code,error.message,error.status,error.retryable);throw error;}
 }
 export async function account(key:string){const result=await rpc('getAccountInfo',[key,{encoding:'base64',commitment:'confirmed'}]);if(!result||!Number.isSafeInteger(result.context?.slot)||result.context.slot<0||!('value' in result)||(result.value!==null&&typeof result.value!=='object'))throw new AppError('RPC_INVALID','The RPC account response is malformed',503,true);return {slot:result.context.slot,value:result.value};}
 export async function chainClock(){const {value}=await account('SysvarC1ock11111111111111111111111111111111');if(!value)throw new AppError('CLOCK_UNAVAILABLE','Chain clock unavailable',503);const data=Buffer.from(value.data[0],'base64');if(data.length<40)throw new AppError('CLOCK_INVALID','Invalid Clock account',503);return {slot:data.readBigUInt64LE(0),timestamp:data.readBigInt64LE(32)};}
