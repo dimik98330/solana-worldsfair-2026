@@ -61,7 +61,7 @@ typography:
     lineHeight: 1.55
   button:
     fontFamily: "'Manrope Variable', 'Manrope', sans-serif"
-    fontSize: "15px"
+    fontSize: "16px"
     fontWeight: 650
     lineHeight: 1.45
   label:
@@ -146,8 +146,8 @@ components:
     padding: "9px 16px"
     height: "48px"
   button-ghost:
-    backgroundColor: "transparent"
-    textColor: "{colors.muted}"
+    backgroundColor: "{colors.input}"
+    textColor: "{colors.foreground}"
     typography: "{typography.button}"
     rounded: "{rounded.control}"
     padding: "9px 16px"
@@ -160,7 +160,7 @@ components:
     height: "56px"
   navigation-active:
     backgroundColor: "{colors.nav-active}"
-    textColor: "#c3d7ff"
+    textColor: "{colors.foreground}"
     rounded: "{rounded.control}"
     padding: "12px"
     height: "48px"
@@ -195,6 +195,8 @@ components:
 BondTrace is an operating issuer and holder application. Deep navy surfaces contain payment records, clear tabular figures and available actions. Inset fields distinguish editable data from the ledger; compact inspectors keep the selected financial object in view. The original open outlined BondTrace lettering is the visual signature.
 
 The implemented world preserves the owner's dark navy direction, English/Russian switch, full desktop width, single field focus edge and existing exact financial/signing semantics. The product presentation is separate. Product commitments live in [PRODUCT.md](PRODUCT.md); the current replacement brief is [docs/frontend/ECC-REDESIGN.md](docs/frontend/ECC-REDESIGN.md). Earlier light-canvas and Settlement Ledger captures are historical.
+
+The9October voting/interaction revision is described in [INTERACTION-RESULTS.md](docs/frontend/INTERACTION-RESULTS.md). Current controls, native navigation and vote layouts below reflect that implemented source. Earlier capture timestamps describe their own source cutoff; current QA and native-window limitations are recorded separately in docs/design-qa.md.
 
 **Key Characteristics:**
 
@@ -256,13 +258,13 @@ Payments pairs a fluid ledger with a 304px reserve/action inspector; at 1800px t
 
 The payment table reserves a 144px action track from 641–1800px. Its remaining width is split 36/20/24/20% across holder, recorded quantity, payment and status. Above 1800px, the tracks use 340px holder, 180px quantity, 240px payment and 160px status, with remaining room for actions. At exactly 1800px the later 641–1800px rule applies. Phone rows pair holder/amount, then recorded quantity/status, with a full-row details action; search and status filters remain usable. The first phone payment begins at 699.328125px in the saved 390×844 capture, so it is visible but not wholly contained in that viewport.
 
-Registry has a name/address search and labeled phone records. At 1600px its holder/address/quantity/value tracks are 340/300/180/220px; at 640px it recomposes to two-column record groups with name, address and action spanning both tracks. Search fields fill the phone toolbar.
+Registry has a name/address search and labeled narrow records. At1600px its holder/address/quantity/value tracks are340/300/180/220px; below900px it recomposes to two-column record groups with name, address and action spanning both tracks. Labels wrap within minmax(0,1fr) tracks with16px gaps. Action buttons retain16px horizontal padding; native holder links have40px minimum height. Search fields fill the phone toolbar.
 
 Issuer creation uses three numbered stages and fills the task canvas. The Terms step pairs a fluid form with a 300px summary and 32px gap; from 761–1179px this summary becomes 240px with a 24px gap; below 760px it follows the fields. Broad terms use a second bounded 240–420px field track at 1600px. Coupon amount/date/date tracks use a 180–260px amount and two fluid date controls; 761–1179px keeps the amount above a pair of date controls; below 760px all stack. Form-body padding is 32px, reducing to 20px at 760px and 16px at 420px. Existing placement/reserve work pairs a fluid main track with 360px side work, stacking below 1280px. Do not restore the former 1360px main or 900px form caps.
 
 Portfolio places the inspected account and its three real balance totals before recorded payment rows. Account identity uses a 360px flex basis and minimum width bounded by the lesser of its available width and 320px; its parent wraps controls instead of collapsing the identity text. Rows use fluid 230/140/180/220px minimum tracks; at 1800px they use 460px description, 240px amount, 240px payment date and the remaining action track. Below 1180px the rows recompose into two tracks; below 640px the name spans the row and date/amount sit together above state/actions. Phone totals become label/value rows. Inspection does not grant signing authority.
 
-Voting pairs results with a 300–360px inspector; at 1800px it uses 400px. The inner result table and its summary have a 720px maximum width, keeping labels and values together while the panel and workspace continue to fill available desktop width. Below 1180px the inspector is 300px; below 900px it stacks. For an open proposal at narrow widths, eligible ballot context precedes results; below 640px its controls become one column. Closed-proposal status stays explicit.
+Voting uses a dedicated vote-page system with results, deadline/rights context and a useful action area. At1800px the result track is bounded to520–720px, context fills available width, and actions use360–440px. Below1450px context moves under results/actions; below900px open ballot actions lead; below640px areas and vote choices stack. The full workspace remains uncapped. Subject26px/24phone, result labels17px and normal totals32px/30phone support clear scanning. Closed state explicitly ends voting and offers history; open states offer account selection, unsigned vote review or read recovery according to actual rights. Original proposal text and exact weights remain unchanged; no governance approval/quorum result is inferred. Long weights use24px/20phone one-line local scrolling, full raw title/ARIA and bounded grid tracks. Portfolio selector/action controls stack below640px.
 
 Receipt details and display settings use ordinary dialogs. Receipt date pairs stack on phones, receipt activity becomes icon/content with the state/action beneath content, and the drawer occupies at most 600px. Settings uses labeled native selects and a date preview that states its timezone. The calendar has its own protected editing layout described below.
 
@@ -284,15 +286,17 @@ The normative corner hierarchy distinguishes compact badges, numbered markers, c
 
 The original `apps/web/public/brand/bondtrace-lettering.svg` is an open outlined path drawing with rounded terminals. Its desktop width is 184px; the mobile shell uses 162px. The compact companion/favicon is derived from the same original lettering. Do not replace this with a font-derived wordmark or unrelated badge.
 
-Lucide is the implemented icon family, with a consistent stroke width of 1.75. Navigation uses 18px icons and a 15px trailing arrow; working controls generally use 16–22px icons. Icons have accessible names when they are the control, or `aria-hidden` when the visible label supplies the meaning.
+Lucide remains the icon family. Navigation uses21px icons and2px strokes; shared action/copy icons also use2px strokes, generally18–22px. Dedicated compact static/input/calendar icons retain their existing treatments. Icons have accessible names when they are the control, or aria-hidden when a visible label supplies meaning. Static issue imagery is unframed; control boundaries identify actual actions.
 
 ## Components
 
 ### Buttons and navigation
 
-Primary commands use the primary color pair; secondary actions use panel/foreground with a control border; ghosts remain transparent/muted and acquire link color on hover. Shared command buttons use the `button` type, 48px minimum height and the normative padding/corner. Secondary hover uses `panel-subtle`; enabled active state uses `brightness(.96)`; disabled controls use opacity 0.48 and an unavailable cursor. Scoped row controls use 40–44px minimum heights.
+Primary commands use the primary color pair; secondary actions use panel/foreground with a control border. Quiet/ghost actions use inset ground, foreground text and a visible control border; they must never resemble static muted labels. Shared command labels use16px/650,48px minimum height and9px/16px padding; compact quiet controls have44px minimum height. Hover strengthens the border and surface without decorative motion. Disabled operations retain their reason and existing opacity/locks.
 
-Rail items use 16px/500 text, rising to 650 for the selected item, 12px padding and 48px minimum height. Selection uses the active navy surface and rail-border seam. At mobile width the menu opens labeled 44px items. EN/RU targets are 40×40px; settings/refresh remain 40×44px through 320px. Below360px the toolbar has 8px horizontal padding to preserve those targets and the one-row EN/RU controls.
+Sidebar and holder navigation are native anchors with meaningful destinations and preserved browser new-tab behavior. Holder links are link-colored and underlined; static names and facts are ordinary text. Disclosures are contained controls with their native semantics. Desktop settings/refresh show text labels; phone versions keep accessible names and40×44 targets. Copy controls have a visible boundary. Use inspect icons for dialogs, direction arrows for internal transitions and external arrows for external destinations.
+
+Rail items use17px/500 text, rising to650 for the selected item; compact navigation uses16px. Padding12px and48px minimum height remain. Selection uses the active navy surface and foreground label. At mobile width the menu opens labeled44px links. EN/RU targets are40×40px; settings/refresh remain40×44px through320px. Below360px the toolbar has8px horizontal padding to preserve those targets and one control row.
 
 Ordinary buttons/links use a 3px visible keyboard outline with 3px offset; navigation substitutes its high-contrast light-blue focus color. Calendar buttons retain their own 2px visible focus treatment.
 

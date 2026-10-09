@@ -1,0 +1,60 @@
+/* The visual grammar distinguishes commands, navigation and read-only facts. */
+.app-shell .button { font-size: 16px; font-weight: 650; line-height: 1.45; }
+.app-shell .button.ghost { padding: 9px 16px; border: 1px solid var(--border-control); background: var(--input); color: var(--foreground); }
+.app-shell .button.ghost:hover:not(:disabled) { background: var(--panel-subtle); border-color: var(--link); color: var(--foreground); }
+.app-shell .button svg, .app-shell .icon-button svg { stroke-width: 2; }
+.app-shell .holder-name-link, .app-shell .text-link { color: var(--link); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: color-mix(in srgb, var(--link) 65%, transparent); }
+.app-shell .holder-name-link:hover, .app-shell .text-link:hover { text-decoration-color: var(--link); }
+.app-shell .positions-table .holder-name-link { display: flex; align-items: center; min-height: 40px; }
+.app-shell button.text-link { min-height: 44px; padding: 6px 0; font-size: 16px; }
+.app-shell .text-link svg { stroke-width: 2; }
+.app-shell .address .copy { width: 40px; height: 40px; min-width: 40px; min-height: 40px; border: 1px solid var(--border-control); border-radius: 6px; background: var(--input); color: var(--foreground); }
+.app-shell .address .copy:hover { border-color: var(--link); background: var(--panel-subtle); }
+.app-shell .address .copy svg { width: 18px; height: 18px; }
+.app-shell .sidebar .nav-item { font-size: 17px; gap: 12px; }
+.app-shell .sidebar .nav-item > svg:first-child { width: 21px; height: 21px; stroke-width: 2; }
+.app-shell .sidebar .nav-item:not(.active) > svg:first-child { color: var(--nav-text); }
+.app-shell .sidebar .nav-item.active { color: var(--foreground); }
+.app-shell .sidebar .nav-group-label { font-size: 14px; }
+.app-shell .sidebar-proof { min-height: 48px; color: var(--link); text-decoration: underline; text-underline-offset: 4px; }
+.app-shell .sidebar-proof svg { width: 20px; height: 20px; stroke-width: 2; }
+.app-shell .unified-toolbar .toolbar-command { width: auto; min-width: 44px; height: auto; min-height: 44px; gap: 8px; }
+.app-shell .unified-toolbar .toolbar-command > svg { width: 20px; height: 20px; }
+.app-shell .network-chip { border: 1px solid var(--border-control); background: var(--panel); color: var(--foreground); }
+.app-shell .network-chip:hover { border-color: var(--link); background: var(--panel-subtle); }
+.app-shell .network-chip > svg { stroke-width: 2; }
+.app-shell .selected-issue-name > svg, .app-shell .creation-context > svg { width: 22px; height: 22px; padding: 0; border: 0; color: var(--muted); }
+.app-shell .language-switch button { font-size: 15px; }
+.app-shell .page-heading .button { flex-shrink: 0; }
+.app-shell .table-row-action .button { white-space: normal; max-width: 100%; }
+.app-shell details > summary { min-height: 48px; padding: 12px 16px; border: 1px solid var(--border-control); border-radius: var(--radius-control); background: var(--input); color: var(--foreground); font-size: 16px; font-weight: 600; }
+.app-shell details > summary:hover { border-color: var(--link); background: var(--panel-subtle); }
+.app-shell details > summary:not(:has(svg)) { list-style-position: inside; }
+.app-shell details[open] > summary { margin-bottom: 16px; }
+@media (max-width: 900px) {
+  .app-shell .positions-table, .app-shell .positions-table tbody { display: block; white-space: normal; }
+  .app-shell .positions-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .app-shell .positions-table tr { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; padding: 20px 16px; border-top: 1px solid var(--border); }
+  .app-shell .positions-table td { display: block; min-width: 0; width: auto !important; padding: 0; border: 0; text-align: left; white-space: normal; }
+  .app-shell .positions-table td:first-child, .app-shell .positions-table td:nth-child(2), .app-shell .positions-table td:last-child { grid-column: 1 / -1; }
+  .app-shell .positions-table td[data-label]::before { content: attr(data-label); display: block; margin-bottom: 6px; color: var(--muted); font-size: 16px; font-weight: 500; white-space: normal; }
+  .app-shell .positions-table td:last-child .button { width: 100%; min-height: 48px; padding: 10px 16px; justify-content: space-between; }
+}
+@media (max-width: 640px) {
+  .app-shell .portfolio-account-controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .app-shell .portfolio-holder-select { width: 100%; min-width: 0; max-width: none; }
+  .app-shell .portfolio-account-controls > .button { width: 100%; justify-content: space-between; }
+}
+@media (max-width: 1180px) and (min-width: 801px) {
+  .app-shell .unified-toolbar { flex-wrap: wrap; gap: 12px; }
+  .app-shell .unified-toolbar .shell-issue { flex: 1 1 100%; }
+}
+@media (max-width: 800px) {
+  .app-shell .unified-toolbar .toolbar-command { width: 40px; min-width: 40px; height: 44px; padding: 8px; }
+  .app-shell .unified-toolbar .toolbar-command-label { display: none; }
+  .app-shell .unified-toolbar .account-trigger { font-size: 14px; }
+  .app-shell .sidebar .nav-item { font-size: 16px; }
+  .app-shell .page-heading { align-items: flex-start; }
+  .app-shell .button.ghost { min-height: 44px; }
+  .app-shell details > summary { padding: 12px; }
+}

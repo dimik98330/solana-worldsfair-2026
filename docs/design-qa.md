@@ -1,5 +1,15 @@
 # Redesign QA — 8 October 2026
 
+## Voting and shared interaction revision — 9 October 2026
+
+Current scope and exact checks: [INTERACTION-RESULTS.md](frontend/INTERACTION-RESULTS.md), fresh [INTERACTION-REVIEW.md](frontend/INTERACTION-REVIEW.md). Owner's Voting screenshot superseded prior surface acceptance. Changes cover explicit voting states/actions, readable results/context, inspect dialog, shared contained commands, native underlined holder/sidebar navigation, toolbar labels/icons and responsive registry/portfolio controls. Original proposal wording, precise weights, voting/signer locks and API semantics remain binding.
+
+Evidence root `C:\Users\dmitrii\Documents\solana\docs\evidence\ui\interaction-20261009\`:58actual final PNGs. Initial56renders/241checks retained239pass and two actual overflow failures; the corrected snapshots do not rewrite that historical result. Separate confirmations45/45,5/5 and8/8 passed, zero page errors. Final nine source hashes in number-confirmation.json independently match. Reviewer ships all six sections at inspected UI scope; IR01–12 closed. Cases include all sections320/390/768/1440/2560, Voting EN and owner's1920, dialogs/navigation/new-tab/search plus clearly marked browser-only fixtures for voting rights/status/unknown/large exact weights. One intercepted unsigned prepare intent was blocked; no financial writes, wallet calls or live-chain result is established.
+
+At320 the extreme u64 weight remains one unbroken exact value in a bounded horizontal wrapper, with full raw title/ARIA and keyboard focus. Its284px text may exceed the262px visible wrapper; simultaneous visibility of every digit or actual scroll-input testing is not claimed. Page and local card-child containment were explicitly checked. Native window was honestly limited to1940×1100/content1940×1013;2560logical viewport is verified, physical native2560 remains unverified. No display setting was altered.
+
+Build:web and52existing UI tests passed. One detector0primary/4type advisories was recorded at its integrated inspected cutoff; no repeated/clean detector or accessibility certificate. Actual DESIGN/sidecar/brand were synchronized. New prototype images remain archived read-only data or labelled UI fixtures; they are not fresh chain proof, production, contest readiness or final owner acceptance.
+
 ## Account dialog correction — 9 October 2026
 
 Direct owner screenshot rejected the narrow580px account dialog and blended bottom controls. The account surface is now1000px on desktop, with distinct holder/wallet areas, explicit row actions/current state and a persistent settings/Close footer. Mobile uses one correctly bounded scrolling body. Scope: App account composition, optional Overlay className, new AccountPicker/account-picker.css only; backend/Git/dependencies/signing behavior untouched.

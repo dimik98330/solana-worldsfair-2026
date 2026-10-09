@@ -1,0 +1,27 @@
+{
+  "observedAt": "2026-10-09T11:00:57.231Z",
+  "platform": "Linux x64",
+  "node": "v22.14.0",
+  "base": "44ed2fc+14owned-overlays+6H1repair-files",
+  "entryAssets": [
+    {
+      "path": "/assets/index-C7zzVrNi.js",
+      "type": "text/javascript",
+      "bytes": 406293,
+      "sha256": "d19b143183bf7f21ac40abd79a73e696c3ca83594525a37bbae7f4a587fc7faa"
+    },
+    {
+      "path": "/assets/index-B805BnzB.css",
+      "type": "text/css",
+      "bytes": 125917,
+      "sha256": "1598f17235f004d9df0489a7bd999fa65f77c86802113cc693ffd0462e0c09e1"
+    }
+  ],
+  "htmlAndActualEntryAssetsVerified": true,
+  "sqliteMarkerSurvivedRestart": true,
+  "noGeneratedKeys": true,
+  "loopbackDiagnosticProgramGateExplicitlyDisabled": true,
+  "programStatus": "unavailable",
+  "financialReady": false,
+  "scope": "H1 repair cohort, actual Linux process/mount/HTTP byte verification. No devnet financial/human/public/Docker-image proof. Original cohort retained."
+}

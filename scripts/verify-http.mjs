@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-const origin = 'http://127.0.0.1:3000';
+const origin = process.env.BONDTRACE_API_ORIGIN??'http://127.0.0.1:3160';
+const target=new URL(origin);
+if(target.origin!==origin||target.protocol!=='http:'||!['127.0.0.1','localhost'].includes(target.hostname)||!target.port)throw new Error('Use the explicit live loopback app origin');
 const getState = async () => {
   const response = await fetch(`${origin}/api/state`, { signal: AbortSignal.timeout(15000) });
   assert.equal(response.status, 200);
@@ -40,7 +42,7 @@ assert.equal(after.activity.length, before.activity.length);
 const report = { checkedAt: new Date().toISOString(), origin, builtApp: true, network: after.network,
   issue: after.instrument?.address, status: after.instrument?.status, checks, chainStateUnchanged: true,
   scope: 'Built same-origin app and rejected malformed/foreign-origin requests; no signing or chain mutation.' };
-const output=process.env.BONDTRACE_HTTP_EVIDENCE_FILE??'docs/evidence/http-checks.json';
+const output=process.env.BONDTRACE_HTTP_EVIDENCE_FILE??('docs/evidence/http-checks-'+Date.now()+'-'+crypto.randomUUID().slice(0,8)+'.json');
 if(!/^docs\/evidence\/[a-z0-9-]+\.json$/.test(output))throw new Error('HTTP evidence must be a named file in docs/evidence');
-fs.writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
+fs.writeFileSync(output, JSON.stringify(report, null, 2) + '\n',{flag:'wx'});
 console.log(JSON.stringify(report));

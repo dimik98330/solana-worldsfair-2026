@@ -22,7 +22,7 @@ export function validTransactionError(value:unknown):boolean{
 let next=0;
 export async function rpc<T=any>(method:string,params:unknown[]=[],timeoutMs=18000):Promise<T>{
   const id=++next;
-  let response:Response;try{response=await fetch(rpcUrl,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id,method,params}),signal:AbortSignal.timeout(timeoutMs)});}catch{throw new AppError('RPC_UNAVAILABLE','The configured test RPC did not respond',503,true);}
+  let response:Response;try{response=await fetch(rpcUrl,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id,method,params}),redirect:'error',signal:AbortSignal.timeout(timeoutMs)});}catch{throw new AppError('RPC_UNAVAILABLE','The configured test RPC did not respond',503,true);}
   if(!response.ok)throw new AppError(response.status===429?'RPC_RATE_LIMITED':'RPC_UNAVAILABLE',`RPC returned HTTP ${response.status}`,503,true);
   let result:any;try{result=await response.json();}catch{throw new AppError('RPC_INVALID','The RPC response is not valid JSON',503,true);}
   if(!result||typeof result!=='object'||Array.isArray(result)||result.jsonrpc!=='2.0'||result.id!==id||(('result' in result)===('error' in result)))throw new AppError('RPC_INVALID','The RPC envelope does not match this request',503,true);

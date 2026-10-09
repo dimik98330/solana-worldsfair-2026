@@ -7,7 +7,7 @@ import {couponPerBond,SETTLEMENT_SCALE} from '../packages/client/src/domain.ts';
 import {AppError,account,awaitConfirmation,chainClock,rpc,transactionStatus,explorer} from './rpc.ts';
 import {activities,fixture,saveFixture,type Fixture} from './store.ts';
 import {demoSigner,execute} from './transactions.ts';
-import {network} from './config.ts';
+import {network,demoEnabled} from './config.ts';
 import {beginOperation,findOperation,updateOperation,type Operation} from './operations.ts';
 import {readCatalog,saveCatalog} from './catalog.ts';
 import {transactionSync} from './storage.ts';
@@ -57,6 +57,7 @@ function progress(id:string,status:string,error?:string){
     metadata:{...value.metadata,bootstrapProgress:{state:status,completedSteps:snapshot.bootstrap.completedSteps,totalSteps:snapshot.bootstrap.totalSteps,nextStepId:snapshot.bootstrap.nextStep?.id??null,updatedAt:new Date().toISOString(),requiresExplicitResume:status!=='confirmed'}}});});
 }
 export async function bootstrap(reset=false,requestedId:string=crypto.randomUUID()){
+  if(!demoEnabled)throw new AppError('DEMO_DISABLED','Demo harness disabled',403);
   if(typeof reset!=='boolean')throw new AppError('INVALID_REQUEST','Bootstrap reset must be a boolean');
   if(pending&&pending.id!==requestedId)throw new AppError('ACTION_PENDING','Another bootstrap is active; retain that recovery identifier',409);
   const existing=beginOperation(requestedId,'bootstrap','issuer',{reset});

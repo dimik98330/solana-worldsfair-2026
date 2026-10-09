@@ -1,0 +1,18 @@
+{
+  "observedAt": "2026-10-09T10:52:26.611Z",
+  "platform": "Linux x64",
+  "node": "v22.14.0",
+  "publishedBase": "44ed2fc",
+  "hostingOverlayFiles": 14,
+  "programStatus": "unavailable",
+  "financialReady": false,
+  "authAndOrigins": true,
+  "generatedDemoDisabled": true,
+  "ephemeralStartupRejected": true,
+  "dedicatedExt4Mount": true,
+  "apiUid": 1000,
+  "sqliteMarkerSurvivedRestart": true,
+  "backupIntegrity": true,
+  "noGeneratedKeys": true,
+  "scope": "Actual isolated Linux hosted process and mounted SQLite verification. Official devnet program remains absent; no financial tx, human wallet or public hosting proof. Docker image build not verified."
+}

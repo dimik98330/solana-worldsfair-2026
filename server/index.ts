@@ -1,7 +1,7 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
-import {demoEnabled,port} from './config.ts';
+import {demoEnabled,port,hosting} from './config.ts';
 import {AppError,transactionStatus,rpc} from './rpc.ts';
 import {getState} from './state.ts';
 import {buildEvidenceReport} from './evidence.ts';
@@ -9,6 +9,7 @@ import {getProgramIdentity} from './program-identity.ts';
 import {runCouponSettlement} from './coupon-run.ts';
 import {planLifecycleRun,runLifecycle,lifecycleRunStatus} from './lifecycle-run.ts';
 import {resolveStaticBuild,staticAssetInside} from './static-build.ts';
+import {hostingAuthorized} from './hosting-policy.ts';
 import {receipt} from './journal.ts';
 import {captureRetainedProof,publicExecutionProof} from './proof-retention.ts';
 import {bootstrap} from './seed.ts';
@@ -19,7 +20,7 @@ import {operationStatus} from './operations.ts';
 import {chainIdentity} from './chain-identity.ts';
 import {storageDiagnostics,StorageError,closeStorage,verifyStorageWrite} from './storage.ts';
 const dist=resolveStaticBuild(process.cwd(),process.env.BONDTRACE_WEB_DIST);
-const allowedOrigins=new Set([`http://127.0.0.1:${port}`,`http://localhost:${port}`,'http://127.0.0.1:5173','http://localhost:5173']);
+const allowedOrigins=new Set(hosting.publicOrigin?[hosting.publicOrigin]:[`http://127.0.0.1:${port}`,`http://localhost:${port}`,'http://127.0.0.1:5173','http://localhost:5173']);
 let mutationBusy=false;
 async function mutate<T>(action:()=>Promise<T>){if(mutationBusy)throw new AppError('ACTION_PENDING','Wait for the existing test operation',409);mutationBusy=true;try{return await action();}finally{mutationBusy=false;}}
 function send(res:http.ServerResponse,status:number,value:unknown){res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store'});res.end(JSON.stringify(value,(_key,item)=>typeof item==='bigint'?item.toString():item));}
@@ -28,7 +29,9 @@ function recoveryId(data:Record<string,unknown>){if(data.operationId!==undefined
 const server=http.createServer(async(req,res)=>{
   try{
     const url=new URL(req.url??'/','http://127.0.0.1');
-    if(req.method==='POST'&&req.headers.origin&&!allowedOrigins.has(req.headers.origin))throw new AppError('ORIGIN_DENIED','Use the local BondTrace application',403);
+    if(req.method==='GET'&&url.pathname==='/healthz')return send(res,200,{status:'alive'});
+    if(!hostingAuthorized(hosting,req.headers.authorization)){res.setHeader('www-authenticate','Basic realm="BondTrace", charset="UTF-8"');throw new AppError('AUTH_REQUIRED','Authenticate to this private test deployment',401);}
+    if(req.method==='POST'&&req.headers.origin&&!allowedOrigins.has(req.headers.origin))throw new AppError('ORIGIN_DENIED','Use the configured BondTrace application origin',403);
     if(req.method==='GET'&&url.pathname==='/api/health'){const chain=await chainIdentity(),program=await getProgramIdentity();return send(res,200,{status:program.signingAllowed?'ok':'read-only',demo:demoEnabled,storage:storageDiagnostics(),chain,program});}
     if(req.method==='GET'&&url.pathname==='/api/program')return send(res,200,await getProgramIdentity());
     if(req.method==='POST'&&url.pathname==='/api/runtime/readiness'){const data=await body(req);if(Object.keys(data).length)throw new AppError('INVALID_REQUEST','Readiness accepts an empty object');const chain=await chainIdentity(),program=await getProgramIdentity(),rpcHealth=await rpc('getHealth'),slotBefore=await rpc<number>('getSlot',[{commitment:'confirmed'}]);await new Promise(resolve=>setTimeout(resolve,800));const slotAfter=await rpc<number>('getSlot',[{commitment:'confirmed'}]);const storage=verifyStorageWrite();return send(res,200,{chain,program,rpcHealth,slotBefore,slotAfter,storage});}
@@ -58,11 +61,14 @@ const server=http.createServer(async(req,res)=>{
     if(req.method!=='GET')throw new AppError('METHOD_NOT_ALLOWED','Use GET',405);
     const relative=decodeURIComponent(url.pathname).replace(/^\/+/,''), candidate=path.resolve(dist,relative||'index.html');
     if(!candidate.startsWith(dist+path.sep))throw new AppError('NOT_FOUND','Not found',404);
-    const file=fs.existsSync(candidate)&&fs.statSync(candidate).isFile()?candidate:path.join(dist,'index.html');
+    const exists=fs.existsSync(candidate)&&fs.statSync(candidate).isFile();
+    if(!exists&&(relative.startsWith('assets/')||path.extname(relative)))throw new AppError('NOT_FOUND','Static asset not found',404);
+    const file=exists?candidate:path.join(dist,'index.html');
     if(!fs.existsSync(file)){res.writeHead(200,{'content-type':'text/html; charset=utf-8'});res.end('<h1>BondTrace API готов</h1><p>Интерфейс разработки: http://127.0.0.1:5173. Для единого запуска выполните npm run build.</p>');return;}
     if(!staticAssetInside(dist,file))throw new AppError('NOT_FOUND','Not found',404);
     const type=({'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.map':'application/json'} as Record<string,string>)[path.extname(file)]??'application/octet-stream';res.writeHead(200,{'content-type':type,'x-content-type-options':'nosniff'});res.end(fs.readFileSync(file));
   }catch(error){const known=error instanceof AppError?error:error instanceof StorageError?new AppError(error.code,'Public metadata storage is unavailable. Existing signed identifiers must be retained for recovery.',503,true):new AppError('INTERNAL_ERROR','The service could not complete this request. Retain any submitted recovery identifier.',500,true);send(res,known.status,{error:{code:known.code,message:known.message,retryable:known.retryable,recoveryRequired:['RECOVERY_ID_CONFLICT','MESSAGE_ALREADY_SUBMITTED','PLAN_RELEASE_MISMATCH'].includes(known.code)||(req.method==='POST'&&known.status>=500)}});}
 });
-server.listen(port,'127.0.0.1',()=>console.log(`BondTrace http://127.0.0.1:${port} · test networks only`));
+server.headersTimeout=10000;server.requestTimeout=30000;server.keepAliveTimeout=5000;
+server.listen(port,hosting.bindHost,()=>console.log(`BondTrace ${hosting.publicOrigin??'http://127.0.0.1:'+port} · test networks only`));
 const stop=()=>server.close(()=>{closeStorage();process.exit(0);});process.on('SIGINT',stop);process.on('SIGTERM',stop);

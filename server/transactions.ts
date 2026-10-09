@@ -8,7 +8,7 @@ import {chainIdentity} from './chain-identity.ts';
 import {receipt,saveReceipt,updateReceipt} from './journal.ts';
 import {completePreparedProjection} from './prepared.ts';
 import {operationStatus} from './operations.ts';
-import {localDir,network} from './config.ts';
+import {localDir,network,demoEnabled} from './config.ts';
 import {AppError,awaitConfirmation,explorer,rpc,signatureOf,rememberLifetime,validTransactionError} from './rpc.ts';
 import {recordActivity,recordProposal} from './store.ts';
 import {requirePrepared,completePrepared,setPreparedStatus} from './prepared.ts';
@@ -24,10 +24,12 @@ async function verifyReviewedProgram(reviewed?:ReviewedProgram){
  if(current.programId!==reviewed.programId||current.expected!.sha256!==reviewed.sha256||current.genesisHash!==reviewed.genesisHash)throw new AppError('PREPARATION_VERSION_CHANGED','The reviewed program release or test network changed. No new transaction was relayed; prepare a fresh review.',409);
  return current;
 }
-const keysDir=path.join(localDir,'keys');fs.mkdirSync(keysDir,{recursive:true});
+const keysDir=path.join(localDir,'keys');
 const knownRoles=new Set(['issuer','investor1','investor2','investor3','settlement-mint']);
 export async function demoSigner(role:string):Promise<KeyPairSigner>{
+  if(!demoEnabled)throw new AppError('DEMO_DISABLED','Generated demo signer mode is disabled',403);
   if(!knownRoles.has(role))throw new AppError('INVALID_DEMO_ROLE','Only fixed generated demo roles are allowed');
+  fs.mkdirSync(keysDir,{recursive:true});
   const location=path.join(keysDir,role+'-keypair.json');
   if(fs.existsSync(location))return createKeyPairSignerFromBytes(Uint8Array.from(JSON.parse(fs.readFileSync(location,'utf8'))),true);
   const key=await generateKeyPairSigner(true);const raw=await crypto.subtle.exportKey('pkcs8',key.keyPair.privateKey);const privateSeed=Buffer.from(raw).subarray(-32);const publicBytes=getAddressEncoder().encode(key.address);fs.writeFileSync(location,JSON.stringify([...privateSeed,...publicBytes]),{flag:'wx',mode:0o600});return key;

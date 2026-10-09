@@ -22,6 +22,7 @@
     "smoke": "node --import tsx scripts/full-smoke.ts",
     "submission:preview": "node scripts/preview-submission.mjs",
     "verify:http": "node scripts/verify-http.mjs",
+    "verify:hosted": "node scripts/verify-hosted.mjs",
     "smoke:issuer": "node --import tsx scripts/issuer-smoke.ts",
     "demo:lifecycle": "pwsh -NoProfile -File scripts/lifecycle-demo.ps1",
     "setup:judge": "pwsh -NoProfile -File scripts/judge-setup.ps1",

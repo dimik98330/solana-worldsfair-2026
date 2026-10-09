@@ -1,13 +1,13 @@
 # BondTrace technical guide
 
-Engineering scope: an existing permissioned corporate-action prototype on Solana, strengthened against the owner's eight KASE requirements on 8 October 2026. The asset and settlement currency are test SPL tokens. Fiat rails, real assets, KASE integration and production authorization are outside this implementation.
+Engineering scope: an existing permissioned corporate-action prototype on Solana, strengthened against the owner's eight KASE requirements on8October and hosting boundaries on9October2026. The asset and settlement currency are test SPL tokens. Fiat rails, real assets, KASE integration and production authorization are outside this implementation. Current instructions: [English](README.md) / [Русский](README.ru.md); [prepared hosting architecture and verification](docs/31-HOSTING.md).
 
 ## Launch and verification
 
-Prepared Windows environment: Node 22.14+, PowerShell 7, Ubuntu WSL, pinned Anchor 1.1.2/Agave 3.1.10/Rust toolchain and installed npm dependencies. Fresh dependency installation: `npm ci --ignore-scripts`. Runtime provenance and fresh-machine limits are documented in `docs/02-ENVIRONMENT.md` and `docs/research/kase-chain.md`.
+Prepared Windows environment: Node22.14.0, PowerShell7, Ubuntu WSL, pinned Anchor1.1.2/Agave3.1.10/Rust toolchain and installed npm dependencies. Fresh dependency installation: `npm ci --ignore-scripts`. Runtime provenance and fresh-machine limits are documented in `docs/02-ENVIRONMENT.md` and `docs/research/kase-chain.md`.
 
 ```powershell
-cd C:\Users\dmitrii\Documents\solana
+cd solana-worldsfair-2026
 npm run demo:lifecycle
 ```
 

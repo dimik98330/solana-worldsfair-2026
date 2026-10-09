@@ -1,0 +1,1001 @@
+{
+  "capturedAt": "2026-10-09T06:46:29.306Z",
+  "repair": "Consolidated IR07–11 source batch",
+  "checks": [
+    {
+      "name": "payments320 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "toolbar": [
+          49.71875,
+          135.71875,
+          179.71875,
+          268,
+          312
+        ],
+        "positions": [],
+        "padding": [],
+        "weights": []
+      }
+    },
+    {
+      "name": "payments320 header fits",
+      "pass": true
+    },
+    {
+      "name": "payments390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "toolbar": [
+          57.71875,
+          145.71875,
+          191.71875,
+          328,
+          374
+        ],
+        "positions": [],
+        "padding": [],
+        "weights": []
+      }
+    },
+    {
+      "name": "payments390 header fits",
+      "pass": true
+    },
+    {
+      "name": "payments768 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 768,
+        "document": 768,
+        "toolbar": [
+          166.046875,
+          254.046875,
+          300.046875,
+          706,
+          752
+        ],
+        "positions": [],
+        "padding": [],
+        "weights": []
+      }
+    },
+    {
+      "name": "payments768 header fits",
+      "pass": true
+    },
+    {
+      "name": "payments1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "toolbar": [
+          855.84375,
+          949.875,
+          1105.375,
+          1260.875,
+          1408
+        ],
+        "positions": [],
+        "padding": [],
+        "weights": []
+      }
+    },
+    {
+      "name": "payments1440 header fits",
+      "pass": true
+    },
+    {
+      "name": "payments2560 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 2560,
+        "document": 2560,
+        "toolbar": [
+          1967.84375,
+          2061.875,
+          2217.375,
+          2372.875,
+          2520
+        ],
+        "positions": [],
+        "padding": [],
+        "weights": []
+      }
+    },
+    {
+      "name": "payments2560 header fits",
+      "pass": true
+    },
+    {
+      "name": "registry320 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "toolbar": [
+          49.71875,
+          135.71875,
+          179.71875,
+          268,
+          312
+        ],
+        "positions": [
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          },
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          },
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          },
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          },
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          },
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          },
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          },
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          },
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          },
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          },
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          },
+          {
+            "width": 123,
+            "scroll": 123,
+            "wrap": "normal"
+          }
+        ],
+        "padding": [
+          16,
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        "weights": []
+      }
+    },
+    {
+      "name": "registry320 header fits",
+      "pass": true
+    },
+    {
+      "name": "registry320 record labels wrap without overlap",
+      "pass": true,
+      "data": [
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        },
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        },
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        },
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        },
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        },
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        },
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        },
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        },
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        },
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        },
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        },
+        {
+          "width": 123,
+          "scroll": 123,
+          "wrap": "normal"
+        }
+      ]
+    },
+    {
+      "name": "registry320 action padding",
+      "pass": true,
+      "data": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "name": "registry390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "toolbar": [
+          57.71875,
+          145.71875,
+          191.71875,
+          328,
+          374
+        ],
+        "positions": [
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          },
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          },
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          },
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          },
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          },
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          },
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          },
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          },
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          },
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          },
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          },
+          {
+            "width": 154,
+            "scroll": 154,
+            "wrap": "normal"
+          }
+        ],
+        "padding": [
+          16,
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        "weights": []
+      }
+    },
+    {
+      "name": "registry390 header fits",
+      "pass": true
+    },
+    {
+      "name": "registry390 record labels wrap without overlap",
+      "pass": true,
+      "data": [
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        },
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        },
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        },
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        },
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        },
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        },
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        },
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        },
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        },
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        },
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        },
+        {
+          "width": 154,
+          "scroll": 154,
+          "wrap": "normal"
+        }
+      ]
+    },
+    {
+      "name": "registry390 action padding",
+      "pass": true,
+      "data": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "name": "registry768 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 768,
+        "document": 768,
+        "toolbar": [
+          166.046875,
+          254.046875,
+          300.046875,
+          706,
+          752
+        ],
+        "positions": [
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          },
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          },
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          },
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          },
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          },
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          },
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          },
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          },
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          },
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          },
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          },
+          {
+            "width": 343,
+            "scroll": 343,
+            "wrap": "normal"
+          }
+        ],
+        "padding": [
+          16,
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        "weights": []
+      }
+    },
+    {
+      "name": "registry768 header fits",
+      "pass": true
+    },
+    {
+      "name": "registry768 record labels wrap without overlap",
+      "pass": true,
+      "data": [
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        },
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        },
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        },
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        },
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        },
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        },
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        },
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        },
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        },
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        },
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        },
+        {
+          "width": 343,
+          "scroll": 343,
+          "wrap": "normal"
+        }
+      ]
+    },
+    {
+      "name": "registry768 action padding",
+      "pass": true,
+      "data": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "name": "portfolio320 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "toolbar": [
+          49.71875,
+          135.71875,
+          179.71875,
+          268,
+          312
+        ],
+        "positions": [],
+        "padding": [],
+        "select": 296,
+        "weights": []
+      }
+    },
+    {
+      "name": "portfolio320 header fits",
+      "pass": true
+    },
+    {
+      "name": "portfolio320 selected holder selector readable",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "toolbar": [
+          49.71875,
+          135.71875,
+          179.71875,
+          268,
+          312
+        ],
+        "positions": [],
+        "padding": [],
+        "select": 296,
+        "weights": []
+      }
+    },
+    {
+      "name": "portfolio390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "toolbar": [
+          57.71875,
+          145.71875,
+          191.71875,
+          328,
+          374
+        ],
+        "positions": [],
+        "padding": [],
+        "select": 358,
+        "weights": []
+      }
+    },
+    {
+      "name": "portfolio390 header fits",
+      "pass": true
+    },
+    {
+      "name": "portfolio390 selected holder selector readable",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "toolbar": [
+          57.71875,
+          145.71875,
+          191.71875,
+          328,
+          374
+        ],
+        "positions": [],
+        "padding": [],
+        "select": 358,
+        "weights": []
+      }
+    },
+    {
+      "name": "voting320 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "toolbar": [
+          49.71875,
+          135.71875,
+          179.71875,
+          268,
+          312
+        ],
+        "positions": [],
+        "padding": [],
+        "weights": []
+      }
+    },
+    {
+      "name": "voting320 header fits",
+      "pass": true
+    },
+    {
+      "name": "voting390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "toolbar": [
+          57.71875,
+          145.71875,
+          191.71875,
+          328,
+          374
+        ],
+        "positions": [],
+        "padding": [],
+        "weights": []
+      }
+    },
+    {
+      "name": "voting390 header fits",
+      "pass": true
+    },
+    {
+      "name": "voting1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "toolbar": [
+          855.84375,
+          949.875,
+          1105.375,
+          1260.875,
+          1408
+        ],
+        "positions": [],
+        "padding": [],
+        "weights": []
+      }
+    },
+    {
+      "name": "voting1440 header fits",
+      "pass": true
+    },
+    {
+      "name": "voting2560 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 2560,
+        "document": 2560,
+        "toolbar": [
+          1967.84375,
+          2061.875,
+          2217.375,
+          2372.875,
+          2520
+        ],
+        "positions": [],
+        "padding": [],
+        "weights": []
+      }
+    },
+    {
+      "name": "voting2560 header fits",
+      "pass": true
+    },
+    {
+      "name": "exactlarge320 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "toolbar": [
+          48,
+          134,
+          178,
+          273.453125,
+          317.453125
+        ],
+        "positions": [],
+        "padding": [],
+        "weights": [
+          {
+            "text": "18,446,744,073,709,551,615",
+            "title": "18446744073709551615",
+            "whiteSpace": "nowrap",
+            "height": 27,
+            "line": "27px",
+            "scroll": 264,
+            "client": 105
+          },
+          {
+            "text": "18,446,744,073,709,551,615",
+            "title": "18446744073709551615",
+            "whiteSpace": "nowrap",
+            "height": 31,
+            "line": "31px",
+            "scroll": 284,
+            "client": 262
+          },
+          {
+            "text": "18,446,744,073,709,551,615",
+            "title": "18446744073709551615",
+            "whiteSpace": "nowrap",
+            "height": 27,
+            "line": "27px",
+            "scroll": 284,
+            "client": 284
+          }
+        ]
+      }
+    },
+    {
+      "name": "exactlarge320 header fits",
+      "pass": true
+    },
+    {
+      "name": "exactlarge320 raw precision and one line",
+      "pass": true,
+      "data": [
+        {
+          "text": "18,446,744,073,709,551,615",
+          "title": "18446744073709551615",
+          "whiteSpace": "nowrap",
+          "height": 27,
+          "line": "27px",
+          "scroll": 264,
+          "client": 105
+        },
+        {
+          "text": "18,446,744,073,709,551,615",
+          "title": "18446744073709551615",
+          "whiteSpace": "nowrap",
+          "height": 31,
+          "line": "31px",
+          "scroll": 284,
+          "client": 262
+        },
+        {
+          "text": "18,446,744,073,709,551,615",
+          "title": "18446744073709551615",
+          "whiteSpace": "nowrap",
+          "height": 27,
+          "line": "27px",
+          "scroll": 284,
+          "client": 284
+        }
+      ]
+    },
+    {
+      "name": "exactlarge390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "toolbar": [
+          56,
+          144,
+          190,
+          328,
+          374
+        ],
+        "positions": [],
+        "padding": [],
+        "weights": [
+          {
+            "text": "18,446,744,073,709,551,615",
+            "title": "18446744073709551615",
+            "whiteSpace": "nowrap",
+            "height": 27,
+            "line": "27px",
+            "scroll": 264,
+            "client": 133
+          },
+          {
+            "text": "18,446,744,073,709,551,615",
+            "title": "18446744073709551615",
+            "whiteSpace": "nowrap",
+            "height": 31,
+            "line": "31px",
+            "scroll": 316,
+            "client": 316
+          },
+          {
+            "text": "18,446,744,073,709,551,615",
+            "title": "18446744073709551615",
+            "whiteSpace": "nowrap",
+            "height": 27,
+            "line": "27px",
+            "scroll": 316,
+            "client": 316
+          }
+        ]
+      }
+    },
+    {
+      "name": "exactlarge390 header fits",
+      "pass": true
+    },
+    {
+      "name": "exactlarge390 raw precision and one line",
+      "pass": true,
+      "data": [
+        {
+          "text": "18,446,744,073,709,551,615",
+          "title": "18446744073709551615",
+          "whiteSpace": "nowrap",
+          "height": 27,
+          "line": "27px",
+          "scroll": 264,
+          "client": 133
+        },
+        {
+          "text": "18,446,744,073,709,551,615",
+          "title": "18446744073709551615",
+          "whiteSpace": "nowrap",
+          "height": 31,
+          "line": "31px",
+          "scroll": 316,
+          "client": 316
+        },
+        {
+          "text": "18,446,744,073,709,551,615",
+          "title": "18446744073709551615",
+          "whiteSpace": "nowrap",
+          "height": 27,
+          "line": "27px",
+          "scroll": 316,
+          "client": 316
+        }
+      ]
+    },
+    {
+      "name": "unknown weight still unknown rather than zero",
+      "pass": true
+    },
+    {
+      "name": "short history still opens existing receipts",
+      "pass": true
+    },
+    {
+      "name": "row details still opens inspection",
+      "pass": true
+    }
+  ],
+  "screens": [
+    "payments-ru-320.png",
+    "payments-ru-390.png",
+    "payments-ru-768.png",
+    "payments-ru-1440.png",
+    "payments-ru-2560.png",
+    "registry-ru-320.png",
+    "registry-ru-390.png",
+    "registry-ru-768.png",
+    "portfolio-ru-320.png",
+    "portfolio-ru-390.png",
+    "voting-ru-320.png",
+    "voting-ru-390.png",
+    "voting-ru-1440.png",
+    "voting-ru-2560.png",
+    "fixture-exactlarge-320.png",
+    "fixture-exactlarge-390.png",
+    "fixture-unknown-390.png"
+  ],
+  "errors": [],
+  "hashes": {
+    "App.tsx": "51d40b6ffc8aab00f3f754cf9e52b0031b0c183d94ecf868c332c9178d28be74",
+    "main.tsx": "607b797897235bde3f123befac84610ebe5a67288542dff29d91d65e79bb670d",
+    "WorkspaceLink.tsx": "cef26efe60275900ca566e73c51ae6342f5841882c0bc75140542d382d531996",
+    "interaction-controls.css": "e6f3d85c5cb38937576e6e216dbdee78bc50fe7adb5fddcf1dd992010808114f",
+    "PaymentTable.tsx": "1f34d72bc29c5ed7176a25f5d0dc85654d2484d7b74ab7860687e9583089d85d",
+    "HolderPortfolio.tsx": "276473f9315ff8c3af7db087333c3cb988f1d820546968f7f5144f99b9ef6e42",
+    "PaymentsWorkspace.tsx": "ead37fe3d9ccf84e63db5ea26762ea99ffa2ef3d71c0599773374f5ad18f0834",
+    "VotingWorkspace.tsx": "cd2060d00fcb3469e984f7949de55894965beda4bd73c76c89c121a25164fce8",
+    "voting-page.css": "08508c46f046f07a4adff7d5bedffd39abda52e0b29e646281a1aace060f4e17"
+  }
+}

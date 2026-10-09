@@ -141,6 +141,7 @@ The current release manifest is [programs/bondtrace/release.json](programs/bondt
 | Check | Recorded result | What it establishes |
 |---|---|---|
 | Clean-source application/client suite | **219 Node tests**, **52 UI tests**, application build and frozen SBF hash passed | Exact amounts, parsing, relay/recovery and UI regressions; mocked transports are not live-network evidence |
+|9October backend/hosting follow-up | **241 Node tests**, **52 UI tests** and current app build passed, including the3asset-repair cases | Hosted auth/origin/storage, disabled-signer boundary, RPC redirects and real HTTP missing-asset behavior; separate cohorts |
 | Separate program test run | **3 Rust unit + 16 actual SBF/SPL runtime tests**, including **64 deterministic sequences** | Real compiled program execution in LiteSVM, financial invariants, rejection cases and rollback; separate from the clean live cycle |
 | Main live built-origin lifecycle | **39 distinct localnet transactions**, all observed finalized with retained schema2 proofs | Coupons **2,500**, principal **25,000**, **25** bonds burned; remaining obligations, supply and vault **0**; actual API/validator restart |
 | Separate clean-source lifecycle | **39 distinct localnet transactions**, same financial totals, fresh keys/state/genesis | Reproduction from an allowlisted source copy on the prepared host; compiler/npm caches may be reused |
@@ -180,6 +181,12 @@ After live startup, open the app on3160 and inspect network/instrument details. 
 For extensions that read the standard local endpoint, run `npm run wallet:localnet` in a second terminal after the runtime starts. This optional loopback alias exposes reads/simulation on8899 against the recorded8959 ledger and rejects transaction submission; the app retains its reviewed relay. It refuses an occupied port and does not reconfigure the wallet.
 
 **Phantom check,9October2026:** discovery, owner-approved connection and application-side simulation passed. After owner approval, the extension returned `Unexpected error`; the API remained `not_submitted`, with no signature or fee charged. A successful Phantom transaction is therefore **not verified**, and the cause remains unresolved. See [the exact check](docs/evidence/external-wallet-check-20261009.json). The alias does not establish wallet compatibility. Devnet requires separate deployment/funding/signature evidence. The verified localnet lifecycle needs no extension: its generated test identities are real cryptographic signers.
+
+## Hosting preparation
+
+[Hosting guide — English/Russian](docs/31-HOSTING.md) describes the prepared **same-origin Render Docker + persistent SQLite + devnet** path, settings, access, backups and restart checks. [Dockerfile](Dockerfile) and [render.yaml](render.yaml) disable generated signing and require explicit access/origin/durable storage. Outside hosted mode, the existing loopback localnet default remains.
+
+Actual isolated Linux verification covered authentication, origin rejection, disabled demo, non-root execution, mounted SQLite surviving restart and a consistent backup. A subsequent repair verifies actual entry JS/CSS bytes and makes missing assets404. These are preparation checks; **no public hosted deployment or successful devnet/Phantom transaction is established**. The Blueprint's paid infrastructure requires separate owner approval; the localnet path above remains independently reproducible at no service cost.
 
 ## Optional: inspect the saved interface snapshot
 

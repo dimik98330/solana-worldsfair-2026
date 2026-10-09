@@ -8,6 +8,7 @@ import App from './App';
 import './styles.css';
 import './operations-design.css';
 import './workspace-shell.css';
+import './interaction-controls.css';
 
 class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { failed: boolean }> {
   state = { failed: false };

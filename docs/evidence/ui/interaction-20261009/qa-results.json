@@ -1,0 +1,7318 @@
+{
+  "capturedAt": "2026-10-09T06:34:58.810Z",
+  "scope": "shared affordance and voting UI; saved snapshot plus explicitly client-only state fixtures; no wallet signing or financial API writes",
+  "screens": [
+    "overview-ru-320.png",
+    "issuer-ru-320.png",
+    "registry-ru-320.png",
+    "payments-ru-320.png",
+    "portfolio-ru-320.png",
+    "voting-ru-320.png",
+    "overview-ru-390.png",
+    "issuer-ru-390.png",
+    "registry-ru-390.png",
+    "payments-ru-390.png",
+    "portfolio-ru-390.png",
+    "voting-ru-390.png",
+    "overview-ru-768.png",
+    "issuer-ru-768.png",
+    "registry-ru-768.png",
+    "payments-ru-768.png",
+    "portfolio-ru-768.png",
+    "voting-ru-768.png",
+    "overview-ru-1440.png",
+    "issuer-ru-1440.png",
+    "registry-ru-1440.png",
+    "payments-ru-1440.png",
+    "portfolio-ru-1440.png",
+    "voting-ru-1440.png",
+    "overview-ru-2560.png",
+    "issuer-ru-2560.png",
+    "registry-ru-2560.png",
+    "payments-ru-2560.png",
+    "portfolio-ru-2560.png",
+    "voting-ru-2560.png",
+    "voting-en-390.png",
+    "voting-en-1440.png",
+    "voting-en-2560.png",
+    "voting-ru-1920.png",
+    "voting-details-1920.png",
+    "vote-history-1920.png",
+    "voting-details-390.png",
+    "settings-390.png",
+    "account-390.png",
+    "creation-1440.png",
+    "creation-390.png",
+    "fixture-noaccount-1440.png",
+    "fixture-noaccount-390.png",
+    "fixture-eligible-1440.png",
+    "fixture-eligible-390.png",
+    "fixture-norights-1440.png",
+    "fixture-norights-390.png",
+    "fixture-voted-1440.png",
+    "fixture-voted-390.png",
+    "fixture-unknown-1440.png",
+    "fixture-unknown-390.png",
+    "fixture-archive-open-390.png",
+    "fixture-offline-390.png",
+    "fixture-empty-390.png",
+    "fixture-longtitle-390.png",
+    "fixture-exactlarge-390.png"
+  ],
+  "checks": [
+    {
+      "name": "overview ru 320 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 8,
+            "right": 49.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 53.71875,
+            "right": 135.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 139.71875,
+            "right": 179.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 194.4375,
+            "right": 268,
+            "width": 73.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 272,
+            "right": 312,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Посмотреть купон",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Посмотреть погашение",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Посмотреть голоса",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Все подтверждения",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "overview ru 320 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 8,
+          "right": 49.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 53.71875,
+          "right": 135.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 139.71875,
+          "right": 179.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 194.4375,
+          "right": 268,
+          "width": 73.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 272,
+          "right": 312,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "overview ru 320 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Посмотреть купон",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Посмотреть погашение",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Посмотреть голоса",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Все подтверждения",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "overview ru 320 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "issuer ru 320 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 8,
+            "right": 49.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 53.71875,
+            "right": 135.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 139.71875,
+            "right": 179.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 194.4375,
+            "right": 268,
+            "width": 73.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 272,
+            "right": 312,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Посмотреть историю",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "issuer ru 320 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 8,
+          "right": 49.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 53.71875,
+          "right": 135.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 139.71875,
+          "right": 179.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 194.4375,
+          "right": 268,
+          "width": 73.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 272,
+          "right": 312,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "issuer ru 320 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Посмотреть историю",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "issuer ru 320 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "registry ru 320 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 8,
+            "right": 49.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 53.71875,
+            "right": 135.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 139.71875,
+            "right": 179.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 194.4375,
+            "right": 268,
+            "width": 73.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 272,
+            "right": 312,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          }
+        ],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "registry ru 320 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 8,
+          "right": 49.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 53.71875,
+          "right": 135.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 139.71875,
+          "right": 179.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 194.4375,
+          "right": 268,
+          "width": 73.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 272,
+          "right": 312,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "registry ru 320 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "registry ru 320 holder navigation distinct native links",
+      "pass": true,
+      "data": [
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        }
+      ]
+    },
+    {
+      "name": "payments ru 320 no document overflow",
+      "pass": false,
+      "data": {
+        "viewport": 320,
+        "document": 325,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 8,
+            "right": 49.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 53.71875,
+            "right": 135.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 139.71875,
+            "right": 179.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 194.4375,
+            "right": 268,
+            "width": 73.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 272,
+            "right": 312,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Подтверждения",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          }
+        ],
+        "tallies": null,
+        "firstPayment": {
+          "top": 720.328125,
+          "bottom": 951.59375
+        }
+      }
+    },
+    {
+      "name": "payments ru 320 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 8,
+          "right": 49.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 53.71875,
+          "right": 135.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 139.71875,
+          "right": 179.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 194.4375,
+          "right": 268,
+          "width": 73.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 272,
+          "right": 312,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "payments ru 320 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Подтверждения",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "payments ru 320 holder navigation distinct native links",
+      "pass": true,
+      "data": [
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 320 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 8,
+            "right": 49.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 53.71875,
+            "right": 135.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 139.71875,
+            "right": 179.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 194.4375,
+            "right": 268,
+            "width": 73.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 272,
+            "right": 312,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "portfolio ru 320 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 8,
+          "right": 49.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 53.71875,
+          "right": 135.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 139.71875,
+          "right": 179.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 194.4375,
+          "right": 268,
+          "width": 73.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 272,
+          "right": 312,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 320 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 320 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 320 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 8,
+            "right": 49.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 53.71875,
+            "right": 135.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 139.71875,
+            "right": 179.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 194.4375,
+            "right": 268,
+            "width": 73.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 272,
+            "right": 312,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 294
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "voting ru 320 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 8,
+          "right": 49.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 53.71875,
+          "right": 135.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 139.71875,
+          "right": 179.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 194.4375,
+          "right": 268,
+          "width": 73.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 272,
+          "right": 312,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "voting ru 320 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 320 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 320 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 294
+      }
+    },
+    {
+      "name": "overview ru 390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 57.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 63.71875,
+            "right": 145.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 151.71875,
+            "right": 191.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 226.4375,
+            "right": 328,
+            "width": 101.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Посмотреть купон",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Посмотреть погашение",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Посмотреть голоса",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Все подтверждения",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "overview ru 390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 57.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 63.71875,
+          "right": 145.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 151.71875,
+          "right": 191.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 226.4375,
+          "right": 328,
+          "width": 101.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "overview ru 390 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Посмотреть купон",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Посмотреть погашение",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Посмотреть голоса",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Все подтверждения",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "overview ru 390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "issuer ru 390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 57.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 63.71875,
+            "right": 145.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 151.71875,
+            "right": 191.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 226.4375,
+            "right": 328,
+            "width": 101.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Посмотреть историю",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "issuer ru 390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 57.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 63.71875,
+          "right": 145.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 151.71875,
+          "right": 191.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 226.4375,
+          "right": 328,
+          "width": 101.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "issuer ru 390 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Посмотреть историю",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "issuer ru 390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "registry ru 390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 57.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 63.71875,
+            "right": 145.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 151.71875,
+            "right": 191.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 226.4375,
+            "right": 328,
+            "width": 101.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          }
+        ],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "registry ru 390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 57.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 63.71875,
+          "right": 145.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 151.71875,
+          "right": 191.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 226.4375,
+          "right": 328,
+          "width": 101.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "registry ru 390 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "registry ru 390 holder navigation distinct native links",
+      "pass": true,
+      "data": [
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        }
+      ]
+    },
+    {
+      "name": "payments ru 390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 57.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 63.71875,
+            "right": 145.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 151.71875,
+            "right": 191.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 226.4375,
+            "right": 328,
+            "width": 101.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Подтверждения",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          }
+        ],
+        "tallies": null,
+        "firstPayment": {
+          "top": 699.328125,
+          "bottom": 925.8125
+        }
+      }
+    },
+    {
+      "name": "payments ru 390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 57.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 63.71875,
+          "right": 145.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 151.71875,
+          "right": 191.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 226.4375,
+          "right": 328,
+          "width": 101.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "payments ru 390 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Подтверждения",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "payments ru 390 holder navigation distinct native links",
+      "pass": true,
+      "data": [
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 57.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 63.71875,
+            "right": 145.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 151.71875,
+            "right": 191.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 226.4375,
+            "right": 328,
+            "width": 101.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "portfolio ru 390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 57.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 63.71875,
+          "right": 145.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 151.71875,
+          "right": 191.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 226.4375,
+          "right": 328,
+          "width": 101.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 390 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 57.71875,
+            "width": 41.71875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 63.71875,
+            "right": 145.71875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 151.71875,
+            "right": 191.71875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 226.4375,
+            "right": 328,
+            "width": 101.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 356
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "voting ru 390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 57.71875,
+          "width": 41.71875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 63.71875,
+          "right": 145.71875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 151.71875,
+          "right": 191.71875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 226.4375,
+          "right": 328,
+          "width": 101.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "voting ru 390 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 390 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 356
+      }
+    },
+    {
+      "name": "overview ru 768 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 768,
+        "document": 768,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 166.046875,
+            "width": 150.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 172.046875,
+            "right": 254.046875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 260.046875,
+            "right": 300.046875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 578.4375,
+            "right": 706,
+            "width": 127.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 712,
+            "right": 752,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Посмотреть купон",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Посмотреть погашение",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Посмотреть голоса",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Все подтверждения",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "overview ru 768 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 166.046875,
+          "width": 150.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 172.046875,
+          "right": 254.046875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 260.046875,
+          "right": 300.046875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 578.4375,
+          "right": 706,
+          "width": 127.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 712,
+          "right": 752,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "overview ru 768 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Посмотреть купон",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Посмотреть погашение",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Посмотреть голоса",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Все подтверждения",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "overview ru 768 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "issuer ru 768 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 768,
+        "document": 768,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 166.046875,
+            "width": 150.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 172.046875,
+            "right": 254.046875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 260.046875,
+            "right": 300.046875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 578.4375,
+            "right": 706,
+            "width": 127.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 712,
+            "right": 752,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Посмотреть историю",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "issuer ru 768 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 166.046875,
+          "width": 150.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 172.046875,
+          "right": 254.046875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 260.046875,
+          "right": 300.046875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 578.4375,
+          "right": 706,
+          "width": 127.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 712,
+          "right": 752,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "issuer ru 768 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Посмотреть историю",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "issuer ru 768 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "registry ru 768 no document overflow",
+      "pass": false,
+      "data": {
+        "viewport": 768,
+        "document": 886,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 166.046875,
+            "width": 150.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 172.046875,
+            "right": 254.046875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 260.046875,
+            "right": 300.046875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 578.4375,
+            "right": 706,
+            "width": 127.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 712,
+            "right": 752,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          }
+        ],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "registry ru 768 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 166.046875,
+          "width": 150.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 172.046875,
+          "right": 254.046875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 260.046875,
+          "right": 300.046875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 578.4375,
+          "right": 706,
+          "width": 127.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 712,
+          "right": 752,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "registry ru 768 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "registry ru 768 holder navigation distinct native links",
+      "pass": true,
+      "data": [
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        }
+      ]
+    },
+    {
+      "name": "payments ru 768 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 768,
+        "document": 768,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 166.046875,
+            "width": 150.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 172.046875,
+            "right": 254.046875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 260.046875,
+            "right": 300.046875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 578.4375,
+            "right": 706,
+            "width": 127.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 712,
+            "right": 752,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Подтверждения",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          }
+        ],
+        "tallies": null,
+        "firstPayment": {
+          "top": 802.484375,
+          "bottom": 914.984375
+        }
+      }
+    },
+    {
+      "name": "payments ru 768 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 166.046875,
+          "width": 150.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 172.046875,
+          "right": 254.046875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 260.046875,
+          "right": 300.046875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 578.4375,
+          "right": 706,
+          "width": 127.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 712,
+          "right": 752,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "payments ru 768 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Подтверждения",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "payments ru 768 holder navigation distinct native links",
+      "pass": true,
+      "data": [
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 768 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 768,
+        "document": 768,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 166.046875,
+            "width": 150.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 172.046875,
+            "right": 254.046875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 260.046875,
+            "right": 300.046875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 578.4375,
+            "right": 706,
+            "width": 127.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 712,
+            "right": 752,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "portfolio ru 768 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 166.046875,
+          "width": 150.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 172.046875,
+          "right": 254.046875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 260.046875,
+          "right": 300.046875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 578.4375,
+          "right": 706,
+          "width": 127.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 712,
+          "right": 752,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 768 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 768 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 768 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 768,
+        "document": 768,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 16,
+            "right": 166.046875,
+            "width": 150.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 172.046875,
+            "right": 254.046875,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 260.046875,
+            "right": 300.046875,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 578.4375,
+            "right": 706,
+            "width": 127.5625,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 712,
+            "right": 752,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 734
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "voting ru 768 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 16,
+          "right": 166.046875,
+          "width": 150.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 172.046875,
+          "right": 254.046875,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 260.046875,
+          "right": 300.046875,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 578.4375,
+          "right": 706,
+          "width": 127.5625,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 712,
+          "right": 752,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "voting ru 768 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 768 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 768 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 734
+      }
+    },
+    {
+      "name": "overview ru 1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 690.796875,
+            "right": 855.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 863.84375,
+            "right": 949.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 957.875,
+            "right": 1105.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 1113.375,
+            "right": 1260.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 1268.875,
+            "right": 1408,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Посмотреть купон",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Посмотреть погашение",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Посмотреть голоса",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Все подтверждения",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "overview ru 1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 690.796875,
+          "right": 855.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 863.84375,
+          "right": 949.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 957.875,
+          "right": 1105.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 1113.375,
+          "right": 1260.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 1268.875,
+          "right": 1408,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "overview ru 1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Посмотреть купон",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Посмотреть погашение",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Посмотреть голоса",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Все подтверждения",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "overview ru 1440 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "issuer ru 1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 690.796875,
+            "right": 855.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 863.84375,
+            "right": 949.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 957.875,
+            "right": 1105.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 1113.375,
+            "right": 1260.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 1268.875,
+            "right": 1408,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Посмотреть историю",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "issuer ru 1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 690.796875,
+          "right": 855.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 863.84375,
+          "right": 949.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 957.875,
+          "right": 1105.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 1113.375,
+          "right": 1260.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 1268.875,
+          "right": 1408,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "issuer ru 1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Посмотреть историю",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "issuer ru 1440 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "registry ru 1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 690.796875,
+            "right": 855.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 863.84375,
+            "right": 949.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 957.875,
+            "right": 1105.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 1113.375,
+            "right": 1260.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 1268.875,
+            "right": 1408,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          }
+        ],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "registry ru 1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 690.796875,
+          "right": 855.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 863.84375,
+          "right": 949.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 957.875,
+          "right": 1105.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 1113.375,
+          "right": 1260.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 1268.875,
+          "right": 1408,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "registry ru 1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "registry ru 1440 holder navigation distinct native links",
+      "pass": true,
+      "data": [
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        }
+      ]
+    },
+    {
+      "name": "payments ru 1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 690.796875,
+            "right": 855.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 863.84375,
+            "right": 949.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 957.875,
+            "right": 1105.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 1113.375,
+            "right": 1260.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 1268.875,
+            "right": 1408,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Подтверждения",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          }
+        ],
+        "tallies": null,
+        "firstPayment": {
+          "top": 659.4375,
+          "bottom": 771.9375
+        }
+      }
+    },
+    {
+      "name": "payments ru 1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 690.796875,
+          "right": 855.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 863.84375,
+          "right": 949.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 957.875,
+          "right": 1105.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 1113.375,
+          "right": 1260.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 1268.875,
+          "right": 1408,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "payments ru 1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Подтверждения",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "payments ru 1440 holder navigation distinct native links",
+      "pass": true,
+      "data": [
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 690.796875,
+            "right": 855.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 863.84375,
+            "right": 949.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 957.875,
+            "right": 1105.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 1113.375,
+            "right": 1260.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 1268.875,
+            "right": 1408,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "portfolio ru 1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 690.796875,
+          "right": 855.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 863.84375,
+          "right": 949.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 957.875,
+          "right": 1105.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 1113.375,
+          "right": 1260.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 1268.875,
+          "right": 1408,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 1440 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 690.796875,
+            "right": 855.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 863.84375,
+            "right": 949.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 957.875,
+            "right": 1105.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 1113.375,
+            "right": 1260.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 1268.875,
+            "right": 1408,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 794
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "voting ru 1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 690.796875,
+          "right": 855.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 863.84375,
+          "right": 949.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 957.875,
+          "right": 1105.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 1113.375,
+          "right": 1260.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 1268.875,
+          "right": 1408,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "voting ru 1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 1440 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 1440 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 794
+      }
+    },
+    {
+      "name": "overview ru 2560 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 2560,
+        "document": 2560,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 1802.796875,
+            "right": 1967.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 1975.84375,
+            "right": 2061.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 2069.875,
+            "right": 2217.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 2225.375,
+            "right": 2372.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 2380.875,
+            "right": 2520,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Посмотреть купон",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Посмотреть погашение",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Посмотреть голоса",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Все подтверждения",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "overview ru 2560 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 1802.796875,
+          "right": 1967.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 1975.84375,
+          "right": 2061.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 2069.875,
+          "right": 2217.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 2225.375,
+          "right": 2372.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 2380.875,
+          "right": 2520,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "overview ru 2560 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Посмотреть купон",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Посмотреть погашение",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Посмотреть голоса",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Все подтверждения",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "overview ru 2560 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "issuer ru 2560 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 2560,
+        "document": 2560,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 1802.796875,
+            "right": 1967.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 1975.84375,
+            "right": 2061.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 2069.875,
+            "right": 2217.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 2225.375,
+            "right": 2372.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 2380.875,
+            "right": 2520,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Посмотреть историю",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "issuer ru 2560 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 1802.796875,
+          "right": 1967.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 1975.84375,
+          "right": 2061.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 2069.875,
+          "right": 2217.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 2225.375,
+          "right": 2372.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 2380.875,
+          "right": 2520,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "issuer ru 2560 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Посмотреть историю",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "issuer ru 2560 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "registry ru 2560 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 2560,
+        "document": 2560,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 1802.796875,
+            "right": 1967.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 1975.84375,
+            "right": 2061.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 2069.875,
+            "right": 2217.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 2225.375,
+            "right": 2372.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 2380.875,
+            "right": 2520,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Открыть портфель",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          }
+        ],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "registry ru 2560 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 1802.796875,
+          "right": 1967.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 1975.84375,
+          "right": 2061.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 2069.875,
+          "right": 2217.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 2225.375,
+          "right": 2372.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 2380.875,
+          "right": 2520,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "registry ru 2560 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Открыть портфель",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "registry ru 2560 holder navigation distinct native links",
+      "pass": true,
+      "data": [
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        }
+      ]
+    },
+    {
+      "name": "payments ru 2560 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 2560,
+        "document": 2560,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 1802.796875,
+            "right": 1967.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 1975.84375,
+            "right": 2061.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 2069.875,
+            "right": 2217.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 2225.375,
+            "right": 2372.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 2380.875,
+            "right": 2520,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Подтверждения",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+            "decoration": "underline"
+          },
+          {
+            "tag": "A",
+            "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+            "decoration": "underline"
+          }
+        ],
+        "tallies": null,
+        "firstPayment": {
+          "top": 667.4375,
+          "bottom": 779.9375
+        }
+      }
+    },
+    {
+      "name": "payments ru 2560 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 1802.796875,
+          "right": 1967.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 1975.84375,
+          "right": 2061.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 2069.875,
+          "right": 2217.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 2225.375,
+          "right": 2372.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 2380.875,
+          "right": 2520,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "payments ru 2560 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Подтверждения",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "payments ru 2560 holder navigation distinct native links",
+      "pass": true,
+      "data": [
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DssTvNQpWGNL2Z1DCCHpVZiyoJ4QpinabssgxTXEq89X",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=5iYXvhJAVDKeUi66DkuiEVtuEzpDNfGUFC7qaTsd5dqa",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=Ahp9jVA6nJqbcJRee6j8jWH9V1LySxSK5v7VCLAJqscP",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=J6ofXUsK6znHF8JMTF2tvViYCutK5zLyM4VKct79iN7k",
+          "decoration": "underline"
+        },
+        {
+          "tag": "A",
+          "href": "/?view=portfolio&holder=DMK11zsAWTxgdkzvGaGPUDZSBGth3yt9JdxsA6gtCK1m",
+          "decoration": "underline"
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 2560 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 2560,
+        "document": 2560,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 1802.796875,
+            "right": 1967.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 1975.84375,
+            "right": 2061.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 2069.875,
+            "right": 2217.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 2225.375,
+            "right": 2372.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 2380.875,
+            "right": 2520,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          },
+          {
+            "text": "Детали выплаты",
+            "border": "1px",
+            "color": "rgb(97, 116, 142)"
+          }
+        ],
+        "links": [],
+        "tallies": null,
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "portfolio ru 2560 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 1802.796875,
+          "right": 1967.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 1975.84375,
+          "right": 2061.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 2069.875,
+          "right": 2217.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 2225.375,
+          "right": 2372.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 2380.875,
+          "right": 2520,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 2560 quiet actions visibly bounded",
+      "pass": true,
+      "data": [
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        },
+        {
+          "text": "Детали выплаты",
+          "border": "1px",
+          "color": "rgb(97, 116, 142)"
+        }
+      ]
+    },
+    {
+      "name": "portfolio ru 2560 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 2560 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 2560,
+        "document": 2560,
+        "header": [
+          {
+            "name": "Сведения о тестовой сети",
+            "x": 1802.796875,
+            "right": 1967.84375,
+            "width": 165.046875,
+            "height": 44
+          },
+          {
+            "name": "Язык интерфейса",
+            "x": 1975.84375,
+            "right": 2061.875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Настройки интерфейса",
+            "x": 2069.875,
+            "right": 2217.375,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Аккаунт",
+            "x": 2225.375,
+            "right": 2372.875,
+            "width": 147.5,
+            "height": 44
+          },
+          {
+            "name": "Обновить данные",
+            "x": 2380.875,
+            "right": 2520,
+            "width": 139.125,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 720
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "voting ru 2560 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Сведения о тестовой сети",
+          "x": 1802.796875,
+          "right": 1967.84375,
+          "width": 165.046875,
+          "height": 44
+        },
+        {
+          "name": "Язык интерфейса",
+          "x": 1975.84375,
+          "right": 2061.875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Настройки интерфейса",
+          "x": 2069.875,
+          "right": 2217.375,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Аккаунт",
+          "x": 2225.375,
+          "right": 2372.875,
+          "width": 147.5,
+          "height": 44
+        },
+        {
+          "name": "Обновить данные",
+          "x": 2380.875,
+          "right": 2520,
+          "width": 139.125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "voting ru 2560 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 2560 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting ru 2560 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 720
+      }
+    },
+    {
+      "name": "voting en 390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 16,
+            "right": 57.453125,
+            "width": 41.453125,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 63.453125,
+            "right": 145.453125,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Interface settings",
+            "x": 151.453125,
+            "right": 191.453125,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Account",
+            "x": 225.125,
+            "right": 328,
+            "width": 102.875,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 356
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "voting en 390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 16,
+          "right": 57.453125,
+          "width": 41.453125,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 63.453125,
+          "right": 145.453125,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Interface settings",
+          "x": 151.453125,
+          "right": 191.453125,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Account",
+          "x": 225.125,
+          "right": 328,
+          "width": 102.875,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "voting en 390 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting en 390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting en 390 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 356
+      }
+    },
+    {
+      "name": "voting en 1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 739.734375,
+            "right": 891.1875,
+            "width": 151.453125,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 899.1875,
+            "right": 985.21875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Interface settings",
+            "x": 993.21875,
+            "right": 1120.65625,
+            "width": 127.4375,
+            "height": 44
+          },
+          {
+            "name": "Account",
+            "x": 1128.65625,
+            "right": 1277.640625,
+            "width": 148.984375,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 1285.640625,
+            "right": 1408,
+            "width": 122.359375,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 794
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "voting en 1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 739.734375,
+          "right": 891.1875,
+          "width": 151.453125,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 899.1875,
+          "right": 985.21875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Interface settings",
+          "x": 993.21875,
+          "right": 1120.65625,
+          "width": 127.4375,
+          "height": 44
+        },
+        {
+          "name": "Account",
+          "x": 1128.65625,
+          "right": 1277.640625,
+          "width": 148.984375,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 1285.640625,
+          "right": 1408,
+          "width": 122.359375,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "voting en 1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting en 1440 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting en 1440 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 794
+      }
+    },
+    {
+      "name": "voting en 2560 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 2560,
+        "document": 2560,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 1851.734375,
+            "right": 2003.1875,
+            "width": 151.453125,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 2011.1875,
+            "right": 2097.21875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Interface settings",
+            "x": 2105.21875,
+            "right": 2232.65625,
+            "width": 127.4375,
+            "height": 44
+          },
+          {
+            "name": "Account",
+            "x": 2240.65625,
+            "right": 2389.640625,
+            "width": 148.984375,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 2397.640625,
+            "right": 2520,
+            "width": 122.359375,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 720
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "voting en 2560 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 1851.734375,
+          "right": 2003.1875,
+          "width": 151.453125,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 2011.1875,
+          "right": 2097.21875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Interface settings",
+          "x": 2105.21875,
+          "right": 2232.65625,
+          "width": 127.4375,
+          "height": 44
+        },
+        {
+          "name": "Account",
+          "x": 2240.65625,
+          "right": 2389.640625,
+          "width": 148.984375,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 2397.640625,
+          "right": 2520,
+          "width": 122.359375,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "voting en 2560 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting en 2560 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "voting en 2560 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 720
+      }
+    },
+    {
+      "name": "closed state no voting action",
+      "pass": true
+    },
+    {
+      "name": "closed state exactweight25 andaccounts2",
+      "pass": true
+    },
+    {
+      "name": "details protected dialog and originalsubject",
+      "pass": true
+    },
+    {
+      "name": "details Escape restores focus",
+      "pass": true
+    },
+    {
+      "name": "vote history opens actualreceiptsfiltered",
+      "pass": true
+    },
+    {
+      "name": "account last correction still bounded",
+      "pass": true
+    },
+    {
+      "name": "untouched creation no errors",
+      "pass": true
+    },
+    {
+      "name": "holder href contains precise destination",
+      "pass": true
+    },
+    {
+      "name": "native holder link opensportfolio preservesinspection",
+      "pass": true
+    },
+    {
+      "name": "native nav updates selectedviewURL",
+      "pass": true
+    },
+    {
+      "name": "Ctrl-click preserves native newtab navigation",
+      "pass": true
+    },
+    {
+      "name": "registry search no-match recovery preserved",
+      "pass": true
+    },
+    {
+      "name": "registry holder link works",
+      "pass": true
+    },
+    {
+      "name": "contained paymentdetails opens own dialog",
+      "pass": true
+    },
+    {
+      "name": "mobile native nav closes menu and navigates",
+      "pass": true
+    },
+    {
+      "name": "fixture noaccount1440 correctstate",
+      "pass": true,
+      "data": "Choose a signing account\n\nVoting rights are checked for the signing account, separately from the portfolio you are viewing.\n\nChoose account"
+    },
+    {
+      "name": "fixture noaccount1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 759.21875,
+            "right": 891.1875,
+            "width": 131.96875,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 899.1875,
+            "right": 985.21875,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Interface settings",
+            "x": 993.21875,
+            "right": 1120.65625,
+            "width": 127.4375,
+            "height": 44
+          },
+          {
+            "name": "Account",
+            "x": 1128.65625,
+            "right": 1277.640625,
+            "width": 148.984375,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 1285.640625,
+            "right": 1408,
+            "width": 122.359375,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 794
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture noaccount1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 759.21875,
+          "right": 891.1875,
+          "width": 131.96875,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 899.1875,
+          "right": 985.21875,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Interface settings",
+          "x": 993.21875,
+          "right": 1120.65625,
+          "width": 127.4375,
+          "height": 44
+        },
+        {
+          "name": "Account",
+          "x": 1128.65625,
+          "right": 1277.640625,
+          "width": 148.984375,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 1285.640625,
+          "right": 1408,
+          "width": 122.359375,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture noaccount1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture noaccount1440 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture noaccount1440 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 794
+      }
+    },
+    {
+      "name": "fixture noaccount1440 recoveryopensaccount",
+      "pass": true
+    },
+    {
+      "name": "fixture noaccount390 correctstate",
+      "pass": true,
+      "data": "Choose a signing account\n\nVoting rights are checked for the signing account, separately from the portfolio you are viewing.\n\nChoose account"
+    },
+    {
+      "name": "fixture noaccount390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 16,
+            "right": 56,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 62,
+            "right": 144,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Interface settings",
+            "x": 150,
+            "right": 190,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Account",
+            "x": 225.125,
+            "right": 328,
+            "width": 102.875,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 356
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture noaccount390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 16,
+          "right": 56,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 62,
+          "right": 144,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Interface settings",
+          "x": 150,
+          "right": 190,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Account",
+          "x": 225.125,
+          "right": 328,
+          "width": 102.875,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture noaccount390 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture noaccount390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture noaccount390 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 356
+      }
+    },
+    {
+      "name": "fixture noaccount390 recoveryopensaccount",
+      "pass": true
+    },
+    {
+      "name": "fixture eligible1440 correctstate",
+      "pass": true,
+      "data": "Your ballot\nRecorded weight\n10\nbonds\n\nYour choice cannot be changed after signing.\n\nReview vote for\nReview vote against"
+    },
+    {
+      "name": "fixture eligible1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 740.265625,
+            "right": 872.234375,
+            "width": 131.96875,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 880.234375,
+            "right": 966.265625,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Interface settings",
+            "x": 974.265625,
+            "right": 1101.703125,
+            "width": 127.4375,
+            "height": 44
+          },
+          {
+            "name": "Investor 01",
+            "x": 1109.703125,
+            "right": 1277.640625,
+            "width": 167.9375,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 1285.640625,
+            "right": 1408,
+            "width": 122.359375,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 794
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture eligible1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 740.265625,
+          "right": 872.234375,
+          "width": 131.96875,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 880.234375,
+          "right": 966.265625,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Interface settings",
+          "x": 974.265625,
+          "right": 1101.703125,
+          "width": 127.4375,
+          "height": 44
+        },
+        {
+          "name": "Investor 01",
+          "x": 1109.703125,
+          "right": 1277.640625,
+          "width": 167.9375,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 1285.640625,
+          "right": 1408,
+          "width": 122.359375,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture eligible1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture eligible1440 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture eligible1440 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 794
+      }
+    },
+    {
+      "name": "fixture eligible390 correctstate",
+      "pass": true,
+      "data": "Your ballot\nRecorded weight\n10\nbonds\n\nYour choice cannot be changed after signing.\n\nReview vote for\nReview vote against"
+    },
+    {
+      "name": "fixture eligible390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 16,
+            "right": 56,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 62,
+            "right": 144,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Interface settings",
+            "x": 150,
+            "right": 190,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Investor 01",
+            "x": 208.546875,
+            "right": 328,
+            "width": 119.453125,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 356
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture eligible390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 16,
+          "right": 56,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 62,
+          "right": 144,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Interface settings",
+          "x": 150,
+          "right": 190,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Investor 01",
+          "x": 208.546875,
+          "right": 328,
+          "width": 119.453125,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture eligible390 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture eligible390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture eligible390 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 356
+      }
+    },
+    {
+      "name": "fixture norights1440 correctstate",
+      "pass": true,
+      "data": "No voting rights\n\nThe signing account has no positive weight in this proposal’s rights record.\n\nChoose another account"
+    },
+    {
+      "name": "fixture norights1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 740.265625,
+            "right": 872.234375,
+            "width": 131.96875,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 880.234375,
+            "right": 966.265625,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Interface settings",
+            "x": 974.265625,
+            "right": 1101.703125,
+            "width": 127.4375,
+            "height": 44
+          },
+          {
+            "name": "Investor 01",
+            "x": 1109.703125,
+            "right": 1277.640625,
+            "width": 167.9375,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 1285.640625,
+            "right": 1408,
+            "width": 122.359375,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 794
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture norights1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 740.265625,
+          "right": 872.234375,
+          "width": 131.96875,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 880.234375,
+          "right": 966.265625,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Interface settings",
+          "x": 974.265625,
+          "right": 1101.703125,
+          "width": 127.4375,
+          "height": 44
+        },
+        {
+          "name": "Investor 01",
+          "x": 1109.703125,
+          "right": 1277.640625,
+          "width": 167.9375,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 1285.640625,
+          "right": 1408,
+          "width": 122.359375,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture norights1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture norights1440 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture norights1440 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 794
+      }
+    },
+    {
+      "name": "fixture norights1440 no reviewvotecontrol",
+      "pass": true
+    },
+    {
+      "name": "fixture norights390 correctstate",
+      "pass": true,
+      "data": "No voting rights\n\nThe signing account has no positive weight in this proposal’s rights record.\n\nChoose another account"
+    },
+    {
+      "name": "fixture norights390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 16,
+            "right": 56,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 62,
+            "right": 144,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Interface settings",
+            "x": 150,
+            "right": 190,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Investor 01",
+            "x": 208.546875,
+            "right": 328,
+            "width": 119.453125,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 356
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture norights390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 16,
+          "right": 56,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 62,
+          "right": 144,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Interface settings",
+          "x": 150,
+          "right": 190,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Investor 01",
+          "x": 208.546875,
+          "right": 328,
+          "width": 119.453125,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture norights390 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture norights390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture norights390 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 356
+      }
+    },
+    {
+      "name": "fixture norights390 no reviewvotecontrol",
+      "pass": true
+    },
+    {
+      "name": "fixture voted1440 correctstate",
+      "pass": true,
+      "data": "Your ballot is recorded\n\nYou cannot vote again or replace your choice.\n\nView vote history"
+    },
+    {
+      "name": "fixture voted1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 740.265625,
+            "right": 872.234375,
+            "width": 131.96875,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 880.234375,
+            "right": 966.265625,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Interface settings",
+            "x": 974.265625,
+            "right": 1101.703125,
+            "width": 127.4375,
+            "height": 44
+          },
+          {
+            "name": "Investor 01",
+            "x": 1109.703125,
+            "right": 1277.640625,
+            "width": 167.9375,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 1285.640625,
+            "right": 1408,
+            "width": 122.359375,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 794
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture voted1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 740.265625,
+          "right": 872.234375,
+          "width": 131.96875,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 880.234375,
+          "right": 966.265625,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Interface settings",
+          "x": 974.265625,
+          "right": 1101.703125,
+          "width": 127.4375,
+          "height": 44
+        },
+        {
+          "name": "Investor 01",
+          "x": 1109.703125,
+          "right": 1277.640625,
+          "width": 167.9375,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 1285.640625,
+          "right": 1408,
+          "width": 122.359375,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture voted1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture voted1440 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture voted1440 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 794
+      }
+    },
+    {
+      "name": "fixture voted1440 no reviewvotecontrol",
+      "pass": true
+    },
+    {
+      "name": "fixture voted390 correctstate",
+      "pass": true,
+      "data": "Your ballot is recorded\n\nYou cannot vote again or replace your choice.\n\nView vote history"
+    },
+    {
+      "name": "fixture voted390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 16,
+            "right": 56,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 62,
+            "right": 144,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Interface settings",
+            "x": 150,
+            "right": 190,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Investor 01",
+            "x": 208.546875,
+            "right": 328,
+            "width": 119.453125,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 356
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture voted390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 16,
+          "right": 56,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 62,
+          "right": 144,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Interface settings",
+          "x": 150,
+          "right": 190,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Investor 01",
+          "x": 208.546875,
+          "right": 328,
+          "width": 119.453125,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture voted390 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture voted390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture voted390 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 356
+      }
+    },
+    {
+      "name": "fixture voted390 no reviewvotecontrol",
+      "pass": true
+    },
+    {
+      "name": "fixture unknown1440 correctstate",
+      "pass": true,
+      "data": "Voting weight unavailable\n\nThis account’s voting weight could not be determined. Refresh the data before voting.\n\nRefresh data"
+    },
+    {
+      "name": "fixture unknown1440 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 1440,
+        "document": 1440,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 740.265625,
+            "right": 872.234375,
+            "width": 131.96875,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 880.234375,
+            "right": 966.265625,
+            "width": 86.03125,
+            "height": 43.25
+          },
+          {
+            "name": "Interface settings",
+            "x": 974.265625,
+            "right": 1101.703125,
+            "width": 127.4375,
+            "height": 44
+          },
+          {
+            "name": "Investor 01",
+            "x": 1109.703125,
+            "right": 1277.640625,
+            "width": 167.9375,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 1285.640625,
+            "right": 1408,
+            "width": 122.359375,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 794
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture unknown1440 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 740.265625,
+          "right": 872.234375,
+          "width": 131.96875,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 880.234375,
+          "right": 966.265625,
+          "width": 86.03125,
+          "height": 43.25
+        },
+        {
+          "name": "Interface settings",
+          "x": 974.265625,
+          "right": 1101.703125,
+          "width": 127.4375,
+          "height": 44
+        },
+        {
+          "name": "Investor 01",
+          "x": 1109.703125,
+          "right": 1277.640625,
+          "width": 167.9375,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 1285.640625,
+          "right": 1408,
+          "width": 122.359375,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture unknown1440 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture unknown1440 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture unknown1440 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 794
+      }
+    },
+    {
+      "name": "fixture unknown1440 refreshisread",
+      "pass": true
+    },
+    {
+      "name": "fixture unknown1440 no reviewvotecontrol",
+      "pass": true
+    },
+    {
+      "name": "fixture unknown390 correctstate",
+      "pass": true,
+      "data": "Voting weight unavailable\n\nThis account’s voting weight could not be determined. Refresh the data before voting.\n\nRefresh data"
+    },
+    {
+      "name": "fixture unknown390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 16,
+            "right": 56,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 62,
+            "right": 144,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Interface settings",
+            "x": 150,
+            "right": 190,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Investor 01",
+            "x": 208.546875,
+            "right": 328,
+            "width": 119.453125,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 356
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture unknown390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 16,
+          "right": 56,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 62,
+          "right": 144,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Interface settings",
+          "x": 150,
+          "right": 190,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Investor 01",
+          "x": 208.546875,
+          "right": 328,
+          "width": 119.453125,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture unknown390 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture unknown390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture unknown390 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 356
+      }
+    },
+    {
+      "name": "fixture unknown390 refreshisread",
+      "pass": true
+    },
+    {
+      "name": "fixture unknown390 no reviewvotecontrol",
+      "pass": true
+    },
+    {
+      "name": "fixture archive-open blocksballots",
+      "pass": true
+    },
+    {
+      "name": "fixture offline blocksballots",
+      "pass": true
+    },
+    {
+      "name": "fixture empty blocksballots",
+      "pass": true
+    },
+    {
+      "name": "fixture longtitle390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 16,
+            "right": 56,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 62,
+            "right": 144,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Interface settings",
+            "x": 150,
+            "right": 190,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Investor 01",
+            "x": 208.546875,
+            "right": 328,
+            "width": 119.453125,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 356
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture longtitle390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 16,
+          "right": 56,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 62,
+          "right": 144,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Interface settings",
+          "x": 150,
+          "right": 190,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Investor 01",
+          "x": 208.546875,
+          "right": 328,
+          "width": 119.453125,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture longtitle390 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture longtitle390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture longtitle390 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 356
+      }
+    },
+    {
+      "name": "large voting value remains exact and grouped",
+      "pass": true
+    },
+    {
+      "name": "fixture exactlarge390 no document overflow",
+      "pass": true,
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "header": [
+          {
+            "name": "Test network details",
+            "x": 16,
+            "right": 56,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Interface language",
+            "x": 62,
+            "right": 144,
+            "width": 82,
+            "height": 42
+          },
+          {
+            "name": "Interface settings",
+            "x": 150,
+            "right": 190,
+            "width": 40,
+            "height": 44
+          },
+          {
+            "name": "Investor 01",
+            "x": 208.546875,
+            "right": 328,
+            "width": 119.453125,
+            "height": 44
+          },
+          {
+            "name": "Refresh chain state",
+            "x": 334,
+            "right": 374,
+            "width": 40,
+            "height": 44
+          }
+        ],
+        "ghosts": [],
+        "links": [],
+        "tallies": {
+          "display": "block",
+          "width": 356
+        },
+        "firstPayment": null
+      }
+    },
+    {
+      "name": "fixture exactlarge390 toolbar controls fit",
+      "pass": true,
+      "data": [
+        {
+          "name": "Test network details",
+          "x": 16,
+          "right": 56,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Interface language",
+          "x": 62,
+          "right": 144,
+          "width": 82,
+          "height": 42
+        },
+        {
+          "name": "Interface settings",
+          "x": 150,
+          "right": 190,
+          "width": 40,
+          "height": 44
+        },
+        {
+          "name": "Investor 01",
+          "x": 208.546875,
+          "right": 328,
+          "width": 119.453125,
+          "height": 44
+        },
+        {
+          "name": "Refresh chain state",
+          "x": 334,
+          "right": 374,
+          "width": 40,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "name": "fixture exactlarge390 quiet actions visibly bounded",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture exactlarge390 holder navigation distinct native links",
+      "pass": true,
+      "data": []
+    },
+    {
+      "name": "fixture exactlarge390 tallies not legacy splitgrid",
+      "pass": true,
+      "data": {
+        "display": "block",
+        "width": 356
+      }
+    },
+    {
+      "name": "eligible for click passes exact unsignedintent only",
+      "pass": true
+    },
+    {
+      "name": "no transaction submit/demoexecution calls",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "postAttempts": [
+    {
+      "url": "/api/actions/prepare",
+      "body": {
+        "action": "cast_vote",
+        "walletAddress": "9MQsCjLfWJRc7Kjto1qHXnq4rc5yzbr6qggjfh3J37s2",
+        "params": {
+          "proposalId": "11",
+          "choice": "yes",
+          "bondAddress": "4fUZgJbBL99e98o5t5JfcsqSqT5kw8qaYHvUL6GSaG8G"
+        }
+      }
+    }
+  ],
+  "hashes": {
+    "App.tsx": "51d40b6ffc8aab00f3f754cf9e52b0031b0c183d94ecf868c332c9178d28be74",
+    "main.tsx": "607b797897235bde3f123befac84610ebe5a67288542dff29d91d65e79bb670d",
+    "WorkspaceLink.tsx": "cef26efe60275900ca566e73c51ae6342f5841882c0bc75140542d382d531996",
+    "interaction-controls.css": "2508e9d0687592f24a227f141c4d6f171b02d54fa9012a1772a54141ff6822f1",
+    "PaymentTable.tsx": "1f34d72bc29c5ed7176a25f5d0dc85654d2484d7b74ab7860687e9583089d85d",
+    "HolderPortfolio.tsx": "276473f9315ff8c3af7db087333c3cb988f1d820546968f7f5144f99b9ef6e42",
+    "VotingWorkspace.tsx": "4ae2305806e9f087ecc05d3e314223d91262b0c7dbcceed4304832084117f71f",
+    "voting-page.css": "d508e315047c57f45fef2fe52508fc94e7109de767e93d923e9920619ac4f581"
+  }
+}

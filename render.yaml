@@ -1,0 +1,25 @@
+# Preparation only: this disk-backed plan is paid. Provision only after owner approval.
+services:
+  - type: web
+    name: bondtrace-devnet
+    runtime: docker
+    plan: starter
+    numInstances: 1
+    autoDeployTrigger: "off"
+    healthCheckPath: /healthz
+    dockerfilePath: ./Dockerfile
+    disk:
+      name: bondtrace-metadata
+      mountPath: /app/.local/hosted
+      sizeGB: 1
+    envVars:
+      - key: BONDTRACE_PUBLIC_ORIGIN
+        sync: false
+      - key: BONDTRACE_HTTP_USER
+        sync: false
+      - key: BONDTRACE_HTTP_PASSWORD
+        sync: false
+      - key: BONDTRACE_NETWORK
+        value: devnet
+      - key: BONDTRACE_ENABLE_DEMO
+        value: "false"

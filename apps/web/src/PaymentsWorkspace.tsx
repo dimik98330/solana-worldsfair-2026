@@ -65,7 +65,7 @@ export function PaymentsWorkspace({
   return <section className="payments-workspace" aria-labelledby={headingId}>
     <header className="payments-heading">
       <div><h1 id={headingId}>{tr('Payments', 'Выплаты')}</h1></div>
-      <Button variant="ghost" onClick={onReceipts}><ReceiptText size={17} aria-hidden="true" />{tr('Receipts', 'Подтверждения')}</Button>
+      <Button variant="ghost" onClick={onReceipts}><ReceiptText size={20} aria-hidden="true" />{tr('History', 'История')}</Button>
     </header>
 
     <div className="payments-layout">

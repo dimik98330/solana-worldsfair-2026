@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-09T06:02:58.331Z",
+  "generatedAt": "2026-10-09T07:02:19.030Z",
   "title": "Design System: BondTrace — Settlement Workspace",
   "extensions": {
     "colorMeta": {
@@ -433,7 +433,7 @@
       },
       "button": {
         "displayName": "Command label",
-        "purpose": "Manrope 15px/650 action name."
+        "purpose": "Manrope16px/650 command label with a visible control boundary."
       },
       "label": {
         "displayName": "Working label",
@@ -592,6 +592,16 @@
         "name": "account-stack",
         "value": "760px",
         "purpose": "Account holder and wallet areas become one scrolling body; header/footer stay outside the scroll region."
+      },
+      {
+        "name": "registry-records",
+        "value": "900px",
+        "purpose": "Labeled registry record groups with wrapping captions and contained action controls."
+      },
+      {
+        "name": "vote-context-row",
+        "value": "1450px",
+        "purpose": "Voting deadline/rights context moves below results and ballot actions."
       }
     ]
   },
@@ -601,24 +611,24 @@
       "kind": "button",
       "refersTo": "button-primary",
       "description": "Available operation command; labels carry actual task names.",
-      "html": "<button class=\"ds-primary\">Review action<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
-      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:9px 16px;border:1px solid var(--border-control,#61748e);border-radius:8px;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:15px;font-weight:650;line-height:1.45;cursor:pointer}.ds-primary:focus-visible{outline:3px solid var(--primary,#376cf4);outline-offset:3px}.ds-primary:active:not(:disabled){filter:brightness(.96)}.ds-primary:disabled{opacity:.48;cursor:not-allowed}@media(prefers-reduced-motion:no-preference){.ds-primary{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}.ds-primary{background:var(--primary,#376cf4);border-color:var(--primary,#376cf4);color:var(--primary-foreground,#ffffff)}.ds-primary:hover:not(:disabled){background:var(--primary-hover,#2c5edd);border-color:var(--primary-hover,#2c5edd)}"
+      "html": "<button class=\"ds-primary\">Review action<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:9px 16px;border:1px solid var(--border-control,#61748e);border-radius:8px;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:16px;font-weight:650;line-height:1.45;cursor:pointer}.ds-primary:focus-visible{outline:3px solid var(--primary,#376cf4);outline-offset:3px}.ds-primary:active:not(:disabled){filter:brightness(.96)}.ds-primary:disabled{opacity:.48;cursor:not-allowed}@media(prefers-reduced-motion:no-preference){.ds-primary{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}.ds-primary{background:var(--primary,#376cf4);border-color:var(--primary,#376cf4);color:var(--primary-foreground,#ffffff)}.ds-primary:hover:not(:disabled){background:var(--primary-hover,#2c5edd);border-color:var(--primary-hover,#2c5edd)}"
     },
     {
       "name": "Secondary action",
       "kind": "button",
       "refersTo": "button-secondary",
       "description": "Supporting working action without command-blue fill.",
-      "html": "<button class=\"ds-secondary\">View receipts<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
-      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:9px 16px;border:1px solid var(--border-control,#61748e);border-radius:8px;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:15px;font-weight:650;line-height:1.45;cursor:pointer}.ds-secondary:focus-visible{outline:3px solid var(--primary,#376cf4);outline-offset:3px}.ds-secondary:active:not(:disabled){filter:brightness(.96)}.ds-secondary:disabled{opacity:.48;cursor:not-allowed}@media(prefers-reduced-motion:no-preference){.ds-secondary{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}.ds-secondary{background:var(--panel,#161e2b);color:var(--foreground,#eef2f8)}.ds-secondary:hover:not(:disabled){background:var(--panel-subtle,#1c2737);border-color:var(--muted,#a6b3c6)}"
+      "html": "<button class=\"ds-secondary\">View receipts<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:9px 16px;border:1px solid var(--border-control,#61748e);border-radius:8px;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:16px;font-weight:650;line-height:1.45;cursor:pointer}.ds-secondary:focus-visible{outline:3px solid var(--primary,#376cf4);outline-offset:3px}.ds-secondary:active:not(:disabled){filter:brightness(.96)}.ds-secondary:disabled{opacity:.48;cursor:not-allowed}@media(prefers-reduced-motion:no-preference){.ds-secondary{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}.ds-secondary{background:var(--panel,#161e2b);color:var(--foreground,#eef2f8)}.ds-secondary:hover:not(:disabled){background:var(--panel-subtle,#1c2737);border-color:var(--muted,#a6b3c6)}"
     },
     {
       "name": "Ghost action",
       "kind": "button",
       "refersTo": "button-ghost",
-      "description": "Local detail or supporting link inside a working record.",
-      "html": "<button class=\"ds-ghost\">Details<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
-      "css": ".ds-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:9px 16px;border:1px solid var(--border-control,#61748e);border-radius:8px;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:15px;font-weight:650;line-height:1.45;cursor:pointer}.ds-ghost:focus-visible{outline:3px solid var(--primary,#376cf4);outline-offset:3px}.ds-ghost:active:not(:disabled){filter:brightness(.96)}.ds-ghost:disabled{opacity:.48;cursor:not-allowed}@media(prefers-reduced-motion:no-preference){.ds-ghost{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}.ds-ghost{background:transparent;border-color:transparent;color:var(--muted,#a6b3c6)}.ds-ghost:hover:not(:disabled){background:var(--primary-soft,#1d3053);color:var(--link,#9fc0ff)}"
+      "description": "Contained quiet inspection action, visually distinct from static labels.",
+      "html": "<button class=\"ds-ghost\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-file-search\" aria-hidden=\"true\"><path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\"></path><path d=\"M14 2v5a1 1 0 0 0 1 1h5\"></path><circle cx=\"11.5\" cy=\"14.5\" r=\"2.5\"></circle><path d=\"M13.3 16.3 15 18\"></path></svg>Details</button>",
+      "css": ".ds-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:9px 16px;border:1px solid var(--border-control,#61748e);border-radius:8px;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:16px;font-weight:650;line-height:1.45;cursor:pointer}.ds-ghost:focus-visible{outline:3px solid var(--primary,#376cf4);outline-offset:3px}.ds-ghost:active:not(:disabled){filter:brightness(.96)}.ds-ghost:disabled{opacity:.48;cursor:not-allowed}@media(prefers-reduced-motion:no-preference){.ds-ghost{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}.ds-ghost{background:var(--input,#0d1420);border-color:var(--border-control,#61748e);color:var(--foreground,#eef2f8)}.ds-ghost:hover:not(:disabled){background:var(--panel-subtle,#1c2737);border-color:var(--link,#9fc0ff);color:var(--foreground,#eef2f8)}"
     },
     {
       "name": "Inset numeric field",
@@ -632,9 +642,9 @@
       "name": "Selected navigation",
       "kind": "nav",
       "refersTo": "navigation-active",
-      "description": "One active work view, with clear labeled icon and quiet selected seam.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Work views\"><button aria-current=\"page\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 8V5a2 2 0 0 0-2-2H5a3 3 0 0 0 0 6h15v10a2 2 0 0 1-2 2H5a3 3 0 0 1-3-3V6\"/><path d=\"M20 12h-4a2 2 0 0 0 0 4h4\"/></svg>Payments<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button></nav>",
-      "css": ".ds-nav{padding:16px;background:var(--nav,#0a101a)}.ds-nav button{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;padding:12px;border:1px solid var(--nav-border,#233044);border-radius:8px;background:var(--nav-active,#182b49);color:#c3d7ff;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:16px;font-weight:650;text-align:left;cursor:pointer}.ds-nav button svg:first-child{color:var(--link,#9fc0ff)}.ds-nav button svg:last-child{margin-left:auto}.ds-nav button:hover{background:var(--nav-active,#182b49);color:#c3d7ff}.ds-nav button:focus-visible{outline:3px solid #93b9ff;outline-offset:3px}@media(prefers-reduced-motion:no-preference){.ds-nav button{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}"
+      "description": "Native navigation link, current page state and preserved browser open-in-new-tab behavior.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Work views\"><a href=\"?view=payments\" aria-current=\"page\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-banknote\" aria-hidden=\"true\"><rect width=\"20\" height=\"12\" x=\"2\" y=\"6\" rx=\"2\"></rect><circle cx=\"12\" cy=\"12\" r=\"2\"></circle><path d=\"M6 12h.01M18 12h.01\"></path></svg>Payments<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-chevron-right\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"></path></svg></a></nav>",
+      "css": ".ds-nav{padding:16px;background:var(--nav,#0a101a)}.ds-nav a{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;padding:12px;border:1px solid var(--nav-border,#233044);border-radius:8px;background:var(--nav-active,#182b49);color:#eef2f8;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:17px;font-weight:650;text-align:left;cursor:pointer}.ds-nav a svg:first-child{color:var(--link,#9fc0ff)}.ds-nav a svg:last-child{margin-left:auto}.ds-nav a:hover{background:var(--nav-active,#182b49);color:#eef2f8}.ds-nav a:focus-visible{outline:3px solid #93b9ff;outline-offset:3px}@media(prefers-reduced-motion:no-preference){.ds-nav a{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}.ds-nav a{text-decoration:none}"
     },
     {
       "name": "Paid status",
@@ -713,6 +723,11 @@
       {
         "name": "The Account Separation Rule",
         "body": "Account selection uses a viewport-bounded 1000px dialog, intrinsic72px-minimum holder rows, independent desktop panes and persistent header/footer; inspection never grants signing rights.",
+        "section": "components"
+      },
+      {
+        "name": "Commands and navigation",
+        "body": "Actions have visible button boundaries and descriptive labels. Holder navigation is a native underlined link. Static facts are not styled as controls. Exact long vote values remain unwrapped in a bounded local scroll area.",
         "section": "components"
       }
     ],

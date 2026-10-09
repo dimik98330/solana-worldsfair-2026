@@ -1,0 +1,157 @@
+{
+  "capturedAt": "2026-10-09T06:55:18.836Z",
+  "scope": "Completion of existing IR09 containment correction within final confirmation",
+  "checks": [
+    {
+      "name": "exactlarge320 card and page containment",
+      "pass": true,
+      "data": {
+        "width": 320,
+        "document": 320,
+        "parentRight": 291,
+        "children": [
+          {
+            "name": "H3",
+            "right": 291,
+            "width": 262
+          },
+          {
+            "name": "vote-your-weight",
+            "right": 291,
+            "width": 262
+          },
+          {
+            "name": "P",
+            "right": 291,
+            "width": 262
+          },
+          {
+            "name": "vote-choice-buttons",
+            "right": 291,
+            "width": 262
+          }
+        ],
+        "long": [
+          {
+            "value": "18,446,744,073,709,551,615",
+            "raw": "18446744073709551615",
+            "nowrap": "nowrap",
+            "client": 105,
+            "scroll": 264
+          },
+          {
+            "value": "18,446,744,073,709,551,615",
+            "raw": "18446744073709551615",
+            "nowrap": "nowrap",
+            "client": 262,
+            "scroll": 284
+          },
+          {
+            "value": "18,446,744,073,709,551,615",
+            "raw": "18446744073709551615",
+            "nowrap": "nowrap",
+            "client": 262,
+            "scroll": 284
+          }
+        ]
+      }
+    },
+    {
+      "name": "exactlarge320 exact unwrapped raw weight",
+      "pass": true
+    },
+    {
+      "name": "exactlarge390 card and page containment",
+      "pass": true,
+      "data": {
+        "width": 390,
+        "document": 390,
+        "parentRight": 353,
+        "children": [
+          {
+            "name": "H3",
+            "right": 353,
+            "width": 316
+          },
+          {
+            "name": "vote-your-weight",
+            "right": 353,
+            "width": 316
+          },
+          {
+            "name": "P",
+            "right": 353,
+            "width": 316
+          },
+          {
+            "name": "vote-choice-buttons",
+            "right": 353,
+            "width": 316
+          }
+        ],
+        "long": [
+          {
+            "value": "18,446,744,073,709,551,615",
+            "raw": "18446744073709551615",
+            "nowrap": "nowrap",
+            "client": 133,
+            "scroll": 264
+          },
+          {
+            "value": "18,446,744,073,709,551,615",
+            "raw": "18446744073709551615",
+            "nowrap": "nowrap",
+            "client": 316,
+            "scroll": 316
+          },
+          {
+            "value": "18,446,744,073,709,551,615",
+            "raw": "18446744073709551615",
+            "nowrap": "nowrap",
+            "client": 316,
+            "scroll": 316
+          }
+        ]
+      }
+    },
+    {
+      "name": "exactlarge390 exact unwrapped raw weight",
+      "pass": true
+    },
+    {
+      "name": "closed voting320 unaffected no overflow",
+      "pass": true
+    },
+    {
+      "name": "closed voting390 unaffected no overflow",
+      "pass": true
+    },
+    {
+      "name": "closed voting1440 unaffected no overflow",
+      "pass": true
+    },
+    {
+      "name": "closed voting2560 unaffected no overflow",
+      "pass": true
+    }
+  ],
+  "screens": [
+    "fixture-exactlarge-320.png",
+    "fixture-exactlarge-390.png",
+    "voting-ru-320.png",
+    "voting-ru-390.png",
+    "voting-ru-1440.png",
+    "voting-ru-2560.png"
+  ],
+  "hashes": {
+    "App.tsx": "51d40b6ffc8aab00f3f754cf9e52b0031b0c183d94ecf868c332c9178d28be74",
+    "main.tsx": "607b797897235bde3f123befac84610ebe5a67288542dff29d91d65e79bb670d",
+    "WorkspaceLink.tsx": "cef26efe60275900ca566e73c51ae6342f5841882c0bc75140542d382d531996",
+    "interaction-controls.css": "6906383c353e2c93b8d265c959480121d13c85d9fb1889f7e7db71a0610d24f6",
+    "PaymentTable.tsx": "1f34d72bc29c5ed7176a25f5d0dc85654d2484d7b74ab7860687e9583089d85d",
+    "HolderPortfolio.tsx": "276473f9315ff8c3af7db087333c3cb988f1d820546968f7f5144f99b9ef6e42",
+    "PaymentsWorkspace.tsx": "ead37fe3d9ccf84e63db5ea26762ea99ffa2ef3d71c0599773374f5ad18f0834",
+    "VotingWorkspace.tsx": "cd2060d00fcb3469e984f7949de55894965beda4bd73c76c89c121a25164fce8",
+    "voting-page.css": "04ac659bd461cc48200a3707b94d5645125b3201c42b67e10089dde0e885aafa"
+  }
+}
