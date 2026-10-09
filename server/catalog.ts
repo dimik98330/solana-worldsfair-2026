@@ -5,10 +5,12 @@ import {localDir} from './config.ts';
 import {AppError} from './rpc.ts';
 import {readJson,listDocuments,transactionSync} from './storage.ts';
 import {fixture, jsonWrite, type Fixture} from './store.ts';
+import {validateRateEvidence,type RateTermsEvidence} from './rate-terms.ts';
 
 export interface CatalogRecord extends Fixture {
   source: 'wallet' | 'demo';
   holderLabels?: Record<string, string>;
+  rateTerms?: RateTermsEvidence;
 }
 const directory = path.join(localDir, 'catalog');
 const MAX_RECORD_BYTES = 32_768;
@@ -52,12 +54,15 @@ function validate(value: unknown): CatalogRecord {
   if (typeof v.createdAt !== 'string' || v.createdAt.length > 40 || !Number.isFinite(Date.parse(v.createdAt))) fail('Invalid catalog timestamp');
   if (typeof v.rateBps !== 'number' || !Number.isSafeInteger(v.rateBps) || v.rateBps < 0 || v.rateBps > 10_000) fail('Invalid catalog rate');
   if (typeof v.couponFrequency !== 'number' || !Number.isSafeInteger(v.couponFrequency) || v.couponFrequency < 0 || v.couponFrequency > 12) fail('Invalid catalog frequency');
-  if (source === 'wallet' && (v.rateBps !== 0 || v.couponFrequency !== 0)) fail('Fixed coupon terms do not imply an annual rate');
+  const rateTerms = v.rateTerms === undefined ? undefined : validateRateEvidence(v.rateTerms, key(v.bond), roles.issuer);
+  if (rateTerms && (v.rateBps !== Number(rateTerms.rateBps) || v.couponFrequency !== Number(rateTerms.couponFrequency))) fail('Catalog annual rate and frequency differ from signed creation evidence');
+  if (source === 'wallet' && !rateTerms && (v.rateBps !== 0 || v.couponFrequency !== 0)) fail('Fixed coupon terms do not imply an annual rate');
   const record: CatalogRecord = {
     seriesId: uint(v.seriesId), bond: key(v.bond), name: text(v.name, 64), settlementMint: key(v.settlementMint),
     createdAt: v.createdAt, rateBps: v.rateBps, couponFrequency: v.couponFrequency, roles, proposalIds,
     complete: v.complete, accelerated: v.accelerated, source,
     ...(Object.keys(holderLabels).length ? {holderLabels} : {}),
+    ...(rateTerms ? {rateTerms} : {}),
   };
   if (v.bootstrapSignature !== undefined) {
     if (typeof v.bootstrapSignature !== 'string' || !/^[1-9A-HJ-NP-Za-km-z]{60,100}$/.test(v.bootstrapSignature)) fail('Invalid catalog signature');
@@ -101,11 +106,12 @@ export function listCatalog(): CatalogRecord[] {
   if (demo && !values.some(value => value.bond === demo.bond)) values.push(demo);
   return values.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 }
-/** Local display metadata only. Callers must verify chain identity before writing. */
+/** Public local projection; rate provenance is immutable signed-creation evidence, not Bond fields. */
 export function saveCatalog(record: CatalogRecord) {
   return transactionSync(()=>{
   const value = validate(record), file = fileFor(value.bond), previous = readCatalog(value.bond);
   if (previous && (previous.seriesId !== value.seriesId || previous.roles.issuer !== value.roles.issuer || previous.settlementMint !== value.settlementMint || previous.source !== value.source)) fail('Catalog identity cannot be replaced');
+  if (previous && JSON.stringify(previous.rateTerms) !== JSON.stringify(value.rateTerms)) fail('Catalog annual-rate creation evidence cannot be replaced');
   if (!previous && listCatalog().length >= MAX_RECORDS) fail('Catalog capacity exceeded');
   safeDirectory(true);
   jsonWrite(file, value);

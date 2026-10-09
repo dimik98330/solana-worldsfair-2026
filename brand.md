@@ -1,15 +1,19 @@
 # Brand — BondTrace
 
-Status: selected by lead under the user's explicit design delegation on2026-10-07.
+Current implemented frontend-only ECC replacement, 8 October 2026: **Settlement Workspace**. Dark ink navy workspace and navigation, inset fields, aligned exact figures and blue commands with white labels. This supersedes the rejected white canvas and previous pale-action navy passes. [DESIGN.md](DESIGN.md) is the normative implemented token system; [PRODUCT.md](PRODUCT.md) records product truth; [docs/design-direction.md](docs/design-direction.md) preserves chosen direction and reference provenance.
 
-Product: operational console for issuer and investor corporate actions on test Solana bonds. Mood: serious, precise, premium. This is a working brand, not a claim of trademark availability.
+BondTrace remains a working issuer and holder application. Use concise operational labels and contextual details. The separate presentation explains the product: no judge tour, onboarding hero, marketing sections or scenario narration in work screens. One issue/account toolbar leads into the selected task; Payments places exact selected dates, reconciliation and holders before reserve mechanics.
 
-Visual anchor: **Swiss** — neutral light surface, one cobalt accent, visible hairline grid, asymmetric typography, tabular numerals. The memorable move is a lifecycle/record-date rail tied to the settlement table. No warm paper/serif/grain/crypto glow.
+The original identity is `apps/web/public/brand/bondtrace-lettering.svg`: path-drawn outlined lowercase lettering with rounded terminals and no font dependency. Its compact companion/favicon is derived from this lettering. Keep the open silhouette and original geometry. Do not replace it with a font wordmark, unrelated symbol or decorative badge.
 
-Tokens: background #F7F7F8; panel #FFFFFF; foreground #161A22; muted #596272; border #DCE0E8; primary #002FA7; primaryForeground #FFFFFF. Dark-compatible optional surfaces #11141B/#1A1F2A with foreground #F2F4F8; do not add mode complexity at cost of primary flow.
+Self-hosted Manrope Variable carries readable UI hierarchy: 17px body, 16px primary labels, 18px desktop holder names. Manrope 650 with tabular lining numerals carries financial figures and numeric fields. Self-hosted IBM Plex Mono 400/500 carries dedicated clock lines, addresses and code. Financial display removes only insignificant trailing zeros; raw precision and exact arithmetic remain unchanged. Dates and exact-second times occupy separate stable lines, with one timezone note per group.
 
-Typography: one clear sans family (Helvetica Neue / Arial / system sans fallback); all financial values tabular-nums. Display34–48px, body15–17px, metadata12–13px. Spacing4px rhythm, strong alignment, table readability, restrained corners8–12px.
+Use the CSS navy/neutral roles and distinct command-blue versus light-blue-link roles defined in DESIGN.md. Input focus is one stroke on the existing control edge; ordinary keyboard controls retain visible focus. Lucide is the consistent control icon family at a restrained 1.75 stroke. Numbered stages and textual statuses replace repetitive decorative checkmarks. Do not blink static status or demo chrome.
 
-Icons: lucide-react only, no unicode substitutes. Copy names actual financial actions and states; all fixture amounts labeled demo/localnet/devnet. Never display fake wallet addresses, transaction signatures, users, revenue or market statistics.
+Use the full desktop workspace, including native 2560px, with bounded internal financial tracks. Mobile navigation folds, account controls remain readable, and the first payment record belongs in the first viewport. English remains the default with a Russian switch. Inspection, signing account and operation permissions stay separate.
 
-Normal wallet and generated demo role are distinct visible controls. Main network label stays visible. Signing preview explains authority/action/amount; RPC unknown is distinct from zero entitlement.
+Keep one compact truthful network/signing context. A connection failure preserves the selected workspace and recovery. Unknown chain values are distinct from zero. Settlement units imply neither real fiat nor production assets, KASE integration or certification.
+
+`npm run preview:ui` on 4180 is a separate read-only saved localnet snapshot. The header says Saved snapshot/Архивный снимок, or Saved/Архив on compact screens; capture time is available in details. Signing and mutations are disabled. Archive screenshots establish presentation of saved evidence, not current chain verification.
+
+Reference studies informed alignment, navigation and restraint only; no third-party branding, imagery or sample data is shipped. Evidence and actual input-check limits live in [docs/design-qa.md](docs/design-qa.md). This document records implementation, not production readiness, eligibility, submission or final owner acceptance.

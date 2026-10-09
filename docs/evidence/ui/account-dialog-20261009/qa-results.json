@@ -1,0 +1,3434 @@
+{
+  "capturedAt": "2026-10-09T05:54:46.362Z",
+  "origin": "http://127.0.0.1:4180",
+  "scope": "account UI only; saved snapshot, no wallet requests or signing",
+  "checks": [
+    {
+      "name": "en320 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 676,
+          "right": 308,
+          "bottom": 688
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 296,
+          "height": 514,
+          "right": 308,
+          "bottom": 607
+        },
+        "footer": {
+          "x": 12,
+          "y": 607,
+          "width": 296,
+          "height": 81,
+          "right": 308,
+          "bottom": 688
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 81,
+          "right": 308,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 28,
+            "y": 620.640625,
+            "width": 264,
+            "height": 72,
+            "right": 292,
+            "bottom": 692.640625
+          }
+        },
+        "document": 320,
+        "dialogScroll": 296,
+        "dialogClient": 296,
+        "rows": [
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "en320 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 676,
+          "right": 308,
+          "bottom": 688
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 296,
+          "height": 514,
+          "right": 308,
+          "bottom": 607
+        },
+        "footer": {
+          "x": 12,
+          "y": 607,
+          "width": 296,
+          "height": 81,
+          "right": 308,
+          "bottom": 688
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 81,
+          "right": 308,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 28,
+            "y": 620.640625,
+            "width": 264,
+            "height": 72,
+            "right": 292,
+            "bottom": 692.640625
+          }
+        },
+        "document": 320,
+        "dialogScroll": 296,
+        "dialogClient": 296,
+        "rows": [
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "en320 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 676,
+          "right": 308,
+          "bottom": 688
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 296,
+          "height": 514,
+          "right": 308,
+          "bottom": 607
+        },
+        "footer": {
+          "x": 12,
+          "y": 607,
+          "width": 296,
+          "height": 81,
+          "right": 308,
+          "bottom": 688
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 81,
+          "right": 308,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 28,
+            "y": 620.640625,
+            "width": 264,
+            "height": 72,
+            "right": 292,
+            "bottom": 692.640625
+          }
+        },
+        "document": 320,
+        "dialogScroll": 296,
+        "dialogClient": 296,
+        "rows": [
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "en320 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mSelected",
+        "rect": {
+          "x": 28,
+          "y": 620.640625,
+          "width": 264,
+          "height": 72,
+          "right": 292,
+          "bottom": 692.640625
+        }
+      }
+    },
+    {
+      "name": "en320 touch rows",
+      "pass": true
+    },
+    {
+      "name": "en320 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "en320 footer remains visible afterscroll",
+      "pass": true
+    },
+    {
+      "name": "en390 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 820,
+          "right": 378,
+          "bottom": 832
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 366,
+          "height": 658,
+          "right": 378,
+          "bottom": 751
+        },
+        "footer": {
+          "x": 12,
+          "y": 751,
+          "width": 366,
+          "height": 81,
+          "right": 378,
+          "bottom": 832
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 81,
+          "right": 378,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 32,
+            "y": 627.59375,
+            "width": 326,
+            "height": 73.390625,
+            "right": 358,
+            "bottom": 700.984375
+          }
+        },
+        "document": 390,
+        "dialogScroll": 366,
+        "dialogClient": 366,
+        "rows": [
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "en390 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 820,
+          "right": 378,
+          "bottom": 832
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 366,
+          "height": 658,
+          "right": 378,
+          "bottom": 751
+        },
+        "footer": {
+          "x": 12,
+          "y": 751,
+          "width": 366,
+          "height": 81,
+          "right": 378,
+          "bottom": 832
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 81,
+          "right": 378,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 32,
+            "y": 627.59375,
+            "width": 326,
+            "height": 73.390625,
+            "right": 358,
+            "bottom": 700.984375
+          }
+        },
+        "document": 390,
+        "dialogScroll": 366,
+        "dialogClient": 366,
+        "rows": [
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "en390 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 820,
+          "right": 378,
+          "bottom": 832
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 366,
+          "height": 658,
+          "right": 378,
+          "bottom": 751
+        },
+        "footer": {
+          "x": 12,
+          "y": 751,
+          "width": 366,
+          "height": 81,
+          "right": 378,
+          "bottom": 832
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 81,
+          "right": 378,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 32,
+            "y": 627.59375,
+            "width": 326,
+            "height": 73.390625,
+            "right": 358,
+            "bottom": 700.984375
+          }
+        },
+        "document": 390,
+        "dialogScroll": 366,
+        "dialogClient": 366,
+        "rows": [
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "en390 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mSelected",
+        "rect": {
+          "x": 32,
+          "y": 627.59375,
+          "width": 326,
+          "height": 73.390625,
+          "right": 358,
+          "bottom": 700.984375
+        }
+      }
+    },
+    {
+      "name": "en390 touch rows",
+      "pass": true
+    },
+    {
+      "name": "en390 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "en390 footer remains visible afterscroll",
+      "pass": true
+    },
+    {
+      "name": "en768 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 768,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 840,
+          "right": 744,
+          "bottom": 920
+        },
+        "body": {
+          "x": 24,
+          "y": 173,
+          "width": 720,
+          "height": 658,
+          "right": 744,
+          "bottom": 831
+        },
+        "footer": {
+          "x": 24,
+          "y": 831,
+          "width": 720,
+          "height": 89,
+          "right": 744,
+          "bottom": 920
+        },
+        "header": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 93,
+          "right": 744,
+          "bottom": 173
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 52,
+            "y": 716.953125,
+            "width": 318.71875,
+            "height": 86.046875,
+            "right": 370.71875,
+            "bottom": 803
+          }
+        },
+        "document": 768,
+        "dialogScroll": 720,
+        "dialogClient": 720,
+        "rows": [
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 86.046875
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en768 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 768,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 840,
+          "right": 744,
+          "bottom": 920
+        },
+        "body": {
+          "x": 24,
+          "y": 173,
+          "width": 720,
+          "height": 658,
+          "right": 744,
+          "bottom": 831
+        },
+        "footer": {
+          "x": 24,
+          "y": 831,
+          "width": 720,
+          "height": 89,
+          "right": 744,
+          "bottom": 920
+        },
+        "header": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 93,
+          "right": 744,
+          "bottom": 173
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 52,
+            "y": 716.953125,
+            "width": 318.71875,
+            "height": 86.046875,
+            "right": 370.71875,
+            "bottom": 803
+          }
+        },
+        "document": 768,
+        "dialogScroll": 720,
+        "dialogClient": 720,
+        "rows": [
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 86.046875
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en768 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 768,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 840,
+          "right": 744,
+          "bottom": 920
+        },
+        "body": {
+          "x": 24,
+          "y": 173,
+          "width": 720,
+          "height": 658,
+          "right": 744,
+          "bottom": 831
+        },
+        "footer": {
+          "x": 24,
+          "y": 831,
+          "width": 720,
+          "height": 89,
+          "right": 744,
+          "bottom": 920
+        },
+        "header": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 93,
+          "right": 744,
+          "bottom": 173
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 52,
+            "y": 716.953125,
+            "width": 318.71875,
+            "height": 86.046875,
+            "right": 370.71875,
+            "bottom": 803
+          }
+        },
+        "document": 768,
+        "dialogScroll": 720,
+        "dialogClient": 720,
+        "rows": [
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 73.390625
+          },
+          {
+            "width": 318.71875,
+            "height": 86.046875
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en768 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mSelected",
+        "rect": {
+          "x": 52,
+          "y": 716.953125,
+          "width": 318.71875,
+          "height": 86.046875,
+          "right": 370.71875,
+          "bottom": 803
+        }
+      }
+    },
+    {
+      "name": "en768 touch rows",
+      "pass": true
+    },
+    {
+      "name": "en768 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "en1440 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "body": {
+          "x": 220,
+          "y": 191.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1220,
+          "bottom": 812.671875
+        },
+        "footer": {
+          "x": 220,
+          "y": 812.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "header": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1220,
+          "bottom": 191.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 248,
+            "y": 711.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 718.28125,
+            "bottom": 784.671875
+          }
+        },
+        "document": 1440,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en1440 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "body": {
+          "x": 220,
+          "y": 191.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1220,
+          "bottom": 812.671875
+        },
+        "footer": {
+          "x": 220,
+          "y": 812.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "header": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1220,
+          "bottom": 191.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 248,
+            "y": 711.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 718.28125,
+            "bottom": 784.671875
+          }
+        },
+        "document": 1440,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en1440 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "body": {
+          "x": 220,
+          "y": 191.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1220,
+          "bottom": 812.671875
+        },
+        "footer": {
+          "x": 220,
+          "y": 812.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "header": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1220,
+          "bottom": 191.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 248,
+            "y": 711.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 718.28125,
+            "bottom": 784.671875
+          }
+        },
+        "document": 1440,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en1440 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mSelected",
+        "rect": {
+          "x": 248,
+          "y": 711.28125,
+          "width": 470.28125,
+          "height": 73.390625,
+          "right": 718.28125,
+          "bottom": 784.671875
+        }
+      }
+    },
+    {
+      "name": "en1440 touch rows",
+      "pass": true
+    },
+    {
+      "name": "en1440 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "en1908 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1908,
+          "height": 930
+        },
+        "dialog": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "body": {
+          "x": 454,
+          "y": 156.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1454,
+          "bottom": 777.671875
+        },
+        "footer": {
+          "x": 454,
+          "y": 777.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "header": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1454,
+          "bottom": 156.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 482,
+            "y": 676.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 952.28125,
+            "bottom": 749.671875
+          }
+        },
+        "document": 1908,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en1908 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1908,
+          "height": 930
+        },
+        "dialog": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "body": {
+          "x": 454,
+          "y": 156.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1454,
+          "bottom": 777.671875
+        },
+        "footer": {
+          "x": 454,
+          "y": 777.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "header": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1454,
+          "bottom": 156.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 482,
+            "y": 676.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 952.28125,
+            "bottom": 749.671875
+          }
+        },
+        "document": 1908,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en1908 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1908,
+          "height": 930
+        },
+        "dialog": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "body": {
+          "x": 454,
+          "y": 156.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1454,
+          "bottom": 777.671875
+        },
+        "footer": {
+          "x": 454,
+          "y": 777.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "header": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1454,
+          "bottom": 156.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 482,
+            "y": 676.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 952.28125,
+            "bottom": 749.671875
+          }
+        },
+        "document": 1908,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en1908 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mSelected",
+        "rect": {
+          "x": 482,
+          "y": 676.28125,
+          "width": 470.28125,
+          "height": 73.390625,
+          "right": 952.28125,
+          "bottom": 749.671875
+        }
+      }
+    },
+    {
+      "name": "en1908 touch rows",
+      "pass": true
+    },
+    {
+      "name": "en1908 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "en2560 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 2560,
+          "height": 1440
+        },
+        "dialog": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "body": {
+          "x": 780,
+          "y": 411.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1780,
+          "bottom": 1032.671875
+        },
+        "footer": {
+          "x": 780,
+          "y": 1032.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "header": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1780,
+          "bottom": 411.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 808,
+            "y": 931.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 1278.28125,
+            "bottom": 1004.671875
+          }
+        },
+        "document": 2560,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en2560 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 2560,
+          "height": 1440
+        },
+        "dialog": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "body": {
+          "x": 780,
+          "y": 411.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1780,
+          "bottom": 1032.671875
+        },
+        "footer": {
+          "x": 780,
+          "y": 1032.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "header": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1780,
+          "bottom": 411.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 808,
+            "y": 931.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 1278.28125,
+            "bottom": 1004.671875
+          }
+        },
+        "document": 2560,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en2560 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 2560,
+          "height": 1440
+        },
+        "dialog": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "body": {
+          "x": 780,
+          "y": 411.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1780,
+          "bottom": 1032.671875
+        },
+        "footer": {
+          "x": 780,
+          "y": 1032.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "header": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1780,
+          "bottom": 411.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mSelected",
+          "rect": {
+            "x": 808,
+            "y": 931.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 1278.28125,
+            "bottom": 1004.671875
+          }
+        },
+        "document": 2560,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "en2560 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mSelected",
+        "rect": {
+          "x": 808,
+          "y": 931.28125,
+          "width": 470.28125,
+          "height": 73.390625,
+          "right": 1278.28125,
+          "bottom": 1004.671875
+        }
+      }
+    },
+    {
+      "name": "en2560 touch rows",
+      "pass": true
+    },
+    {
+      "name": "en2560 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "ru320 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 676,
+          "right": 308,
+          "bottom": 688
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 296,
+          "height": 498.5,
+          "right": 308,
+          "bottom": 591.5
+        },
+        "footer": {
+          "x": 12,
+          "y": 591.5,
+          "width": 296,
+          "height": 96.5,
+          "right": 308,
+          "bottom": 688
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 81,
+          "right": 308,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 28,
+            "y": 620.640625,
+            "width": 264,
+            "height": 72,
+            "right": 292,
+            "bottom": 692.640625
+          }
+        },
+        "document": 320,
+        "dialogScroll": 296,
+        "dialogClient": 296,
+        "rows": [
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "ru320 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 676,
+          "right": 308,
+          "bottom": 688
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 296,
+          "height": 498.5,
+          "right": 308,
+          "bottom": 591.5
+        },
+        "footer": {
+          "x": 12,
+          "y": 591.5,
+          "width": 296,
+          "height": 96.5,
+          "right": 308,
+          "bottom": 688
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 81,
+          "right": 308,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 28,
+            "y": 620.640625,
+            "width": 264,
+            "height": 72,
+            "right": 292,
+            "bottom": 692.640625
+          }
+        },
+        "document": 320,
+        "dialogScroll": 296,
+        "dialogClient": 296,
+        "rows": [
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "ru320 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 320,
+          "height": 700
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 676,
+          "right": 308,
+          "bottom": 688
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 296,
+          "height": 498.5,
+          "right": 308,
+          "bottom": 591.5
+        },
+        "footer": {
+          "x": 12,
+          "y": 591.5,
+          "width": 296,
+          "height": 96.5,
+          "right": 308,
+          "bottom": 688
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 296,
+          "height": 81,
+          "right": 308,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 28,
+            "y": 620.640625,
+            "width": 264,
+            "height": 72,
+            "right": 292,
+            "bottom": 692.640625
+          }
+        },
+        "document": 320,
+        "dialogScroll": 296,
+        "dialogClient": 296,
+        "rows": [
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          },
+          {
+            "width": 264,
+            "height": 72
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "ru320 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mВыбран",
+        "rect": {
+          "x": 28,
+          "y": 620.640625,
+          "width": 264,
+          "height": 72,
+          "right": 292,
+          "bottom": 692.640625
+        }
+      }
+    },
+    {
+      "name": "ru320 touch rows",
+      "pass": true
+    },
+    {
+      "name": "ru320 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "ru320 footer remains visible afterscroll",
+      "pass": true
+    },
+    {
+      "name": "ru390 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 820,
+          "right": 378,
+          "bottom": 832
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 366,
+          "height": 642.5,
+          "right": 378,
+          "bottom": 735.5
+        },
+        "footer": {
+          "x": 12,
+          "y": 735.5,
+          "width": 366,
+          "height": 96.5,
+          "right": 378,
+          "bottom": 832
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 81,
+          "right": 378,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 32,
+            "y": 627.59375,
+            "width": 326,
+            "height": 73.390625,
+            "right": 358,
+            "bottom": 700.984375
+          }
+        },
+        "document": 390,
+        "dialogScroll": 366,
+        "dialogClient": 366,
+        "rows": [
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "ru390 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 820,
+          "right": 378,
+          "bottom": 832
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 366,
+          "height": 642.5,
+          "right": 378,
+          "bottom": 735.5
+        },
+        "footer": {
+          "x": 12,
+          "y": 735.5,
+          "width": 366,
+          "height": 96.5,
+          "right": 378,
+          "bottom": 832
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 81,
+          "right": 378,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 32,
+            "y": 627.59375,
+            "width": 326,
+            "height": 73.390625,
+            "right": 358,
+            "bottom": 700.984375
+          }
+        },
+        "document": 390,
+        "dialogScroll": 366,
+        "dialogClient": 366,
+        "rows": [
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "ru390 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialog": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 820,
+          "right": 378,
+          "bottom": 832
+        },
+        "body": {
+          "x": 12,
+          "y": 93,
+          "width": 366,
+          "height": 642.5,
+          "right": 378,
+          "bottom": 735.5
+        },
+        "footer": {
+          "x": 12,
+          "y": 735.5,
+          "width": 366,
+          "height": 96.5,
+          "right": 378,
+          "bottom": 832
+        },
+        "header": {
+          "x": 12,
+          "y": 12,
+          "width": 366,
+          "height": 81,
+          "right": 378,
+          "bottom": 93
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 32,
+            "y": 627.59375,
+            "width": 326,
+            "height": 73.390625,
+            "right": 358,
+            "bottom": 700.984375
+          }
+        },
+        "document": 390,
+        "dialogScroll": 366,
+        "dialogClient": 366,
+        "rows": [
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          },
+          {
+            "width": 326,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": true
+      }
+    },
+    {
+      "name": "ru390 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mВыбран",
+        "rect": {
+          "x": 32,
+          "y": 627.59375,
+          "width": 326,
+          "height": 73.390625,
+          "right": 358,
+          "bottom": 700.984375
+        }
+      }
+    },
+    {
+      "name": "ru390 touch rows",
+      "pass": true
+    },
+    {
+      "name": "ru390 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "ru390 footer remains visible afterscroll",
+      "pass": true
+    },
+    {
+      "name": "ru768 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 768,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 840,
+          "right": 744,
+          "bottom": 920
+        },
+        "body": {
+          "x": 24,
+          "y": 173,
+          "width": 720,
+          "height": 658,
+          "right": 744,
+          "bottom": 831
+        },
+        "footer": {
+          "x": 24,
+          "y": 831,
+          "width": 720,
+          "height": 89,
+          "right": 744,
+          "bottom": 920
+        },
+        "header": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 93,
+          "right": 744,
+          "bottom": 173
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 52,
+            "y": 727.5,
+            "width": 318.71875,
+            "height": 75.5,
+            "right": 370.71875,
+            "bottom": 803
+          }
+        },
+        "document": 768,
+        "dialogScroll": 720,
+        "dialogClient": 720,
+        "rows": [
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru768 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 768,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 840,
+          "right": 744,
+          "bottom": 920
+        },
+        "body": {
+          "x": 24,
+          "y": 173,
+          "width": 720,
+          "height": 658,
+          "right": 744,
+          "bottom": 831
+        },
+        "footer": {
+          "x": 24,
+          "y": 831,
+          "width": 720,
+          "height": 89,
+          "right": 744,
+          "bottom": 920
+        },
+        "header": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 93,
+          "right": 744,
+          "bottom": 173
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 52,
+            "y": 727.5,
+            "width": 318.71875,
+            "height": 75.5,
+            "right": 370.71875,
+            "bottom": 803
+          }
+        },
+        "document": 768,
+        "dialogScroll": 720,
+        "dialogClient": 720,
+        "rows": [
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru768 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 768,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 840,
+          "right": 744,
+          "bottom": 920
+        },
+        "body": {
+          "x": 24,
+          "y": 173,
+          "width": 720,
+          "height": 658,
+          "right": 744,
+          "bottom": 831
+        },
+        "footer": {
+          "x": 24,
+          "y": 831,
+          "width": 720,
+          "height": 89,
+          "right": 744,
+          "bottom": 920
+        },
+        "header": {
+          "x": 24,
+          "y": 80,
+          "width": 720,
+          "height": 93,
+          "right": 744,
+          "bottom": 173
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 52,
+            "y": 727.5,
+            "width": 318.71875,
+            "height": 75.5,
+            "right": 370.71875,
+            "bottom": 803
+          }
+        },
+        "document": 768,
+        "dialogScroll": 720,
+        "dialogClient": 720,
+        "rows": [
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          },
+          {
+            "width": 318.71875,
+            "height": 75.5
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru768 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mВыбран",
+        "rect": {
+          "x": 52,
+          "y": 727.5,
+          "width": 318.71875,
+          "height": 75.5,
+          "right": 370.71875,
+          "bottom": 803
+        }
+      }
+    },
+    {
+      "name": "ru768 touch rows",
+      "pass": true
+    },
+    {
+      "name": "ru768 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "ru1440 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "body": {
+          "x": 220,
+          "y": 191.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1220,
+          "bottom": 812.671875
+        },
+        "footer": {
+          "x": 220,
+          "y": 812.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "header": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1220,
+          "bottom": 191.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 248,
+            "y": 711.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 718.28125,
+            "bottom": 784.671875
+          }
+        },
+        "document": 1440,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru1440 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "body": {
+          "x": 220,
+          "y": 191.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1220,
+          "bottom": 812.671875
+        },
+        "footer": {
+          "x": 220,
+          "y": 812.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "header": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1220,
+          "bottom": 191.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 248,
+            "y": 711.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 718.28125,
+            "bottom": 784.671875
+          }
+        },
+        "document": 1440,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru1440 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "dialog": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "body": {
+          "x": 220,
+          "y": 191.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1220,
+          "bottom": 812.671875
+        },
+        "footer": {
+          "x": 220,
+          "y": 812.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1220,
+          "bottom": 901.671875
+        },
+        "header": {
+          "x": 220,
+          "y": 98.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1220,
+          "bottom": 191.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 248,
+            "y": 711.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 718.28125,
+            "bottom": 784.671875
+          }
+        },
+        "document": 1440,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru1440 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mВыбран",
+        "rect": {
+          "x": 248,
+          "y": 711.28125,
+          "width": 470.28125,
+          "height": 73.390625,
+          "right": 718.28125,
+          "bottom": 784.671875
+        }
+      }
+    },
+    {
+      "name": "ru1440 touch rows",
+      "pass": true
+    },
+    {
+      "name": "ru1440 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "ru1908 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1908,
+          "height": 930
+        },
+        "dialog": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "body": {
+          "x": 454,
+          "y": 156.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1454,
+          "bottom": 777.671875
+        },
+        "footer": {
+          "x": 454,
+          "y": 777.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "header": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1454,
+          "bottom": 156.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 482,
+            "y": 676.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 952.28125,
+            "bottom": 749.671875
+          }
+        },
+        "document": 1908,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru1908 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1908,
+          "height": 930
+        },
+        "dialog": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "body": {
+          "x": 454,
+          "y": 156.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1454,
+          "bottom": 777.671875
+        },
+        "footer": {
+          "x": 454,
+          "y": 777.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "header": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1454,
+          "bottom": 156.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 482,
+            "y": 676.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 952.28125,
+            "bottom": 749.671875
+          }
+        },
+        "document": 1908,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru1908 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 1908,
+          "height": 930
+        },
+        "dialog": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "body": {
+          "x": 454,
+          "y": 156.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1454,
+          "bottom": 777.671875
+        },
+        "footer": {
+          "x": 454,
+          "y": 777.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1454,
+          "bottom": 866.671875
+        },
+        "header": {
+          "x": 454,
+          "y": 63.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1454,
+          "bottom": 156.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 482,
+            "y": 676.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 952.28125,
+            "bottom": 749.671875
+          }
+        },
+        "document": 1908,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru1908 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mВыбран",
+        "rect": {
+          "x": 482,
+          "y": 676.28125,
+          "width": 470.28125,
+          "height": 73.390625,
+          "right": 952.28125,
+          "bottom": 749.671875
+        }
+      }
+    },
+    {
+      "name": "ru1908 touch rows",
+      "pass": true
+    },
+    {
+      "name": "ru1908 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "ru2560 bounded dialog",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 2560,
+          "height": 1440
+        },
+        "dialog": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "body": {
+          "x": 780,
+          "y": 411.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1780,
+          "bottom": 1032.671875
+        },
+        "footer": {
+          "x": 780,
+          "y": 1032.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "header": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1780,
+          "bottom": 411.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 808,
+            "y": 931.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 1278.28125,
+            "bottom": 1004.671875
+          }
+        },
+        "document": 2560,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru2560 no horizontal dialog/page overflow",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 2560,
+          "height": 1440
+        },
+        "dialog": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "body": {
+          "x": 780,
+          "y": 411.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1780,
+          "bottom": 1032.671875
+        },
+        "footer": {
+          "x": 780,
+          "y": 1032.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "header": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1780,
+          "bottom": 411.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 808,
+            "y": 931.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 1278.28125,
+            "bottom": 1004.671875
+          }
+        },
+        "document": 2560,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru2560 header/footer outside scrollbody",
+      "pass": true,
+      "data": {
+        "viewport": {
+          "width": 2560,
+          "height": 1440
+        },
+        "dialog": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 803.34375,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "body": {
+          "x": 780,
+          "y": 411.328125,
+          "width": 1000,
+          "height": 621.34375,
+          "right": 1780,
+          "bottom": 1032.671875
+        },
+        "footer": {
+          "x": 780,
+          "y": 1032.671875,
+          "width": 1000,
+          "height": 89,
+          "right": 1780,
+          "bottom": 1121.671875
+        },
+        "header": {
+          "x": 780,
+          "y": 318.328125,
+          "width": 1000,
+          "height": 93,
+          "right": 1780,
+          "bottom": 411.328125
+        },
+        "selected": {
+          "name": "Execution holder 6DMK11…tCK1mВыбран",
+          "rect": {
+            "x": 808,
+            "y": 931.28125,
+            "width": 470.28125,
+            "height": 73.390625,
+            "right": 1278.28125,
+            "bottom": 1004.671875
+          }
+        },
+        "document": 2560,
+        "dialogScroll": 1000,
+        "dialogClient": 1000,
+        "rows": [
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          },
+          {
+            "width": 470.28125,
+            "height": 73.390625
+          }
+        ],
+        "bodyScroll": false
+      }
+    },
+    {
+      "name": "ru2560 exactly selectedholder6",
+      "pass": true,
+      "data": {
+        "name": "Execution holder 6DMK11…tCK1mВыбран",
+        "rect": {
+          "x": 808,
+          "y": 931.28125,
+          "width": 470.28125,
+          "height": 73.390625,
+          "right": 1278.28125,
+          "bottom": 1004.671875
+        }
+      }
+    },
+    {
+      "name": "ru2560 touch rows",
+      "pass": true
+    },
+    {
+      "name": "ru2560 holder and wallet sections never overlap",
+      "pass": true
+    },
+    {
+      "name": "holder selection closes account dialog",
+      "pass": true
+    },
+    {
+      "name": "holder selection opens exactportfolio",
+      "pass": true
+    },
+    {
+      "name": "holder selection remains view only",
+      "pass": true
+    },
+    {
+      "name": "settings is distinctdialog",
+      "pass": true
+    },
+    {
+      "name": "close footer dismisses",
+      "pass": true
+    },
+    {
+      "name": "Escape returns accounttriggerfocus",
+      "pass": true
+    },
+    {
+      "name": "unrelated receipts overlay opens",
+      "pass": true
+    },
+    {
+      "name": "all closed native dialogs remain hidden",
+      "pass": true
+    },
+    {
+      "name": "fixture16 390 keeps background scroll",
+      "pass": true,
+      "data": {
+        "before": 100,
+        "background": 100,
+        "listScroll": 0,
+        "selectedTop": 1869.84375,
+        "selectedBottom": 1990.828125,
+        "listTop": 220.640625,
+        "listBottom": 1990.828125,
+        "dialogWidth": 366,
+        "scrollWidth": 366,
+        "footerBottom": 688,
+        "height": 700
+      }
+    },
+    {
+      "name": "fixture16 390 bounded layout",
+      "pass": true,
+      "data": {
+        "background": 100,
+        "listScroll": 0,
+        "selectedTop": 1869.84375,
+        "selectedBottom": 1990.828125,
+        "listTop": 220.640625,
+        "listBottom": 1990.828125,
+        "dialogWidth": 366,
+        "scrollWidth": 366,
+        "footerBottom": 688,
+        "height": 700
+      }
+    },
+    {
+      "name": "fixture16 1440 keeps background scroll",
+      "pass": true,
+      "data": {
+        "before": 0,
+        "background": 0,
+        "listScroll": 1043,
+        "selectedTop": 387,
+        "selectedBottom": 459,
+        "listTop": 230,
+        "listBottom": 459,
+        "dialogWidth": 1000,
+        "scrollWidth": 1000,
+        "footerBottom": 576,
+        "height": 600
+      }
+    },
+    {
+      "name": "fixture16 1440 bounded layout",
+      "pass": true,
+      "data": {
+        "background": 0,
+        "listScroll": 1043,
+        "selectedTop": 387,
+        "selectedBottom": 459,
+        "listTop": 230,
+        "listBottom": 459,
+        "dialogWidth": 1000,
+        "scrollWidth": 1000,
+        "footerBottom": 576,
+        "height": 600
+      }
+    },
+    {
+      "name": "fixture16 desktop selectedoption locallyvisible",
+      "pass": true,
+      "data": {
+        "background": 0,
+        "listScroll": 1043,
+        "selectedTop": 387,
+        "selectedBottom": 459,
+        "listTop": 230,
+        "listBottom": 459,
+        "dialogWidth": 1000,
+        "scrollWidth": 1000,
+        "footerBottom": 576,
+        "height": 600
+      }
+    },
+    {
+      "name": "empty registry still offers wallet/preferences",
+      "pass": true
+    }
+  ],
+  "screens": [
+    "account-en-320.png",
+    "account-wallet-en-320.png",
+    "account-en-390.png",
+    "account-wallet-en-390.png",
+    "account-en-768.png",
+    "account-en-1440.png",
+    "account-en-1908.png",
+    "account-en-2560.png",
+    "account-ru-320.png",
+    "account-wallet-ru-320.png",
+    "account-ru-390.png",
+    "account-wallet-ru-390.png",
+    "account-ru-768.png",
+    "account-ru-1440.png",
+    "account-ru-1908.png",
+    "account-ru-2560.png",
+    "account-fixture16-390.png",
+    "account-fixture16-1440.png",
+    "account-empty-390.png"
+  ],
+  "errors": [],
+  "hashes": {
+    "App.tsx": "2928946304a082a46ea41e6e6c47cc4907997a3cd860d1c705f084b3d4d9aec4",
+    "components.tsx": "018f51a1d24b46ab7be2bdf35bce8fd1c672899f03e8fb74b00c59c0a574fc07",
+    "AccountPicker.tsx": "152122caa96a93e9daaab88ea6a843cd3168318e8ab815906016508f6aa7a213",
+    "account-picker.css": "9b057335f8f1d8ec7e8774478b83f07b2f5b2c79aa0c8dda16d7ebfa3b61ec4c"
+  },
+  "sourceHashesUpdatedAt": "2026-10-09T05:59:55.494Z"
+}

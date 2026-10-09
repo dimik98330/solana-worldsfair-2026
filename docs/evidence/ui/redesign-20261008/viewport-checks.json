@@ -1,0 +1,211 @@
+{
+  "snapshot": "execution-lifecycle-localnet.json",
+  "finalMetrics": [
+    {
+      "view": "overview",
+      "viewport": 1440,
+      "width": 1440,
+      "scroll": 1440,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    },
+    {
+      "view": "issuer",
+      "viewport": 1440,
+      "width": 1440,
+      "scroll": 1440,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    },
+    {
+      "view": "registry",
+      "viewport": 1440,
+      "width": 1440,
+      "scroll": 1440,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    },
+    {
+      "view": "payments",
+      "viewport": 1440,
+      "width": 1440,
+      "scroll": 1440,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    },
+    {
+      "view": "portfolio",
+      "viewport": 1440,
+      "width": 1440,
+      "scroll": 1440,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    },
+    {
+      "view": "voting",
+      "viewport": 1440,
+      "width": 1440,
+      "scroll": 1440,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    },
+    {
+      "view": "overview",
+      "viewport": 390,
+      "width": 390,
+      "scroll": 390,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    },
+    {
+      "view": "issuer",
+      "viewport": 390,
+      "width": 390,
+      "scroll": 390,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    },
+    {
+      "view": "registry",
+      "viewport": 390,
+      "width": 390,
+      "scroll": 390,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    },
+    {
+      "view": "payments",
+      "viewport": 390,
+      "width": 390,
+      "scroll": 390,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    },
+    {
+      "view": "portfolio",
+      "viewport": 390,
+      "width": 390,
+      "scroll": 390,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    },
+    {
+      "view": "voting",
+      "viewport": 390,
+      "width": 390,
+      "scroll": 390,
+      "y": 0,
+      "skipBottom": -18.206253051757812
+    }
+  ],
+  "confirmation": [
+    {
+      "view": "overview",
+      "viewport": 320,
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "view": "issuer",
+      "viewport": 320,
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "view": "registry",
+      "viewport": 320,
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "view": "payments",
+      "viewport": 320,
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "view": "portfolio",
+      "viewport": 320,
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "view": "voting",
+      "viewport": 320,
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "view": "overview",
+      "viewport": 768,
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "view": "issuer",
+      "viewport": 768,
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "view": "registry",
+      "viewport": 768,
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "view": "payments",
+      "viewport": 768,
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "view": "portfolio",
+      "viewport": 768,
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "view": "voting",
+      "viewport": 768,
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "view": "overview",
+      "viewport": 2560,
+      "width": 2560,
+      "scroll": 2560
+    },
+    {
+      "view": "issuer",
+      "viewport": 2560,
+      "width": 2560,
+      "scroll": 2560
+    },
+    {
+      "view": "registry",
+      "viewport": 2560,
+      "width": 2560,
+      "scroll": 2560
+    },
+    {
+      "view": "payments",
+      "viewport": 2560,
+      "width": 2560,
+      "scroll": 2560
+    },
+    {
+      "view": "portfolio",
+      "viewport": 2560,
+      "width": 2560,
+      "scroll": 2560
+    },
+    {
+      "view": "voting",
+      "viewport": 2560,
+      "width": 2560,
+      "scroll": 2560
+    }
+  ]
+}

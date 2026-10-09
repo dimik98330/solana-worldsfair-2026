@@ -1,0 +1,983 @@
+{
+  "capturedAt": "2026-10-08T18:35:33.427Z",
+  "origin": "http://127.0.0.1:4180",
+  "scope": "read-only saved snapshot and local browser draft; no chain signing",
+  "screens": [
+    {
+      "view": "overview",
+      "width": 320,
+      "viewport": 320,
+      "document": 320,
+      "heading": "Overview",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "22px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "overview-320.png"
+    },
+    {
+      "view": "issuer",
+      "width": 320,
+      "viewport": 320,
+      "document": 320,
+      "heading": "Issuer desk",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "26px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "issuer-320.png"
+    },
+    {
+      "view": "registry",
+      "width": 320,
+      "viewport": 320,
+      "document": 320,
+      "heading": "Holder registry",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "18px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "registry-320.png"
+    },
+    {
+      "view": "payments",
+      "width": 320,
+      "viewport": 320,
+      "document": 320,
+      "heading": "Payments",
+      "firstPayment": {
+        "top": 720.328125,
+        "bottom": 951.59375
+      },
+      "moneyFont": {
+        "size": "22px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "payments-320.png"
+    },
+    {
+      "view": "portfolio",
+      "width": 320,
+      "viewport": 320,
+      "document": 320,
+      "heading": "Portfolio",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "22px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "portfolio-320.png"
+    },
+    {
+      "view": "voting",
+      "width": 320,
+      "viewport": 320,
+      "document": 320,
+      "heading": "Holder voting",
+      "firstPayment": null,
+      "moneyFont": null,
+      "file": "voting-320.png"
+    },
+    {
+      "view": "overview",
+      "width": 390,
+      "viewport": 390,
+      "document": 390,
+      "heading": "Overview",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "22px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "overview-390.png"
+    },
+    {
+      "view": "issuer",
+      "width": 390,
+      "viewport": 390,
+      "document": 390,
+      "heading": "Issuer desk",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "26px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "issuer-390.png"
+    },
+    {
+      "view": "registry",
+      "width": 390,
+      "viewport": 390,
+      "document": 390,
+      "heading": "Holder registry",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "18px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "registry-390.png"
+    },
+    {
+      "view": "payments",
+      "width": 390,
+      "viewport": 390,
+      "document": 390,
+      "heading": "Payments",
+      "firstPayment": {
+        "top": 699.328125,
+        "bottom": 925.8125
+      },
+      "moneyFont": {
+        "size": "22px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "payments-390.png"
+    },
+    {
+      "view": "portfolio",
+      "width": 390,
+      "viewport": 390,
+      "document": 390,
+      "heading": "Portfolio",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "24px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "portfolio-390.png"
+    },
+    {
+      "view": "voting",
+      "width": 390,
+      "viewport": 390,
+      "document": 390,
+      "heading": "Holder voting",
+      "firstPayment": null,
+      "moneyFont": null,
+      "file": "voting-390.png"
+    },
+    {
+      "view": "overview",
+      "width": 768,
+      "viewport": 768,
+      "document": 768,
+      "heading": "Overview",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "30px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "overview-768.png"
+    },
+    {
+      "view": "issuer",
+      "width": 768,
+      "viewport": 768,
+      "document": 768,
+      "heading": "Issuer desk",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "26px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "issuer-768.png"
+    },
+    {
+      "view": "registry",
+      "width": 768,
+      "viewport": 768,
+      "document": 768,
+      "heading": "Holder registry",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "18px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "registry-768.png"
+    },
+    {
+      "view": "payments",
+      "width": 768,
+      "viewport": 768,
+      "document": 768,
+      "heading": "Payments",
+      "firstPayment": {
+        "top": 806.484375,
+        "bottom": 910.984375
+      },
+      "moneyFont": {
+        "size": "30px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "payments-768.png"
+    },
+    {
+      "view": "portfolio",
+      "width": 768,
+      "viewport": 768,
+      "document": 768,
+      "heading": "Portfolio",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "28px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "portfolio-768.png"
+    },
+    {
+      "view": "voting",
+      "width": 768,
+      "viewport": 768,
+      "document": 768,
+      "heading": "Holder voting",
+      "firstPayment": null,
+      "moneyFont": null,
+      "file": "voting-768.png"
+    },
+    {
+      "view": "overview",
+      "width": 1440,
+      "viewport": 1440,
+      "document": 1440,
+      "heading": "Overview",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "30px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "overview-1440.png"
+    },
+    {
+      "view": "issuer",
+      "width": 1440,
+      "viewport": 1440,
+      "document": 1440,
+      "heading": "Issuer desk",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "26px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "issuer-1440.png"
+    },
+    {
+      "view": "registry",
+      "width": 1440,
+      "viewport": 1440,
+      "document": 1440,
+      "heading": "Holder registry",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "18px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "registry-1440.png"
+    },
+    {
+      "view": "payments",
+      "width": 1440,
+      "viewport": 1440,
+      "document": 1440,
+      "heading": "Payments",
+      "firstPayment": {
+        "top": 659.4375,
+        "bottom": 763.9375
+      },
+      "moneyFont": {
+        "size": "30px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "payments-1440.png"
+    },
+    {
+      "view": "portfolio",
+      "width": 1440,
+      "viewport": 1440,
+      "document": 1440,
+      "heading": "Portfolio",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "28px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "portfolio-1440.png"
+    },
+    {
+      "view": "voting",
+      "width": 1440,
+      "viewport": 1440,
+      "document": 1440,
+      "heading": "Holder voting",
+      "firstPayment": null,
+      "moneyFont": null,
+      "file": "voting-1440.png"
+    },
+    {
+      "view": "overview",
+      "width": 2560,
+      "viewport": 2560,
+      "document": 2560,
+      "heading": "Overview",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "34px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "overview-2560.png"
+    },
+    {
+      "view": "issuer",
+      "width": 2560,
+      "viewport": 2560,
+      "document": 2560,
+      "heading": "Issuer desk",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "26px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "issuer-2560.png"
+    },
+    {
+      "view": "registry",
+      "width": 2560,
+      "viewport": 2560,
+      "document": 2560,
+      "heading": "Holder registry",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "18px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "registry-2560.png"
+    },
+    {
+      "view": "payments",
+      "width": 2560,
+      "viewport": 2560,
+      "document": 2560,
+      "heading": "Payments",
+      "firstPayment": {
+        "top": 667.4375,
+        "bottom": 771.9375
+      },
+      "moneyFont": {
+        "size": "30px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "payments-2560.png"
+    },
+    {
+      "view": "portfolio",
+      "width": 2560,
+      "viewport": 2560,
+      "document": 2560,
+      "heading": "Portfolio",
+      "firstPayment": null,
+      "moneyFont": {
+        "size": "28px",
+        "font": "\"Manrope Variable\", Manrope, sans-serif",
+        "figures": "lining-nums tabular-nums"
+      },
+      "file": "portfolio-2560.png"
+    },
+    {
+      "view": "voting",
+      "width": 2560,
+      "viewport": 2560,
+      "document": 2560,
+      "heading": "Holder voting",
+      "firstPayment": null,
+      "moneyFont": null,
+      "file": "voting-2560.png"
+    }
+  ],
+  "checks": [
+    {
+      "name": "overview 320 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 320,
+        "document": 320,
+        "heading": "Overview",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "22px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "issuer 320 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 320,
+        "document": 320,
+        "heading": "Issuer desk",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "26px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "registry 320 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 320,
+        "document": 320,
+        "heading": "Holder registry",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "18px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "payments 320 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 320,
+        "document": 320,
+        "heading": "Payments",
+        "firstPayment": {
+          "top": 720.328125,
+          "bottom": 951.59375
+        },
+        "moneyFont": {
+          "size": "22px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "portfolio 320 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 320,
+        "document": 320,
+        "heading": "Portfolio",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "22px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "voting 320 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 320,
+        "document": 320,
+        "heading": "Holder voting",
+        "firstPayment": null,
+        "moneyFont": null
+      }
+    },
+    {
+      "name": "overview 390 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "heading": "Overview",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "22px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "issuer 390 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "heading": "Issuer desk",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "26px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "registry 390 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "heading": "Holder registry",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "18px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "payments 390 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "heading": "Payments",
+        "firstPayment": {
+          "top": 699.328125,
+          "bottom": 925.8125
+        },
+        "moneyFont": {
+          "size": "22px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "portfolio 390 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "heading": "Portfolio",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "24px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "voting 390 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 390,
+        "document": 390,
+        "heading": "Holder voting",
+        "firstPayment": null,
+        "moneyFont": null
+      }
+    },
+    {
+      "name": "overview 768 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 768,
+        "document": 768,
+        "heading": "Overview",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "30px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "issuer 768 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 768,
+        "document": 768,
+        "heading": "Issuer desk",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "26px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "registry 768 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 768,
+        "document": 768,
+        "heading": "Holder registry",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "18px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "payments 768 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 768,
+        "document": 768,
+        "heading": "Payments",
+        "firstPayment": {
+          "top": 806.484375,
+          "bottom": 910.984375
+        },
+        "moneyFont": {
+          "size": "30px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "portfolio 768 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 768,
+        "document": 768,
+        "heading": "Portfolio",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "28px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "voting 768 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 768,
+        "document": 768,
+        "heading": "Holder voting",
+        "firstPayment": null,
+        "moneyFont": null
+      }
+    },
+    {
+      "name": "overview 1440 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "heading": "Overview",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "30px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "issuer 1440 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "heading": "Issuer desk",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "26px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "registry 1440 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "heading": "Holder registry",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "18px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "payments 1440 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "heading": "Payments",
+        "firstPayment": {
+          "top": 659.4375,
+          "bottom": 763.9375
+        },
+        "moneyFont": {
+          "size": "30px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "portfolio 1440 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "heading": "Portfolio",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "28px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "voting 1440 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 1440,
+        "document": 1440,
+        "heading": "Holder voting",
+        "firstPayment": null,
+        "moneyFont": null
+      }
+    },
+    {
+      "name": "overview 2560 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 2560,
+        "document": 2560,
+        "heading": "Overview",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "34px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "issuer 2560 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 2560,
+        "document": 2560,
+        "heading": "Issuer desk",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "26px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "registry 2560 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 2560,
+        "document": 2560,
+        "heading": "Holder registry",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "18px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "payments 2560 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 2560,
+        "document": 2560,
+        "heading": "Payments",
+        "firstPayment": {
+          "top": 667.4375,
+          "bottom": 771.9375
+        },
+        "moneyFont": {
+          "size": "30px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "portfolio 2560 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 2560,
+        "document": 2560,
+        "heading": "Portfolio",
+        "firstPayment": null,
+        "moneyFont": {
+          "size": "28px",
+          "font": "\"Manrope Variable\", Manrope, sans-serif",
+          "figures": "lining-nums tabular-nums"
+        }
+      }
+    },
+    {
+      "name": "voting 2560 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "viewport": 2560,
+        "document": 2560,
+        "heading": "Holder voting",
+        "firstPayment": null,
+        "moneyFont": null
+      }
+    },
+    {
+      "name": "coupon exact625 visible",
+      "pass": true
+    },
+    {
+      "name": "principal exact25000 visible",
+      "pass": true
+    },
+    {
+      "name": "payment search empty state",
+      "pass": true
+    },
+    {
+      "name": "unclaimed status excludes archived paid rows",
+      "pass": true
+    },
+    {
+      "name": "payment details dialog",
+      "pass": true
+    },
+    {
+      "name": "detail escape dismiss",
+      "pass": true
+    },
+    {
+      "name": "registry empty search recovers",
+      "pass": true
+    },
+    {
+      "name": "registry clear returns6",
+      "pass": true
+    },
+    {
+      "name": "registry opens view-only holder",
+      "pass": true
+    },
+    {
+      "name": "holder selection works",
+      "pass": true
+    },
+    {
+      "name": "archive label and timestamp truthful",
+      "pass": true
+    },
+    {
+      "name": "timezone preference changes display only",
+      "pass": true
+    },
+    {
+      "name": "untouched create form no red errors",
+      "pass": true
+    },
+    {
+      "name": "invalid progression marks firstfield",
+      "pass": true
+    },
+    {
+      "name": "calendar cancel unchanged",
+      "pass": true
+    },
+    {
+      "name": "calendar Escape closes",
+      "pass": true
+    },
+    {
+      "name": "calendar Save retains exactseconds",
+      "pass": true
+    },
+    {
+      "name": "exact draft total1025.000002",
+      "pass": true
+    },
+    {
+      "name": "draft reload retained exactvalues",
+      "pass": true
+    },
+    {
+      "name": "completed stage returns with fields",
+      "pass": true
+    },
+    {
+      "name": "calendar320 fits viewport",
+      "pass": true
+    },
+    {
+      "name": "API failure preserves Payments",
+      "pass": true
+    },
+    {
+      "name": "API failure never first-run",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "sourceHashes": {
+    "App.tsx": "553f00bb754c3f313834ddee83e0b455856954fd41f796dd69d31222b142c0b3",
+    "main.tsx": "129c458c072cb55616b4199d3d75203ff69a110cdf8a4729cfbc5485057684cc",
+    "styles.css": "eb55d453211895cd6e1ea20e1712aacb7e50d339d72afe8de7851f988a364638",
+    "workspace-shell.css": "a6bc0d9595abccf905ac8855a2324f9a98c4ebac0aa5c6e688e1d3e98b1dda68",
+    "JudgeOverview.tsx": "a025a07c3e76954b5a671a675d90e830ab512b9386e5303ce61c7c27d419988a",
+    "judge-overview.css": "bb33c2b003d1f76ad7a50acd736bae84441161c876e4c948ddf26c984eef6383",
+    "PaymentTable.tsx": "166ea56abaf030364e55670c72d5325aef2d8db03297b90c6c804502b2404b04",
+    "PaymentsWorkspace.tsx": "8f387aa6136eb364c4b8e3eb17aa29cd4bca607aa661c3b47b07114408728bd8",
+    "payments-workspace.css": "d293f55e6ea4153b1a224a0fc9a04fa2cc3765733261f274d38f263e4674aaa0",
+    "IssuerSetup.tsx": "a4ba955f316cf07295e4133a704ae819497a30d3a6ba472174800ab7a3f2fe57",
+    "issuer.css": "e5fe576457b49ed8dc535f1e8c6da59350f6f03ea0b7463a5ccbb2dd2906fb59",
+    "DateTimeField.tsx": "363266c274e7c3616d6260f1c3bf4310710b419225c56576cc53540f4e3c2266",
+    "date-time-field.css": "8a1f5a81c7ce24d66f3ef09cbe96b8207456eaf8ef008db375cefbff7f70a2fc",
+    "HolderPortfolio.tsx": "a0f30d2d9830d6da52012fd1582d1934bd875c4722dab488430c2380cfcdef19",
+    "VotingWorkspace.tsx": "fdb960aa320ed4ba3533b9fa8900ae5748f33b1d0fab8105012f6fe126b2a920",
+    "voting-workspace.css": "246a9517fb6445dde521e89167ff2681a8895c2fc591b1f94c52d5ff10b05b9d",
+    "ReceiptDetails.tsx": "c704c2b5ec084ed67a85150cd944c87210609a46a6ba36f37cb0d062b807dcb5",
+    "InterfaceSettings.tsx": "5df59cfa0f935df3d3d8981247a8ec7f2c265dfa51dab91ed6bff658a96e436b"
+  },
+  "sourceHashesUpdatedAt": "2026-10-08T18:49:53.547Z"
+}

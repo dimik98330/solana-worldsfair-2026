@@ -1,0 +1,23 @@
+name: Backend verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    container: ubuntu:24.04
+    timeout-minutes: 45
+    steps:
+      - name: Prepare isolated runner
+        run: apt-get update -qq && apt-get install -y --no-install-recommends ca-certificates git curl
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, verified 2026-10-08
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4, verified 2026-10-08
+        with:
+          node-version: 22.14.0
+      - name: Install pinned program tools in this runner
+        run: BONDTRACE_CI=true bash scripts/setup-isolated-toolchain.sh
+      - name: Verify source, frozen release and invariants
+        run: bash scripts/ci-verify.sh

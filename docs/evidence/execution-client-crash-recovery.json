@@ -1,0 +1,487 @@
+{
+  "scope": "Actual client harness timed out after a successful API restart; the existing coupon run resumed from a new HTTP client. Principal and second coupon are not included in this evidence.",
+  "firstProof": {
+    "proof": {
+      "schemaVersion": 1,
+      "source": "retained-confirmed-rpc-transaction",
+      "signature": "2cWRDLUyJMFucj6Vm7wEhjLheCkFKitYsHZhHPTYfnuEpzHFwMCQmpwCAtPH54MgTb5EKwMVNbBGHhFuWpCtUBmU",
+      "genesisHash": "ESN5pbAEubJukcBqh2WW7y23QdQ8EZ7e2EsN3Lv7KJgc",
+      "slot": 8698,
+      "blockTime": 1791448516,
+      "capturedAt": "2026-10-08T08:35:17.978Z",
+      "commitment": "confirmed",
+      "version": 0,
+      "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+      "transactionSha256": "9067898df4fe5771ca61e40f54923f7e98cbaa1bf3ffcfa4f89463fab92ca45b",
+      "messageSha256": "b4222ad440eecbf26c7bb546ac58255f4dfb6a581f9b3f7bac0683df1c8c7343",
+      "wireBytes": 808,
+      "expectedWireMatched": true,
+      "feeLamports": "5000",
+      "computeUnitsConsumed": "198903",
+      "accountKeys": [
+        "AGtowUa3D7KLSRW2pB6WP5cg5J77jhZ68xDtbmYXgXYd",
+        "13kpeMTyZ6jd1Na34jTtRd2R5YQiXVN5dhDMUfmDcrvw",
+        "4phjEpJd16FkTTXV9CDsbfnoAmz5Ve61KrqUZii5CtQP",
+        "B6DiC2wCoAqoMu6byDPEwFRJm2z2pJxzzn8xumxcjd3d",
+        "CH1gARFKCvdJkMka3Zx9ubQ5DMKypakBbTHH3HPTAfeT",
+        "EeDcVp12F2g83LMBRCo4r6QkG4LWsA4Wg14N2ZecfG7R",
+        "GZEFPtHPgukeyPxqcDxw7m6cZ9v6kQYZRxUggF4bhDQ9",
+        "11111111111111111111111111111111",
+        "2uF9J8xtu8WfjZq6WcDpD3cEgMBHJb6GHQfvspVB7jtA",
+        "3cWaM8DcquC97XQY8ANpR6xi668fP8ejXU7o3k5fM9WY",
+        "5borrhcfhS4opRRujxKu8hPTSSBFAecwSRCp53ybAv1e",
+        "9kbtJhek3dbn7zhAgRtopMnpVAXJgTddR3pjwPptuejP",
+        "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+        "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "ComputeBudget111111111111111111111111111111",
+        "D1MthsHHwVPN2FsmC4U9BpfWkBMdCAztoWcXuGCjmrKw",
+        "GvjVX82nt5Kz2Ke5SN6RB4X9GD2vseUEvKYfh5vYqer4",
+        "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+      ],
+      "preBalances": [
+        "1734339560",
+        "0",
+        "0",
+        "0",
+        "0",
+        "2039280",
+        "2449920",
+        "1",
+        "10000000",
+        "8498160",
+        "1461600",
+        "8533400",
+        "731913600",
+        "1141440",
+        "1",
+        "10000000",
+        "10000000",
+        "929020800"
+      ],
+      "postBalances": [
+        "1726177440",
+        "2039280",
+        "2039280",
+        "2039280",
+        "2039280",
+        "2039280",
+        "2449920",
+        "1",
+        "10000000",
+        "8498160",
+        "1461600",
+        "8533400",
+        "731913600",
+        "1141440",
+        "1",
+        "10000000",
+        "10000000",
+        "929020800"
+      ],
+      "preTokenBalances": [
+        {
+          "accountIndex": 5,
+          "account": "EeDcVp12F2g83LMBRCo4r6QkG4LWsA4Wg14N2ZecfG7R",
+          "mint": "5borrhcfhS4opRRujxKu8hPTSSBFAecwSRCp53ybAv1e",
+          "owner": "3cWaM8DcquC97XQY8ANpR6xi668fP8ejXU7o3k5fM9WY",
+          "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "amount": "26375000000",
+          "decimals": 6
+        }
+      ],
+      "postTokenBalances": [
+        {
+          "accountIndex": 1,
+          "account": "13kpeMTyZ6jd1Na34jTtRd2R5YQiXVN5dhDMUfmDcrvw",
+          "mint": "5borrhcfhS4opRRujxKu8hPTSSBFAecwSRCp53ybAv1e",
+          "owner": "2uF9J8xtu8WfjZq6WcDpD3cEgMBHJb6GHQfvspVB7jtA",
+          "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "amount": "150000000",
+          "decimals": 6
+        },
+        {
+          "accountIndex": 2,
+          "account": "4phjEpJd16FkTTXV9CDsbfnoAmz5Ve61KrqUZii5CtQP",
+          "mint": "5borrhcfhS4opRRujxKu8hPTSSBFAecwSRCp53ybAv1e",
+          "owner": "GvjVX82nt5Kz2Ke5SN6RB4X9GD2vseUEvKYfh5vYqer4",
+          "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "amount": "100000000",
+          "decimals": 6
+        },
+        {
+          "accountIndex": 3,
+          "account": "B6DiC2wCoAqoMu6byDPEwFRJm2z2pJxzzn8xumxcjd3d",
+          "mint": "5borrhcfhS4opRRujxKu8hPTSSBFAecwSRCp53ybAv1e",
+          "owner": "9kbtJhek3dbn7zhAgRtopMnpVAXJgTddR3pjwPptuejP",
+          "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "amount": "250000000",
+          "decimals": 6
+        },
+        {
+          "accountIndex": 4,
+          "account": "CH1gARFKCvdJkMka3Zx9ubQ5DMKypakBbTHH3HPTAfeT",
+          "mint": "5borrhcfhS4opRRujxKu8hPTSSBFAecwSRCp53ybAv1e",
+          "owner": "D1MthsHHwVPN2FsmC4U9BpfWkBMdCAztoWcXuGCjmrKw",
+          "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "amount": "200000000",
+          "decimals": 6
+        },
+        {
+          "accountIndex": 5,
+          "account": "EeDcVp12F2g83LMBRCo4r6QkG4LWsA4Wg14N2ZecfG7R",
+          "mint": "5borrhcfhS4opRRujxKu8hPTSSBFAecwSRCp53ybAv1e",
+          "owner": "3cWaM8DcquC97XQY8ANpR6xi668fP8ejXU7o3k5fM9WY",
+          "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "amount": "25675000000",
+          "decimals": 6
+        }
+      ],
+      "independentAttestation": false
+    },
+    "capture": {
+      "status": "captured",
+      "attemptedAt": "2026-10-08T08:35:17.943Z"
+    },
+    "matchesStoredReceipt": true,
+    "scope": "retained-observation-not-fresh-rpc-attestation"
+  },
+  "before": {
+    "operationId": "coupon-execution-3ca9d3ca-144e-4ed8-ab7a-788f60f5dd97",
+    "action": "coupon_run",
+    "status": "ready",
+    "signature": null,
+    "plan": {
+      "version": 1,
+      "operationId": "coupon-execution-3ca9d3ca-144e-4ed8-ab7a-788f60f5dd97",
+      "genesisHash": "ESN5pbAEubJukcBqh2WW7y23QdQ8EZ7e2EsN3Lv7KJgc",
+      "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+      "releaseSha256": "4b75579ad52b046f8fedf528dbddc09722e7cd92d73b2778e16201d612b44b50",
+      "releaseProgramLen": 482752,
+      "snapshot": {
+        "bondAddress": "3cWaM8DcquC97XQY8ANpR6xi668fP8ejXU7o3k5fM9WY",
+        "couponAddress": "GZEFPtHPgukeyPxqcDxw7m6cZ9v6kQYZRxUggF4bhDQ9",
+        "couponId": "0",
+        "issuer": "AGtowUa3D7KLSRW2pB6WP5cg5J77jhZ68xDtbmYXgXYd",
+        "settlementMint": "5borrhcfhS4opRRujxKu8hPTSSBFAecwSRCp53ybAv1e",
+        "vault": "EeDcVp12F2g83LMBRCo4r6QkG4LWsA4Wg14N2ZecfG7R",
+        "bondMint": "CXwPsTf7ooVkyGjqBwmZ2Ny8osD4zFoR7iJZMbfQGKtU",
+        "seriesId": "1791448411588",
+        "registry": [
+          "64rwQtSU4iuxDWuvS6fr7YZMrYoZpuaR3L68iKSXRVvH",
+          "9kbtJhek3dbn7zhAgRtopMnpVAXJgTddR3pjwPptuejP",
+          "2uF9J8xtu8WfjZq6WcDpD3cEgMBHJb6GHQfvspVB7jtA",
+          "GvjVX82nt5Kz2Ke5SN6RB4X9GD2vseUEvKYfh5vYqer4",
+          "D1MthsHHwVPN2FsmC4U9BpfWkBMdCAztoWcXuGCjmrKw",
+          "88PmEKF5BkuphfxysjjwihpuZfP3ZAUkcPJMEgYgAcNB"
+        ],
+        "recordTs": "1791448510",
+        "paymentTs": "1791448511",
+        "capturedAt": "1791448511",
+        "unitAmount": "50000000",
+        "totalUnits": "25",
+        "units": [
+          "10",
+          "5",
+          "3",
+          "2",
+          "4",
+          "1"
+        ],
+        "bump": 254
+      },
+      "initialClaimedMask": 1,
+      "initialPaidTotalMinor": "500000000",
+      "contextSlot": 8695,
+      "groups": [
+        {
+          "indices": [
+            2,
+            1,
+            4,
+            3
+          ],
+          "holderWallets": [
+            "2uF9J8xtu8WfjZq6WcDpD3cEgMBHJb6GHQfvspVB7jtA",
+            "9kbtJhek3dbn7zhAgRtopMnpVAXJgTddR3pjwPptuejP",
+            "D1MthsHHwVPN2FsmC4U9BpfWkBMdCAztoWcXuGCjmrKw",
+            "GvjVX82nt5Kz2Ke5SN6RB4X9GD2vseUEvKYfh5vYqer4"
+          ],
+          "units": [
+            "3",
+            "5",
+            "4",
+            "2"
+          ],
+          "amountsMinor": [
+            "150000000",
+            "250000000",
+            "200000000",
+            "100000000"
+          ],
+          "amountMinor": "700000000"
+        },
+        {
+          "indices": [
+            5
+          ],
+          "holderWallets": [
+            "88PmEKF5BkuphfxysjjwihpuZfP3ZAUkcPJMEgYgAcNB"
+          ],
+          "units": [
+            "1"
+          ],
+          "amountsMinor": [
+            "50000000"
+          ],
+          "amountMinor": "50000000"
+        }
+      ],
+      "budget": {
+        "maxRecipients": 16,
+        "maxBatchRecipients": 4,
+        "maxBatchAtaRentLamports": "12000000",
+        "maxBatchFeeLamports": "1000000",
+        "maxTransactions": 2,
+        "maxRunSolDebitLamports": "26000000",
+        "scope": "test-SOL safety ceilings, not predicted charge"
+      },
+      "digest": "88b581a3d74829fbb0c2ffe266e8f6411c203a51941ed74e5b2004b6cff0f8bc",
+      "childOperationIds": [
+        "coupon_cc0ae245758f6a0027a0b9b9e6bb8bcf36b9a81d75df3a831c206b7008e8cde1",
+        "coupon_4b9e3a27b842b04dc69511a72cf6748162ddbb3c508fd104cd520bec1652d89e"
+      ]
+    },
+    "groups": [
+      {
+        "indices": [
+          2,
+          1,
+          4,
+          3
+        ],
+        "holderWallets": [
+          "2uF9J8xtu8WfjZq6WcDpD3cEgMBHJb6GHQfvspVB7jtA",
+          "9kbtJhek3dbn7zhAgRtopMnpVAXJgTddR3pjwPptuejP",
+          "D1MthsHHwVPN2FsmC4U9BpfWkBMdCAztoWcXuGCjmrKw",
+          "GvjVX82nt5Kz2Ke5SN6RB4X9GD2vseUEvKYfh5vYqer4"
+        ],
+        "units": [
+          "3",
+          "5",
+          "4",
+          "2"
+        ],
+        "amountsMinor": [
+          "150000000",
+          "250000000",
+          "200000000",
+          "100000000"
+        ],
+        "amountMinor": "700000000",
+        "operationId": "coupon_cc0ae245758f6a0027a0b9b9e6bb8bcf36b9a81d75df3a831c206b7008e8cde1",
+        "status": "confirmed",
+        "signature": "2cWRDLUyJMFucj6Vm7wEhjLheCkFKitYsHZhHPTYfnuEpzHFwMCQmpwCAtPH54MgTb5EKwMVNbBGHhFuWpCtUBmU",
+        "projectionStatus": "complete"
+      },
+      {
+        "indices": [
+          5
+        ],
+        "holderWallets": [
+          "88PmEKF5BkuphfxysjjwihpuZfP3ZAUkcPJMEgYgAcNB"
+        ],
+        "units": [
+          "1"
+        ],
+        "amountsMinor": [
+          "50000000"
+        ],
+        "amountMinor": "50000000",
+        "operationId": "coupon_4b9e3a27b842b04dc69511a72cf6748162ddbb3c508fd104cd520bec1652d89e",
+        "status": "not_submitted",
+        "signature": null,
+        "projectionStatus": "not_applicable"
+      }
+    ],
+    "completedGroups": 1,
+    "totalGroups": 2,
+    "desiredRightsPaid": false,
+    "contextSlot": 9447,
+    "error": null,
+    "resume": {
+      "requiresExplicitRequest": true,
+      "canResume": true
+    },
+    "scope": "explicit-localnet-generated-issuer"
+  },
+  "after": {
+    "operationId": "coupon-execution-3ca9d3ca-144e-4ed8-ab7a-788f60f5dd97",
+    "action": "coupon_run",
+    "status": "completed",
+    "signature": null,
+    "plan": {
+      "version": 1,
+      "operationId": "coupon-execution-3ca9d3ca-144e-4ed8-ab7a-788f60f5dd97",
+      "genesisHash": "ESN5pbAEubJukcBqh2WW7y23QdQ8EZ7e2EsN3Lv7KJgc",
+      "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+      "releaseSha256": "4b75579ad52b046f8fedf528dbddc09722e7cd92d73b2778e16201d612b44b50",
+      "releaseProgramLen": 482752,
+      "snapshot": {
+        "bondAddress": "3cWaM8DcquC97XQY8ANpR6xi668fP8ejXU7o3k5fM9WY",
+        "couponAddress": "GZEFPtHPgukeyPxqcDxw7m6cZ9v6kQYZRxUggF4bhDQ9",
+        "couponId": "0",
+        "issuer": "AGtowUa3D7KLSRW2pB6WP5cg5J77jhZ68xDtbmYXgXYd",
+        "settlementMint": "5borrhcfhS4opRRujxKu8hPTSSBFAecwSRCp53ybAv1e",
+        "vault": "EeDcVp12F2g83LMBRCo4r6QkG4LWsA4Wg14N2ZecfG7R",
+        "bondMint": "CXwPsTf7ooVkyGjqBwmZ2Ny8osD4zFoR7iJZMbfQGKtU",
+        "seriesId": "1791448411588",
+        "registry": [
+          "64rwQtSU4iuxDWuvS6fr7YZMrYoZpuaR3L68iKSXRVvH",
+          "9kbtJhek3dbn7zhAgRtopMnpVAXJgTddR3pjwPptuejP",
+          "2uF9J8xtu8WfjZq6WcDpD3cEgMBHJb6GHQfvspVB7jtA",
+          "GvjVX82nt5Kz2Ke5SN6RB4X9GD2vseUEvKYfh5vYqer4",
+          "D1MthsHHwVPN2FsmC4U9BpfWkBMdCAztoWcXuGCjmrKw",
+          "88PmEKF5BkuphfxysjjwihpuZfP3ZAUkcPJMEgYgAcNB"
+        ],
+        "recordTs": "1791448510",
+        "paymentTs": "1791448511",
+        "capturedAt": "1791448511",
+        "unitAmount": "50000000",
+        "totalUnits": "25",
+        "units": [
+          "10",
+          "5",
+          "3",
+          "2",
+          "4",
+          "1"
+        ],
+        "bump": 254
+      },
+      "initialClaimedMask": 1,
+      "initialPaidTotalMinor": "500000000",
+      "contextSlot": 8695,
+      "groups": [
+        {
+          "indices": [
+            2,
+            1,
+            4,
+            3
+          ],
+          "holderWallets": [
+            "2uF9J8xtu8WfjZq6WcDpD3cEgMBHJb6GHQfvspVB7jtA",
+            "9kbtJhek3dbn7zhAgRtopMnpVAXJgTddR3pjwPptuejP",
+            "D1MthsHHwVPN2FsmC4U9BpfWkBMdCAztoWcXuGCjmrKw",
+            "GvjVX82nt5Kz2Ke5SN6RB4X9GD2vseUEvKYfh5vYqer4"
+          ],
+          "units": [
+            "3",
+            "5",
+            "4",
+            "2"
+          ],
+          "amountsMinor": [
+            "150000000",
+            "250000000",
+            "200000000",
+            "100000000"
+          ],
+          "amountMinor": "700000000"
+        },
+        {
+          "indices": [
+            5
+          ],
+          "holderWallets": [
+            "88PmEKF5BkuphfxysjjwihpuZfP3ZAUkcPJMEgYgAcNB"
+          ],
+          "units": [
+            "1"
+          ],
+          "amountsMinor": [
+            "50000000"
+          ],
+          "amountMinor": "50000000"
+        }
+      ],
+      "budget": {
+        "maxRecipients": 16,
+        "maxBatchRecipients": 4,
+        "maxBatchAtaRentLamports": "12000000",
+        "maxBatchFeeLamports": "1000000",
+        "maxTransactions": 2,
+        "maxRunSolDebitLamports": "26000000",
+        "scope": "test-SOL safety ceilings, not predicted charge"
+      },
+      "digest": "88b581a3d74829fbb0c2ffe266e8f6411c203a51941ed74e5b2004b6cff0f8bc",
+      "childOperationIds": [
+        "coupon_cc0ae245758f6a0027a0b9b9e6bb8bcf36b9a81d75df3a831c206b7008e8cde1",
+        "coupon_4b9e3a27b842b04dc69511a72cf6748162ddbb3c508fd104cd520bec1652d89e"
+      ]
+    },
+    "groups": [
+      {
+        "indices": [
+          2,
+          1,
+          4,
+          3
+        ],
+        "holderWallets": [
+          "2uF9J8xtu8WfjZq6WcDpD3cEgMBHJb6GHQfvspVB7jtA",
+          "9kbtJhek3dbn7zhAgRtopMnpVAXJgTddR3pjwPptuejP",
+          "D1MthsHHwVPN2FsmC4U9BpfWkBMdCAztoWcXuGCjmrKw",
+          "GvjVX82nt5Kz2Ke5SN6RB4X9GD2vseUEvKYfh5vYqer4"
+        ],
+        "units": [
+          "3",
+          "5",
+          "4",
+          "2"
+        ],
+        "amountsMinor": [
+          "150000000",
+          "250000000",
+          "200000000",
+          "100000000"
+        ],
+        "amountMinor": "700000000",
+        "operationId": "coupon_cc0ae245758f6a0027a0b9b9e6bb8bcf36b9a81d75df3a831c206b7008e8cde1",
+        "status": "confirmed",
+        "signature": "2cWRDLUyJMFucj6Vm7wEhjLheCkFKitYsHZhHPTYfnuEpzHFwMCQmpwCAtPH54MgTb5EKwMVNbBGHhFuWpCtUBmU",
+        "projectionStatus": "complete"
+      },
+      {
+        "indices": [
+          5
+        ],
+        "holderWallets": [
+          "88PmEKF5BkuphfxysjjwihpuZfP3ZAUkcPJMEgYgAcNB"
+        ],
+        "units": [
+          "1"
+        ],
+        "amountsMinor": [
+          "50000000"
+        ],
+        "amountMinor": "50000000",
+        "operationId": "coupon_4b9e3a27b842b04dc69511a72cf6748162ddbb3c508fd104cd520bec1652d89e",
+        "status": "confirmed",
+        "signature": "5EJu4oVstTGb3D4FdQ3NcAMKGNad9GmkFo3Rwp6V6sYDFmSUaCyH9m4Vs3txfzzf429aoh3h43d8ZYcFiuGJsgk9",
+        "projectionStatus": "complete"
+      }
+    ],
+    "completedGroups": 2,
+    "totalGroups": 2,
+    "desiredRightsPaid": true,
+    "contextSlot": 9452,
+    "error": null,
+    "resume": {
+      "requiresExplicitRequest": true,
+      "canResume": false
+    },
+    "scope": "explicit-localnet-generated-issuer"
+  },
+  "checkedAt": "2026-10-08T08:40:38.1459370Z"
+}

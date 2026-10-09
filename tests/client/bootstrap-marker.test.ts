@@ -1,10 +1,12 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import {spawn} from 'node:child_process';import {pathToFileURL} from 'node:url';
 const modules=['server/seed.ts','server/operations.ts'].map(p=>pathToFileURL(path.resolve(p)).href);
 const source=`
+import {programRpc} from './tests/client/helpers/program-rpc.ts';
 import fs from 'node:fs';import path from 'node:path';import {DatabaseSync} from 'node:sqlite';
 const directory=process.env.BONDTRACE_DATA_DIR,id=process.env.MARKER_ID,mode=process.env.MARKER_MODE;
 const [seed,operations]=await Promise.all(${JSON.stringify(modules)}.map(p=>import(p)));
 globalThis.fetch=async (_url,init)=>{const r=JSON.parse(String(init.body));let result;
+ const deployment=programRpc(r);if(deployment!==undefined)return Response.json({jsonrpc:'2.0',id:r.id,result:deployment});
  if(r.method==='getGenesisHash')result='11111111111111111111111111111111';
  else if(r.method==='getAccountInfo'){if(r.params[0]==='SysvarC1ock11111111111111111111111111111111'){const bytes=Buffer.alloc(40);bytes.writeBigInt64LE(100n,32);result={context:{slot:1},value:{owner:'Sysvar1111111111111111111111111111111111111',executable:false,data:[bytes.toString('base64'),'base64']}};}else result={context:{slot:1},value:null};}
  else if(r.method==='getMinimumBalanceForRentExemption')result=1000000;

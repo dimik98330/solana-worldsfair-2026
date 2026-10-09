@@ -1,0 +1,150 @@
+{
+  "checkedAt": "2026-10-08T05:17:35.677Z",
+  "scope": "Actual new source-only namespace and role keys created from npm-ci release package; SQLite-only, no legacy fixture.json; original ledger reused without reset.",
+  "operationId": "fresh_export_df3d6b9e-3dd0-4f26-bbf8-4e7daa4fca68",
+  "status": "confirmed",
+  "signature": "42M4hfzG5Gnzu2ksgyHrHSPTZoXnUC7RPfWXVKt9vL86pGBWqRT6YRRZbZA5ZpXu2xqZhRMpZRvPHcWQugdZN26z",
+  "bond": "GCRDTj96h6bfmLc2CAAGpWHhY41CiT2FDQsG7SN4AsAD",
+  "accelerated": true,
+  "explorerUrl": "https://explorer.solana.com/tx/42M4hfzG5Gnzu2ksgyHrHSPTZoXnUC7RPfWXVKt9vL86pGBWqRT6YRRZbZA5ZpXu2xqZhRMpZRvPHcWQugdZN26z?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8899",
+  "chainStatus": "confirmed",
+  "projectionStatus": "complete",
+  "error": null,
+  "bootstrap": {
+    "version": 1,
+    "mode": "planned",
+    "reset": true,
+    "planDigest": "c255671633489194d744b6e1d67b32a0363492d7d25f3038c268c53db900e2f6",
+    "completedSteps": 11,
+    "totalSteps": 11,
+    "nextStep": null,
+    "steps": [
+      {
+        "id": "sol_issuer",
+        "operationId": "bootstrap_f8f86b42337e76857dcbe3ee6b6c7a9b899e3f54df1edd03",
+        "kind": "test_sol_funding",
+        "status": "confirmed",
+        "signature": "56oxYA8wQE3xnkP7ZdeQMNpjMtSHjoyUFU8hXGZ9UNXi9f8ybLKjCNfiX3NSkJMbTvVLDhzC97y8X7G3AjQdw28w",
+        "chainStatus": "confirmed",
+        "projectionStatus": "complete",
+        "fundingVerification": null,
+        "error": null
+      },
+      {
+        "id": "sol_investor1",
+        "operationId": "bootstrap_a2e21ccb006811d7f6be53c8e6fde19284d631ca24a32b65",
+        "kind": "test_sol_funding",
+        "status": "confirmed",
+        "signature": "5mBvXep8vxHiwJBgcKShpgipBtVMT95rLmKzGstbsv3sYtB8HiawwNUPUzZDJZcVkgn27o6BjJ38YqDnBVs7By9n",
+        "chainStatus": "confirmed",
+        "projectionStatus": "complete",
+        "fundingVerification": null,
+        "error": null
+      },
+      {
+        "id": "sol_investor2",
+        "operationId": "bootstrap_9f84eb80a0bf85d74e2cedddf9721ad2065b12820640cfe7",
+        "kind": "test_sol_funding",
+        "status": "confirmed",
+        "signature": "2TDRTX4DZeUNC3kCJT94nyT6gUmeAbFv3C9fWaP7zuQrRhuCnXLBr22q2y9kjRx9XfAouPfqxNg4rAkk79cWiB3D",
+        "chainStatus": "confirmed",
+        "projectionStatus": "complete",
+        "fundingVerification": null,
+        "error": null
+      },
+      {
+        "id": "sol_investor3",
+        "operationId": "bootstrap_2204f2dd5eaee2efedb7872a67625e57306dfbd89a45baed",
+        "kind": "test_sol_funding",
+        "status": "confirmed",
+        "signature": "gXSyq5KYjCxXAg6Xq2M7DJhiDhvKw7vnTbPJyUzRkG3hkxqqB8WnHpb15Y9D2ZAKubQGD7HpP5o4B4ZGanU9gSG",
+        "chainStatus": "confirmed",
+        "projectionStatus": "complete",
+        "fundingVerification": null,
+        "error": null
+      },
+      {
+        "id": "mint",
+        "operationId": "bootstrap_ff5319a6ddc1f4bc4ec7405631dbf63fd125404d8eb6896e",
+        "kind": "test_settlement_mint",
+        "status": "confirmed",
+        "signature": "2261QEbrocFbEwBNibeB1HqeL2vqvN26hzfALtttD34vMbZCsZXLU8qqe36hwiQ11meRZ4BDAoyAtSrXPEzzFRPJ",
+        "chainStatus": "confirmed",
+        "projectionStatus": "complete",
+        "fundingVerification": null,
+        "error": null
+      },
+      {
+        "id": "funding",
+        "operationId": "bootstrap_6ea8e721ef7d1c9545208784a8bfc43b86707412375146de",
+        "kind": "test_settlement_funding",
+        "status": "confirmed",
+        "signature": "3hoxkVf6ETvH6fmnkq3JJqqGTiWqMGKjPqWJZ8VRVMBvwGRuC2QNRikvyCeyKQWjhpdJy6YhL2nJPYUnESJE1j6",
+        "chainStatus": "confirmed",
+        "projectionStatus": "complete",
+        "fundingVerification": null,
+        "error": null
+      },
+      {
+        "id": "issue",
+        "operationId": "bootstrap_c154301ec6e975b54af8914d3e6e55651cfa1f7b5da55ded",
+        "kind": "initialize_issue",
+        "status": "confirmed",
+        "signature": "3XPLdCJ9XHhr7dUZ3mQJgAzoTQCXCyKTEipDCvSukJv3WoTnB4Biv6ndXAXuDt763vWb2eApy96J9K3hLGUTAmMo",
+        "chainStatus": "confirmed",
+        "projectionStatus": "complete",
+        "fundingVerification": null,
+        "error": null
+      },
+      {
+        "id": "holder_0",
+        "operationId": "bootstrap_43e5d72b68907b9f839ab570f84b08c9a0f96e3c8b122941",
+        "kind": "register_and_issue",
+        "status": "confirmed",
+        "signature": "41QsaD8MQz4xSHmkAqN4KSxoqdNEph5to3wCTcDZLYReSfkgWM3zoC8QcXXp5VxPnjf9QcfuJbVo1QKB65L5GoRm",
+        "chainStatus": "confirmed",
+        "projectionStatus": "complete",
+        "fundingVerification": null,
+        "error": null
+      },
+      {
+        "id": "holder_1",
+        "operationId": "bootstrap_02de3d246c7975b44a7c1a10e216b748826866da2f9b6a89",
+        "kind": "register_and_issue",
+        "status": "confirmed",
+        "signature": "3YfAUWo4KvZv932UpAD7AAU9Nu6fg1bkhetJ9eGwhxW2duNDNp7UksvYiKXZJn5DqegvzDaL9hhL5oqAnLctCnaq",
+        "chainStatus": "confirmed",
+        "projectionStatus": "complete",
+        "fundingVerification": null,
+        "error": null
+      },
+      {
+        "id": "holder_2",
+        "operationId": "bootstrap_992213cbe078741373eee97ed990554059bb88547ed75dfa",
+        "kind": "register_and_issue",
+        "status": "confirmed",
+        "signature": "4Dzhd8xdZ9dfmucZMCQ6xZxb19tvjTyJwMVAhzQbmdctX2sTqoR2tcMbWiN3CYBtT3tXBEVuP9ndizis7avU55Hc",
+        "chainStatus": "confirmed",
+        "projectionStatus": "complete",
+        "fundingVerification": null,
+        "error": null
+      },
+      {
+        "id": "seal",
+        "operationId": "bootstrap_0ab4e8bed9de17db172b52c64a1c5ffdeb5e47259aff2104",
+        "kind": "fund_and_seal",
+        "status": "confirmed",
+        "signature": "42M4hfzG5Gnzu2ksgyHrHSPTZoXnUC7RPfWXVKt9vL86pGBWqRT6YRRZbZA5ZpXu2xqZhRMpZRvPHcWQugdZN26z",
+        "chainStatus": "confirmed",
+        "projectionStatus": "complete",
+        "fundingVerification": null,
+        "error": null
+      }
+    ],
+    "canResume": false,
+    "canCheckFunding": false,
+    "supersededBy": null,
+    "requiresExplicitResume": false,
+    "resumeOperationId": "fresh_export_df3d6b9e-3dd0-4f26-bbf8-4e7daa4fca68"
+  }
+}

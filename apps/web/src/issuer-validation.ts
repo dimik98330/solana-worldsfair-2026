@@ -1,5 +1,7 @@
 import { isAddress } from '@solana/kit';
 import type { ChainState } from './types';
+import { zonedInput, zonedSeconds } from './time-zone';
+import { resolveDraftSeconds, type DraftInstants } from './issuer-draft';
 
 export const U64_MAX = 18_446_744_073_709_551_615n;
 export const ISSUE_NAME_MAX_BYTES = 64;
@@ -43,7 +45,8 @@ export function addressError(value: string): string | null {
 }
 
 /** Native datetime-local values are interpreted in the browser's displayed timezone. */
-export function localDateSeconds(value: string): number | null {
+export function localDateSeconds(value: string, timeZone?: string): number | null {
+  if (timeZone) return zonedSeconds(value, timeZone);
   const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/.exec(value);
   if (!match) return null;
   const [, year, month, day, hour, minute, second = '0'] = match;
@@ -53,19 +56,21 @@ export function localDateSeconds(value: string): number | null {
   return Number.isSafeInteger(seconds) && seconds > 0 ? seconds : null;
 }
 
-export function localDateInput(seconds: number): string {
+export function localDateInput(seconds: number, timeZone?: string): string {
+  if (timeZone) return zonedInput(seconds, timeZone);
   const value = new Date(seconds * 1000);
   const pad = (n: number) => String(n).padStart(2, '0');
   return `${value.getFullYear()}-${pad(value.getMonth() + 1)}-${pad(value.getDate())}T${pad(value.getHours())}:${pad(value.getMinutes())}:${pad(value.getSeconds())}`;
 }
 
-export function validateIssueDraft(draft: IssueDraft, nowSeconds: number): { errors: Record<string, string>; params: IssueParams | null; unitReserveMinor?: string } {
+export function validateIssueDraft(draft: IssueDraft, nowSeconds: number, timeZone?: string, instants: DraftInstants = {}): { errors: Record<string, string>; params: IssueParams | null; unitReserveMinor?: string } {
+  const secondsFor = (key: string, value: string) => timeZone ? resolveDraftSeconds(value, timeZone, instants[key]) : localDateSeconds(value);
   const errors: Record<string, string> = {};
   const name = utf8Error(draft.name); if (name) errors.name = name;
   const mint = addressError(draft.settlementMint); if (mint) errors.settlementMint = mint;
   if (!/^\d+$/.test(draft.seriesId) || BigInt(draft.seriesId) > U64_MAX) errors.seriesId = 'Issue identifier is invalid. Start a new issue form.';
   const face = parseSettlementAmount(draft.faceValue); if (face.error) errors.faceValue = face.error;
-  const maturity = localDateSeconds(draft.maturityLocal);
+  const maturity = secondsFor('maturityLocal', draft.maturityLocal);
   if (!Number.isSafeInteger(nowSeconds) || nowSeconds <= 0) errors.schedule = 'Chain time is unavailable. Refresh the connection before creating an issue.';
   if (maturity == null) errors.maturityLocal = 'Choose a valid maturity date and time.';
   else if (maturity <= nowSeconds) errors.maturityLocal = 'Maturity must be in the future.';
@@ -74,7 +79,7 @@ export function validateIssueDraft(draft: IssueDraft, nowSeconds: number): { err
   const coupons: { recordTs: string; paymentTs: string; unitAmount: string }[] = [];
   draft.coupons.forEach((coupon, index) => {
     const prefix = `coupon.${coupon.key}`;
-    const record = localDateSeconds(coupon.recordLocal), payment = localDateSeconds(coupon.paymentLocal);
+    const record = secondsFor(`${prefix}.recordLocal`, coupon.recordLocal), payment = secondsFor(`${prefix}.paymentLocal`, coupon.paymentLocal);
     const amount = parseSettlementAmount(coupon.amount);
     if (record == null) errors[`${prefix}.recordLocal`] = 'Choose a valid record date and time.';
     else if (record <= priorRecord) errors[`${prefix}.recordLocal`] = index === 0 ? 'First record date must be in the future. Allow time to register, issue, fund and activate.' : 'Record date must be later than the previous coupon record date.';

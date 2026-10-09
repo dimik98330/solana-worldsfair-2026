@@ -43,6 +43,41 @@ pub struct Bond {
     pub redemption_units: Vec<u64>,
 }
 
+/// Created atomically with a rate-based issue. There is deliberately no update,
+/// close, or attach-to-existing-bond instruction for this immutable account.
+#[account]
+#[derive(InitSpace)]
+pub struct FinancialTerms {
+    pub version: u8,
+    pub bond: Pubkey,
+    /// Settlement-token base units per whole bond.
+    pub nominal: u64,
+    pub rate_bps: u16,
+    pub frequency: u8,
+    /// Exact settlement-token base units for each regular coupon.
+    pub unit_amount: u64,
+    pub bump: u8,
+}
+
+pub const FINANCIAL_TERMS_VERSION: u8 = 1;
+
+pub fn rate_coupon_amount(nominal: u64, rate_bps: u16, frequency: u8) -> Result<u64> {
+    require!(
+        nominal > 0 && (1..=10_000).contains(&rate_bps) && (1..=12).contains(&frequency),
+        BondError::InvalidTerms
+    );
+    let numerator = u128::from(nominal)
+        .checked_mul(u128::from(rate_bps))
+        .ok_or(BondError::MathOverflow)?;
+    let denominator = 10_000_u128
+        .checked_mul(u128::from(frequency))
+        .ok_or(BondError::MathOverflow)?;
+    require!(numerator % denominator == 0, BondError::InvalidTerms);
+    let amount = u64::try_from(numerator / denominator).map_err(|_| BondError::MathOverflow)?;
+    require!(amount > 0, BondError::InvalidTerms);
+    Ok(amount)
+}
+
 #[account]
 #[derive(InitSpace)]
 pub struct Coupon {
@@ -189,6 +224,19 @@ pub struct ActionReceipt {
     pub kind: u8,
     pub actor: Pubkey,
     pub action_id: u64,
+    pub units: u64,
+    pub amount: u64,
+    pub timestamp: i64,
+}
+
+#[event]
+pub struct CouponSettlementReceipt {
+    pub bond: Pubkey,
+    pub coupon: Pubkey,
+    pub index: u8,
+    pub executor: Pubkey,
+    pub beneficiary: Pubkey,
+    pub destination: Pubkey,
     pub units: u64,
     pub amount: u64,
     pub timestamp: i64,

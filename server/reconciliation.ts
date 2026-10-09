@@ -23,7 +23,7 @@ export function isoTimestamp(value: bigint): string {
   return new Date(Number(value * 1000n)).toISOString();
 }
 /** Checks program invariants against one bank; no local activity or floating point determines money. */
-export function reconcile(view: Pick<ChainView, 'address'|'bond'|'bondMint'|'holders'|'vault'|'coupons'|'proposals'|'clock'|'contextSlot'|'missingProposalIds'>) {
+export function reconcile(view: Pick<ChainView, 'address'|'bond'|'bondMint'|'holders'|'vault'|'coupons'|'proposals'|'clock'|'contextSlot'|'missingProposalIds'> & Partial<Pick<ChainView, 'proposalDiscovery'>>) {
   const {bond, holders, coupons, clock, address} = view, count = bond.holderWallets.length;
   check(count <= 16 && new Set(bond.holderWallets).size === count, 'Registry must contain unique wallets within capacity');
   check(Number.isSafeInteger(bond.state) && bond.state >= 0 && bond.state <= 3, 'Invalid instrument state');
@@ -91,6 +91,7 @@ export function reconcile(view: Pick<ChainView, 'address'|'bond'|'bondMint'|'hol
     principal: {basis: bond.state >= 2 ? 'immutable-maturity-snapshot' : 'current-holdings-forecast', total: money(principalTotal), paid: money(principalPaid), remaining: money(principalRemaining), claimable: money(principalClaimable)},
     coupons: couponReports,
     totals: {contractual: money(contractualTotal), principalPaid: money(principalPaid), couponPaid: money(couponPaid), cashPaid: money(add([principalPaid, couponPaid], 'All cash payments')), remainingObligations: money(obligations), scheduledCouponForecast: money(couponTotal - fixedAccrued), fixedAccruedCoupon: money(fixedAccrued), claimableNow: money(add([principalClaimable, couponClaimable], 'All claimable payments')), vault: money(balance), fundingGap: money(gap), surplus: money(surplus)},
-    proposals: proposalReports, missingProposalIds: [...view.missingProposalIds], proposalCoverageComplete: view.missingProposalIds.length === 0, proposalDiscovery: 'local-catalog-identifiers-only' as const,
+    proposals: proposalReports, missingProposalIds: [...view.missingProposalIds], catalogProposalsResolved: view.missingProposalIds.length === 0 && (view.proposalDiscovery?.omittedCatalogIds.length ?? 0) === 0,
+    proposalCoverageComplete: false, proposalDiscovery: view.proposalDiscovery?.source ?? 'local-catalog-identifiers-only', proposalDiscoveryCoverage: view.proposalDiscovery ?? null,
   };
 }

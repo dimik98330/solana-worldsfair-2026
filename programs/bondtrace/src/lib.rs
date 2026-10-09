@@ -23,33 +23,7 @@ pub mod bondtrace {
         maturity_ts: i64,
         coupons: Vec<CouponTerms>,
     ) -> Result<()> {
-        let now = Clock::get()?.unix_timestamp;
-        require!(
-            !name.trim().is_empty() && name.len() <= 64 && face_value > 0,
-            BondError::InvalidTerms
-        );
-        require!(
-            !coupons.is_empty() && coupons.len() <= MAX_COUPONS && maturity_ts > now,
-            BondError::InvalidTerms
-        );
-        let mut prior_record = now;
-        let mut prior_payment = now;
-        let mut unit_total = face_value;
-        for terms in &coupons {
-            require!(
-                terms.record_ts > prior_record
-                    && terms.payment_ts >= terms.record_ts
-                    && terms.payment_ts >= prior_payment
-                    && terms.payment_ts <= maturity_ts
-                    && terms.unit_amount > 0,
-                BondError::InvalidTerms
-            );
-            prior_record = terms.record_ts;
-            prior_payment = terms.payment_ts;
-            unit_total = unit_total
-                .checked_add(terms.unit_amount)
-                .ok_or(BondError::MathOverflow)?;
-        }
+        validate_issue_terms(&name, face_value, maturity_ts, &coupons)?;
         let bond = &mut ctx.accounts.bond;
         bond.issuer = ctx.accounts.issuer.key();
         bond.bond_mint = ctx.accounts.bond_mint.key();
@@ -68,6 +42,51 @@ pub mod bondtrace {
         bond.holder_wallets = Vec::new();
         bond.coupon_terms = coupons;
         bond.redemption_units = Vec::new();
+        Ok(())
+    }
+
+    pub fn initialize_rate_issue(
+        ctx: Context<InitializeRateIssue>,
+        series_id: u64,
+        name: String,
+        face_value: u64,
+        maturity_ts: i64,
+        coupons: Vec<CouponTerms>,
+        rate_bps: u16,
+        frequency: u8,
+    ) -> Result<()> {
+        validate_issue_terms(&name, face_value, maturity_ts, &coupons)?;
+        let unit_amount = rate_coupon_amount(face_value, rate_bps, frequency)?;
+        require!(
+            coupons.iter().all(|terms| terms.unit_amount == unit_amount),
+            BondError::InvalidTerms
+        );
+        let bond = &mut ctx.accounts.bond;
+        bond.issuer = ctx.accounts.issuer.key();
+        bond.bond_mint = ctx.accounts.bond_mint.key();
+        bond.settlement_mint = ctx.accounts.settlement_mint.key();
+        bond.vault = ctx.accounts.vault.key();
+        bond.series_id = series_id;
+        bond.name = name;
+        bond.face_value = face_value;
+        bond.maturity_ts = maturity_ts;
+        bond.total_issued = 0;
+        bond.total_redeemed = 0;
+        bond.state = DRAFT;
+        bond.bump = ctx.bumps.bond;
+        bond.next_coupon_index = 0;
+        bond.principal_claimed_mask = 0;
+        bond.holder_wallets = Vec::new();
+        bond.coupon_terms = coupons;
+        bond.redemption_units = Vec::new();
+        let terms = &mut ctx.accounts.financial_terms;
+        terms.version = FINANCIAL_TERMS_VERSION;
+        terms.bond = bond.key();
+        terms.nominal = face_value;
+        terms.rate_bps = rate_bps;
+        terms.frequency = frequency;
+        terms.unit_amount = unit_amount;
+        terms.bump = ctx.bumps.financial_terms;
         Ok(())
     }
 
@@ -124,12 +143,24 @@ pub mod bondtrace {
         let series = bond.series_id.to_le_bytes();
         let bump = [bond.bump];
         let seeds: &[&[u8]] = &[b"bond", bond.issuer.as_ref(), &series, &bump];
-        thaw(
-            &ctx.accounts.holder_bonds.to_account_info(),
-            &ctx.accounts.bond_mint.to_account_info(),
-            &bond.to_account_info(),
-            seeds,
-        )?;
+        // A registered wallet can close its frozen zero ATA and recreate it.
+        // Only an empty initialized account may bypass thaw; all other holder
+        // identity and authority checks above still apply.
+        if ctx.accounts.holder_bonds.state == token::spl_token::state::AccountState::Frozen {
+            thaw(
+                &ctx.accounts.holder_bonds.to_account_info(),
+                &ctx.accounts.bond_mint.to_account_info(),
+                &bond.to_account_info(),
+                seeds,
+            )?;
+        } else {
+            require!(
+                ctx.accounts.holder_bonds.state
+                    == token::spl_token::state::AccountState::Initialized
+                    && ctx.accounts.holder_bonds.amount == 0,
+                BondError::InvalidHolderAccount
+            );
+        }
         token::mint_to(
             CpiContext::new(
                 token::ID,
@@ -197,6 +228,10 @@ pub mod bondtrace {
         require!(
             ctx.accounts.bond_mint.supply == bond.total_issued,
             BondError::SupplyMismatch
+        );
+        require!(
+            ctx.accounts.vault.state == token::spl_token::state::AccountState::Initialized,
+            BondError::InvalidTerms
         );
         require!(
             ctx.accounts.vault.amount >= bond.required_reserve()?,
@@ -314,38 +349,14 @@ pub mod bondtrace {
 
     pub fn claim_coupon(ctx: Context<ClaimCoupon>, index: u8) -> Result<()> {
         let bond = &ctx.accounts.bond;
-        let coupon = &ctx.accounts.coupon;
-        require!(
-            Clock::get()?.unix_timestamp >= coupon.payment_ts,
-            BondError::TooEarly
-        );
-        let holder_index = bond.holder_index(ctx.accounts.holder.key())?;
-        let bit = holder_bit(holder_index)?;
-        require!(coupon.claimed_mask & bit == 0, BondError::AlreadyClaimed);
-        let units = *coupon
-            .units
-            .get(holder_index)
-            .ok_or(BondError::IncompleteSnapshot)?;
-        require!(units > 0, BondError::NoEntitlement);
-        let amount = payment_amount(coupon.unit_amount, units)?;
-        require!(
-            ctx.accounts.vault.amount >= amount,
-            BondError::InsufficientReserve
-        );
-        payout(
+        let (units, amount) = pay_coupon(
             bond,
-            &ctx.accounts.vault.to_account_info(),
+            &mut ctx.accounts.coupon,
+            ctx.accounts.holder.key(),
+            &ctx.accounts.vault,
             &ctx.accounts.settlement_mint.to_account_info(),
             &ctx.accounts.destination.to_account_info(),
-            amount,
         )?;
-        ctx.accounts.coupon.claimed_mask |= bit;
-        ctx.accounts.coupon.paid_total = ctx
-            .accounts
-            .coupon
-            .paid_total
-            .checked_add(amount)
-            .ok_or(BondError::MathOverflow)?;
         receipt(
             bond.key(),
             3,
@@ -354,6 +365,31 @@ pub mod bondtrace {
             units,
             amount,
         )
+    }
+
+    /// Anyone may deliver an already-fixed coupon to its beneficiary. The
+    /// beneficiary never delegates custody and the same mask protects both paths.
+    pub fn settle_coupon(ctx: Context<SettleCoupon>, index: u8) -> Result<()> {
+        let (units, amount) = pay_coupon(
+            &ctx.accounts.bond,
+            &mut ctx.accounts.coupon,
+            ctx.accounts.holder.key(),
+            &ctx.accounts.vault,
+            &ctx.accounts.settlement_mint.to_account_info(),
+            &ctx.accounts.destination.to_account_info(),
+        )?;
+        emit!(CouponSettlementReceipt {
+            bond: ctx.accounts.bond.key(),
+            coupon: ctx.accounts.coupon.key(),
+            index,
+            executor: ctx.accounts.executor.key(),
+            beneficiary: ctx.accounts.holder.key(),
+            destination: ctx.accounts.destination.key(),
+            units,
+            amount,
+            timestamp: Clock::get()?.unix_timestamp,
+        });
+        Ok(())
     }
 
     pub fn begin_redemption(ctx: Context<BeginRedemption>) -> Result<()> {
@@ -543,6 +579,35 @@ pub mod bondtrace {
     }
 }
 
+fn validate_issue_terms(name: &str, face_value: u64, maturity_ts: i64, coupons: &[CouponTerms]) -> Result<()> {
+    let now = Clock::get()?.unix_timestamp;
+    require!(
+        !name.trim().is_empty() && name.len() <= 64 && face_value > 0,
+        BondError::InvalidTerms
+    );
+    require!(
+        !coupons.is_empty() && coupons.len() <= MAX_COUPONS && maturity_ts > now,
+        BondError::InvalidTerms
+    );
+    let mut prior_record = now;
+    let mut prior_payment = now;
+    let mut unit_total = face_value;
+    for terms in coupons {
+        require!(
+            terms.record_ts > prior_record
+                && terms.payment_ts >= terms.record_ts
+                && terms.payment_ts >= prior_payment
+                && terms.payment_ts <= maturity_ts
+                && terms.unit_amount > 0,
+            BondError::InvalidTerms
+        );
+        prior_record = terms.record_ts;
+        prior_payment = terms.payment_ts;
+        unit_total = unit_total.checked_add(terms.unit_amount).ok_or(BondError::MathOverflow)?;
+    }
+    Ok(())
+}
+
 fn validate_token_authorities(account: &TokenAccount) -> Result<()> {
     require!(
         account.delegate.is_none() && account.close_authority.is_none(),
@@ -648,6 +713,28 @@ fn freeze<'info>(
     )
 }
 
+fn pay_coupon<'info>(
+    bond: &Account<'info, Bond>,
+    coupon: &mut Account<'info, Coupon>,
+    holder: Pubkey,
+    vault: &Account<'info, TokenAccount>,
+    mint: &AccountInfo<'info>,
+    destination: &AccountInfo<'info>,
+) -> Result<(u64, u64)> {
+    require!(Clock::get()?.unix_timestamp >= coupon.payment_ts, BondError::TooEarly);
+    let position = bond.holder_index(holder)?;
+    let bit = holder_bit(position)?;
+    require!(coupon.claimed_mask & bit == 0, BondError::AlreadyClaimed);
+    let units = *coupon.units.get(position).ok_or(BondError::IncompleteSnapshot)?;
+    require!(units > 0, BondError::NoEntitlement);
+    let amount = payment_amount(coupon.unit_amount, units)?;
+    require!(vault.amount >= amount, BondError::InsufficientReserve);
+    payout(bond, &vault.to_account_info(), mint, destination, amount)?;
+    coupon.claimed_mask |= bit;
+    coupon.paid_total = coupon.paid_total.checked_add(amount).ok_or(BondError::MathOverflow)?;
+    Ok((units, amount))
+}
+
 fn payout<'info>(
     bond: &Account<'info, Bond>,
     vault: &AccountInfo<'info>,
@@ -711,5 +798,6 @@ mod tests {
         assert_eq!(Coupon::INIT_SPACE + 8, 224);
         assert_eq!(Proposal::INIT_SPACE + 8, 323);
         assert_eq!(Ballot::INIT_SPACE + 8, 82);
+        assert_eq!(FinancialTerms::INIT_SPACE + 8, 61);
     }
 }

@@ -2,7 +2,7 @@ import {rpcUrl,network} from './config.ts';
 import {localDir} from './config.ts';
 import path from 'node:path';
 import {readJson,writeJson,transactionSync} from './storage.ts';
-import {receipt,updateReceipt,saveReceipt} from './journal.ts';
+import {receipt,updateReceipt,saveReceipt,boundReceiptFinality,retainedReceiptFinality,type ReceiptRecord,type FinalityObservation,type FinalityLevel} from './journal.ts';
 import {chainIdentity} from './chain-identity.ts';
 import {getSignatureFromTransaction, getTransactionDecoder} from '@solana/kit';
 export class AppError extends Error { constructor(readonly code:string,message:string,readonly status=400,readonly retryable=false,readonly definitive=false){super(message);} }
@@ -20,9 +20,9 @@ export function validTransactionError(value:unknown):boolean{
  return false;
 }
 let next=0;
-export async function rpc<T=any>(method:string,params:unknown[]=[]):Promise<T>{
+export async function rpc<T=any>(method:string,params:unknown[]=[],timeoutMs=18000):Promise<T>{
   const id=++next;
-  let response:Response;try{response=await fetch(rpcUrl,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id,method,params}),signal:AbortSignal.timeout(18000)});}catch{throw new AppError('RPC_UNAVAILABLE','The configured test RPC did not respond',503,true);}
+  let response:Response;try{response=await fetch(rpcUrl,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id,method,params}),signal:AbortSignal.timeout(timeoutMs)});}catch{throw new AppError('RPC_UNAVAILABLE','The configured test RPC did not respond',503,true);}
   if(!response.ok)throw new AppError(response.status===429?'RPC_RATE_LIMITED':'RPC_UNAVAILABLE',`RPC returned HTTP ${response.status}`,503,true);
   let result:any;try{result=await response.json();}catch{throw new AppError('RPC_INVALID','The RPC response is not valid JSON',503,true);}
   if(!result||typeof result!=='object'||Array.isArray(result)||result.jsonrpc!=='2.0'||result.id!==id||(('result' in result)===('error' in result)))throw new AppError('RPC_INVALID','The RPC envelope does not match this request',503,true);
@@ -39,23 +39,58 @@ export function explorer(signature:string){return network==='devnet'?`https://ex
 export function signatureOf(base64:string){try{return String(getSignatureFromTransaction(getTransactionDecoder().decode(Buffer.from(base64,'base64'))));}catch{throw new AppError('INVALID_TRANSACTION','Signed transaction bytes are invalid');}}
 const lifetimeFile=path.join(localDir,'lifetimes.json');
 export function rememberLifetime(signature:string,lastValidBlockHeight:number){if(!Number.isSafeInteger(lastValidBlockHeight)||lastValidBlockHeight<0)throw new AppError('INVALID_LIFETIME','The RPC lifetime must be a valid block height',503);transactionSync(()=>{const values=readJson<Record<string,number>>(lifetimeFile,{});values[signature]=lastValidBlockHeight;writeJson(lifetimeFile,values);});}
+const finalityRank=(value:FinalityLevel|null)=>value==='finalized'?3:value==='confirmed'?2:value==='processed'?1:0;
+function validateReceiptBinding(record:ReceiptRecord|null,signature:string,genesisHash:string){
+  if(!record)return;
+  if(record.signature!==signature||(record.genesisHash&&record.genesisHash!==genesisHash))throw new AppError('CHAIN_IDENTITY_CHANGED','This receipt belongs to a different transaction or test ledger. Keep its original namespace.',409);
+  if(record.finality&&!boundReceiptFinality(record))throw new AppError('RECEIPT_FINALITY_INVALID','The retained finality observation is inconsistent. Preserve this recovery identifier before another signature.',409);
+}
+function assertObservationProgress(record:ReceiptRecord|null,value:any,contextSlot:number){
+  if(!record||!record.genesisHash)return;
+  const prior=boundReceiptFinality(record),level=value.confirmationStatus as FinalityLevel|null;
+  // Settled observations must never regress into a fresh/retryable payment.
+  const settled=record.chainStatus==='confirmed'||record.chainStatus==='error';
+  if(prior&&contextSlot<prior.contextSlot!)throw new AppError('RPC_REGRESSION','The RPC context predates a retained observation. Recover the existing transaction without signing again.',503,true);
+  if(prior&&finalityRank(level)<finalityRank(prior.status))throw new AppError('RPC_REGRESSION','The RPC returned a lower commitment than the retained observation. Recover the existing transaction without signing again.',503,true);
+  if(settled&&(!['confirmed','finalized'].includes(level??'')||(record.slot!=null&&value.slot!==record.slot)))throw new AppError('RPC_RECEIPT_CONFLICT','The RPC contradicts the retained settled transaction context. Preserve its existing recovery identifier.',503,true);
+  if(settled&&((record.chainStatus==='confirmed'&&value.err!==null)||(record.chainStatus==='error'&&value.err===null)))throw new AppError('RPC_RECEIPT_CONFLICT','The RPC contradicts the retained transaction outcome. Preserve its existing recovery identifier.',503,true);
+  if(settled&&prior&&record.chainStatus==='error'&&record.error){
+    let retainedError:unknown;try{retainedError=JSON.parse(record.error);}catch{}
+    if(retainedError!=null&&validTransactionError(retainedError)&&JSON.stringify(retainedError)!==JSON.stringify(value.err))throw new AppError('RPC_RECEIPT_CONFLICT','The RPC contradicts the retained execution error. Preserve its existing recovery identifier.',503,true);
+  }
+}
 export async function transactionStatus(signature:string){
   if(!/^[1-9A-HJ-NP-Za-km-z]{60,100}$/.test(signature))throw new AppError('INVALID_SIGNATURE','Invalid transaction signature');
   const identity=await chainIdentity();const stored=receipt(signature);
-  if(stored?.genesisHash&&stored.genesisHash!==identity.genesisHash)throw new AppError('CHAIN_IDENTITY_CHANGED','This receipt belongs to a different test ledger. Keep its original namespace.',409);
+  validateReceiptBinding(stored,signature,identity.genesisHash);
   const result=await rpc('getSignatureStatuses',[[signature],{searchTransactionHistory:true}]);
   if(!result||!Number.isSafeInteger(result.context?.slot)||result.context.slot<0||!Array.isArray(result.value)||result.value.length!==1)throw new AppError('RPC_INVALID','The RPC returned an invalid receipt response',503,true);
   const value=result.value[0];
   if(value!==null&&(typeof value!=='object'||Array.isArray(value)||!Object.hasOwn(value,'err')||!validTransactionError(value.err)||!Number.isSafeInteger(value.slot)||value.slot<0||value.slot>result.context.slot||!['processed','confirmed','finalized',null].includes(value.confirmationStatus)))throw new AppError('RPC_INVALID','The RPC receipt fields are inconsistent',503,true);
-  if(!value&&stored?.chainStatus==='confirmed'&&stored.genesisHash===identity.genesisHash){return {signature,status:'confirmed',slot:stored.slot??null,error:null,explorerUrl:explorer(signature),verification:'recorded-confirmation',observedAt:stored.observedAt,genesisHash:identity.genesisHash};}
-  if(!value&&stored?.chainStatus==='error'&&stored.genesisHash===identity.genesisHash){return {signature,status:'error',slot:stored.slot??null,error:stored.error??'Retained definitive rejection',explorerUrl:explorer(signature),verification:'recorded-rejection',observedAt:stored.observedAt,genesisHash:identity.genesisHash};}
+  if(value&&Object.hasOwn(value,'confirmations')&&(value.confirmations!==null&&!unsigned(value.confirmations,Number.MAX_SAFE_INTEGER)||value.confirmationStatus==='finalized'&&value.confirmations!==null))throw new AppError('RPC_INVALID','The RPC confirmation count is inconsistent',503,true);
+  if(value&&Object.hasOwn(value,'status')){
+    const legacy=value.status;
+    if(!(value.err===null?sole(legacy,'Ok')&&legacy.Ok===null:sole(legacy,'Err')&&validTransactionError(legacy.Err)&&JSON.stringify(legacy.Err)===JSON.stringify(value.err)))throw new AppError('RPC_INVALID','The RPC legacy status contradicts its outcome',503,true);
+  }
+  // The identity cannot change between the signature read and its retention.
+  await chainIdentity();
+  const current=transactionSync(()=>{const row=receipt(signature);validateReceiptBinding(row,signature,identity.genesisHash);return row;});
+  const priorFinality=current?boundReceiptFinality(current):null;
+  if(priorFinality&&result.context.slot<priorFinality.contextSlot!)throw new AppError('RPC_REGRESSION','The RPC context predates the retained receipt. Preserve its existing recovery identifier.',503,true);
+  if(!value&&current?.chainStatus==='confirmed'&&current.genesisHash===identity.genesisHash){await (await import('./proof-retention.ts')).captureRetainedProof(signature);return {signature,status:'confirmed' as const,slot:current.slot??null,error:null,explorerUrl:explorer(signature),verification:'recorded-confirmation',observedAt:current.observedAt,genesisHash:identity.genesisHash,finality:retainedReceiptFinality(current)};}
+  if(!value&&current?.chainStatus==='error'&&current.genesisHash===identity.genesisHash){return {signature,status:'error' as const,slot:current.slot??null,error:current.error??'Retained definitive rejection',explorerUrl:explorer(signature),verification:'recorded-rejection',observedAt:current.observedAt,genesisHash:identity.genesisHash,finality:retainedReceiptFinality(current)};}
   const settled=value?.confirmationStatus==='confirmed'||value?.confirmationStatus==='finalized';
   let status:'pending'|'confirmed'|'error'|'unknown'=settled?(value.err?'error':'confirmed'):'pending';
-  const lifetimes=readJson<Record<string,number>>(lifetimeFile,{});const last=stored?.lastValidBlockHeight??lifetimes[signature];
+  const lifetimes=readJson<Record<string,number>>(lifetimeFile,{});const last=current?.lastValidBlockHeight??lifetimes[signature];
   if(!value&&last!==undefined){const height=await rpc<number>('getBlockHeight',[{commitment:'finalized'}]);if(!Number.isSafeInteger(height)||height<0)throw new AppError('RPC_INVALID','The RPC block height is invalid',503,true);if(height>last)status='unknown';}
-  if(!value&&stored?.verification==='legacy-unbound')status='unknown';
-  if(value){transactionSync(()=>{const current=receipt(signature),observation={chainStatus:status,genesisHash:identity.genesisHash,slot:value.slot,observedAt:new Date().toISOString(),verification:'live-rpc' as const,...(value.err?{error:JSON.stringify(value.err)}:{})};if(current)updateReceipt(signature,observation);else saveReceipt({signature,action:'observed-status',network,projectionStatus:'pending',submittedAt:observation.observedAt,...observation});});}
-  return {signature,status,slot:value?.slot??null,error:value?.err??null,explorerUrl:explorer(signature),verification:'live-rpc',genesisHash:identity.genesisHash,...(status==='unknown'?{message:'An unavailable or unbound historical receipt cannot prove failure. Recover the existing operation; do not prepare another signature.'}:{})};
+  if(!value&&current?.verification==='legacy-unbound')status='unknown';
+  const finality:FinalityObservation=value?{schemaVersion:1,signature,status:value.confirmationStatus,source:'live-rpc',slot:value.slot,contextSlot:result.context.slot,observedAt:new Date().toISOString(),genesisHash:identity.genesisHash}
+    :current?retainedReceiptFinality(current):{schemaVersion:1,signature,status:null,source:'live-rpc',slot:null,contextSlot:result.context.slot,observedAt:new Date().toISOString(),genesisHash:identity.genesisHash};
+  if(value){transactionSync(()=>{const latest=receipt(signature);validateReceiptBinding(latest,signature,identity.genesisHash);assertObservationProgress(latest,value,result.context.slot);
+    const observation={chainStatus:status,genesisHash:identity.genesisHash,slot:value.slot,observedAt:finality.observedAt!,verification:'live-rpc' as const,finality,error:value.err?JSON.stringify(value.err):undefined};
+    if(latest)updateReceipt(signature,observation);else saveReceipt({signature,action:'observed-status',network,projectionStatus:'pending',submittedAt:observation.observedAt,...observation});});}
+  if(status==='confirmed')await (await import('./proof-retention.ts')).captureRetainedProof(signature);
+  return {signature,status,slot:value?.slot??null,error:value?.err??null,explorerUrl:explorer(signature),verification:'live-rpc',genesisHash:identity.genesisHash,observedAt:finality.observedAt,finality,...(status==='unknown'?{message:'An unavailable or unbound historical receipt cannot prove failure. Recover the existing operation; do not prepare another signature.'}:{})};
 }
 export async function awaitConfirmation(signature:string,maxMs=20000){
   const started=Date.now();let last:Awaited<ReturnType<typeof transactionStatus>>|undefined;

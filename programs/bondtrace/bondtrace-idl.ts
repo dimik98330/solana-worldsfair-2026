@@ -678,6 +678,182 @@ export type Bondtrace = {
       ]
     },
     {
+      "name": "initializeRateIssue",
+      "discriminator": [
+        183,
+        250,
+        76,
+        96,
+        58,
+        165,
+        92,
+        167
+      ],
+      "accounts": [
+        {
+          "name": "issuer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "issuer"
+              },
+              {
+                "kind": "arg",
+                "path": "seriesId"
+              }
+            ]
+          }
+        },
+        {
+          "name": "bondMint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          }
+        },
+        {
+          "name": "settlementMint"
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          }
+        },
+        {
+          "name": "financialTerms",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  105,
+                  110,
+                  97,
+                  110,
+                  99,
+                  105,
+                  97,
+                  108,
+                  95,
+                  116,
+                  101,
+                  114,
+                  109,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "seriesId",
+          "type": "u64"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "faceValue",
+          "type": "u64"
+        },
+        {
+          "name": "maturityTs",
+          "type": "i64"
+        },
+        {
+          "name": "coupons",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "couponTerms"
+              }
+            }
+          }
+        },
+        {
+          "name": "rateBps",
+          "type": "u16"
+        },
+        {
+          "name": "frequency",
+          "type": "u8"
+        }
+      ]
+    },
+    {
       "name": "issueUnits",
       "discriminator": [
         39,
@@ -1173,6 +1349,199 @@ export type Bondtrace = {
       "args": []
     },
     {
+      "name": "settleCoupon",
+      "docs": [
+        "Anyone may deliver an already-fixed coupon to its beneficiary. The",
+        "beneficiary never delegates custody and the same mask protects both paths."
+      ],
+      "discriminator": [
+        210,
+        249,
+        224,
+        28,
+        55,
+        142,
+        211,
+        251
+      ],
+      "accounts": [
+        {
+          "name": "executor",
+          "docs": [
+            "Pays transaction fees; cannot choose the entitlement or redirect it."
+          ],
+          "signer": true
+        },
+        {
+          "name": "holder"
+        },
+        {
+          "name": "bond",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bond"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bond"
+              }
+            ]
+          },
+          "relations": [
+            "coupon"
+          ]
+        },
+        {
+          "name": "coupon",
+          "writable": true
+        },
+        {
+          "name": "settlementMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          },
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "destination",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "holder"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "settlementMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "index",
+          "type": "u8"
+        }
+      ]
+    },
+    {
       "name": "transferUnits",
       "discriminator": [
         65,
@@ -1283,6 +1652,19 @@ export type Bondtrace = {
       ]
     },
     {
+      "name": "financialTerms",
+      "discriminator": [
+        123,
+        13,
+        162,
+        209,
+        216,
+        188,
+        57,
+        195
+      ]
+    },
+    {
       "name": "proposal",
       "discriminator": [
         26,
@@ -1308,6 +1690,19 @@ export type Bondtrace = {
         114,
         4,
         38
+      ]
+    },
+    {
+      "name": "couponSettlementReceipt",
+      "discriminator": [
+        82,
+        162,
+        74,
+        95,
+        144,
+        206,
+        33,
+        101
       ]
     }
   ],
@@ -1644,6 +2039,50 @@ export type Bondtrace = {
       }
     },
     {
+      "name": "couponSettlementReceipt",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "coupon",
+            "type": "pubkey"
+          },
+          {
+            "name": "index",
+            "type": "u8"
+          },
+          {
+            "name": "executor",
+            "type": "pubkey"
+          },
+          {
+            "name": "beneficiary",
+            "type": "pubkey"
+          },
+          {
+            "name": "destination",
+            "type": "pubkey"
+          },
+          {
+            "name": "units",
+            "type": "u64"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
       "name": "couponTerms",
       "type": {
         "kind": "struct",
@@ -1662,6 +2101,52 @@ export type Bondtrace = {
               "Settlement-token base units payable for one whole bond."
             ],
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "financialTerms",
+      "docs": [
+        "Created atomically with a rate-based issue. There is deliberately no update,",
+        "close, or attach-to-existing-bond instruction for this immutable account."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "nominal",
+            "docs": [
+              "Settlement-token base units per whole bond."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "rateBps",
+            "type": "u16"
+          },
+          {
+            "name": "frequency",
+            "type": "u8"
+          },
+          {
+            "name": "unitAmount",
+            "docs": [
+              "Exact settlement-token base units for each regular coupon."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }

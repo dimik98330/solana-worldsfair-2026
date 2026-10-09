@@ -1,0 +1,49 @@
+{
+  "checkedAt": "2026-10-08T06:47:57.097Z",
+  "scope": "Read-only HTTP verification on isolated localnet, real corrected SBF bytes and empty-metadata recovery; not public hosting or human-wallet proof.",
+  "origin": "http://127.0.0.1:3110",
+  "recoveryOrigin": "http://127.0.0.1:3112",
+  "instrument": "Cu3YxSD7EZbEHxP687hwQMwGj2q1TLqY2P4Budde7a2L",
+  "chainIdentity": {
+    "network": "localnet",
+    "genesisHash": "HwoMoH2okGjTRdkD2mj4SBqR7YJJXMgJzrb96DaLzW7s",
+    "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+    "rpcUrl": "http://127.0.0.1:8919",
+    "observedAt": "2026-10-08T06:47:53.569Z"
+  },
+  "program": {
+    "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+    "programDataAddress": "uZzaw6cRtbnd2JWk9rEirz9g8hZNY6VmUPWBPxuFz2r",
+    "slot": 1670,
+    "imageBytes": 462232,
+    "sha256": "a46736e7e38b27db356f78c3dcefad0c02ef2147eaa21cb0161cfb6ee53739e1",
+    "deployedBytesEqualBuild": true
+  },
+  "checks": {
+    "builtHtmlServed": true,
+    "servicingSettled": true,
+    "evidenceDownload": true,
+    "payloadDigestVerified": true,
+    "noPrivateExportFields": true,
+    "invalidAddressRejected": true,
+    "absentInstrumentRejected": true,
+    "emptyMetadataFinancialRecovery": true,
+    "emptyMetadataProposalRecovery": true,
+    "noInventedRecoveredReceipts": true
+  },
+  "emptyMetadata": {
+    "catalogRecords": 0,
+    "receipts": 0,
+    "discoveredProposalIds": [
+      "1"
+    ],
+    "cashPaid": "16125000000"
+  },
+  "servicing": "settled",
+  "evidenceDigest": {
+    "algorithm": "sha256",
+    "canonicalization": "recursively-sorted-json-object-keys",
+    "payloadSha256": "8584a46c55bdd77202edfc708666870247e7089741d0976093cf6089e2d192ec",
+    "meaning": "export-integrity-only-not-a-signature-or-on-chain-commitment"
+  }
+}

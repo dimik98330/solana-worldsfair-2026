@@ -1,0 +1,261 @@
+{
+  "capturedAt": "2026-10-08T18:49:47.039Z",
+  "finding": "F03",
+  "checks": [
+    {
+      "name": "overview320en targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Interface settings",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Refresh chain state",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "issuer320en targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Interface settings",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Refresh chain state",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "registry320en targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Interface settings",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Refresh chain state",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "payments320en targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Interface settings",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Refresh chain state",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "portfolio320en targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Interface settings",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Refresh chain state",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "voting320en targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Interface settings",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Refresh chain state",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "overview320ru targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Настройки интерфейса",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Обновить данные",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "issuer320ru targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Настройки интерфейса",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Обновить данные",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "registry320ru targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Настройки интерфейса",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Обновить данные",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "payments320ru targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Настройки интерфейса",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Обновить данные",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "portfolio320ru targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Настройки интерфейса",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Обновить данные",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "voting320ru targets and overflow",
+      "pass": true,
+      "data": {
+        "viewport": 320,
+        "document": 320,
+        "controls": [
+          {
+            "label": "Настройки интерфейса",
+            "width": 40,
+            "height": 44
+          },
+          {
+            "label": "Обновить данные",
+            "width": 40,
+            "height": 44
+          }
+        ]
+      }
+    }
+  ],
+  "screens": [
+    "overview-320.png",
+    "issuer-320.png",
+    "registry-320.png",
+    "payments-320.png",
+    "portfolio-320.png",
+    "voting-320.png",
+    "overview-ru-320.png",
+    "issuer-ru-320.png",
+    "registry-ru-320.png",
+    "payments-ru-320.png",
+    "portfolio-ru-320.png",
+    "voting-ru-320.png"
+  ],
+  "errors": []
+}

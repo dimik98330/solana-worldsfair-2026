@@ -2,6 +2,7 @@ import {test,after} from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import fs from 'node:fs';
+import {programRpc} from './helpers/program-rpc.ts';
 import {generateKeyPairSigner,getTransactionDecoder,getTransactionEncoder} from '@solana/kit';
 // Isolated synthetic RPC transport tests. Never write fake receipts to the application fixture.
 process.env.BONDTRACE_DATA_DIR=path.resolve('.local/tests/transport-'+crypto.randomUUID());
@@ -13,6 +14,7 @@ type Mode='normal'|'send-loss'|'confirmation-loss'|'preflight'|'absent'|'process
 let mode:Mode='normal',reads=0,sendHook:(wire:string)=>void=()=>{};
 globalThis.fetch=async (_input,init)=>{
   const request=JSON.parse(String(init?.body));let result:any;
+  const deployment=programRpc(request);if(deployment!==undefined)return Response.json({jsonrpc:'2.0',id:request.id,result:deployment});
   switch(request.method){
     case 'getGenesisHash':result='11111111111111111111111111111111';break;
     case 'getLatestBlockhash':result={value:{blockhash:'11111111111111111111111111111111',lastValidBlockHeight:1000},context:{slot:1}};break;
@@ -34,15 +36,15 @@ test('ambiguous send retains its exact signature before network response and can
   mode='normal';sendHook=()=>{};assert.equal((await operationStatus(id)).status,'confirmed');
 });
 test('confirmation-read outage remains UNKNOWN_STATUS with recoverable prepared signature',async()=>{
-  const actor=await generateKeyPairSigner();mode='normal';const value=await signed(actor,2);const id=rememberPrepared(value.transactionBase64,{action:'test-only',wallet:actor.address,lastValidBlockHeight:value.lastValidBlockHeight});mode='confirmation-loss';
+  const actor=await generateKeyPairSigner();mode='normal';const value=await signed(actor,2);const id=rememberPrepared(value.transactionBase64,{action:'test-only',wallet:actor.address,lastValidBlockHeight:value.lastValidBlockHeight,programRelease:value.programRelease});mode='confirmation-loss';
   await assert.rejects(submitPrepared(value.transactionBase64),(error:any)=>error instanceof AppError&&error.code==='UNKNOWN_STATUS');assert.ok(findPrepared(id)?.signature);mode='normal';assert.equal((await operationStatus(id)).status,'confirmed');
 });
 test('definitive rejection is terminal; unavailable receipt after lifetime remains unknown',async()=>{
-  const actor=await generateKeyPairSigner();mode='normal';let value=await signed(actor,3);let id=rememberPrepared(value.transactionBase64,{action:'test-only',wallet:actor.address,lastValidBlockHeight:value.lastValidBlockHeight});mode='preflight';await assert.rejects(submitPrepared(value.transactionBase64));assert.equal((await operationStatus(id)).status,'error');
-  mode='normal';value=await signed(actor,4);id=rememberPrepared(value.transactionBase64,{action:'test-only',wallet:actor.address,lastValidBlockHeight:1000});mode='send-loss';await assert.rejects(submitPrepared(value.transactionBase64));mode='absent';assert.equal((await operationStatus(id)).status,'unknown');mode='normal';
+  const actor=await generateKeyPairSigner();mode='normal';let value=await signed(actor,3);let id=rememberPrepared(value.transactionBase64,{action:'test-only',wallet:actor.address,lastValidBlockHeight:value.lastValidBlockHeight,programRelease:value.programRelease});mode='preflight';await assert.rejects(submitPrepared(value.transactionBase64));assert.equal((await operationStatus(id)).status,'error');
+  mode='normal';value=await signed(actor,4);id=rememberPrepared(value.transactionBase64,{action:'test-only',wallet:actor.address,lastValidBlockHeight:1000,programRelease:value.programRelease});mode='send-loss';await assert.rejects(submitPrepared(value.transactionBase64));mode='absent';assert.equal((await operationStatus(id)).status,'unknown');mode='normal';
 });
 test('confirmed prepared proposal is discoverable in the selected fixture',async()=>{
-  const actor=await generateKeyPairSigner();mode='normal';saveFixture({seriesId:'1',bond:actor.address,name:'Synthetic test fixture',settlementMint:actor.address,createdAt:new Date().toISOString(),rateBps:1000,couponFrequency:2,roles:{issuer:actor.address},proposalIds:[],complete:true,accelerated:true});const value=await signed(actor,5);rememberPrepared(value.transactionBase64,{action:'create_vote',wallet:actor.address,bond:actor.address,params:{proposalId:'3'},lastValidBlockHeight:1000});await submitPrepared(value.transactionBase64);assert.deepEqual(fixture()?.proposalIds,['3']);
+  const actor=await generateKeyPairSigner();mode='normal';saveFixture({seriesId:'1',bond:actor.address,name:'Synthetic test fixture',settlementMint:actor.address,createdAt:new Date().toISOString(),rateBps:1000,couponFrequency:2,roles:{issuer:actor.address},proposalIds:[],complete:true,accelerated:true});const value=await signed(actor,5);rememberPrepared(value.transactionBase64,{action:'create_vote',wallet:actor.address,bond:actor.address,params:{proposalId:'3'},lastValidBlockHeight:1000,programRelease:value.programRelease});await submitPrepared(value.transactionBase64);assert.deepEqual(fixture()?.proposalIds,['3']);
 });
 
 test('unsigned or cryptographically invalid signatures cannot poison a prepared recovery record',async()=>{

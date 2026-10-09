@@ -1,0 +1,166 @@
+{
+  "checkedAt": "2026-10-08T10:04:29.095Z",
+  "scope": "Owner-requested engineering audit; actual working-tree bytes; original review lineages preserved",
+  "entries": [
+    {
+      "path": "AUDIT.md",
+      "bytes": 6595,
+      "sha256": "5b00602f84011a06cd99fbcc9dcd19d8158dea1768f0494f23e9dcb60e18b149"
+    },
+    {
+      "path": "TECHNICAL.md",
+      "bytes": 11398,
+      "sha256": "1cbabe2eede38af3970e105c4e753ea0337b380a26a12e92240fa4a0e21a00ba"
+    },
+    {
+      "path": "README.md",
+      "bytes": 11164,
+      "sha256": "e86d388729906c14528ad89f0acf11a640ae4209a02b91d459083391b9c085de"
+    },
+    {
+      "path": "docs/28-AUDIT-RESULTS.md",
+      "bytes": 7511,
+      "sha256": "2ffc48856205db8ce3fccfbc3384cf5775cb93b3fc0445ba78892bcd9f6fcab3"
+    },
+    {
+      "path": "docs/00-STATE.md",
+      "bytes": 42463,
+      "sha256": "534a2203d131dc46397929fa0cd3c3025adb5dd543b3c3657bb65bb0058a9688"
+    },
+    {
+      "path": "docs/15-API-CONTRACT.md",
+      "bytes": 16337,
+      "sha256": "f6d591d9c9021c786914c2b0e2631a11c6a267a64292153a1ce1d5fe2ee87f2e"
+    },
+    {
+      "path": "package.json",
+      "bytes": 2133,
+      "sha256": "fac73ee944278e7fbaabf6a024c082d5e80d70fb3a0e4c489d5642189c65d299"
+    },
+    {
+      "path": "programs/bondtrace/src/lib.rs",
+      "bytes": 26161,
+      "sha256": "7cf74809d555a3810821d6e7f7b7f2ca4833380b615b6bf2bdb6248c414a4ab4"
+    },
+    {
+      "path": "programs/bondtrace/src/contexts.rs",
+      "bytes": 9510,
+      "sha256": "d0154c67e076f8215c0c2aa8dcc312c9bdced677a5b71e657537849883cb6999"
+    },
+    {
+      "path": "programs/bondtrace/src/state.rs",
+      "bytes": 6135,
+      "sha256": "f7895edf747ebc45b47dece506472882e83d08f67d3a49fa002ae5aa966ec4c9"
+    },
+    {
+      "path": "programs/bondtrace/release.json",
+      "bytes": 267,
+      "sha256": "9a66d822662e0f0272c2fa80a94487324084a7e772c2ba94e1981bb5ed360a3a"
+    },
+    {
+      "path": "server/admin.ts",
+      "bytes": 20786,
+      "sha256": "7d1c43aa2b618fa90f93397c3ec2d9d30e0f9e6970b3ac138aeb1bc6f2a926d8"
+    },
+    {
+      "path": "server/catalog.ts",
+      "bytes": 7187,
+      "sha256": "5e0470109e717d2f14d21c70fc2bda58887cd3131182d826e3ee0dc818b64330"
+    },
+    {
+      "path": "server/state.ts",
+      "bytes": 10461,
+      "sha256": "1f2043203f211d70227dabae4ebba411b9507774a1a03ab64472f62a11165db9"
+    },
+    {
+      "path": "server/request-contract.ts",
+      "bytes": 8829,
+      "sha256": "b7dd00068fd56e67c4a5c306ff730aee82599ef5a0aa0fbda5c89793a3eb1003"
+    },
+    {
+      "path": "server/rate-terms.ts",
+      "bytes": 7747,
+      "sha256": "ef93e92800e9e1990cfc8a775e248cebca30b938d52ec067ed884c4feea953e7"
+    },
+    {
+      "path": "server/rebroadcast.ts",
+      "bytes": 5075,
+      "sha256": "7f12aa96fe700178da9874a9f6f2199a62e2710f90d71a03061a80de9538d216"
+    },
+    {
+      "path": "server/effects.ts",
+      "bytes": 1819,
+      "sha256": "51042e4c3e87908eeca0912461bfc370f6c2954aa4d8a0483ff7c293ae3bf7cb"
+    },
+    {
+      "path": "server/actions.ts",
+      "bytes": 13693,
+      "sha256": "62526ebffd3e874aa83fa90015dfc8432e681f2f8a70b50d7cc822e4783264d9"
+    },
+    {
+      "path": "server/index.ts",
+      "bytes": 9150,
+      "sha256": "76ee562b62d132ecf4dbb81e51282a30d6b14d32a6ac04c8759c38e94e646aef"
+    },
+    {
+      "path": "scripts/backend-runtime.ps1",
+      "bytes": 6299,
+      "sha256": "93438921d41292dbb8302a1a535e55c64e5f474154252e4d1daef92cab0e9236"
+    },
+    {
+      "path": "scripts/backend-validator.sh",
+      "bytes": 805,
+      "sha256": "5707759e77f09c02a1b6d7c3621bc45f1462b749eabe8d1d978ef96e2addc06d"
+    },
+    {
+      "path": "scripts/lifecycle-demo.ps1",
+      "bytes": 2558,
+      "sha256": "6af9d12669269d30bc605a20bccad23649998700b735ab1ac50215095a228f68"
+    },
+    {
+      "path": "scripts/execution-smoke.ts",
+      "bytes": 13669,
+      "sha256": "25a1144e5803d9824e7c0aeeafd3e7b13add192be0e17d6d6b8ea8aa0f3ffa20"
+    },
+    {
+      "path": "scripts/full-smoke.ts",
+      "bytes": 5084,
+      "sha256": "6098ce1a82e07e96ede23f7cd0bc4f00e7d51f529c1c6a51773936206b65d3f3"
+    },
+    {
+      "path": "scripts/verify-lifecycle.ts",
+      "bytes": 5529,
+      "sha256": "59c54bdf55effc9216234ea067081fd46c1a1d9fe60f5d9df71574caab0386f1"
+    },
+    {
+      "path": "scripts/rebroadcast-smoke.ts",
+      "bytes": 3408,
+      "sha256": "b859373d5d9f1ab87d0e13565ac7084166298f4e4bc8997b97de1c3d14a6660e"
+    },
+    {
+      "path": "tests/program/runtime.rs",
+      "bytes": 61183,
+      "sha256": "ed937bffc11f957d022e132c6745f86218d1a7adedd26b8411531f3a445ed8b3"
+    },
+    {
+      "path": "tests/client/admin.test.ts",
+      "bytes": 26043,
+      "sha256": "2b37b993f9c09e1719b7f8473fee45d036ce3be6c7b8e8b1aef29828943f62e0"
+    },
+    {
+      "path": "tests/client/rate-terms.test.ts",
+      "bytes": 10861,
+      "sha256": "d012191f733872e71dcfd58c4fff8ec6710201955c941df165d59aa6cdf8f063"
+    },
+    {
+      "path": "tests/client/rebroadcast.test.ts",
+      "bytes": 5460,
+      "sha256": "1580d447a268773457476371fbcda0b5e85702c78cc785d7f3d77faf005a2b2c"
+    },
+    {
+      "path": "docs/research/kase-owner-audit-independent.md",
+      "bytes": 21434,
+      "sha256": "99177d7180ab1aaff2f0097935fe77d1df42e51e38f4a6c3ea5972bfa20a094c"
+    }
+  ]
+}

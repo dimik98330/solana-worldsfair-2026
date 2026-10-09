@@ -9,6 +9,8 @@ import {readCatalog, saveCatalog, type CatalogRecord} from './catalog.ts';
 import {transactionSync} from './storage.ts';
 import {isKnownDemoWallet} from './demo-identities.ts';
 import {fixture} from './store.ts';
+import {normalizeRateDescriptor,verifyRateAmounts,rateMemoInstruction,confirmedRateEvidence,type RateTermsEvidence} from './rate-terms.ts';
+import {receipt} from './journal.ts';
 
 export const adminActions = new Set(['initialize_issue', 'register_holder', 'issue_units', 'seal_issue']);
 type Bond = ReturnType<typeof program.decodeBond>;
@@ -46,6 +48,7 @@ export function normalizeIssueTerms(params: Record<string, unknown>, now: bigint
   const seriesId = integer(params.seriesId, 'Series ID'), name = label(params.name, 'Issue name');
   const settlementMint = publicKey(params.settlementMint, 'Settlement mint');
   const faceValue = integer(params.faceValueMinor, 'Face value', MAX_U64, true);
+  const rateDescriptor = normalizeRateDescriptor(params, faceValue);
   const maturityTs = integer(params.maturityTs, 'Maturity date', MAX_RENDERABLE_TIMESTAMP, true);
   let schedule = params.coupons;
   if (typeof schedule === 'string') {
@@ -59,18 +62,20 @@ export function normalizeIssueTerms(params: Record<string, unknown>, now: bigint
     if (!value || typeof value !== 'object' || Array.isArray(value)) fail('INVALID_TERMS', 'Each coupon must be an object');
     const recordTs = integer(value.recordTs, 'Record date', MAX_RENDERABLE_TIMESTAMP, true);
     const paymentTs = integer(value.paymentTs, 'Payment date', MAX_RENDERABLE_TIMESTAMP, true);
-    const unitAmount = integer(value.unitAmount, 'Coupon amount', MAX_U64, true);
+    const unitAmount = integer(value.unitAmount === undefined && rateDescriptor ? rateDescriptor.couponUnitMinor : value.unitAmount, 'Coupon amount', MAX_U64, true);
     if (recordTs <= priorRecord || paymentTs < recordTs || paymentTs < priorPayment || paymentTs > maturityTs) fail('INVALID_TERMS', 'Coupon dates must be ordered, after chain time, and within maturity');
     priorRecord = recordTs; priorPayment = paymentTs;
     return {recordTs, paymentTs, unitAmount};
   });
+  if (rateDescriptor) verifyRateAmounts(rateDescriptor, coupons.map(coupon => coupon.unitAmount));
   requiredReserve({faceValue, couponTerms: coupons}, 1n);
-  return {seriesId, name, settlementMint, faceValue, maturityTs, coupons};
+  return {seriesId, name, settlementMint, faceValue, maturityTs, coupons, rateDescriptor};
 }
 function normalizeMetadata(terms: ReturnType<typeof normalizeIssueTerms>): AdminMetadata {
   return {seriesId: terms.seriesId.toString(), name: terms.name, settlementMint: terms.settlementMint,
     faceValueMinor: terms.faceValue.toString(), maturityTs: terms.maturityTs.toString(),
-    coupons: terms.coupons.map(c => ({recordTs: c.recordTs.toString(), paymentTs: c.paymentTs.toString(), unitAmount: c.unitAmount.toString()}))};
+    coupons: terms.coupons.map(c => ({recordTs: c.recordTs.toString(), paymentTs: c.paymentTs.toString(), unitAmount: c.unitAmount.toString()})),
+    ...(terms.rateDescriptor ? {rateBps: terms.rateDescriptor.rateBps, couponFrequency: terms.rateDescriptor.couponFrequency, rateProvenance: 'issuer-signed-creation-memo'} : {})};
 }
 async function mint(key: string, decimals: number) {
   const {value} = await account(key);
@@ -83,7 +88,16 @@ async function mint(key: string, decimals: number) {
 }
 async function token(key: string, expectedMint: string, owner: string, optional = false) {
   const {value} = await account(key);
-  if (!value && optional) return null;
+  const vacant = value?.owner === program.SYSTEM && value.executable === false
+    && Number.isSafeInteger(value.lamports) && value.lamports >= 0
+    && Array.isArray(value.data) && value.data.length === 2 && value.data[0] === '' && value.data[1] === 'base64'
+    && (value.space === undefined || value.space === 0);
+  if (optional && (!value || vacant)) {
+    // A closed ATA may receive lamports before recreation. Only its exact
+    // canonical, empty System account can take the idempotent creation path.
+    if (key !== await program.ata(owner, expectedMint)) fail('INVALID_TOKEN_ACCOUNT', 'Only a canonical associated token account may be restored');
+    return null;
+  }
   if (!value || value.executable || value.owner !== TOKEN_PROGRAM_ADDRESS) fail('INVALID_TOKEN_ACCOUNT', 'Expected a classic SPL token account');
   const bytes = Buffer.from(value.data[0], 'base64');
   if (bytes.length !== 165) fail('INVALID_TOKEN_ACCOUNT', 'Expected a classic SPL token account');
@@ -111,11 +125,15 @@ export async function makeAdminAction(request: AdminRequest, wallet: string) {
   if (request.action === 'initialize_issue') {
     const terms = normalizeIssueTerms(params, (await chainClock()).timestamp);
     await mint(terms.settlementMint, 6);
-    const built = await program.initializeIssue(actor, terms.settlementMint, terms.seriesId, terms.name, terms.faceValue, terms.maturityTs, terms.coupons);
+    const built = terms.rateDescriptor
+      ? await program.initializeRateIssue(actor, terms.settlementMint, terms.seriesId, terms.name, terms.faceValue, terms.maturityTs, terms.coupons, Number(terms.rateDescriptor.rateBps), Number(terms.rateDescriptor.couponFrequency))
+      : await program.initializeIssue(actor, terms.settlementMint, terms.seriesId, terms.name, terms.faceValue, terms.maturityTs, terms.coupons);
     if (request.bondAddress !== undefined && publicKey(request.bondAddress, 'Instrument') !== built.bond) fail('INSTRUMENT_MISMATCH', 'Requested instrument does not match issuer and series');
     if ((await account(built.bond)).value) fail('ISSUE_EXISTS', 'An instrument for this issuer and series already exists');
     bondAddress = built.bond; proofAccount = built.bond; metadata = normalizeMetadata(terms);
+    if(terms.rateDescriptor)metadata.programRateTermsVersion=1;
     instructions.push(built.ix);
+    if (terms.rateDescriptor) instructions.push(rateMemoInstruction(bondAddress, actor, terms.faceValue.toString(), terms.rateDescriptor));
   } else {
     const read = await readBond(request.bondAddress);
     if (!read) fail('NO_INSTRUMENT', 'Select a confirmed instrument first');
@@ -141,11 +159,14 @@ export async function makeAdminAction(request: AdminRequest, wallet: string) {
         if (!bond.holderWallets.includes(address(holder))) fail('NOT_HOLDER', 'Register this holder before issuing units');
         amount = integer(params.units, 'Bond units', MAX_U64, true);
         requiredReserve(bond, checked(bond.totalIssued + amount));
-        const holderAta = await program.ata(holder, bond.bondMint), existing = (await token(holderAta, bond.bondMint, holder))!;
-        if (existing.state !== 2) fail('INVALID_HOLDER', 'Registered bond accounts must be frozen');
+        const holderAta = await program.ata(holder, bond.bondMint), existing = await token(holderAta, bond.bondMint, holder, true);
+        // SPL permits closing an empty registered account. Restore only its
+        // canonical ATA; the program freezes it again after the authorized mint.
+        if (existing && existing.state !== 2 && (existing.state !== 1 || existing.amount !== 0n)) fail('INVALID_HOLDER', 'Registered bond accounts must be frozen or empty before issuance');
+        if (!existing) instructions.push(getCreateAssociatedTokenIdempotentInstruction({payer: createNoopSigner(address(actor)), ata: holderAta, owner: address(holder), mint: bond.bondMint}));
         instructions.push(program.issueUnits(actor, bondAddress, bond.bondMint, holderAta, amount));
         tokenAddress = bond.bondMint; tokenDecimals = 0; recipients = [holder];
-        metadata = {holderWallet: holder, units: amount.toString(), beforeTotalIssued: bond.totalIssued.toString(), beforeHolderUnits: existing.amount.toString()};
+        metadata = {holderWallet: holder, units: amount.toString(), beforeTotalIssued: bond.totalIssued.toString(), beforeHolderUnits: (existing?.amount ?? 0n).toString()};
         break;
       }
       case 'seal_issue': {
@@ -155,6 +176,7 @@ export async function makeAdminAction(request: AdminRequest, wallet: string) {
         if (bondMint.mintAuthority.__option !== 'Some' || bondMint.mintAuthority.value !== bondAddress || bondMint.freezeAuthority.__option !== 'Some' || bondMint.freezeAuthority.value !== bondAddress) fail('INVALID_MINT', 'Bond mint authorities do not match this instrument');
         const reserve = requiredReserve(bond, bond.totalIssued);
         if (!vault || vault.amount < reserve) fail('INSUFFICIENT_RESERVE', `Full reserve requires ${reserve} settlement minor units`);
+        if (vault.state !== 1) fail('VAULT_FROZEN', 'The settlement vault is frozen; activation requires a transferable reserve');
         instructions.push(program.sealIssue(actor, bondAddress, bond.bondMint, bond.vault));
         metadata = {requiredReserveMinor: reserve.toString()};
         break;
@@ -166,7 +188,7 @@ export async function makeAdminAction(request: AdminRequest, wallet: string) {
 }
 
 /** Invoke only after the exact prepared message has a confirmed successful receipt. */
-export async function finalizeAdminEffect(prepared: {action: string; wallet: string; bond?: string; params?: Record<string, unknown>; metadata?: AdminMetadata}) {
+export async function finalizeAdminEffect(prepared: {action: string; wallet: string; bond?: string; params?: Record<string, unknown>; metadata?: AdminMetadata; signature?: string}) {
   if (!adminActions.has(prepared.action)) return;
   const actor = publicKey(prepared.wallet, 'Issuer wallet'), bondAddress = publicKey(prepared.bond, 'Instrument');
   const raw = await programAccount(bondAddress);
@@ -178,15 +200,23 @@ export async function finalizeAdminEffect(prepared: {action: string; wallet: str
   if (record && (record.roles.issuer !== actor || record.seriesId !== bond.seriesId.toString() || record.settlementMint !== bond.settlementMint)) fail('INSTRUMENT_MISMATCH', 'Catalog identity does not match the confirmed instrument');
   const metadata = prepared.metadata;
   let holderLabelEffect: {wallet: string; label: string} | undefined;
+  let rateTerms: RateTermsEvidence | undefined;
   if (prepared.action === 'initialize_issue') {
     if (!metadata) fail('CONFIRMED_EFFECT_MISSING', 'Prepared creation terms are required for reconciliation');
     // Compare immutable terms without reapplying the now-expired creation window.
     const terms = normalizeIssueTerms(metadata, 0n);
     if (terms.seriesId !== bond.seriesId || terms.name !== bond.name || terms.settlementMint !== bond.settlementMint || terms.faceValue !== bond.faceValue || terms.maturityTs !== bond.maturityTs || terms.coupons.length !== bond.couponTerms.length || terms.coupons.some((c, i) => c.recordTs !== bond.couponTerms[i].recordTs || c.paymentTs !== bond.couponTerms[i].paymentTs || c.unitAmount !== bond.couponTerms[i].unitAmount)) fail('INSTRUMENT_MISMATCH', 'Confirmed issue terms do not match the exact prepared creation');
     await mint(bond.settlementMint, 6);
+    if(metadata.programRateTermsVersion===1){
+      const key=await program.deriveFinancialTerms(bondAddress),raw=await programAccount(key);
+      if(!raw)fail('RATE_EVIDENCE_PENDING','The atomic on-chain financial terms are absent');
+      const validated=program.decodeFinancialTerms(raw.bytes);
+      if(!terms.rateDescriptor||validated.bond!==bondAddress||validated.nominal!==terms.faceValue||validated.rateBps!==Number(terms.rateDescriptor.rateBps)||validated.couponFrequency!==Number(terms.rateDescriptor.couponFrequency)||validated.unitAmount.toString()!==terms.rateDescriptor.couponUnitMinor)fail('INSTRUMENT_MISMATCH','The program-validated financial terms differ from the reviewed creation');
+    }
+    if (terms.rateDescriptor) rateTerms = await confirmedRateEvidence(prepared.signature ? receipt(prepared.signature) : null, bondAddress, actor, terms.faceValue.toString(), terms.rateDescriptor);
     // This is the local catalog observation time, not an asserted chain creation timestamp.
     const source = isKnownDemoWallet(actor,fixture()?.roles) ? 'demo' : 'wallet';
-    record ??= {seriesId: bond.seriesId.toString(), bond: bondAddress, name: bond.name, settlementMint: bond.settlementMint, createdAt: new Date().toISOString(), rateBps: 0, couponFrequency: 0, roles: {issuer: actor}, proposalIds: [], complete: bond.state > 0, accelerated: false, source};
+    record ??= {seriesId: bond.seriesId.toString(), bond: bondAddress, name: bond.name, settlementMint: bond.settlementMint, createdAt: new Date().toISOString(), rateBps: rateTerms ? Number(rateTerms.rateBps) : 0, couponFrequency: rateTerms ? Number(rateTerms.couponFrequency) : 0, ...(rateTerms ? {rateTerms} : {}), roles: {issuer: actor}, proposalIds: [], complete: bond.state > 0, accelerated: false, source};
   } else {
     if (!record) fail('NO_INSTRUMENT', 'Confirmed instrument is missing from the catalog');
     if (prepared.action === 'register_holder') {
@@ -214,6 +244,7 @@ export async function finalizeAdminEffect(prepared: {action: string; wallet: str
   }
   const effective=latest??record;
   if(!effective)fail('NO_INSTRUMENT','The confirmed instrument catalog is unavailable');
+  if (rateTerms && JSON.stringify(effective.rateTerms) !== JSON.stringify(rateTerms)) fail('INSTRUMENT_MISMATCH', 'Catalog annual-rate provenance differs from the confirmed creation receipt');
   if (holderLabelEffect) effective.holderLabels = {...effective.holderLabels, [holderLabelEffect.wallet]: holderLabelEffect.label};
   effective.complete = effective.complete || bond.state > 0;
   saveCatalog(effective as CatalogRecord);

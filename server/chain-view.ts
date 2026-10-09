@@ -1,7 +1,8 @@
 import {getMintDecoder, getTokenDecoder, TOKEN_PROGRAM_ADDRESS} from '@solana-program/token';
-import {PROGRAM_ID, SYSTEM, ata, decodeBond, decodeCoupon, decodeProposal, derive, deriveBond} from '../packages/client/src/program.ts';
+import {PROGRAM_ID, SYSTEM, ata, decodeBond, decodeCoupon, decodeProposal, decodeFinancialTerms, deriveFinancialTerms, derive, deriveBond} from '../packages/client/src/program.ts';
 import {AppError, rpc} from './rpc.ts';
-import {address} from '@solana/kit';
+import {address,getProgramDerivedAddress,getAddressEncoder} from '@solana/kit';
+import {discoverProposals, MAX_PROPOSALS, sortProposalIds, type ProposalDiscoveryCoverage} from './proposal-discovery.ts';
 
 export const CLOCK_ADDRESS = 'SysvarC1ock11111111111111111111111111111111';
 const SYSVAR_OWNER = 'Sysvar1111111111111111111111111111111111111';
@@ -20,6 +21,8 @@ export type ChainView = {
   holders: TokenBalance[]; vault: TokenBalance; issuerSettlement: TokenBalance;
   coupons: (Coupon | null)[]; couponAddresses: string[];
   proposals: {id: string; address: string; value: Proposal}[]; missingProposalIds: string[];
+  proposalDiscovery: ProposalDiscoveryCoverage;
+  financialTerms?: ReturnType<typeof decodeFinancialTerms>|null; financialTermsAddress?: string;
 };
 function fail(code: string, message: string): never { throw new AppError(code, message, 503); }
 function slot(value: unknown): number {
@@ -73,8 +76,8 @@ function graphIdentity(bond: Bond) {
 }
 function proposalIds(read: () => string[]): string[] {
   const ids = read();
-  if (!Array.isArray(ids) || ids.length > 32 || ids.some(id => typeof id !== 'string' || !/^(0|[1-9]\d{0,19})$/.test(id) || BigInt(id) > (1n << 64n) - 1n) || new Set(ids).size !== ids.length) fail('INVALID_CATALOG', 'Invalid proposal discovery list');
-  return [...ids];
+  if (!Array.isArray(ids) || ids.some(id => typeof id !== 'string' || !/^(0|[1-9]\d{0,19})$/.test(id) || BigInt(id) > (1n << 64n) - 1n) || new Set(ids).size !== ids.length) fail('INVALID_CATALOG', 'Invalid proposal discovery list');
+  return sortProposalIds(ids);
 }
 /** Discovery identifies addresses only. Every returned financial value comes from one confirmed bank. */
 export async function readChainView(key: string, options: {readRpc?: ReadRpc; proposalIds?: () => string[]} = {}): Promise<ChainView> {
@@ -88,19 +91,25 @@ export async function readChainView(key: string, options: {readRpc?: ReadRpc; pr
     const discovered = decodeProgramAccount(discovery?.value, decodeBond);
     if (!discovered) fail('INSTRUMENT_NOT_FOUND', 'Selected instrument does not exist at confirmed commitment');
     await validateBondIdentity(key, discovered);
-    const ids = proposalIds(idsReader), holderAtas = await Promise.all(discovered.holderWallets.map(wallet => ata(wallet, discovered.bondMint)));
+    const catalogIds = proposalIds(idsReader);
+    const proposalDiscovery = await discoverProposals(key, discoveredSlot, request, catalogIds);
+    const discoveredIds = proposalDiscovery.discoveredIds, ids = proposalDiscovery.selectedIds;
+    const holderAtas = await Promise.all(discovered.holderWallets.map(wallet => ata(wallet, discovered.bondMint)));
     const couponAddresses = await Promise.all(discovered.couponTerms.map((_terms, index) => derive('coupon', key, index)));
     const proposalAddresses = await Promise.all(ids.map(id => derive('proposal', key, BigInt(id))));
     const issuerAta = await ata(discovered.issuer, discovered.settlementMint);
-    const keys = [key, CLOCK_ADDRESS, discovered.bondMint, discovered.settlementMint, discovered.vault, ...holderAtas, ...couponAddresses, ...proposalAddresses, issuerAta];
+    const financialTermsAddress=String(await deriveFinancialTerms(key));
+    const keys = [key, CLOCK_ADDRESS, discovered.bondMint, discovered.settlementMint, discovered.vault, ...holderAtas, ...couponAddresses, ...proposalAddresses, issuerAta,financialTermsAddress];
     if (keys.length > 100 || new Set(keys).size !== keys.length) fail('INVALID_INSTRUMENT', 'Instrument account graph exceeds RPC capacity or aliases accounts');
-    const response: MultipleResponse = await request('getMultipleAccounts', [keys, {encoding: 'base64', commitment: 'confirmed', minContextSlot: discoveredSlot}]);
+    const response: MultipleResponse = await request('getMultipleAccounts', [keys, {encoding: 'base64', commitment: 'confirmed', minContextSlot: proposalDiscovery.contextSlot}]);
     const contextSlot = slot(response?.context?.slot);
-    if (contextSlot < discoveredSlot || !Array.isArray(response?.value) || response.value.length !== keys.length || response.value.some(v => v === undefined)) fail('RPC_INVALID', 'RPC did not return the complete requested context');
+    if (contextSlot < proposalDiscovery.contextSlot || !Array.isArray(response?.value) || response.value.length !== keys.length || response.value.some(v => v === undefined)) fail('RPC_INVALID', 'RPC did not return the complete requested context');
     const bond = decodeProgramAccount(response.value[0], decodeBond);
     if (!bond) fail('MISSING_REQUIRED_ACCOUNT', 'Instrument disappeared from its account graph');
     await validateBondIdentity(key, bond);
-    if (graphIdentity(bond) !== graphIdentity(discovered) || JSON.stringify(proposalIds(idsReader)) !== JSON.stringify(ids)) { lowerBound = contextSlot; continue; }
+    if (graphIdentity(bond) !== graphIdentity(discovered)) { lowerBound = contextSlot; continue; }
+    const verification = await discoverProposals(key, contextSlot, request, catalogIds);
+    if (verification.headerFingerprint !== proposalDiscovery.headerFingerprint || JSON.stringify(proposalIds(idsReader)) !== JSON.stringify(catalogIds)) { lowerBound = verification.contextSlot; continue; }
     const clockAccount = response.value[1];
     if (!clockAccount) fail('CLOCK_UNAVAILABLE', 'Chain clock is absent');
     const clockBytes = accountBytes(clockAccount, SYSVAR_OWNER);
@@ -119,9 +128,28 @@ export async function readChainView(key: string, options: {readRpc?: ReadRpc; pr
       return value;
     });
     const missingProposalIds: string[] = [], proposals: ChainView['proposals'] = [];
-    proposalAddresses.forEach((address, index) => { const value = decodeProgramAccount(response.value[offset++], decodeProposal); if (value) proposals.push({id: ids[index], address, value}); else missingProposalIds.push(ids[index]); });
+    proposalAddresses.forEach((address, index) => {
+      const value = decodeProgramAccount(response.value[offset++], decodeProposal);
+      if (value) {
+        if (value.bond !== key || value.proposalId.toString() !== ids[index]) fail('INVALID_PROGRAM_ACCOUNT', 'Proposal identity does not match its canonical address');
+        proposals.push({id: ids[index], address, value});
+      } else missingProposalIds.push(ids[index]);
+    });
+    if (missingProposalIds.some(id => discoveredIds.includes(id))) { lowerBound = verification.contextSlot; continue; }
     const issuerSettlement = decodeTokenBalance(response.value[offset], issuerAta, bond.settlementMint, bond.issuer, true, false);
-    return {address: key, bond, contextSlot, clock, accountCount: keys.length, bondMint, settlementMint, holders, vault, issuerSettlement, coupons, couponAddresses, proposals, missingProposalIds};
+    const financialTerms=decodeProgramAccount(response.value[offset+1],decodeFinancialTerms);
+    if(financialTerms){
+      const [,bump]=await getProgramDerivedAddress({programAddress:address(PROGRAM_ID),seeds:[Buffer.from('financial_terms'),getAddressEncoder().encode(address(key))]});
+      if(financialTerms.bond!==key||financialTerms.nominal!==bond.faceValue||financialTerms.bump!==bump||bond.couponTerms.some(c=>c.unitAmount!==financialTerms.unitAmount))fail('INVALID_FINANCIAL_TERMS','The immutable rate account does not match this instrument and every coupon');
+    }
+    // Equal pre/post discovery sets are observations at those two banks. They
+    // do not prove exhaustive discovery at the intervening financial bank.
+    return {address: key, bond, contextSlot, clock, accountCount: keys.length, bondMint, settlementMint, holders, vault, issuerSettlement, coupons, couponAddresses, proposals, missingProposalIds,financialTerms,financialTermsAddress,
+      proposalDiscovery: {source: 'program-accounts', commitment: 'confirmed', scope: 'discovery-slot', contextSlot: proposalDiscovery.contextSlot, verificationContextSlot: verification.contextSlot, financialContextSlot: contextSlot, discoveredIds, catalogIds, queriedIds: ids,
+        selection: 'lowest-proposal-id', discoveredCount: discoveredIds.length, selectedIds: ids, selectedDiscoveredCount: proposalDiscovery.proposals.length,
+        omittedDiscoveredCount: discoveredIds.length - proposalDiscovery.proposals.length, omittedCatalogIds: catalogIds.filter(id => !ids.includes(id)),
+        catalogIdsAbsentAtDiscovery: proposalDiscovery.catalogIdsAbsentAtDiscovery, unverifiedPdaCount: discoveredIds.length - proposalDiscovery.proposals.length,
+        maxProposals: MAX_PROPOSALS, completeAtFinancialContext: false}};
   }
   throw new AppError('CHAIN_VIEW_CHANGED', 'Instrument registry or proposal discovery changed during all three reads; retry without signing', 503, true);
 }

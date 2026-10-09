@@ -1,0 +1,1 @@
+export function verifySourceSnapshot(sourceRoot:string,cleanRoot:string,files:{path:string;sha256:string}[]):{stagedSourceChanged:string[];originalSourceChanged:string[];runtimeSourceChanged:string[];presentationDrift:string[];stagedSnapshotVerified:boolean;currentRuntimeSourceMatches:boolean;currentFrontendAcceptance:false};

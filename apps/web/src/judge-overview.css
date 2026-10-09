@@ -1,0 +1,109 @@
+/* A settlement book and an issue inspector share one working hierarchy. */
+.judge-overview { display: grid; gap: var(--space-6); min-width: 0; }
+.judge-overview svg { stroke-width: 1.75; }
+.judge-overview-heading { display: flex; justify-content: space-between; align-items: center; gap: var(--space-6); }
+.judge-overview-heading h1 { font-size: 32px; line-height: 1.3; letter-spacing: -.03em; }
+.judge-overview-heading > .button { flex-shrink: 0; }
+.overview-workbench { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: var(--space-6); align-items: start; }
+.overview-main-records { display: grid; gap: var(--space-6); min-width: 0; }
+.overview-payment-book, .overview-voting-book, .overview-terms, .overview-receipts { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-panel); min-width: 0; }
+.overview-section-heading { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--border); }
+.overview-section-heading h2 { display: flex; align-items: center; gap: var(--space-2); font-size: 18px; font-weight: 650; }
+.overview-section-heading > span { color: var(--muted); font-size: 14px; }
+.overview-payment-record { padding: var(--space-6); }
+.overview-payment-record + .overview-payment-record { border-top: 1px solid var(--border); }
+.overview-payment-identity { display: flex; align-items: center; gap: var(--space-3); }
+.overview-payment-identity > svg { color: var(--muted); flex-shrink: 0; }
+.overview-payment-identity > div { min-width: 0; }
+.overview-payment-identity h3 { font-size: 19px; font-weight: 650; }
+.overview-payment-identity p { color: var(--muted); font-size: 15px; margin-top: var(--space-1); }
+.overview-payment-identity > .badge { margin-left: auto; flex-shrink: 0; }
+.overview-payment-values { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); margin: var(--space-5) 0; }
+.overview-payment-values > div { min-width: 0; }
+.overview-payment-values dt { color: var(--muted); font-size: 15px; }
+.overview-payment-values dd { margin: var(--space-1) 0 0; font-size: 30px; font-weight: 650; line-height: 1.35; overflow-x: auto; scrollbar-width: thin; }
+.overview-payment-values .money { font-family: var(--font-ui); font-weight: 650; letter-spacing: -.025em; font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
+.overview-payment-footer { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); }
+.overview-payment-footer > div { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-3) var(--space-5); color: var(--muted); font-size: 15px; }
+.overview-payment-footer .display-date { font-size: 15px; }
+.overview-payment-footer .button { padding-right: 0; }
+.overview-record-empty { color: var(--muted); font-size: 16px; margin: var(--space-5) 0; }
+.overview-timezone { color: var(--muted); font-size: 14px; padding: var(--space-3) var(--space-6); border-top: 1px solid var(--border); background: var(--nav); border-radius: 0 0 var(--radius-panel) var(--radius-panel); }
+.overview-voting-book { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-4) var(--space-6); padding: var(--space-6); }
+.overview-vote-description { display: flex; align-items: start; gap: var(--space-3); }
+.overview-vote-description > svg { color: var(--muted); flex-shrink: 0; margin-top: var(--space-1); }
+.overview-vote-description h2 { font-size: 19px; }
+.overview-vote-description p { color: var(--muted); font-size: 16px; margin-top: var(--space-2); max-width: 60ch; overflow-wrap: anywhere; }
+.overview-vote-state { grid-column: 1; display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-4); padding-left: 34px; }
+.overview-vote-state > p { color: var(--muted); font-size: 14px; }
+.overview-vote-tally { display: flex; gap: var(--space-5); margin: 0; }
+.overview-vote-tally > div { display: flex; align-items: baseline; gap: var(--space-2); }
+.overview-vote-tally dt { color: var(--muted); font-size: 15px; }
+.overview-vote-tally dd { margin: 0; font-family: var(--font-ui); font-size: 22px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.overview-voting-book > .button { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+.overview-issue-inspector { display: grid; gap: var(--space-6); min-width: 0; }
+.overview-terms { padding: var(--space-6); }
+.overview-terms > header { display: flex; align-items: center; gap: var(--space-2); color: var(--muted); }
+.overview-terms > header h2 { font-size: 16px; font-weight: 500; }
+.overview-terms > h3 { font-size: 22px; font-weight: 650; letter-spacing: -.02em; line-height: 1.45; overflow-wrap: anywhere; margin: var(--space-4) 0 var(--space-3); }
+.overview-issue-facts { display: grid; gap: var(--space-4); margin: var(--space-5) 0; }
+.overview-issue-facts > div { display: grid; gap: var(--space-1); min-width: 0; }
+.overview-issue-facts dt { color: var(--muted); font-size: 15px; }
+.overview-issue-facts dd { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--space-2); margin: 0; font-size: 19px; font-weight: 600; }
+.overview-issue-facts dd > span:not(.money):not(.number) { color: var(--muted); font-size: 14px; font-weight: 400; }
+.overview-issue-facts .money, .overview-issue-facts .number { font-family: var(--font-ui); font-weight: 650; font-variant-numeric: tabular-nums; }
+.overview-issue-facts .display-date { font-size: 16px; font-weight: 500; }
+.overview-issue-addresses { border-top: 1px solid var(--border); margin-bottom: var(--space-4); }
+.overview-issue-addresses summary { min-height: 44px; display: flex; align-items: center; font-size: 15px; }
+.overview-issue-addresses dl { display: grid; gap: var(--space-3); margin: var(--space-2) 0 var(--space-4); }
+.overview-issue-addresses dt { font-size: 14px; color: var(--muted); }
+.overview-issue-addresses dd { margin: var(--space-1) 0 0; }
+.overview-terms > .button { width: 100%; justify-content: space-between; }
+.overview-receipts .overview-section-heading { padding: var(--space-4) var(--space-5); }
+.overview-receipts ul { list-style: none; padding: 0 var(--space-5); margin: 0; }
+.overview-receipts li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2); padding: var(--space-4) 0; }
+.overview-receipts li + li { border-top: 1px solid var(--border); }
+.overview-receipts li > strong { grid-column: 1 / -1; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
+.overview-receipts .display-date { font-size: 14px; }
+.overview-receipts li > .badge { align-self: start; }
+.overview-receipts > p { color: var(--muted); padding: var(--space-5); font-size: 16px; }
+.overview-receipts > .button { width: calc(100% - 40px); margin: 0 var(--space-5) var(--space-3); justify-content: space-between; }
+@media (min-width: 1800px) {
+  .overview-workbench { grid-template-columns: minmax(0, 1fr) 400px; gap: var(--space-8); }
+  .overview-payment-record { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: var(--space-5) var(--space-8); padding: var(--space-8); }
+  .overview-payment-identity { display: grid; grid-template-columns: 22px minmax(0, 1fr); align-content: start; gap: var(--space-2) var(--space-3); }
+  .overview-payment-identity > .badge { grid-column: 2; justify-self: start; margin-left: 0; }
+  .overview-payment-values { margin: 0; max-width: 860px; }
+  .overview-payment-values dd { font-size: 34px; }
+  .overview-payment-footer { grid-column: 1 / -1; }
+  .overview-record-empty { margin: 0; align-self: center; }
+}
+@media (max-width: 1200px) {
+  .overview-workbench { grid-template-columns: minmax(0, 1fr); }
+  .overview-issue-inspector { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .overview-issue-facts { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .judge-overview { gap: var(--space-5); }
+  .judge-overview-heading { align-items: center; flex-wrap: wrap; gap: var(--space-3); }
+  .judge-overview-heading h1 { font-size: 28px; }
+  .judge-overview-heading > .button { min-height: 44px; }
+  .overview-workbench, .overview-main-records, .overview-issue-inspector { gap: var(--space-4); }
+  .overview-section-heading { flex-wrap: wrap; padding: var(--space-4); gap: var(--space-1); }
+  .overview-payment-record { padding: var(--space-4); }
+  .overview-payment-identity { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: var(--space-2) var(--space-3); align-items: start; }
+  .overview-payment-identity h3 { font-size: 18px; }
+  .overview-payment-identity > .badge { grid-column: 2; justify-self: start; margin-left: 0; }
+  .overview-payment-values { gap: var(--space-3); margin: var(--space-4) 0; }
+  .overview-payment-values dt { font-size: 14px; }
+  .overview-payment-values dd { font-size: 22px; }
+  .overview-payment-footer { align-items: start; flex-direction: column; gap: var(--space-2); }
+  .overview-payment-footer .button { width: 100%; justify-content: space-between; padding-left: 0; }
+  .overview-timezone { padding-inline: var(--space-4); }
+  .overview-voting-book { grid-template-columns: minmax(0, 1fr); padding: var(--space-4); }
+  .overview-vote-state { padding-left: 0; }
+  .overview-voting-book > .button { grid-column: 1; grid-row: auto; justify-content: space-between; padding-inline: 0; }
+  .overview-issue-inspector { grid-template-columns: minmax(0, 1fr); }
+  .overview-terms { padding: var(--space-4); }
+  .overview-issue-facts { gap: var(--space-4); }
+}

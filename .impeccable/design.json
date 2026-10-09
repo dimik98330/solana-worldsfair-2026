@@ -1,0 +1,738 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T06:02:58.331Z",
+  "title": "Design System: BondTrace — Settlement Workspace",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Command Blue",
+        "canonical": "#376cf4",
+        "tonalRamp": [
+          "oklch(15% 0.2121 264.47)",
+          "oklch(25% 0.2121 264.47)",
+          "oklch(35% 0.2121 264.47)",
+          "oklch(45% 0.2121 264.47)",
+          "oklch(55% 0.2121 264.47)",
+          "oklch(70% 0.2121 264.47)",
+          "oklch(85% 0.2121 264.47)",
+          "oklch(95% 0.2121 264.47)"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Command Blue Deep",
+        "canonical": "#2c5edd",
+        "tonalRamp": [
+          "oklch(15% 0.2017 264.22)",
+          "oklch(25% 0.2017 264.22)",
+          "oklch(35% 0.2017 264.22)",
+          "oklch(45% 0.2017 264.22)",
+          "oklch(55% 0.2017 264.22)",
+          "oklch(70% 0.2017 264.22)",
+          "oklch(85% 0.2017 264.22)",
+          "oklch(95% 0.2017 264.22)"
+        ]
+      },
+      "primary-soft": {
+        "role": "primary",
+        "displayName": "Blue Recess",
+        "canonical": "#1d3053",
+        "tonalRamp": [
+          "oklch(15% 0.0679 261.70)",
+          "oklch(25% 0.0679 261.70)",
+          "oklch(35% 0.0679 261.70)",
+          "oklch(45% 0.0679 261.70)",
+          "oklch(55% 0.0679 261.70)",
+          "oklch(70% 0.0679 261.70)",
+          "oklch(85% 0.0679 261.70)",
+          "oklch(95% 0.0679 261.70)"
+        ]
+      },
+      "primary-foreground": {
+        "role": "primary",
+        "displayName": "Command White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(25% 0.0000 89.88)",
+          "oklch(35% 0.0000 89.88)",
+          "oklch(45% 0.0000 89.88)",
+          "oklch(55% 0.0000 89.88)",
+          "oklch(70% 0.0000 89.88)",
+          "oklch(85% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "link": {
+        "role": "primary",
+        "displayName": "Readable Blue",
+        "canonical": "#9fc0ff",
+        "tonalRamp": [
+          "oklch(15% 0.0967 262.98)",
+          "oklch(25% 0.0967 262.98)",
+          "oklch(35% 0.0967 262.98)",
+          "oklch(45% 0.0967 262.98)",
+          "oklch(55% 0.0967 262.98)",
+          "oklch(70% 0.0967 262.98)",
+          "oklch(85% 0.0967 262.98)",
+          "oklch(95% 0.0967 262.98)"
+        ]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Navy Canvas",
+        "canonical": "#0f1520",
+        "tonalRamp": [
+          "oklch(15% 0.0242 262.22)",
+          "oklch(25% 0.0242 262.22)",
+          "oklch(35% 0.0242 262.22)",
+          "oklch(45% 0.0242 262.22)",
+          "oklch(55% 0.0242 262.22)",
+          "oklch(70% 0.0242 262.22)",
+          "oklch(85% 0.0242 262.22)",
+          "oklch(95% 0.0242 262.22)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Working Record",
+        "canonical": "#161e2b",
+        "tonalRamp": [
+          "oklch(15% 0.0279 259.94)",
+          "oklch(25% 0.0279 259.94)",
+          "oklch(35% 0.0279 259.94)",
+          "oklch(45% 0.0279 259.94)",
+          "oklch(55% 0.0279 259.94)",
+          "oklch(70% 0.0279 259.94)",
+          "oklch(85% 0.0279 259.94)",
+          "oklch(95% 0.0279 259.94)"
+        ]
+      },
+      "panel-subtle": {
+        "role": "neutral",
+        "displayName": "Raised Record",
+        "canonical": "#1c2737",
+        "tonalRamp": [
+          "oklch(15% 0.0338 257.67)",
+          "oklch(25% 0.0338 257.67)",
+          "oklch(35% 0.0338 257.67)",
+          "oklch(45% 0.0338 257.67)",
+          "oklch(55% 0.0338 257.67)",
+          "oklch(70% 0.0338 257.67)",
+          "oklch(85% 0.0338 257.67)",
+          "oklch(95% 0.0338 257.67)"
+        ]
+      },
+      "input": {
+        "role": "neutral",
+        "displayName": "Inset Navy",
+        "canonical": "#0d1420",
+        "tonalRamp": [
+          "oklch(15% 0.0268 260.88)",
+          "oklch(25% 0.0268 260.88)",
+          "oklch(35% 0.0268 260.88)",
+          "oklch(45% 0.0268 260.88)",
+          "oklch(55% 0.0268 260.88)",
+          "oklch(70% 0.0268 260.88)",
+          "oklch(85% 0.0268 260.88)",
+          "oklch(95% 0.0268 260.88)"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Clear Financial Text",
+        "canonical": "#eef2f8",
+        "tonalRamp": [
+          "oklch(15% 0.0091 258.34)",
+          "oklch(25% 0.0091 258.34)",
+          "oklch(35% 0.0091 258.34)",
+          "oklch(45% 0.0091 258.34)",
+          "oklch(55% 0.0091 258.34)",
+          "oklch(70% 0.0091 258.34)",
+          "oklch(85% 0.0091 258.34)",
+          "oklch(95% 0.0091 258.34)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Quiet Slate",
+        "canonical": "#a6b3c6",
+        "tonalRamp": [
+          "oklch(15% 0.0309 257.78)",
+          "oklch(25% 0.0309 257.78)",
+          "oklch(35% 0.0309 257.78)",
+          "oklch(45% 0.0309 257.78)",
+          "oklch(55% 0.0309 257.78)",
+          "oklch(70% 0.0309 257.78)",
+          "oklch(85% 0.0309 257.78)",
+          "oklch(95% 0.0309 257.78)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Record Seam",
+        "canonical": "#2c3a4f",
+        "tonalRamp": [
+          "oklch(15% 0.0414 258.31)",
+          "oklch(25% 0.0414 258.31)",
+          "oklch(35% 0.0414 258.31)",
+          "oklch(45% 0.0414 258.31)",
+          "oklch(55% 0.0414 258.31)",
+          "oklch(70% 0.0414 258.31)",
+          "oklch(85% 0.0414 258.31)",
+          "oklch(95% 0.0414 258.31)"
+        ]
+      },
+      "border-control": {
+        "role": "neutral",
+        "displayName": "Control Edge",
+        "canonical": "#61748e",
+        "tonalRamp": [
+          "oklch(15% 0.0466 256.31)",
+          "oklch(25% 0.0466 256.31)",
+          "oklch(35% 0.0466 256.31)",
+          "oklch(45% 0.0466 256.31)",
+          "oklch(55% 0.0466 256.31)",
+          "oklch(70% 0.0466 256.31)",
+          "oklch(85% 0.0466 256.31)",
+          "oklch(95% 0.0466 256.31)"
+        ]
+      },
+      "nav": {
+        "role": "neutral",
+        "displayName": "Deep Navigation",
+        "canonical": "#0a101a",
+        "tonalRamp": [
+          "oklch(15% 0.0230 260.39)",
+          "oklch(25% 0.0230 260.39)",
+          "oklch(35% 0.0230 260.39)",
+          "oklch(45% 0.0230 260.39)",
+          "oklch(55% 0.0230 260.39)",
+          "oklch(70% 0.0230 260.39)",
+          "oklch(85% 0.0230 260.39)",
+          "oklch(95% 0.0230 260.39)"
+        ]
+      },
+      "nav-surface": {
+        "role": "neutral",
+        "displayName": "Navigation Hover",
+        "canonical": "#172231",
+        "tonalRamp": [
+          "oklch(15% 0.0327 256.31)",
+          "oklch(25% 0.0327 256.31)",
+          "oklch(35% 0.0327 256.31)",
+          "oklch(45% 0.0327 256.31)",
+          "oklch(55% 0.0327 256.31)",
+          "oklch(70% 0.0327 256.31)",
+          "oklch(85% 0.0327 256.31)",
+          "oklch(95% 0.0327 256.31)"
+        ]
+      },
+      "nav-text": {
+        "role": "neutral",
+        "displayName": "Navigation Paper",
+        "canonical": "#f0f4fa",
+        "tonalRamp": [
+          "oklch(15% 0.0091 258.34)",
+          "oklch(25% 0.0091 258.34)",
+          "oklch(35% 0.0091 258.34)",
+          "oklch(45% 0.0091 258.34)",
+          "oklch(55% 0.0091 258.34)",
+          "oklch(70% 0.0091 258.34)",
+          "oklch(85% 0.0091 258.34)",
+          "oklch(95% 0.0091 258.34)"
+        ]
+      },
+      "nav-muted": {
+        "role": "neutral",
+        "displayName": "Navigation Silver",
+        "canonical": "#b2bdcb",
+        "tonalRamp": [
+          "oklch(15% 0.0233 254.42)",
+          "oklch(25% 0.0233 254.42)",
+          "oklch(35% 0.0233 254.42)",
+          "oklch(45% 0.0233 254.42)",
+          "oklch(55% 0.0233 254.42)",
+          "oklch(70% 0.0233 254.42)",
+          "oklch(85% 0.0233 254.42)",
+          "oklch(95% 0.0233 254.42)"
+        ]
+      },
+      "nav-border": {
+        "role": "neutral",
+        "displayName": "Navigation Seam",
+        "canonical": "#233044",
+        "tonalRamp": [
+          "oklch(15% 0.0404 258.81)",
+          "oklch(25% 0.0404 258.81)",
+          "oklch(35% 0.0404 258.81)",
+          "oklch(45% 0.0404 258.81)",
+          "oklch(55% 0.0404 258.81)",
+          "oklch(70% 0.0404 258.81)",
+          "oklch(85% 0.0404 258.81)",
+          "oklch(95% 0.0404 258.81)"
+        ]
+      },
+      "nav-active": {
+        "role": "neutral",
+        "displayName": "Selected Navigation",
+        "canonical": "#182b49",
+        "tonalRamp": [
+          "oklch(15% 0.0606 259.19)",
+          "oklch(25% 0.0606 259.19)",
+          "oklch(35% 0.0606 259.19)",
+          "oklch(45% 0.0606 259.19)",
+          "oklch(55% 0.0606 259.19)",
+          "oklch(70% 0.0606 259.19)",
+          "oklch(85% 0.0606 259.19)",
+          "oklch(95% 0.0606 259.19)"
+        ]
+      },
+      "muted-on-primary": {
+        "role": "primary",
+        "displayName": "Command Secondary",
+        "canonical": "#e0e8ff",
+        "tonalRamp": [
+          "oklch(15% 0.0324 270.45)",
+          "oklch(25% 0.0324 270.45)",
+          "oklch(35% 0.0324 270.45)",
+          "oklch(45% 0.0324 270.45)",
+          "oklch(55% 0.0324 270.45)",
+          "oklch(70% 0.0324 270.45)",
+          "oklch(85% 0.0324 270.45)",
+          "oklch(95% 0.0324 270.45)"
+        ]
+      },
+      "line-on-primary": {
+        "role": "primary",
+        "displayName": "Command Seam",
+        "canonical": "#5275d9",
+        "tonalRamp": [
+          "oklch(15% 0.1577 266.99)",
+          "oklch(25% 0.1577 266.99)",
+          "oklch(35% 0.1577 266.99)",
+          "oklch(45% 0.1577 266.99)",
+          "oklch(55% 0.1577 266.99)",
+          "oklch(70% 0.1577 266.99)",
+          "oklch(85% 0.1577 266.99)",
+          "oklch(95% 0.1577 266.99)"
+        ]
+      },
+      "success": {
+        "role": "semantic",
+        "displayName": "Paid Mint",
+        "canonical": "#9cd2be",
+        "tonalRamp": [
+          "oklch(15% 0.0627 169.91)",
+          "oklch(25% 0.0627 169.91)",
+          "oklch(35% 0.0627 169.91)",
+          "oklch(45% 0.0627 169.91)",
+          "oklch(55% 0.0627 169.91)",
+          "oklch(70% 0.0627 169.91)",
+          "oklch(85% 0.0627 169.91)",
+          "oklch(95% 0.0627 169.91)"
+        ]
+      },
+      "success-soft": {
+        "role": "semantic",
+        "displayName": "Paid Recess",
+        "canonical": "#253c37",
+        "tonalRamp": [
+          "oklch(15% 0.0303 179.18)",
+          "oklch(25% 0.0303 179.18)",
+          "oklch(35% 0.0303 179.18)",
+          "oklch(45% 0.0303 179.18)",
+          "oklch(55% 0.0303 179.18)",
+          "oklch(70% 0.0303 179.18)",
+          "oklch(85% 0.0303 179.18)",
+          "oklch(95% 0.0303 179.18)"
+        ]
+      },
+      "warning": {
+        "role": "semantic",
+        "displayName": "Attention Sand",
+        "canonical": "#e1c39d",
+        "tonalRamp": [
+          "oklch(15% 0.0610 73.38)",
+          "oklch(25% 0.0610 73.38)",
+          "oklch(35% 0.0610 73.38)",
+          "oklch(45% 0.0610 73.38)",
+          "oklch(55% 0.0610 73.38)",
+          "oklch(70% 0.0610 73.38)",
+          "oklch(85% 0.0610 73.38)",
+          "oklch(95% 0.0610 73.38)"
+        ]
+      },
+      "warning-soft": {
+        "role": "semantic",
+        "displayName": "Attention Recess",
+        "canonical": "#3b332c",
+        "tonalRamp": [
+          "oklch(15% 0.0166 63.40)",
+          "oklch(25% 0.0166 63.40)",
+          "oklch(35% 0.0166 63.40)",
+          "oklch(45% 0.0166 63.40)",
+          "oklch(55% 0.0166 63.40)",
+          "oklch(70% 0.0166 63.40)",
+          "oklch(85% 0.0166 63.40)",
+          "oklch(95% 0.0166 63.40)"
+        ]
+      },
+      "error": {
+        "role": "semantic",
+        "displayName": "Error Rose",
+        "canonical": "#efadb5",
+        "tonalRamp": [
+          "oklch(15% 0.0780 10.90)",
+          "oklch(25% 0.0780 10.90)",
+          "oklch(35% 0.0780 10.90)",
+          "oklch(45% 0.0780 10.90)",
+          "oklch(55% 0.0780 10.90)",
+          "oklch(70% 0.0780 10.90)",
+          "oklch(85% 0.0780 10.90)",
+          "oklch(95% 0.0780 10.90)"
+        ]
+      },
+      "error-soft": {
+        "role": "semantic",
+        "displayName": "Error Recess",
+        "canonical": "#3c2d37",
+        "tonalRamp": [
+          "oklch(15% 0.0275 338.92)",
+          "oklch(25% 0.0275 338.92)",
+          "oklch(35% 0.0275 338.92)",
+          "oklch(45% 0.0275 338.92)",
+          "oklch(55% 0.0275 338.92)",
+          "oklch(70% 0.0275 338.92)",
+          "oklch(85% 0.0275 338.92)",
+          "oklch(95% 0.0275 338.92)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Page heading",
+        "purpose": "Shared page heading, Manrope 34px/650; 28px on phones."
+      },
+      "workspace-heading": {
+        "displayName": "Workspace heading",
+        "purpose": "Payments heading, Manrope 32px/700; Overview uses the same size with inherited 650."
+      },
+      "title": {
+        "displayName": "Section heading",
+        "purpose": "Shared section heading, Manrope 22px/700."
+      },
+      "record-title": {
+        "displayName": "Record heading",
+        "purpose": "Selected payment, issuer and voting title, Manrope 22px/650."
+      },
+      "body": {
+        "displayName": "Working text",
+        "purpose": "Comfortable Manrope 17px working body."
+      },
+      "button": {
+        "displayName": "Command label",
+        "purpose": "Manrope 15px/650 action name."
+      },
+      "label": {
+        "displayName": "Working label",
+        "purpose": "Manrope 16px/600 input and group label."
+      },
+      "metadata": {
+        "displayName": "Supporting detail",
+        "purpose": "Manrope 14px supporting context."
+      },
+      "table-label": {
+        "displayName": "Financial column",
+        "purpose": "Manrope 15px/500 column heading."
+      },
+      "holder-name": {
+        "displayName": "Holder identity",
+        "purpose": "Manrope 18px/600 payment name; registry 650; phone Payments 16px."
+      },
+      "data": {
+        "displayName": "Exact financial data",
+        "purpose": "Manrope 18px/650 tabular lining figures in payment and registry cells."
+      },
+      "financial-summary": {
+        "displayName": "Financial reconciliation",
+        "purpose": "Manrope 30px/650 settlement totals, 22px on phones; Overview 34px from 1800px."
+      },
+      "portfolio-balance": {
+        "displayName": "Portfolio balance",
+        "purpose": "Manrope 28px/650, 24px on phones and 22px at 360px."
+      },
+      "voting-result": {
+        "displayName": "Recorded voting result",
+        "purpose": "Manrope 26px/650 recorded result; 24px on phones."
+      },
+      "clock": {
+        "displayName": "Exact clock line",
+        "purpose": "Plex Mono 16px/400 trigger clock; scoped payment/voting 15px."
+      },
+      "code": {
+        "displayName": "Technical reference",
+        "purpose": "Plex Mono 14px addresses and technical references."
+      }
+    },
+    "shadows": [
+      {
+        "name": "overlay",
+        "value": "0 24px 80px rgb(0 5 16 / 48%)",
+        "purpose": "Temporary dialogs and calendar; not ordinary records."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Shared control feedback."
+      },
+      {
+        "name": "control-transition",
+        "value": "140ms",
+        "purpose": "Color/background/border; reduced-motion media guard."
+      },
+      {
+        "name": "issuer-transition",
+        "value": "150ms",
+        "purpose": "Issuer border/toggle; reduced-motion media guard."
+      },
+      {
+        "name": "pending-spinner",
+        "value": "spin 1s linear infinite",
+        "purpose": "Only active work under prefers-reduced-motion: no-preference."
+      }
+    ],
+    "focus": [
+      {
+        "name": "field-edge",
+        "value": "border-color: var(--link); outline: 1px solid var(--link); outline-offset: -1px; box-shadow: none",
+        "purpose": "One merged issuer/payment/date field boundary; registry search focuses its field container."
+      },
+      {
+        "name": "keyboard-control",
+        "value": "outline: 3px solid var(--primary); outline-offset: 3px",
+        "purpose": "Ordinary buttons and links."
+      },
+      {
+        "name": "navigation-focus",
+        "value": "outline-color: #93b9ff",
+        "purpose": "Keyboard contrast inside the navigation rail."
+      },
+      {
+        "name": "calendar-button",
+        "value": "outline: 2px solid var(--primary); outline-offset: 3px",
+        "purpose": "Calendar buttons; calendar inputs keep the single field edge."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow-shell",
+        "value": "360px"
+      },
+      {
+        "name": "compact-forms",
+        "value": "420px"
+      },
+      {
+        "name": "compact-calendar",
+        "value": "480px"
+      },
+      {
+        "name": "phone-records",
+        "value": "640px"
+      },
+      {
+        "name": "stack-issuer-dates",
+        "value": "760px"
+      },
+      {
+        "name": "mobile-shell",
+        "value": "800px"
+      },
+      {
+        "name": "stack-voting",
+        "value": "900px"
+      },
+      {
+        "name": "stack-payment-selection",
+        "value": "1050px"
+      },
+      {
+        "name": "reduced-rail",
+        "value": "1080px"
+      },
+      {
+        "name": "compact-record-tracks",
+        "value": "1180px"
+      },
+      {
+        "name": "stack-overview-inspector",
+        "value": "1200px"
+      },
+      {
+        "name": "stack-issuer-workspace",
+        "value": "1280px"
+      },
+      {
+        "name": "wide-shell-registry",
+        "value": "1600px"
+      },
+      {
+        "name": "stack-payments-inspector",
+        "value": "1650px"
+      },
+      {
+        "name": "wide-financial-tracks",
+        "value": "1800px"
+      },
+      {
+        "name": "account-stack",
+        "value": "760px",
+        "purpose": "Account holder and wallet areas become one scrolling body; header/footer stay outside the scroll region."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary command",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Available operation command; labels carry actual task names.",
+      "html": "<button class=\"ds-primary\">Review action<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:9px 16px;border:1px solid var(--border-control,#61748e);border-radius:8px;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:15px;font-weight:650;line-height:1.45;cursor:pointer}.ds-primary:focus-visible{outline:3px solid var(--primary,#376cf4);outline-offset:3px}.ds-primary:active:not(:disabled){filter:brightness(.96)}.ds-primary:disabled{opacity:.48;cursor:not-allowed}@media(prefers-reduced-motion:no-preference){.ds-primary{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}.ds-primary{background:var(--primary,#376cf4);border-color:var(--primary,#376cf4);color:var(--primary-foreground,#ffffff)}.ds-primary:hover:not(:disabled){background:var(--primary-hover,#2c5edd);border-color:var(--primary-hover,#2c5edd)}"
+    },
+    {
+      "name": "Secondary action",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Supporting working action without command-blue fill.",
+      "html": "<button class=\"ds-secondary\">View receipts<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:9px 16px;border:1px solid var(--border-control,#61748e);border-radius:8px;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:15px;font-weight:650;line-height:1.45;cursor:pointer}.ds-secondary:focus-visible{outline:3px solid var(--primary,#376cf4);outline-offset:3px}.ds-secondary:active:not(:disabled){filter:brightness(.96)}.ds-secondary:disabled{opacity:.48;cursor:not-allowed}@media(prefers-reduced-motion:no-preference){.ds-secondary{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}.ds-secondary{background:var(--panel,#161e2b);color:var(--foreground,#eef2f8)}.ds-secondary:hover:not(:disabled){background:var(--panel-subtle,#1c2737);border-color:var(--muted,#a6b3c6)}"
+    },
+    {
+      "name": "Ghost action",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Local detail or supporting link inside a working record.",
+      "html": "<button class=\"ds-ghost\">Details<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
+      "css": ".ds-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:9px 16px;border:1px solid var(--border-control,#61748e);border-radius:8px;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:15px;font-weight:650;line-height:1.45;cursor:pointer}.ds-ghost:focus-visible{outline:3px solid var(--primary,#376cf4);outline-offset:3px}.ds-ghost:active:not(:disabled){filter:brightness(.96)}.ds-ghost:disabled{opacity:.48;cursor:not-allowed}@media(prefers-reduced-motion:no-preference){.ds-ghost{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}.ds-ghost{background:transparent;border-color:transparent;color:var(--muted,#a6b3c6)}.ds-ghost:hover:not(:disabled){background:var(--primary-soft,#1d3053);color:var(--link,#9fc0ff)}"
+    },
+    {
+      "name": "Inset numeric field",
+      "kind": "input",
+      "refersTo": "issuer-input",
+      "description": "Exact decimal-safe input with one merged focus edge; validation begins on blur/progression.",
+      "html": "<label class=\"ds-field\">Face value<input type=\"text\" inputmode=\"decimal\" value=\"1000\" autocomplete=\"off\"></label>",
+      "css": ".ds-field{display:grid;gap:8px;color:var(--foreground,#eef2f8);font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:16px;font-weight:600;line-height:1.5}.ds-field input{width:100%;min-height:56px;padding:12px 16px;border:1px solid var(--border-control,#61748e);border-radius:8px;background:var(--input,#0d1420);color:var(--foreground,#eef2f8);font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:18px;font-weight:600;line-height:1.5;letter-spacing:-.015em;font-variant-numeric:tabular-nums lining-nums;font-feature-settings:'tnum'}.ds-field input:hover:not(:disabled):not([aria-invalid=true]){border-color:var(--muted,#a6b3c6)}.ds-field input:focus-visible{border-color:var(--link,#9fc0ff);outline:1px solid var(--link,#9fc0ff);outline-offset:-1px;box-shadow:none}.ds-field input[aria-invalid=true]{border-color:var(--error,#efadb5)}.ds-field input:disabled{background:var(--background,#0f1520);color:var(--muted,#a6b3c6)}@media(prefers-reduced-motion:no-preference){.ds-field input{transition:border-color 150ms cubic-bezier(.16,1,.3,1)}}"
+    },
+    {
+      "name": "Selected navigation",
+      "kind": "nav",
+      "refersTo": "navigation-active",
+      "description": "One active work view, with clear labeled icon and quiet selected seam.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Work views\"><button aria-current=\"page\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 8V5a2 2 0 0 0-2-2H5a3 3 0 0 0 0 6h15v10a2 2 0 0 1-2 2H5a3 3 0 0 1-3-3V6\"/><path d=\"M20 12h-4a2 2 0 0 0 0 4h4\"/></svg>Payments<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button></nav>",
+      "css": ".ds-nav{padding:16px;background:var(--nav,#0a101a)}.ds-nav button{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;padding:12px;border:1px solid var(--nav-border,#233044);border-radius:8px;background:var(--nav-active,#182b49);color:#c3d7ff;font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:16px;font-weight:650;text-align:left;cursor:pointer}.ds-nav button svg:first-child{color:var(--link,#9fc0ff)}.ds-nav button svg:last-child{margin-left:auto}.ds-nav button:hover{background:var(--nav-active,#182b49);color:#c3d7ff}.ds-nav button:focus-visible{outline:3px solid #93b9ff;outline-offset:3px}@media(prefers-reduced-motion:no-preference){.ds-nav button{transition:color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1),border-color 140ms cubic-bezier(.16,1,.3,1)}}"
+    },
+    {
+      "name": "Paid status",
+      "kind": "chip",
+      "refersTo": "badge-success",
+      "description": "Textual state; specimen appearance is not transaction evidence.",
+      "html": "<span class=\"ds-paid\">Paid</span>",
+      "css": ".ds-paid{display:inline-flex;align-items:center;min-height:26px;padding:4px 8px;border-radius:5px;background:var(--success-soft,#253c37);color:var(--success,#9cd2be);font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:13px;font-weight:600;line-height:1.5}"
+    },
+    {
+      "name": "Working panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Tonal record/form container; child sections supply spacing, no ambient card shadow.",
+      "html": "<section class=\"ds-panel\"><h2>Issue terms</h2><p>Exact terms remain available in review.</p></section>",
+      "css": ".ds-panel{padding:24px;border:1px solid var(--border,#2c3a4f);border-radius:14px;background:var(--panel,#161e2b);color:var(--foreground,#eef2f8);font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);line-height:1.55}.ds-panel h2{margin:0;font-size:18px;font-weight:650}.ds-panel p{margin:12px 0 0;color:var(--muted,#a6b3c6);font-size:16px}"
+    },
+    {
+      "name": "Protected date trigger",
+      "kind": "custom",
+      "refersTo": "date-trigger",
+      "description": "Inset date/time trigger; runtime protected calendar is at most 440px with viewport margins, persistent Save/Cancel and unchanged canonical instants until Save.",
+      "html": "<button class=\"ds-date\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M16 3v4M8 3v4M3 11h18\"/></svg><span>Choose date<small>Time and timezone</small></span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
+      "css": ".ds-date{display:flex;align-items:center;gap:12px;width:100%;min-height:76px;padding:12px 16px;border:1px solid var(--border-control,#61748e);border-radius:8px;background:var(--input,#0d1420);color:var(--foreground,#eef2f8);font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:17px;font-weight:600;text-align:left;font-variant-numeric:tabular-nums;cursor:pointer}.ds-date>span{display:grid;gap:4px;min-width:0}.ds-date small{color:var(--muted,#a6b3c6);font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:16px;font-weight:400}.ds-date>svg{color:var(--muted,#a6b3c6)}.ds-date>svg:first-child{color:var(--link,#9fc0ff)}.ds-date>svg:last-child{margin-left:auto}.ds-date:hover:not(:disabled){border-color:var(--muted,#a6b3c6)}.ds-date:focus-visible{border-color:var(--link,#9fc0ff);outline:1px solid var(--link,#9fc0ff);outline-offset:-1px;box-shadow:none}.ds-date:disabled{color:var(--muted,#a6b3c6);background:var(--background,#0f1520);cursor:not-allowed}@media(prefers-reduced-motion:no-preference){.ds-date{transition:background-color 150ms cubic-bezier(.16,1,.3,1),border-color 150ms cubic-bezier(.16,1,.3,1),color 150ms cubic-bezier(.16,1,.3,1)}}"
+    },
+    {
+      "name": "Payment search",
+      "kind": "input",
+      "refersTo": "search-field",
+      "description": "Real holder name/address filter; no-match remains separate from no recorded allocations.",
+      "html": "<label class=\"ds-search\"><span class=\"ds-search-label\">Search holders</span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><input type=\"search\" placeholder=\"Search…\" autocomplete=\"off\"></label>",
+      "css": ".ds-search{position:relative;display:block;color:var(--muted,#a6b3c6);font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif)}.ds-search-label{display:block;font-size:15px;margin-bottom:8px}.ds-search>svg{position:absolute;left:12px;bottom:13px;pointer-events:none}.ds-search input{width:100%;min-height:44px;padding:8px 12px 8px 40px;border:1px solid var(--border-control,#61748e);border-radius:8px;background:var(--input,#0d1420);color:var(--foreground,#eef2f8);font-family:var(--font-ui,'Manrope Variable','Manrope',sans-serif);font-size:15px}.ds-search input::placeholder{color:var(--muted,#a6b3c6);opacity:1}.ds-search input:focus-visible{border-color:var(--link,#9fc0ff);outline:1px solid var(--link,#9fc0ff);outline-offset:-1px;box-shadow:none}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Settlement Workspace",
+    "overview": "BondTrace is an operating issuer and holder application. Deep navy surfaces contain payment records, clear tabular figures and available actions. Inset fields distinguish editable data from the ledger; compact inspectors keep the selected financial object in view. The original open outlined BondTrace lettering is the visual signature.\n\nThe implemented world preserves the owner's dark navy direction, English/Russian switch, full desktop width, single field focus edge and existing exact financial/signing semantics. The product presentation is separate. Product commitments live in [PRODUCT.md](PRODUCT.md); the current replacement brief is [docs/frontend/ECC-REDESIGN.md](docs/frontend/ECC-REDESIGN.md). Earlier light-canvas and Settlement Ledger captures are historical.",
+    "keyCharacteristics": [
+      "Deep navy canvas, darker navigation and contained tonal records.",
+      "Saturated blue commands, light blue links and inset editable fields.",
+      "Manrope interface text and financial figures; Plex Mono addresses, code and dedicated clock lines.",
+      "Full-width desktop work with bounded financial tracks and responsive inspectors.",
+      "Original path-drawn BondTrace lettering and one consistent Lucide icon family."
+    ],
+    "rules": [
+      {
+        "name": "The Honest State Rule",
+        "body": "Color represents an actual operation or validation state; it never implies production, payment or eligibility without evidence.",
+        "section": "colors"
+      },
+      {
+        "name": "The Exact Figures Rule",
+        "body": "Format the display without rounding away significant digits or changing raw arithmetic; do not substitute floating-point approximations or abbreviations for settlement values.",
+        "section": "typography"
+      },
+      {
+        "name": "The Readable Work Rule",
+        "body": "Primary body and labels use the documented working hierarchy; compact metadata must not become the default size for financial tasks.",
+        "section": "typography"
+      },
+      {
+        "name": "The Bounded Tracks Rule",
+        "body": "Use the available desktop width while keeping related money, dates and identity tracks close enough to scan together.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Records Rule",
+        "body": "Working records use tones and seams; overlay shadow identifies a temporary editing or inspection surface.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Single Edge Rule",
+        "body": "Text-field focus occupies the existing control edge; do not add a detached second ring.",
+        "section": "components"
+      },
+      {
+        "name": "The Account Separation Rule",
+        "body": "Account selection uses a viewport-bounded 1000px dialog, intrinsic72px-minimum holder rows, independent desktop panes and persistent header/footer; inspection never grants signing rights.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do use the available desktop width with bounded internal financial tracks.",
+      "Do preserve exact raw values while presenting Manrope tabular financial figures.",
+      "Do keep labels, date/time lines, recovery, network and signer scope readable and truthful.",
+      "Do reuse the original path-drawn BondTrace lettering and consistent Lucide control icons.",
+      "Do preserve keyboard focus, draft recovery, display-timezone semantics and reduced-motion behavior.",
+      "Do distinguish an archive with capture time and disabled signing from current chain reads."
+    ],
+    "donts": [
+      "Don't restore the rejected white workspace, pale-blue command fill or fixed desktop content caps.",
+      "Don't restore mono financial figures from an earlier design document over the implemented Manrope system.",
+      "Don't add a detached second focus ring to text fields.",
+      "Don't use decorative blinking or repeated checkmarks as page decoration.",
+      "Don't invent balances, customers, institutional endorsements or production claims.",
+      "Don't add a judge tour, promotional hero or explanatory presentation to work screens.",
+      "Don't relabel saved snapshots or generated concepts as current chain evidence.",
+      "Don't replace the existing React/CSS component foundation wholesale without reviewed scope."
+    ]
+  }
+}

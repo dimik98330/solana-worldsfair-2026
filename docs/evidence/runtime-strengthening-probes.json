@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-08T19:07:21.198Z",
+  "scope": "Actual test-localnet runtime probes and injected quota; no financial execution by watchdog",
+  "quota": {
+    "observedAt": "2026-10-08T18:27:41.4080932Z",
+    "quotaBytes": 9437184,
+    "priorRestartCount": 3,
+    "status": "attention-required",
+    "reason": "storage-budget-owned-writer-stopped",
+    "rpcListeningAfter": false,
+    "financialExecution": false
+  },
+  "http": [
+    {
+      "passed": true,
+      "case": "native readiness"
+    },
+    {
+      "passed": true,
+      "case": "passive financial closure"
+    },
+    {
+      "passed": true,
+      "case": "foreign origin denied"
+    },
+    {
+      "passed": true,
+      "case": "unsafe executor request denied"
+    }
+  ],
+  "limits": "The quota fixture is intentionally injected. Source hashes and actual local observation logs are retained privately; this is not independent production attestation."
+}

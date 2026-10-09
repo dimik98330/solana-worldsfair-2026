@@ -1,0 +1,1411 @@
+{
+  "capturedAt": "2026-10-09T05:59:43.432Z",
+  "repair": "AD06 row intrinsic heights, second bounded source repair",
+  "checks": [
+    {
+      "name": "en320 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 320,
+        "viewport": 320,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 72,
+            "inside": true
+          }
+        ],
+        "footer": 688,
+        "height": 700
+      }
+    },
+    {
+      "name": "en320 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 320,
+        "viewport": 320,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 72,
+            "inside": true
+          }
+        ],
+        "footer": 688,
+        "height": 700
+      }
+    },
+    {
+      "name": "en390 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 390,
+        "viewport": 390,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 832,
+        "height": 844
+      }
+    },
+    {
+      "name": "en390 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 390,
+        "viewport": 390,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 832,
+        "height": 844
+      }
+    },
+    {
+      "name": "en768 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 768,
+        "viewport": 768,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 97.1875,
+            "inside": true
+          }
+        ],
+        "footer": 920,
+        "height": 1000
+      }
+    },
+    {
+      "name": "en768 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 768,
+        "viewport": 768,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 97.1875,
+            "inside": true
+          }
+        ],
+        "footer": 920,
+        "height": 1000
+      }
+    },
+    {
+      "name": "en1440 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 1440,
+        "viewport": 1440,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 901.671875,
+        "height": 1000
+      }
+    },
+    {
+      "name": "en1440 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 1440,
+        "viewport": 1440,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 901.671875,
+        "height": 1000
+      }
+    },
+    {
+      "name": "en1908 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 1908,
+        "viewport": 1908,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 866.671875,
+        "height": 930
+      }
+    },
+    {
+      "name": "en1908 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 1908,
+        "viewport": 1908,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 866.671875,
+        "height": 930
+      }
+    },
+    {
+      "name": "en2560 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 2560,
+        "viewport": 2560,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 1121.671875,
+        "height": 1440
+      }
+    },
+    {
+      "name": "en2560 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 2560,
+        "viewport": 2560,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mSelected",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 1121.671875,
+        "height": 1440
+      }
+    },
+    {
+      "name": "ru320 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 320,
+        "viewport": 320,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 72,
+            "inside": true
+          }
+        ],
+        "footer": 688,
+        "height": 700
+      }
+    },
+    {
+      "name": "ru320 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 320,
+        "viewport": 320,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 72,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 72,
+            "inside": true
+          }
+        ],
+        "footer": 688,
+        "height": 700
+      }
+    },
+    {
+      "name": "ru390 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 390,
+        "viewport": 390,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 832,
+        "height": 844
+      }
+    },
+    {
+      "name": "ru390 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 390,
+        "viewport": 390,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 832,
+        "height": 844
+      }
+    },
+    {
+      "name": "ru768 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 768,
+        "viewport": 768,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 97.1875,
+            "inside": true
+          }
+        ],
+        "footer": 920,
+        "height": 1000
+      }
+    },
+    {
+      "name": "ru768 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 768,
+        "viewport": 768,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 97.1875,
+            "inside": true
+          }
+        ],
+        "footer": 920,
+        "height": 1000
+      }
+    },
+    {
+      "name": "ru1440 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 1440,
+        "viewport": 1440,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 901.671875,
+        "height": 1000
+      }
+    },
+    {
+      "name": "ru1440 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 1440,
+        "viewport": 1440,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 901.671875,
+        "height": 1000
+      }
+    },
+    {
+      "name": "ru1908 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 1908,
+        "viewport": 1908,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 866.671875,
+        "height": 930
+      }
+    },
+    {
+      "name": "ru1908 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 1908,
+        "viewport": 1908,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 866.671875,
+        "height": 930
+      }
+    },
+    {
+      "name": "ru2560 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 2560,
+        "viewport": 2560,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 1121.671875,
+        "height": 1440
+      }
+    },
+    {
+      "name": "ru2560 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 2560,
+        "viewport": 2560,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2Открыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kОткрыть",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mВыбран",
+            "height": 73.390625,
+            "inside": true
+          }
+        ],
+        "footer": 1121.671875,
+        "height": 1440
+      }
+    },
+    {
+      "name": "fixture16 390 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 390,
+        "viewport": 390,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 7 with a deliberately long account label11111…11117View",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 8 with a deliberately long account label11111…11118View",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 9 with a deliberately long account label11111…11119View",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 10 with a deliberately long account label11111…1111AView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 11 with a deliberately long account label11111…1111BView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 12 with a deliberately long account label11111…1111CView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 13 with a deliberately long account label11111…1111DView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 14 with a deliberately long account label11111…1111EView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 15 with a deliberately long account label11111…1111FView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 16 with a deliberately long account label11111…1111GSelected",
+            "height": 120.984375,
+            "inside": true
+          }
+        ],
+        "footer": 688,
+        "height": 700
+      }
+    },
+    {
+      "name": "fixture16 390 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 390,
+        "viewport": 390,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 7 with a deliberately long account label11111…11117View",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 8 with a deliberately long account label11111…11118View",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 9 with a deliberately long account label11111…11119View",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 10 with a deliberately long account label11111…1111AView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 11 with a deliberately long account label11111…1111BView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 12 with a deliberately long account label11111…1111CView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 13 with a deliberately long account label11111…1111DView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 14 with a deliberately long account label11111…1111EView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 15 with a deliberately long account label11111…1111FView",
+            "height": 120.984375,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 16 with a deliberately long account label11111…1111GSelected",
+            "height": 120.984375,
+            "inside": true
+          }
+        ],
+        "footer": 688,
+        "height": 700
+      }
+    },
+    {
+      "name": "fixture16 1440 row content inside borders",
+      "pass": true,
+      "data": {
+        "document": 1440,
+        "viewport": 1440,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 7 with a deliberately long account label11111…11117View",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 8 with a deliberately long account label11111…11118View",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 9 with a deliberately long account label11111…11119View",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 10 with a deliberately long account label11111…1111AView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 11 with a deliberately long account label11111…1111BView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 12 with a deliberately long account label11111…1111CView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 13 with a deliberately long account label11111…1111DView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 14 with a deliberately long account label11111…1111EView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 15 with a deliberately long account label11111…1111FView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 16 with a deliberately long account label11111…1111GSelected",
+            "height": 97.1875,
+            "inside": true
+          }
+        ],
+        "footer": 576,
+        "height": 600
+      }
+    },
+    {
+      "name": "fixture16 1440 viewport and footer bounded",
+      "pass": true,
+      "data": {
+        "document": 1440,
+        "viewport": 1440,
+        "rows": [
+          {
+            "text": "Execution holder 19MQsC…J37s2View",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 2DssTv…Eq89XView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 35iYXv…d5dqaView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 4Ahp9j…JqscPView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 5J6ofX…9iN7kView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "Execution holder 6DMK11…tCK1mView",
+            "height": 73.390625,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 7 with a deliberately long account label11111…11117View",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 8 with a deliberately long account label11111…11118View",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 9 with a deliberately long account label11111…11119View",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 10 with a deliberately long account label11111…1111AView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 11 with a deliberately long account label11111…1111BView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 12 with a deliberately long account label11111…1111CView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 13 with a deliberately long account label11111…1111DView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 14 with a deliberately long account label11111…1111EView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 15 with a deliberately long account label11111…1111FView",
+            "height": 97.1875,
+            "inside": true
+          },
+          {
+            "text": "UI fixture holder 16 with a deliberately long account label11111…1111GSelected",
+            "height": 97.1875,
+            "inside": true
+          }
+        ],
+        "footer": 576,
+        "height": 600
+      }
+    },
+    {
+      "name": "Tab focuses visible holder action",
+      "pass": true
+    },
+    {
+      "name": "ShiftTab stays in dialog",
+      "pass": true
+    }
+  ],
+  "screens": [
+    "account-en-320.png",
+    "account-wallet-en-320.png",
+    "account-en-390.png",
+    "account-wallet-en-390.png",
+    "account-en-768.png",
+    "account-en-1440.png",
+    "account-en-1908.png",
+    "account-en-2560.png",
+    "account-ru-320.png",
+    "account-wallet-ru-320.png",
+    "account-ru-390.png",
+    "account-wallet-ru-390.png",
+    "account-ru-768.png",
+    "account-ru-1440.png",
+    "account-ru-1908.png",
+    "account-ru-2560.png",
+    "account-fixture16-390.png",
+    "account-fixture16-1440.png"
+  ],
+  "errors": []
+}

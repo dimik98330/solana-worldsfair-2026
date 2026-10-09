@@ -1,0 +1,157 @@
+{
+  "checkedAt": "2026-10-08T08:58:03.803Z",
+  "scope": "Read-only transaction recheck and idempotent completed-run replay on isolated localnet; unsigned legacy preparation was rejected before signing.",
+  "origin": "http://127.0.0.1:3130",
+  "bond": "wvgaaG3CDQ2irLz3y4obWVfPmFoe7pGQ3QtrB7J96G4",
+  "confirmedSignatures": 40,
+  "signatureContextSlot": 11893,
+  "program": {
+    "status": "known-match",
+    "signingAllowed": true,
+    "code": "PROGRAM_MATCH",
+    "message": "RPC-observed deployed bytecode matches the expected release; this is not source-to-binary attestation.",
+    "network": "localnet",
+    "rpcUrl": "http://127.0.0.1:8929",
+    "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+    "loaderAddress": "BPFLoaderUpgradeab1e11111111111111111111111",
+    "genesisHash": "ESN5pbAEubJukcBqh2WW7y23QdQ8EZ7e2EsN3Lv7KJgc",
+    "contextSlot": 11893,
+    "observedAt": "2026-10-08T08:57:57.448Z",
+    "expected": {
+      "schemaVersion": 1,
+      "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+      "loader": "BPFLoaderUpgradeable",
+      "programLen": 482752,
+      "sha256": "4b75579ad52b046f8fedf528dbddc09722e7cd92d73b2778e16201d612b44b50",
+      "releaseId": "coupon-settlement-v2"
+    },
+    "observed": {
+      "programDataAddress": "uZzaw6cRtbnd2JWk9rEirz9g8hZNY6VmUPWBPxuFz2r",
+      "deploymentSlot": "0",
+      "upgradeAuthority": "11111111111111111111111111111111",
+      "immutable": false,
+      "programDataLength": 482797,
+      "payloadLength": 482752,
+      "sha256": "4b75579ad52b046f8fedf528dbddc09722e7cd92d73b2778e16201d612b44b50",
+      "paddingBytes": 0,
+      "paddingZero": true
+    },
+    "verification": {
+      "commitment": "confirmed",
+      "scope": "rpc-observed-deployed-bytecode",
+      "method": "cached-payload-with-fresh-headers",
+      "payloadContextSlot": 11093,
+      "headerContextSlot": 11893,
+      "sourceToBinaryAttested": false
+    }
+  },
+  "firstBatch": {
+    "signature": "2Ym7tSGXzQoMezHtvmvPHWsdiSJPzfLZMvvSpLrPXca1BLzoHkkDV11YPTK2TzgrV2nmZ4z9bJG2LGaz5vggFUgg",
+    "bytes": 808,
+    "computeUnits": 210886,
+    "feeLamports": "5000",
+    "beneficiaries": [
+      {
+        "wallet": "5CFEi8yokw7ijAgp4L6qYr5uXifKsTmQJxs1KU1LAS5r",
+        "destination": "37mFpXtRAHbLR7gPmQVGy96TMH4wayEns9U7P1vt2zLE",
+        "preLamports": 0,
+        "preTokenAccountAbsent": true,
+        "paidMinor": "200000000"
+      },
+      {
+        "wallet": "9wsaeA7oEWg6i7u2uT35dBTgrf5tmMBZ8zeiR993jbB4",
+        "destination": "F2Lbb5s6zPYzYQvJs4GSQpCyusjVZAsh4iDUEA5qvRqe",
+        "preLamports": 0,
+        "preTokenAccountAbsent": true,
+        "paidMinor": "250000000"
+      },
+      {
+        "wallet": "AAH6UakzR5yVuxdJzFDPA4AZxtfkEzJyrj8apJKr7vJu",
+        "destination": "G3oQNFar6VYsoTHL17vbQqFTNHKfjCi5JvrjoKz5kQeG",
+        "preLamports": 0,
+        "preTokenAccountAbsent": true,
+        "paidMinor": "150000000"
+      },
+      {
+        "wallet": "hFpAN1ZvXGTBdaAhi9k9Lo56UKKKvQDAYDUkNRMd26a",
+        "destination": "EeewUXqroAD8WqK3pUyWqyCZ2TrJFVJ5gpQdtCjcKTpu",
+        "preLamports": 0,
+        "preTokenAccountAbsent": true,
+        "paidMinor": "100000000"
+      }
+    ]
+  },
+  "checks": {
+    "builtHtmlServed": true,
+    "all40TransactionsConfirmed": true,
+    "fourNewAtasAndExactPayouts": true,
+    "completedRunReplayRetainsSignatures": true,
+    "replayDoesNotAddActivity": true,
+    "evidenceDigestVerified": true,
+    "invalidSchedulingCapRejected": true,
+    "legacyBytecodeDetected": true,
+    "legacyFirstPreparationBlocked": true
+  },
+  "legacy": {
+    "observedSha256": "15525ec2de285e7cc3065f7ec8ce47bfe81d1ed2837754b85b8cf2598c935dc2",
+    "expectedSha256": "4b75579ad52b046f8fedf528dbddc09722e7cd92d73b2778e16201d612b44b50",
+    "signingAllowed": false
+  },
+  "totals": {
+    "contractual": {
+      "baseUnits": "26875000000",
+      "decimal": "26875.000000",
+      "decimals": 6
+    },
+    "principalPaid": {
+      "baseUnits": "25000000000",
+      "decimal": "25000.000000",
+      "decimals": 6
+    },
+    "couponPaid": {
+      "baseUnits": "1875000000",
+      "decimal": "1875.000000",
+      "decimals": 6
+    },
+    "cashPaid": {
+      "baseUnits": "26875000000",
+      "decimal": "26875.000000",
+      "decimals": 6
+    },
+    "remainingObligations": {
+      "baseUnits": "0",
+      "decimal": "0.000000",
+      "decimals": 6
+    },
+    "scheduledCouponForecast": {
+      "baseUnits": "0",
+      "decimal": "0.000000",
+      "decimals": 6
+    },
+    "fixedAccruedCoupon": {
+      "baseUnits": "1875000000",
+      "decimal": "1875.000000",
+      "decimals": 6
+    },
+    "claimableNow": {
+      "baseUnits": "0",
+      "decimal": "0.000000",
+      "decimals": 6
+    },
+    "vault": {
+      "baseUnits": "0",
+      "decimal": "0.000000",
+      "decimals": 6
+    },
+    "fundingGap": {
+      "baseUnits": "0",
+      "decimal": "0.000000",
+      "decimals": 6
+    },
+    "surplus": {
+      "baseUnits": "0",
+      "decimal": "0.000000",
+      "decimals": 6
+    }
+  }
+}

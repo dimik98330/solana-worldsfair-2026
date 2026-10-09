@@ -27,6 +27,30 @@ pub struct InitializeIssue<'info> {
 }
 
 #[derive(Accounts)]
+#[instruction(series_id: u64)]
+pub struct InitializeRateIssue<'info> {
+    #[account(mut)]
+    pub issuer: Signer<'info>,
+    #[account(init, payer = issuer, space = 8 + Bond::INIT_SPACE,
+        seeds = [b"bond", issuer.key().as_ref(), &series_id.to_le_bytes()], bump)]
+    pub bond: Box<Account<'info, Bond>>,
+    #[account(init, payer = issuer, seeds = [b"bond_mint", bond.key().as_ref()], bump,
+        mint::decimals = 0, mint::authority = bond, mint::freeze_authority = bond)]
+    pub bond_mint: Account<'info, Mint>,
+    #[account(constraint = settlement_mint.decimals == 6 @ BondError::InvalidTerms)]
+    pub settlement_mint: Account<'info, Mint>,
+    #[account(init, payer = issuer, seeds = [b"vault", bond.key().as_ref()], bump,
+        token::mint = settlement_mint, token::authority = bond)]
+    pub vault: Account<'info, TokenAccount>,
+    #[account(init, payer = issuer, space = 8 + FinancialTerms::INIT_SPACE,
+        seeds = [b"financial_terms", bond.key().as_ref()], bump)]
+    pub financial_terms: Account<'info, FinancialTerms>,
+    pub token_program: Program<'info, Token>,
+    pub system_program: Program<'info, System>,
+    pub rent: Sysvar<'info, Rent>,
+}
+
+#[derive(Accounts)]
 pub struct RegisterHolder<'info> {
     #[account(mut)]
     pub issuer: Signer<'info>,
@@ -127,6 +151,28 @@ pub struct ClaimCoupon<'info> {
         token::mint = settlement_mint, token::authority = bond)]
     pub vault: Account<'info, TokenAccount>,
     #[account(mut, token::mint = settlement_mint, token::authority = holder)]
+    pub destination: Account<'info, TokenAccount>,
+    pub token_program: Program<'info, Token>,
+}
+
+#[derive(Accounts)]
+#[instruction(index: u8)]
+pub struct SettleCoupon<'info> {
+    /// Pays transaction fees; cannot choose the entitlement or redirect it.
+    pub executor: Signer<'info>,
+    /// CHECK: key must be in the sealed registry, and destination is its canonical ATA.
+    pub holder: UncheckedAccount<'info>,
+    #[account(seeds = [b"bond", bond.issuer.as_ref(), &bond.series_id.to_le_bytes()],
+        bump = bond.bump, has_one = settlement_mint, has_one = vault)]
+    pub bond: Box<Account<'info, Bond>>,
+    #[account(mut, seeds = [b"coupon", bond.key().as_ref(), &[index]], bump = coupon.bump,
+        has_one = bond, constraint = coupon.index == index @ BondError::InvalidCouponIndex)]
+    pub coupon: Box<Account<'info, Coupon>>,
+    pub settlement_mint: Account<'info, Mint>,
+    #[account(mut, seeds = [b"vault", bond.key().as_ref()], bump,
+        token::mint = settlement_mint, token::authority = bond)]
+    pub vault: Account<'info, TokenAccount>,
+    #[account(mut, associated_token::mint = settlement_mint, associated_token::authority = holder)]
     pub destination: Account<'info, TokenAccount>,
     pub token_program: Program<'info, Token>,
 }

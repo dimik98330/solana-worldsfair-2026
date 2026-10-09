@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const base=process.env.BONDTRACE_ORIGIN??'http://127.0.0.1:3000';
+const evidenceFile=process.env.BONDTRACE_SMOKE_EVIDENCE??`docs/evidence/full-smoke-${Date.now()}-${crypto.randomUUID()}.json`;
+if(!/^docs\/evidence\/full-smoke-[a-z0-9-]+\.json$/.test(evidenceFile)||fs.existsSync(evidenceFile))throw new Error('Choose a new named full-smoke evidence file; historical evidence must not be overwritten');
 const proofs:unknown[]=[];
 async function api(path:string,body?:unknown){const res=await fetch(base+path,{method:body?'POST':'GET',headers:body?{'content-type':'application/json'}:{},body:body?JSON.stringify(body):undefined,signal:AbortSignal.timeout(30000)});const value=await res.json();if(!res.ok)throw new Error(value.error?.code+': '+value.error?.message);return value;}
 async function action(name:string,role:string,params:Record<string,string>={},operationId=crypto.randomUUID()){const result=await api('/api/demo/action',{action:name,role,params,operationId});assert.equal(result.status,'confirmed');assert.ok(result.signature);proofs.push({action:name,role,...result});console.log(JSON.stringify({action:name,status:result.status,signature:result.signature}));return result;}
@@ -23,4 +25,4 @@ await action('begin_redemption','issuer');for(const role of ['investor1','invest
 s=await api('/api/state');assert.equal(s.instrument.status,'redeemed');assert.equal(s.instrument.redeemedSupply,'18');assert.equal(s.instrument.vaultBalanceMinor,'0');assert.equal(s.redemption.paidMinor,'18000000000');assert.ok(s.holders.every((holder:any)=>holder.units==='0'));
 try{await api('/api/demo/action',{action:'redeem_principal',role:'investor1',params:{},operationId:crypto.randomUUID()});assert.fail('Duplicate principal passed');}catch(error){assert.match(String(error),/ALREADY_CLAIMED/);}
 const report={checkedAt:new Date().toISOString(),origin:base,network:s.network,instrument:s.instrument,checks:{exactEntitlement:true,historicalCouponAfterTransfer:true,oneBallot:true,duplicateCouponRejected:true,recoveryAndReplay:true,atomicPrincipalAndBurn:true,duplicatePrincipalRejected:true,zeroFinalSupplyAndVault:true},proofs};
-fs.mkdirSync('docs/evidence',{recursive:true});fs.writeFileSync(`docs/evidence/full-smoke-${s.network}.json`,JSON.stringify(report,null,2));console.log(JSON.stringify({result:'passed',network:s.network,proofCount:proofs.length}));
+fs.mkdirSync('docs/evidence',{recursive:true});fs.writeFileSync(evidenceFile,JSON.stringify(report,null,2),{flag:'wx'});console.log(JSON.stringify({result:'passed',network:s.network,proofCount:proofs.length,evidenceFile}));

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 254 44" role="img" aria-labelledby="title">
+  <title id="title">BondTrace</title>
+  <metadata>Original hand-drawn vector lettering for BondTrace, 8 October 2026. Custom continuous round stems and open terminals; no font or icon dependency.</metadata>
+  <g fill="none" stroke="#edf2fa" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 8v24m0-10c0-6 3.8-10 9-10s9.5 4 9.5 10-4.3 10-9.5 10-9-4-9-10Z"/>
+    <path d="M51 22c0 6-3.6 10-9 10s-9-4-9-10 3.6-10 9-10 9 4 9 10Z"/>
+    <path d="M61 32V13m0 7c0-5 3.5-8 8.5-8s8.5 3 8.5 8v12"/>
+    <path d="M107 8v24m0-10c0-6-3.8-10-9-10s-9.5 4-9.5 10 4.3 10 9.5 10 9-4 9-10Z"/>
+    <path d="M121 6v19c0 5 2 7 7 7h3"/>
+    <path d="M142 32V13m0 8c0-6 3.5-9 10-9"/>
+    <path d="M178 32V13m0 9c0-6-3.5-10-8.5-10s-9 4-9 10 4 10 9 10 8.5-4 8.5-10Z"/>
+    <path d="M206 15c-2-2-4-3-7-3-5.5 0-9.5 4-9.5 10s4 10 9.5 10c3 0 5-1 7-3"/>
+    <path d="M218 22h21c0-6-3.8-10-9.5-10s-9.5 4-9.5 10 3.8 10 10 10c3.5 0 6-1 8-3"/>
+  </g>
+  <path d="M115 13h17" fill="none" stroke="#9abbff" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

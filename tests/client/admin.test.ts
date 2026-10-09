@@ -165,9 +165,71 @@ test('issuance pins holder/supply baseline and rejects unregistered, zero and ov
   await rejects(makeAdminAction(request, issuer), 'INVALID_HOLDER');
 });
 
+test('issuance restores a closed registered ATA and accepts only an empty recreated account', async () => {
+  const {bond, bondAddress} = await setup({totalIssued: 0n});
+  const holderAta = await program.ata(holder, bond.bondMint);
+  const request = {action: 'issue_units', bondAddress, params: {holderWallet: holder, units: '3'}};
+  accounts.delete(holderAta);
+  const missing = await makeAdminAction(request, issuer);
+  assert.equal(missing.instructions.length, 2);
+  assert.equal(missing.instructions[0].programAddress, ASSOCIATED_TOKEN_PROGRAM_ADDRESS);
+  assert.equal(missing.instructions[0].accounts?.[1].address, holderAta);
+  assert.equal(missing.metadata?.beforeHolderUnits, '0');
+  assert.equal(missing.metadata?.beforeTotalIssued, '0');
+
+  tokenAccount(holderAta, bond.bondMint, holder, 0n, 1);
+  const recreated = await makeAdminAction(request, issuer);
+  assert.equal(recreated.instructions.length, 1);
+  assert.equal(recreated.metadata?.beforeHolderUnits, '0');
+  tokenAccount(holderAta, bond.bondMint, holder, 1n, 1);
+  await rejects(makeAdminAction(request, issuer), 'INVALID_HOLDER');
+  tokenAccount(holderAta, bond.bondMint, other, 0n, 1);
+  await rejects(makeAdminAction(request, issuer), 'INVALID_TOKEN_ACCOUNT');
+  tokenAccount(holderAta, settlementMint, holder, 0n, 1);
+  await rejects(makeAdminAction(request, issuer), 'INVALID_TOKEN_ACCOUNT');
+  for (const override of [{delegate: other}, {closeAuthority: other}]) {
+    store(holderAta, getTokenEncoder().encode({mint: bond.bondMint, owner: holder, amount: 0n, delegate: null, delegatedAmount: 0n, closeAuthority: null, isNative: null, state: 1, ...override}));
+    await rejects(makeAdminAction(request, issuer), 'INVALID_TOKEN_ACCOUNT');
+  }
+});
+
+test('issuance restores a lamport-funded system-owned canonical ATA but rejects malformed vacancies', async () => {
+  const {bond, bondAddress} = await setup({totalIssued: 0n});
+  const holderAta = await program.ata(holder, bond.bondMint);
+  const request = {action: 'issue_units', bondAddress, params: {holderWallet: holder, units: '3'}};
+  const vacant = {owner: program.SYSTEM, executable: false, data: ['', 'base64'] as [string, string], lamports: 1};
+  accounts.set(holderAta, vacant);
+  const restored = await makeAdminAction(request, issuer);
+  assert.equal(restored.instructions.length, 2);
+  assert.equal(restored.instructions[0].programAddress, ASSOCIATED_TOKEN_PROGRAM_ADDRESS);
+  assert.equal(restored.instructions[0].accounts?.[1].address, holderAta);
+  assert.equal(restored.metadata?.beforeHolderUnits, '0');
+
+  for (const invalid of [
+    {...vacant, data: ['AA==', 'base64']}, {...vacant, data: ['', 'base64+zstd']},
+    {...vacant, data: ['', 'base64', 'extra']}, {...vacant, data: [null, 'base64']},
+    {...vacant, data: ['']}, {...vacant, data: null}, {...vacant, data: ['#', 'base64']},
+    {...vacant, executable: true}, {...vacant, executable: undefined}, {...vacant, owner: other},
+    {...vacant, lamports: -1}, {...vacant, lamports: 1.5}, {...vacant, lamports: '1'},
+    {...vacant, lamports: undefined}, {...vacant, lamports: Number.MAX_SAFE_INTEGER + 1}, {...vacant, space: 165},
+  ]) {
+    accounts.set(holderAta, invalid as unknown as SyntheticAccount);
+    await rejects(makeAdminAction(request, issuer), 'INVALID_TOKEN_ACCOUNT');
+  }
+
+  // Registration uses the same optional canonical ATA validation.
+  const newAta = await program.ata(other, bond.bondMint);
+  accounts.set(newAta, {...vacant, lamports: 2});
+  const registered = await makeAdminAction({action: 'register_holder', bondAddress, params: {holderWallet: other}}, issuer);
+  assert.equal(registered.instructions[0].programAddress, ASSOCIATED_TOKEN_PROGRAM_ADDRESS);
+  assert.equal(registered.instructions[0].accounts?.[1].address, newAta);
+});
+
 test('seal requires exact full reserve and matching mint supply/authority', async () => {
   const {bond, bondAddress} = await setup(), request = {action: 'seal_issue', bondAddress};
   const built = await makeAdminAction(request, issuer); assert.equal(built.metadata?.requiredReserveMinor, '10500000');
+  tokenAccount(bond.vault, settlementMint, bondAddress, 10_500_000n, 2);
+  await rejects(makeAdminAction(request, issuer), 'VAULT_FROZEN');
   tokenAccount(bond.vault, settlementMint, bondAddress, 10_499_999n, 1);
   await rejects(makeAdminAction(request, issuer), 'INSUFFICIENT_RESERVE');
   tokenAccount(bond.vault, settlementMint, bondAddress, 10_500_000n, 1);
@@ -175,6 +237,27 @@ test('seal requires exact full reserve and matching mint supply/authority', asyn
   await rejects(makeAdminAction(request, issuer), 'SUPPLY_MISMATCH');
   store(bond.bondMint, getMintEncoder().encode({mintAuthority: other, freezeAuthority: address(bondAddress), supply: 10n, decimals: 0, isInitialized: true}));
   await rejects(makeAdminAction(request, issuer), 'INVALID_MINT');
+});
+
+test('optional annual rate derives exact coupons and adds a signed creation memo without changing fixed schedules', async () => {
+  await setup();
+  const input = {...terms((++nextSeries).toString()), rateBps: '01000', couponFrequency: '02', coupons: [{recordTs: '200', paymentTs: '250'}]};
+  const normalized = normalizeIssueTerms(input, now);
+  assert.deepEqual(normalized.rateDescriptor, {rateBps: '1000', couponFrequency: '2', couponUnitMinor: '50000'});
+  assert.equal(normalized.coupons[0].unitAmount, 50_000n);
+  const built = await makeAdminAction({action: 'initialize_issue', params: input}, issuer);
+  assert.equal(built.instructions.length, 2);
+  assert.equal(String(built.instructions[1].programAddress), 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');
+  assert.equal(built.instructions[1].accounts?.[0].address, issuer);
+  assert.equal(built.instructions[1].accounts?.[0].role, 2);
+  assert.equal(built.metadata?.rateBps, '1000'); assert.equal(built.metadata?.couponFrequency, '2');
+  assert.equal(readCatalog(built.bondAddress), null, 'Unsigned preparation cannot create annual-rate provenance');
+  const newBond = {...(await setup()).bond, seriesId: normalized.seriesId, bondMint: await program.derive('bond_mint', built.bondAddress), vault: await program.derive('vault', built.bondAddress), name: normalized.name, faceValue: normalized.faceValue, maturityTs: normalized.maturityTs, couponTerms: normalized.coupons};
+  store(built.bondAddress, encodeBond(newBond), program.PROGRAM_ID);
+  await rejects(finalizeAdminEffect({action: 'initialize_issue', wallet: issuer, bond: built.bondAddress, metadata: built.metadata}), 'RATE_EVIDENCE_PENDING');
+  assert.equal(readCatalog(built.bondAddress), null, 'Terms require a successful exact signed receipt before projection');
+  const irregular = {...terms(), coupons: [{recordTs: '200', paymentTs: '250', unitAmount: '50000'}, {recordTs: '300', paymentTs: '350', unitAmount: '25000'}]};
+  assert.equal(normalizeIssueTerms(irregular, now).rateDescriptor, undefined);
 });
 
 test('confirmed creation reconciliation pins issuer, series, mint and complete immutable schedule', async () => {

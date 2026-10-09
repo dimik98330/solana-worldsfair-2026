@@ -1,0 +1,94 @@
+/* Protected date editing uses the same inset edge as issuer fields. */
+.date-time-field { min-width: 0; }
+.date-time-field svg { stroke-width: 1.75; }
+.date-time-label { display: block; margin-bottom: var(--space-2); color: var(--foreground); font-size: 16px; font-weight: 600; }
+.date-time-trigger { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-height: 76px; padding: var(--space-3) var(--space-4); border: 1px solid var(--border-control); border-radius: var(--radius-control); background: var(--input, var(--panel)); color: var(--foreground); text-align: left; font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; cursor: pointer; }
+.date-time-trigger > svg:first-child { color: var(--link); }
+.date-time-trigger:hover:not(:disabled) { border-color: var(--muted); }
+.date-time-trigger[aria-invalid="true"] { border-color: var(--error); }
+.date-time-trigger:disabled { background: var(--background); color: var(--muted); cursor: not-allowed; }
+.date-time-date { min-width: 0; font-family: var(--font-ui); font-size: 18px; font-weight: 600; }
+.date-time-value { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+.date-time-clock { display: inline-flex; align-items: center; gap: var(--space-1); white-space: nowrap; color: var(--muted); font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-size: 16px; font-weight: 400; letter-spacing: 0; }
+.date-time-clock svg, .date-time-trigger-arrow { color: var(--muted); }
+.date-time-trigger-arrow { margin-left: auto; flex-shrink: 0; }
+.date-time-trigger > svg:first-child { flex-shrink: 0; }
+.date-time-clock + .date-time-trigger-arrow { margin-left: 0; }
+.date-time-placeholder { color: var(--muted); font-weight: 500; }
+.date-time-hint, .date-time-error { margin-top: var(--space-2); font-size: 15px; line-height: 1.5; }
+.date-time-hint { color: var(--muted); }
+.date-time-error { color: var(--error); }
+.date-time-dialog { width: min(440px, calc(100% - 24px)); max-width: calc(100vw - 16px); max-height: calc(100dvh - 24px); margin: auto; padding: var(--space-6); overflow-y: auto; overscroll-behavior: contain; border: 0; border-radius: var(--radius-panel); background: var(--panel); color: var(--foreground); box-shadow: var(--shadow-overlay); font-family: var(--font-ui); font-variant-numeric: tabular-nums; color-scheme: dark; }
+.date-time-dialog svg { stroke-width: 1.75; }
+.date-time-dialog::backdrop { background: color-mix(in srgb, var(--background) 76%, transparent); }
+.date-time-dialog[open] { display: flex; flex-direction: column; overflow: hidden; }
+.date-time-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.date-time-dialog-heading, .date-time-zone, .date-time-selection, .date-time-dialog-actions { flex-shrink: 0; }
+.date-time-trigger:focus-visible, .date-time-dialog :is(button, input, select):focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+.date-time-trigger:focus-visible, .date-time-dialog input:focus-visible, .date-time-dialog select:focus-visible { border-color: var(--link); outline: 1px solid var(--link); outline-offset: -1px; box-shadow: none; }
+.date-time-dialog-heading { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+.date-time-dialog-heading h2 { font-size: 22px; font-weight: 650; letter-spacing: -.025em; line-height: 1.4; margin: 0; }
+.date-time-zone { display: flex; align-items: flex-start; gap: var(--space-2); color: var(--muted); font-size: 15px; line-height: 1.5; margin-bottom: var(--space-4); }
+.date-time-zone > svg { flex-shrink: 0; margin-top: 3px; }
+.date-time-zone strong { color: var(--foreground); font-weight: 600; }
+.date-time-close { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; padding: 0; border: 0; border-radius: var(--radius-control); background: transparent; color: var(--muted); cursor: pointer; }
+.date-time-close:hover { background: var(--background); color: var(--foreground); }
+.date-time-calendar { --rdp-accent-color: var(--primary); --rdp-accent-background-color: var(--primary-soft); --rdp-day-height: 48px; --rdp-day_button-height: 44px; --rdp-day_button-width: 44px; --rdp-day_button-border-radius: var(--radius-control); --rdp-nav_button-height: 44px; --rdp-nav_button-width: 44px; --rdp-nav-height: 48px; --rdp-today-color: var(--foreground); --rdp-outside-opacity: 1; --rdp-disabled-opacity: 1; width: 100%; font-size: 16px; }
+.date-time-calendar .rdp-months, .date-time-calendar .rdp-month { width: 100%; max-width: none; }
+.date-time-calendar .rdp-month_caption { height: 48px; margin-bottom: var(--space-3); padding: 0 96px 0 0; }
+.date-time-calendar .rdp-dropdowns { gap: var(--space-2); min-width: 0; }
+.date-time-calendar .rdp-dropdown_root { min-height: 44px; border: 1px solid var(--border-control); border-radius: var(--radius-control); background: var(--input); }
+.date-time-calendar .rdp-caption_label { gap: var(--space-1); padding: var(--space-2); font-size: 15px; font-weight: 650; }
+.date-time-calendar .rdp-caption_label svg { color: var(--muted); stroke: currentColor; fill: none; }
+.date-time-calendar .rdp-dropdown { min-height: 44px; font-family: var(--font-ui); font-variant-numeric: tabular-nums; color: var(--foreground); background: var(--input); }
+.date-time-calendar .rdp-dropdown option { color: var(--foreground); background: var(--panel); }
+.date-time-calendar .rdp-dropdown:focus-visible ~ .rdp-caption_label { outline: 1px solid var(--primary); outline-offset: -1px; border-radius: var(--radius-control); }
+.date-time-calendar .rdp-nav { gap: var(--space-1); }
+.date-time-calendar .rdp-button_previous, .date-time-calendar .rdp-button_next { border-radius: var(--radius-control); color: var(--foreground); }
+.date-time-calendar .rdp-button_previous:hover:not(:disabled), .date-time-calendar .rdp-button_next:hover:not(:disabled) { background: var(--background); }
+.date-time-calendar .rdp-chevron { stroke: currentColor; fill: none; color: inherit; }
+.date-time-calendar .rdp-month_grid { width: 100%; table-layout: fixed; border-spacing: 0; border-collapse: collapse; }
+.date-time-calendar .rdp-weekday { height: 32px; padding: 0; border: 0; background: transparent; color: var(--muted); font-size: 14px; font-weight: 500; opacity: 1; }
+.date-time-calendar .rdp-day { width: auto; padding: 0; border: 0; background: transparent; color: var(--foreground); font-size: 17px; }
+.date-time-calendar .rdp-week:hover { background: transparent; }
+.date-time-calendar .rdp-day_button { width: min(44px, 100%); height: 44px; margin: 2px auto; font-family: var(--font-ui); font-variant-numeric: tabular-nums lining-nums; font-size: 17px; font-weight: 500; }
+.date-time-calendar .rdp-day_button:hover:not(:disabled) { background: var(--background); }
+.date-time-calendar .rdp-outside { color: var(--muted); }
+.date-time-calendar .rdp-today:not(.rdp-selected) .rdp-day_button { color: var(--foreground); border-color: var(--border-control); }
+.date-time-calendar .rdp-selected .rdp-day_button, .date-time-calendar .rdp-selected .rdp-day_button:hover { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); font-size: 17px; font-weight: 500; }
+.date-time-calendar .rdp-disabled .rdp-day_button { color: var(--muted); text-decoration: line-through; cursor: not-allowed; }
+.date-time-controls { margin: var(--space-4) 0 0; padding: var(--space-4) 0 0; border: 0; border-top: 1px solid var(--border); }
+.date-time-controls legend { display: flex; align-items: center; gap: var(--space-2); padding: 0 var(--space-2) 0 0; color: var(--foreground); font-size: 16px; font-weight: 600; }
+.date-time-controls legend svg { color: var(--muted); }
+.date-time-time-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: var(--space-3); }
+.date-time-time-row label { display: flex; flex-direction: column; gap: var(--space-1); color: var(--muted); font-size: 15px; }
+.date-time-time-row input { width: 100%; min-height: 56px; margin: 0; padding: var(--space-2) var(--space-3); border: 1px solid var(--border-control); border-radius: var(--radius-control); background: var(--input, var(--panel)); color: var(--foreground); caret-color: var(--link); font-family: var(--font-ui); font-size: 24px; line-height: 1.25; font-weight: 650; text-align: center; font-variant-numeric: tabular-nums; }
+.date-time-time-row input[aria-invalid="true"] { border-color: var(--error); }
+.date-time-separator { display: flex; align-items: center; height: 52px; color: var(--muted); font-size: 24px; }
+.date-time-selection { min-height: 56px; display: flex; flex-direction: column; justify-content: center; gap: var(--space-1); margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--border); color: var(--muted); font-size: 15px; }
+.date-time-selection strong { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); color: var(--foreground); font-size: 17px; font-weight: 600; }
+.date-time-selection strong span { white-space: nowrap; font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-weight: 400; }
+.date-time-dialog-actions { display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-4); }
+.date-time-cancel, .date-time-apply { min-height: 48px; padding: var(--space-3) var(--space-4); border: 1px solid var(--border-control); border-radius: var(--radius-control); background: var(--panel); color: var(--foreground); font-family: var(--font-ui); font-size: 16px; font-weight: 600; cursor: pointer; }
+.date-time-cancel:hover { background: var(--background); }
+.date-time-apply { border-color: var(--primary); background: var(--primary); color: var(--primary-foreground); }
+.date-time-apply:hover:not(:disabled) { border-color: var(--primary-hover); background: var(--primary-hover); }
+.date-time-apply:disabled { border-color: var(--border); background: var(--background); color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) {
+  .date-time-trigger, .date-time-cancel, .date-time-apply, .date-time-close { transition: background-color 150ms var(--ease), border-color 150ms var(--ease), color 150ms var(--ease); }
+}
+@media (max-width: 480px) {
+  .date-time-dialog { padding: var(--space-4); }
+  .date-time-dialog-actions > button { flex: 1; }
+  .date-time-dialog-actions { padding-top: var(--space-3); background: var(--panel); border-top: 1px solid var(--border); }
+}
+@media (max-width: 359px) {
+  .date-time-dialog { width: calc(100% - 16px); padding: var(--space-3); max-height: calc(100dvh - 16px); }
+  .date-time-trigger { gap: var(--space-2); padding-inline: var(--space-3); }
+  .date-time-calendar .rdp-month_caption { padding-right: 88px; }
+  .date-time-calendar .rdp-caption_label { padding-inline: 6px; }
+  .date-time-calendar .rdp-dropdowns { gap: var(--space-1); }
+  .date-time-calendar { --rdp-nav_button-width: 40px; }
+  .date-time-clock { margin-left: 0; }
+  .date-time-trigger-arrow { margin-left: auto; }
+}

@@ -11,8 +11,6 @@ try {
 $windowsPathForWsl=$projectRoot.Replace('\','/')
 $wslRoot=((& wsl.exe -d Ubuntu --exec wslpath -a $windowsPathForWsl) -join '').Trim()
 if($LASTEXITCODE -ne 0){throw 'WSL path resolution failed'}
-$toolchain='/home/dmitrii/.local/bondtrace-tools/solana-release/bin/solana-test-validator'
-$binary="$wslRoot/target/deploy/bondtrace.so"
-if(-not (Test-Path (Join-Path $projectRoot 'target/deploy/bondtrace.so'))){throw 'Build the SBF program first; see README.'}
-& wsl.exe -d Ubuntu --cd $projectRoot --exec $toolchain --ledger '.local/bondtrace-validator' --rpc-port 8899 --faucet-port 9900 --bind-address 127.0.0.1 --bpf-program $programId $binary --quiet
+if(-not (Test-Path (Join-Path $projectRoot 'target/deploy/bondtrace.so')) -and -not (Test-Path (Join-Path $projectRoot 'artifacts/program/bondtrace.so'))){throw 'Build the SBF program or use the verified release image; see README.'}
+& wsl.exe -d Ubuntu --exec bash "$wslRoot/scripts/localnet.sh"
 if($LASTEXITCODE -ne 0){throw 'Local validator stopped with an error'}

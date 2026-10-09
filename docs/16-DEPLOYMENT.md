@@ -1,5 +1,7 @@
 # Devnet deployment checkpoint
 
+**Последняя проверка: 08.10.2026, 04:56:55 UTC / 09:56:55 Казахстан UTC+5. Статус остаётся `needs free test-SOL funding`.** Payer по-прежнему имеет0 lamports; программа отсутствует. Ни новой попытки airdrop, ни deployment, ни нового wallet не было. Прежний раздел07.10 ниже сохранён как историческое доказательство. Текущий защитный порог подготовленной команды —**3 test SOL**;2,4 в историческом описании больше не является её действующим порогом.
+
 Проверено 07.10.2026, 18:44 UTC / 23:44 Казахстан UTC+5. **Статус: blocked by free test-SOL funding. Devnet-программа пока не развёрнута; deployment signatures отсутствуют.** Локальный работающий validator и его fixture не изменялись в этой задаче.
 
 ## Scope и skills
@@ -87,3 +89,32 @@ Provenance:
 Evidence сохранён в `.local/bondtrace/devnet/pow-live-specs.json` (timestamp внутри) и read-only `.local/bondtrace/devnet/pow-inspect.mjs`. Этот скрипт не читает keypairs, не подписывает, не вызывает `requestAirdrop` и не майнит. Приведённые CPU runtime/throughput не измерялись; вывод основан на фактической ликвидности/reward и bootstrap code. Новые install/mining/faucet requests не производились. Manual owner faucet request остаётся прежним; дополнительного запроса владельцу не добавлено.
 
 Следующий шаг не меняется: допустимое бесплатное funding dedicated payer владельцем либо оставить devnet как честно незавершённый gate, продолжая независимый localnet/client/browser/submission-materials scope. Не выдавать исследованный PoW CLI, Program ID Explorer link или уже работающий localnet за успешный devnet deployment.
+
+## Release readiness —8 октября 2026
+
+Новая задача пользователя —полноценно довести конкурсную подготовку, включая devnet и настоящий кошелёк. Этот подэтап выполнен в режиме **ProofPilot coach**, узкий технический `review` существующего deployment; продуктовая идея, demand и assessment budget не перезапускались. Перед работой прочитаны актуальные AGENTS, START, STATE, backend focus/readiness и установленный ProofPilot (`routing`, `review`, `safety`, `solana-new`) плюс `solana-dev` (`SKILL`, quick RPC lookups, применимые security checks). Solana MCP named tools в текущем tool catalog отсутствуют; ранее установленная конфигурация не переустанавливалась. Для текущих deployment/genesis/cluster рекомендаций использованы официальные документы и живой pinned public RPC. Это не formal contest score или production security assessment.
+
+Свежий read-only скрипт `.local/bondtrace/devnet/release-readiness.mjs` не открывает signer files, не запрашивает airdrop, не подписывает и не отправляет транзакции. Genesis проверяется до остальных запросов; RPC envelopes, slots и integer lamports проверяются; frozen image size/hash должны совпасть. Каждый запуск сохраняет новый файл через exclusive create, не перезаписывая предыдущий snapshot.
+
+| Проверка | Фактический результат08Oct04:56:55UTC |
+|---|---|
+| Genesis |`EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG`, devnet совпал |
+| Payer balance |`0` lamports, confirmed context slot`508703361` |
+| Program account |`value=null`, confirmed context slot`508703363`; owner/executable не существуют |
+| Frozen image |`463096` bytes, SHA256`15525ec2de285e7cc3065f7ec8ce47bfe81d1ed2837754b85b8cf2598c935dc2` совпал |
+| ProgramData rent |`2353406520` lamports |
+| Program account rent |`833120` lamports |
+| Сумма rent |`2354239640` lamports =`2.35423964` test SOL, ещё нужны fees |
+| Deployment / new airdrop |Не выполнялись |
+
+Raw public evidence: `C:\Users\dmitrii\Documents\solana\.local\bondtrace\devnet\release-readiness-2026-10-08T04-56-51-751Z.json`. Slot balance и slot отсутствующего program —отдельные RPC contexts, не выдаются за один atomic snapshot. Ни наличие Program ID link, ни прошедшие localnet tests не доказывают devnet deployment.
+
+Подготовленный `deploy-devnet.sh` дополнительно защищён проверкой pinned genesis и exact size перед balance gate, порогом3 test SOL, atomic one-attempt marker и wall-clock limit300s (+15s termination). После неизвестного/неудачного upload повторный запуск блокируется до явного исследования program/buffer/receipts. Marker нельзя автоматически удалять ради повторов. Existing explicit buffer/payer/program/upgrade authority сохранены; global cluster config, irreversible `--final` и skip-preflight flags отсутствуют. CLI output в ignored log; сырые recovery logs не публиковать. При CLI success требуется отдельно подтвердить signature/ProgramData/authority и on-chain image hash; success команды сам по себе недостаточен.
+
+Проверки этого подэтапа: `node --check release-readiness.mjs`, live execution этого read-only скрипта exit0, `bash -n deploy-devnet.sh` passed; installed CLI3.1.10 help подтвердил `genesis-hash`, `--output json`, explicit buffer, bounded sign attempts и нужные deploy flags. `git check-ignore` подтвердил, что scripts и оба прежних keypair paths остаются ignored. Deployment branch и timeout не исполнялись из-за0 balance; не объявлены passed на живой сети. Source, IDL, local ledger, services, manifests и Git не изменялись этим worker.
+
+Практический следующий шаг —бесплатно получить **3 devnet test SOL** на тот же публичный payer через ранее предложенный владельцу [официальный faucet](https://faucet.solana.com/). Владелец проходит sign-in/consent/CAPTCHA; приватные ключи и коды никому не передаются. Новый запрос владельцу здесь не отправлялся, вопросы lead уже pending. Не покупать реальные SOL. Если funding появился, повторить read-only balance/genesis и выполнить ровно одну защищённую попытку; затем полноценный отдельный devnet product cycle и human-wallet flow. Без funding gate остаётся честно незавершённым.
+
+Источники заново прочитаны08.10.2026: [официальный deployment guide](https://solana.com/docs/programs/deploying), [official clusters](https://solana.com/docs/references/clusters), [getGenesisHash](https://solana.com/docs/rpc/http/getgenesishash). RPC endpoint`https://api.devnet.solana.com` —фактический источник баланса/отсутствия программы/rent, а не предварительная оценка документации. Старые два airdrop failures и PoW feasibility evidence выше сохранены.
+
+Для продолжения сохранять обязательное правило AGENTS: до существенной задачи выбирать и читать установленные skills, ProofPilot coach для решений, specialist Solana/security/testing для исполнения; передавать это каждому subagent и новому чату. Ownership этого worker —только docs16 и ignored devnet namespace, lead обновляет основной STATE.

@@ -1,5 +1,6 @@
 import {test, after} from 'node:test';
 import assert from 'node:assert/strict';
+import {programRpc} from './helpers/program-rpc.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
@@ -38,6 +39,7 @@ function store(key: string, bytes: ArrayLike<number>, owner: string) {
 }
 globalThis.fetch = async (_input, init) => {
   const request = JSON.parse(String(init?.body)); let result: unknown;
+  const deployment=programRpc(request);if(deployment!==undefined)return Response.json({jsonrpc:'2.0',id:request.id,result:deployment});
   switch (request.method) {
     case 'getGenesisHash': result = genesisHash; break;
     case 'getAccountInfo': {

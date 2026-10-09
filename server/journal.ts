@@ -2,12 +2,39 @@ import path from 'node:path';
 import {localDir,network} from './config.ts';
 import {readJson,writeJson,listDocuments,transactionSync} from './storage.ts';
 
+export type FinalityLevel='processed'|'confirmed'|'finalized';
+/** A timestamped RPC observation, separate from the servicing/business result. */
+export interface FinalityObservation {
+  schemaVersion:1; signature:string; status:FinalityLevel|null;
+  source:'live-rpc'|'retained-observation'|'legacy-unknown';
+  observedAt:string|null; slot:number|null; contextSlot:number|null; genesisHash:string|null;
+}
 export interface ReceiptRecord {
   signature:string; action:string; bond?:string; account?:string; wallet?:string; operationId?:string;
   network:string; genesisHash:string|null; chainStatus:'pending'|'confirmed'|'error'|'unknown';
   projectionStatus:'pending'|'complete'; submittedAt:string; observedAt?:string; slot?:number|null;
   lastValidBlockHeight?:number; signedTransactionBase64?:string; error?:string;
   verification?:'live-rpc'|'recorded-confirmation'|'legacy-unbound';
+  finality?:FinalityObservation;
+  programRelease?: {programId:string;sha256:string;genesisHash:string};
+  transactionProof?:import('./transaction-proof.ts').TransactionProof;
+  proofCapture?:{status:'pending'|'captured'|'unavailable';attemptedAt:string;attemptId?:string;commitment?:'confirmed'|'finalized';code?:string;message?:string};
+}
+/** Legacy receipts never infer a commitment level from business confirmation. */
+export function boundReceiptFinality(record:ReceiptRecord):FinalityObservation|null{
+  const value=record.finality,integer=(n:unknown)=>typeof n==='number'&&Number.isSafeInteger(n)&&n>=0;
+  if(!value||value.schemaVersion!==1||value.signature!==record.signature||!['processed','confirmed','finalized',null].includes(value.status)
+    ||!['live-rpc','retained-observation'].includes(value.source)||typeof value.observedAt!=='string'||!Number.isFinite(Date.parse(value.observedAt))
+    ||!integer(value.slot)||value.slot!==record.slot||!integer(value.contextSlot)||value.contextSlot!<value.slot!
+    ||!value.genesisHash||value.genesisHash!==record.genesisHash)return null;
+  if(record.chainStatus==='confirmed'&&!['confirmed','finalized'].includes(value.status??''))return null;
+  return value;
+}
+export function retainedReceiptFinality(record:ReceiptRecord):FinalityObservation{
+  const observation=boundReceiptFinality(record);
+  if(observation)return {...observation,source:'retained-observation'};
+  return {schemaVersion:1,signature:record.signature,status:null,source:'legacy-unknown',observedAt:null,
+    slot:Number.isSafeInteger(record.slot)&&record.slot!>=0?record.slot!:null,contextSlot:null,genesisHash:record.genesisHash};
 }
 const signaturePattern=/^[1-9A-HJ-NP-Za-km-z]{60,100}$/;
 function receiptPath(signature:string){if(!signaturePattern.test(signature))throw new Error('Invalid receipt identifier');return path.join(localDir,'receipts',signature+'.json');}

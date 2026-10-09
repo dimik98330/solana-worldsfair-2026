@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-10-08T09:55:37.607Z",
+  "network": "localnet",
+  "origin": "http://127.0.0.1:3140",
+  "rpcUrl": "http://127.0.0.1:8939",
+  "programSha256": "2c00cf68701f7769fd6a730aa62723d34fb66255db635fd1a1c7e58b7d45b0ff",
+  "signature": "4GJtZNL2ica6WndmyzygEsRaYTe8gfQhqQFZ7TqQ4i7SrF1K6e1ngPjkJy8UXwPZNuvRBWFSZ6ntejrbAncJjENp",
+  "beneficiary": "55NRDLp2rSS3cGvNqqfCgDsgzrsRG4thSyHKqNT8GDFK",
+  "transferLamports": "890880",
+  "checks": {
+    "faultAfterDurableCommitBeforeRpcRelay": true,
+    "recipientBalanceBeforeRelayZero": true,
+    "separateApiProcessRecoveredSameSignedBytes": true,
+    "completedReplayNoSecondTransfer": true
+  },
+  "first": {
+    "signature": "4GJtZNL2ica6WndmyzygEsRaYTe8gfQhqQFZ7TqQ4i7SrF1K6e1ngPjkJy8UXwPZNuvRBWFSZ6ntejrbAncJjENp",
+    "status": "confirmed",
+    "slot": 1203,
+    "error": null,
+    "explorerUrl": "https://explorer.solana.com/tx/4GJtZNL2ica6WndmyzygEsRaYTe8gfQhqQFZ7TqQ4i7SrF1K6e1ngPjkJy8UXwPZNuvRBWFSZ6ntejrbAncJjENp?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8939",
+    "verification": "live-rpc",
+    "genesisHash": "7EKZqLhf5y3tcBpAGzRLRR9QF7ST7cV2g4GCRfu4ruuw",
+    "rebroadcast": true
+  },
+  "replay": {
+    "signature": "4GJtZNL2ica6WndmyzygEsRaYTe8gfQhqQFZ7TqQ4i7SrF1K6e1ngPjkJy8UXwPZNuvRBWFSZ6ntejrbAncJjENp",
+    "status": "confirmed",
+    "slot": 1203,
+    "error": null,
+    "explorerUrl": "https://explorer.solana.com/tx/4GJtZNL2ica6WndmyzygEsRaYTe8gfQhqQFZ7TqQ4i7SrF1K6e1ngPjkJy8UXwPZNuvRBWFSZ6ntejrbAncJjENp?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8939",
+    "verification": "live-rpc",
+    "genesisHash": "7EKZqLhf5y3tcBpAGzRLRR9QF7ST7cV2g4GCRfu4ruuw"
+  }
+}

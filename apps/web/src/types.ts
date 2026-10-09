@@ -19,8 +19,9 @@ export interface Proposal {
   id: string; title: string; snapshotAddress: string; deadlineAt: string; yesWeight: string; noWeight: string;
   eligibleWeights: { wallet: string; units: string }[]; votedWallets: string[]; status: 'open' | 'closed';
 }
-export interface Activity { signature: string; time: string; kind: string; status: string; explorerUrl?: string }
+export interface Activity { signature: string; time: string; kind: string; status: string; explorerUrl?: string; slot?:number; account?:string; bond?:string; verification?:string }
 export interface ChainState {
+  readOnlySnapshot?: { capturedAt: string; source: string };
   network: 'localnet' | 'devnet'; rpcUrl: string; programId: string; connected: boolean; serverTime: string;
   instrument: Instrument | null; holders: Holder[]; coupons: Coupon[]; redemption: Redemption | null;
   proposals: Proposal[]; activity: Activity[];

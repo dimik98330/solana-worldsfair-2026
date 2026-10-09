@@ -11,7 +11,7 @@ export const databasePath = path.join(localDir, 'metadata.sqlite');
 const applicationId = 0x42545243; // BTRC, to reject unrelated SQLite files.
 const busyTimeoutMs = 5_000;
 const legacyRootDocuments = ['fixture.json', 'activity.json', 'prepared.json', 'operations.json', 'lifetimes.json'];
-const rootDocuments = [...legacyRootDocuments, 'journal-migration.json', 'chain-identity.json'];
+const rootDocuments = [...legacyRootDocuments, 'journal-migration.json', 'chain-identity.json', 'runtime-readiness.json'];
 const catalogDocument = /^catalog\/[1-9A-HJ-NP-Za-km-z]{32,44}\.json$/;
 const recordDocuments = [/^prepared\/[a-f0-9]{64}\.json$/, /^operations\/[A-Za-z0-9_-]{8,100}\.json$/, /^receipts\/[1-9A-HJ-NP-Za-km-z]{60,100}\.json$/];
 const documentDirectories = ['catalog', 'prepared', 'operations', 'receipts'];
@@ -282,6 +282,12 @@ export function storageDiagnostics(options: {integrityCheck?: boolean} = {}): St
   };
 }
 export function verifyStorageIntegrity(): string[] { return integrity(openDatabase()); }
+/** Explicit readiness POST probes only this public metadata marker, never a financial intent. */
+export function verifyStorageWrite(): {verified: true; checkedAt: string} {
+  const marker = path.join(localDir, 'runtime-readiness.json'), nonce = crypto.randomUUID(), checkedAt = new Date().toISOString();
+  transactionSync(() => {writeJson(marker, {nonce, checkedAt}); if (readJson<{nonce: string}|null>(marker, null)?.nonce !== nonce) fail('STORAGE_INTEGRITY', 'Readiness write/read verification failed');});
+  return {verified: true, checkedAt};
+}
 /** A consistent public-metadata snapshot. No automatic restore, overwrite or key backup. */
 export function backupStorage(absoluteDestination: string) {
   if (!path.isAbsolute(absoluteDestination) || !isWithin(localDir, path.resolve(absoluteDestination)) || path.extname(absoluteDestination) !== '.sqlite') fail('STORAGE_INVALID_PATH', 'Backup must be a .sqlite file inside its ignored storage namespace');

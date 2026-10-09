@@ -14,6 +14,7 @@ fs.mkdirSync(base, {recursive: true});
 const moduleUrl = (file: string) => pathToFileURL(path.resolve(file)).href;
 const modules = ['server/storage.ts', 'server/journal.ts', 'server/operations.ts', 'server/prepared.ts', 'server/rpc.ts', 'server/request-contract.ts', 'server/transactions.ts', 'packages/client/src/program.ts'].map(moduleUrl);
 const prelude = `
+import {programRpc} from './tests/client/helpers/program-rpc.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -25,6 +26,7 @@ let genesis=key(101), mode='confirmed', sends=0, onSend=()=>{};
 const requests=[];
 globalThis.fetch=async(_input,init)=>{
   const request=JSON.parse(String(init?.body)); requests.push(request.method); let result;
+  const deployment=programRpc(request);if(deployment!==undefined)return Response.json({jsonrpc:'2.0',id:request.id,result:deployment});
   switch(request.method){
     case 'getGenesisHash':result=genesis;break;
     case 'getLatestBlockhash':result={context:{slot:600},value:{blockhash:'11111111111111111111111111111111',lastValidBlockHeight:1000}};break;
@@ -71,7 +73,7 @@ const name=Buffer.from('Synthetic concurrent projection');
 const bondBytes=Buffer.concat([createHash('sha256').update('account:Bond').digest().subarray(0,8),...[issuer,bondMint,settlementMint,vault].map(pk),u64(77n),u32(name.length),name,u64(1000000n),i64(400n),u64(0n),u64(0n),Buffer.from([0,255,0]),Buffer.alloc(2),u32(holderWallets.length),...holderWallets.map(pk),u32(1),i64(200n),i64(300n),u64(50000n),u32(0)]);
 const record={seriesId:'77',bond:bondAddress,name:name.toString(),settlementMint,createdAt:'2026-10-08T00:00:00.000Z',rateBps:0,couponFrequency:0,roles:{issuer},proposalIds:[],complete:false,accelerated:false,source:'demo'};
 const originalMock=globalThis.fetch;
-globalThis.fetch=async(input,init)=>{const req=JSON.parse(String(init?.body));if(req.method==='getAccountInfo'){assert.equal(req.params[0],bondAddress);return Response.json({jsonrpc:'2.0',id:req.id,result:{context:{slot:600},value:{owner:program.PROGRAM_ID,executable:false,data:[bondBytes.toString('base64'),'base64']}}});}return originalMock(input,init);};
+globalThis.fetch=async(input,init)=>{const req=JSON.parse(String(init?.body));if(req.method==='getAccountInfo'&&req.params[0]===bondAddress){return Response.json({jsonrpc:'2.0',id:req.id,result:{context:{slot:600},value:{owner:program.PROGRAM_ID,executable:false,data:[bondBytes.toString('base64'),'base64']}}});}return originalMock(input,init);};
 `;
 
 test('legacy arrays migrate once, preserve bytes and retain more than150 signed and projection-pending records through restart', async () => {
@@ -185,7 +187,7 @@ test('async and thenable pre-relay callbacks cannot bypass transactional persist
 test('prepared signature is rolled back if lifetime metadata cannot be committed before send', async () => {
   await success(`
     const actor=await generateKeyPairSigner(),value=await signed(actor,24);
-    const id=prepared.rememberPrepared(value.transactionBase64,{action:'journal_fixture',wallet:actor.address});
+    const id=prepared.rememberPrepared(value.transactionBase64,{action:'journal_fixture',wallet:actor.address,programRelease:value.programRelease});
     await assert.rejects(()=>transactions.submitPrepared(value.transactionBase64),code('INVALID_LIFETIME'));
     assert.equal(prepared.findPrepared(id).signature,undefined);assert.equal(prepared.findPrepared(id).status,'prepared');assert.equal(sends,0);assert.deepEqual(journal.receipts(),[]);assert.deepEqual(storage.readJson(file('lifetimes.json'),{}),{});
     storage.closeStorage();assert.equal(prepared.findPrepared(id).signature,undefined);storage.closeStorage();

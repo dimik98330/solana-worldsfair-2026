@@ -1,0 +1,57 @@
+{
+  "checkedAt": "2026-10-08T18:24:55.124Z",
+  "network": "localnet",
+  "origin": "http://127.0.0.1:3160",
+  "rpcUrl": "http://127.0.0.1:8959",
+  "programSha256": "761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd",
+  "signature": "3DVYfSSRgVA5nyCGAFP41xirzRJFUeySM2o3GhsfDm23PbGj9JhE4FXw79W4Q9BLS89bSESZxLqMcbYMRsE5udgb",
+  "beneficiary": "C7ZyY8RzvuYt1zDfXGN1F9Vs97rmeYN8fxjhdBFmpR7X",
+  "transferLamports": "890880",
+  "checks": {
+    "faultAfterDurableCommitBeforeRpcRelay": true,
+    "recipientBalanceBeforeRelayZero": true,
+    "separateApiProcessRecoveredSameSignedBytes": true,
+    "completedReplayNoSecondTransfer": true
+  },
+  "first": {
+    "signature": "3DVYfSSRgVA5nyCGAFP41xirzRJFUeySM2o3GhsfDm23PbGj9JhE4FXw79W4Q9BLS89bSESZxLqMcbYMRsE5udgb",
+    "status": "confirmed",
+    "slot": 6623,
+    "error": null,
+    "explorerUrl": "https://explorer.solana.com/tx/3DVYfSSRgVA5nyCGAFP41xirzRJFUeySM2o3GhsfDm23PbGj9JhE4FXw79W4Q9BLS89bSESZxLqMcbYMRsE5udgb?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8959",
+    "verification": "live-rpc",
+    "genesisHash": "6sNRfcm4QfwRYW1QM8425j5ws7ENXcZkzpTcEd7RRNGA",
+    "observedAt": "2026-10-08T18:24:54.849Z",
+    "finality": {
+      "schemaVersion": 1,
+      "signature": "3DVYfSSRgVA5nyCGAFP41xirzRJFUeySM2o3GhsfDm23PbGj9JhE4FXw79W4Q9BLS89bSESZxLqMcbYMRsE5udgb",
+      "status": "confirmed",
+      "source": "live-rpc",
+      "slot": 6623,
+      "contextSlot": 6623,
+      "observedAt": "2026-10-08T18:24:54.849Z",
+      "genesisHash": "6sNRfcm4QfwRYW1QM8425j5ws7ENXcZkzpTcEd7RRNGA"
+    },
+    "rebroadcast": true
+  },
+  "replay": {
+    "signature": "3DVYfSSRgVA5nyCGAFP41xirzRJFUeySM2o3GhsfDm23PbGj9JhE4FXw79W4Q9BLS89bSESZxLqMcbYMRsE5udgb",
+    "status": "confirmed",
+    "slot": 6623,
+    "error": null,
+    "explorerUrl": "https://explorer.solana.com/tx/3DVYfSSRgVA5nyCGAFP41xirzRJFUeySM2o3GhsfDm23PbGj9JhE4FXw79W4Q9BLS89bSESZxLqMcbYMRsE5udgb?cluster=custom&customUrl=http%3A%2F%2F127.0.0.1%3A8959",
+    "verification": "live-rpc",
+    "genesisHash": "6sNRfcm4QfwRYW1QM8425j5ws7ENXcZkzpTcEd7RRNGA",
+    "observedAt": "2026-10-08T18:24:55.089Z",
+    "finality": {
+      "schemaVersion": 1,
+      "signature": "3DVYfSSRgVA5nyCGAFP41xirzRJFUeySM2o3GhsfDm23PbGj9JhE4FXw79W4Q9BLS89bSESZxLqMcbYMRsE5udgb",
+      "status": "confirmed",
+      "source": "live-rpc",
+      "slot": 6623,
+      "contextSlot": 6624,
+      "observedAt": "2026-10-08T18:24:55.089Z",
+      "genesisHash": "6sNRfcm4QfwRYW1QM8425j5ws7ENXcZkzpTcEd7RRNGA"
+    }
+  }
+}

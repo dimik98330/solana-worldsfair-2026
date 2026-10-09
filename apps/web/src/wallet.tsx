@@ -3,6 +3,7 @@ import { createClient, getCompiledTransactionMessageDecoder, getTransactionDecod
 import { ClientProvider } from '@solana/react';
 import { walletSigner } from '@solana/kit-plugin-wallet';
 import { useConnectedWallet, useWallets, useWalletStatus } from '@solana/kit-plugin-wallet/react';
+import {withWalletDeadline} from './wallet-deadline';
 
 function createWalletClient(network: 'localnet' | 'devnet') { return createClient().use(walletSigner({ chain: `solana:${network}` })); }
 type WalletClient = ReturnType<typeof createWalletClient>;
@@ -28,9 +29,10 @@ export async function signPreparedTransaction(connection: NonNullable<ReturnType
   const message = getCompiledTransactionMessageDecoder().decode(transaction.messageBytes);
   if (!(connection.account.address in transaction.signatures)) throw new Error('The prepared transaction does not name your connected account as a signer.');
   if (!connection.supportedTransactionVersions.has(message.version)) throw new Error(`This wallet does not support the prepared transaction version (${message.version}). Choose a compatible wallet.`);
-  if (!connection.signer || !isTransactionModifyingSigner(connection.signer)) throw new Error('This wallet does not support transaction signing. Choose a Wallet Standard wallet with solana:signTransaction.');
+  const signer=connection.signer;
+  if (!signer || !isTransactionModifyingSigner(signer)) throw new Error('This wallet does not support transaction signing. Choose a Wallet Standard wallet with solana:signTransaction.');
   if (!connection.account.chains.includes(`solana:${network}`)) throw new Error(`This account does not support ${network}. Switch the network in your wallet.`);
-  const [result] = await connection.signer.modifyAndSignTransactions([transaction]);
+  const [result] = await withWalletDeadline(()=>signer.modifyAndSignTransactions([transaction]));
   if (!result) throw new Error('The wallet returned no signed transaction.');
   if (result.messageBytes.length !== transaction.messageBytes.length || result.messageBytes.some((byte, index) => byte !== transaction.messageBytes[index])) throw new Error('The wallet changed the reviewed transaction. Prepare a new preview before submitting.');
   let binary = ''; for (const byte of getTransactionEncoder().encode(result)) binary += String.fromCharCode(byte);

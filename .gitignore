@@ -9,6 +9,10 @@ dist/
 apps/web/dist/
 coverage/
 .brand-preview/
+.impeccable/review/
+.impeccable/critique/
+.impeccable/judge-b/
+.impeccable/rejection-evidence/
 *.tsbuildinfo
 test-ledger/
 .env
@@ -32,3 +36,17 @@ artifacts/demo/rendered/
 artifacts/demo/qa/
 artifacts/demo/test-*.json
 artifacts/demo/head-scenes.json
+# OS/editor/cache byproducts and local database copies are not source deliverables.
+.DS_Store
+Thumbs.db
+__pycache__/
+*.py[cod]
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db-journal
+# Lead/agent draft notes are archived locally after their findings are integrated.
+docs/release/JURY-README-DRAFT.md
+docs/release/JURY-REPRODUCTION-NOTES.md
+docs/release/JURY-PACKAGING-REVIEW.md
+docs/release/JURY-BILINGUAL-REVIEW.md

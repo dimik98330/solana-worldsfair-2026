@@ -4,19 +4,26 @@ import {entitlement, hasClaim} from '../packages/client/src/domain.ts';
 import {account, AppError, chainClock} from './rpc.ts';
 import {activities, fixture} from './store.ts';
 import {isKnownDemoWallet} from './demo-identities.ts';
-import {readCatalog, listCatalog} from './catalog.ts';
+import {readCatalog, listCatalog, type CatalogRecord} from './catalog.ts';
 import {demoEnabled, network, rpcUrl} from './config.ts';
 import {accountBytes, readChainView, validateBondIdentity, type Bond} from './chain-view.ts';
 import {decimalAmount, isoTimestamp, reconcile} from './reconciliation.ts';
+import {buildServicing} from './servicing.ts';
+import {normalizeRateDescriptor,verifyRateAmounts} from './rate-terms.ts';
 
 // Individual reads remain available to transaction builders; /state uses the complete coherent graph.
 export async function programAccount(key: string) {
   const data = await account(key); if (!data.value) return null;
   return {bytes: accountBytes(data.value, PROGRAM_ID), slot: data.slot};
 }
-function metadata(key: string, bond: Bond) {
+function metadata(key: string, bond: Bond): CatalogRecord {
   const meta = readCatalog(key);
   if (meta && (bond.issuer !== meta.roles.issuer || bond.seriesId.toString() !== meta.seriesId || bond.settlementMint !== meta.settlementMint)) throw new AppError('FIXTURE_MISMATCH', 'Recorded instrument does not match on-chain identity');
+  if (meta?.rateTerms) {
+    if (meta.rateTerms.faceValueMinor !== bond.faceValue.toString()) throw new AppError('INSTRUMENT_MISMATCH', 'Signed annual-rate evidence has a different nominal than the on-chain instrument');
+    const rate = normalizeRateDescriptor({rateBps: meta.rateTerms.rateBps, couponFrequency: meta.rateTerms.couponFrequency}, bond.faceValue)!;
+    verifyRateAmounts(rate, bond.couponTerms.map(coupon => coupon.unitAmount));
+  }
   return meta ?? {seriesId: bond.seriesId.toString(), bond: key, name: bond.name, settlementMint: bond.settlementMint, createdAt: '', rateBps: 0, couponFrequency: 0, roles: {issuer: String(bond.issuer)}, proposalIds: [], complete: bond.state > 0, accelerated: false, source: 'wallet' as const, holderLabels: {} as Record<string, string>};
 }
 export async function readBond(selected?: string) {
@@ -48,12 +55,19 @@ export async function getState(selected?: string) {
   result.slot = String(view.contextSlot);
   result.context = {commitment: 'confirmed', slot: result.slot, clockSlot: clock.slot.toString(), chainTimestamp: clock.timestamp.toString(), accountCount: view.accountCount};
   result.serverTime = isoTimestamp(clock.timestamp); result.reconciliation = reconciliation;
+  result.servicing = buildServicing(view, reconciliation);
+  result.proposalDiscovery = view.proposalDiscovery;
   const generatedMatch = isKnownDemoWallet(String(bond.issuer), f?.roles);
   result.demo = {available: demoEnabled && generatedMatch, ready: bond.state > 0, accelerated: meta.accelerated, roleWallets: generatedMatch ? f!.roles : {}};
   const amounts = view.holders.map(h => h.amount);
   const label = (wallet: string) => meta.holderLabels?.[wallet] ?? Object.entries(generatedMatch ? f!.roles : {}).find(([, value]) => value === wallet)?.[0].replace('issuer', 'Test issuer').replace('investor', 'Test investor ') ?? 'Registered holder';
   result.holders = bond.holderWallets.map((wallet, i) => ({wallet, label: label(wallet), units: amounts[i].toString(), tokenAccount: view.holders[i].address, accountState: view.holders[i].closed ? 'closed-empty-canonical' : view.holders[i].state === 2 ? 'frozen' : 'initialized-empty'}));
-  result.instrument = {address: bondAddress, name: bond.name, symbol: 'BOND·TEST', issuer: bond.issuer, bondMint: bond.bondMint, settlementMint: bond.settlementMint, settlementDecimals: view.settlementMint.decimals, faceValueMinor: bond.faceValue.toString(), faceValueDecimal: decimalAmount(bond.faceValue), seriesId: bond.seriesId.toString(), rateBps: meta.rateBps, couponFrequency: meta.couponFrequency, rateBasis: 'local-display-metadata', couponUnitMinor: bond.couponTerms.reduce((sum, c) => sum + c.unitAmount, 0n).toString(), status: ['draft', 'active', 'redeeming', 'redeemed'][bond.state], issuedSupply: bond.totalIssued.toString(), redeemedSupply: bond.totalRedeemed.toString(), recordAt: isoTimestamp(bond.couponTerms[0].recordTs), paymentAt: isoTimestamp(bond.couponTerms[0].paymentTs), maturityAt: isoTimestamp(bond.maturityTs), vaultBalanceMinor: view.vault.amount.toString(), vaultBalanceDecimal: decimalAmount(view.vault.amount), requiredReserveMinor: reconciliation.totals.remainingObligations.baseUnits, fundingGapMinor: reconciliation.totals.fundingGap.baseUnits, settlementBalanceMinor: view.issuerSettlement.amount.toString(), settlementBalanceDecimal: decimalAmount(view.issuerSettlement.amount), settlementAccountAvailable: !view.issuerSettlement.closed};
+  result.instrument = {address: bondAddress, name: bond.name, symbol: 'BOND·TEST', issuer: bond.issuer, bondMint: bond.bondMint, settlementMint: bond.settlementMint, settlementDecimals: view.settlementMint.decimals, faceValueMinor: bond.faceValue.toString(), faceValueDecimal: decimalAmount(bond.faceValue), seriesId: bond.seriesId.toString(), rateBps: meta.rateBps, couponFrequency: meta.couponFrequency, rateBasis: meta.rateTerms ? 'issuer-signed-creation-memo-validated-against-on-chain-coupons' : meta.source === 'demo' && meta.rateBps > 0 && meta.couponFrequency > 0 ? 'historical-local-display-metadata' : 'fixed-coupon-amounts-no-annual-rate-descriptor', rateTerms: meta.rateTerms ?? null, couponUnitMinor: bond.couponTerms.reduce((sum, c) => sum + c.unitAmount, 0n).toString(), status: ['draft', 'active', 'redeeming', 'redeemed'][bond.state], issuedSupply: bond.totalIssued.toString(), redeemedSupply: bond.totalRedeemed.toString(), recordAt: isoTimestamp(bond.couponTerms[0].recordTs), paymentAt: isoTimestamp(bond.couponTerms[0].paymentTs), maturityAt: isoTimestamp(bond.maturityTs), vaultBalanceMinor: view.vault.amount.toString(), vaultBalanceDecimal: decimalAmount(view.vault.amount), requiredReserveMinor: reconciliation.totals.remainingObligations.baseUnits, fundingGapMinor: reconciliation.totals.fundingGap.baseUnits, settlementBalanceMinor: view.issuerSettlement.amount.toString(), settlementBalanceDecimal: decimalAmount(view.issuerSettlement.amount), settlementAccountAvailable: !view.issuerSettlement.closed};
+  if(view.financialTerms){
+    const terms=view.financialTerms;
+    if(meta.rateTerms&&(Number(meta.rateTerms.rateBps)!==terms.rateBps||Number(meta.rateTerms.couponFrequency)!==terms.couponFrequency))throw new AppError('FIXTURE_MISMATCH','Local rate metadata disagrees with the immutable program account');
+    Object.assign(result.instrument,{rateBps:terms.rateBps,couponFrequency:terms.couponFrequency,rateBasis:'on-chain-program-validated-rate-v1',financialTerms:{address:view.financialTermsAddress,version:terms.version,bond:terms.bond,faceValueMinor:terms.nominal.toString(),rateBps:terms.rateBps,couponFrequency:terms.couponFrequency,couponUnitMinor:terms.unitAmount.toString(),contextSlot:String(view.contextSlot)}});
+  }else result.instrument.financialTerms=null;
   for (let index = 0; index < bond.couponTerms.length; index++) {
     const terms = bond.couponTerms[index], snapshot = view.coupons[index], key = view.couponAddresses[index], financial = reconciliation.coupons[index];
     const units = snapshot?.units ?? amounts;

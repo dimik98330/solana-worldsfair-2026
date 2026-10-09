@@ -1,0 +1,138 @@
+{
+  "capturedAt": "2026-10-08T18:43:13.843Z",
+  "checks": [
+    {
+      "name": "portfolio320 fits",
+      "pass": true,
+      "data": {
+        "innerWidth": 320,
+        "document": 320,
+        "identityWidth": 240
+      }
+    },
+    {
+      "name": "voting320 fits",
+      "pass": true,
+      "data": {
+        "innerWidth": 320,
+        "document": 320,
+        "tableWidth": 262
+      }
+    },
+    {
+      "name": "portfolio390 fits",
+      "pass": true,
+      "data": {
+        "innerWidth": 390,
+        "document": 390,
+        "identityWidth": 302
+      }
+    },
+    {
+      "name": "voting390 fits",
+      "pass": true,
+      "data": {
+        "innerWidth": 390,
+        "document": 390,
+        "tableWidth": 324
+      }
+    },
+    {
+      "name": "portfolio768 fits",
+      "pass": true,
+      "data": {
+        "innerWidth": 768,
+        "document": 768,
+        "identityWidth": 185
+      }
+    },
+    {
+      "name": "voting768 fits",
+      "pass": true,
+      "data": {
+        "innerWidth": 768,
+        "document": 768,
+        "tableWidth": 694
+      }
+    },
+    {
+      "name": "portfolio1440 fits",
+      "pass": true,
+      "data": {
+        "innerWidth": 1440,
+        "document": 1440,
+        "identityWidth": 185
+      }
+    },
+    {
+      "name": "voting1440 fits",
+      "pass": true,
+      "data": {
+        "innerWidth": 1440,
+        "document": 1440,
+        "tableWidth": 720
+      }
+    },
+    {
+      "name": "portfolio2560 fits",
+      "pass": true,
+      "data": {
+        "innerWidth": 2560,
+        "document": 2560,
+        "identityWidth": 185
+      }
+    },
+    {
+      "name": "voting2560 fits",
+      "pass": true,
+      "data": {
+        "innerWidth": 2560,
+        "document": 2560,
+        "tableWidth": 720
+      }
+    },
+    {
+      "name": "phone invalid progression focuses issue name",
+      "pass": true
+    },
+    {
+      "name": "phone review exact sum",
+      "pass": true
+    },
+    {
+      "name": "archive transaction review disabled",
+      "pass": true
+    },
+    {
+      "name": "overlays escape return focus",
+      "pass": true
+    },
+    {
+      "name": "selected holder2 identity1440 readable",
+      "pass": true,
+      "data": {
+        "width": 188.46875,
+        "text": "Execution holder 2DssTv…Eq89X"
+      }
+    }
+  ],
+  "screens": [
+    "portfolio-320.png",
+    "voting-320.png",
+    "portfolio-390.png",
+    "voting-390.png",
+    "portfolio-768.png",
+    "voting-768.png",
+    "portfolio-1440.png",
+    "voting-1440.png",
+    "portfolio-2560.png",
+    "voting-2560.png",
+    "creation-error-390.png",
+    "creation-review-390.png",
+    "creation-review-footer-390.png",
+    "receipts-390.png",
+    "account-390.png",
+    "portfolio-selected-1440.png"
+  ],
+  "errors": []
+}

@@ -5,7 +5,7 @@ import {AppError} from './rpc.ts';
 import {transactionSync} from './storage.ts';
 
 export interface ConfirmedEffect {
-  action: string; wallet?: string; bond?: string; params?: Record<string, unknown>; metadata?: Record<string, unknown>;
+  action: string; signature?: string; wallet?: string; bond?: string; params?: Record<string, unknown>; metadata?: Record<string, unknown>;
 }
 /** Only call after a successful receipt for the exact persisted signed message. */
 export async function applyConfirmedEffect(record: ConfirmedEffect) {

@@ -1,0 +1,201 @@
+{
+  "scope": "UI only; saved snapshot, actual API error, or explicit fixture. Form screenshots are viewport sections.",
+  "files": [
+    {
+      "file": "account-1440.png",
+      "sha256": "366c5008010e4bce61bee95ab55c4659adc7793e2a69a7261aa0c54f2b9b3fb2"
+    },
+    {
+      "file": "calendar-1440.png",
+      "sha256": "e6fb077ac8d6dd2fd63adf1b42521c23f85e045f899d90d450eb0aefb52f271e"
+    },
+    {
+      "file": "calendar-320.png",
+      "sha256": "d792f20e34bef13a89699baacbbd45e316a0c107d6fca21133a82d47efe1f31b"
+    },
+    {
+      "file": "calendar-390.png",
+      "sha256": "e1f72428808d01bf5f6327784558cc6f484b420b1100b1d852c4c8a8d9ceaf96"
+    },
+    {
+      "file": "creation-1440-bottom.png",
+      "sha256": "7c3479da64458ad257e9aea0ff74a2666720758bffd9cd60a643155c37577f8d"
+    },
+    {
+      "file": "creation-1440.png",
+      "sha256": "7c3479da64458ad257e9aea0ff74a2666720758bffd9cd60a643155c37577f8d"
+    },
+    {
+      "file": "creation-2560.png",
+      "sha256": "f6b32230f51ebf17f9d785b415c761b260fe6af2a84c629e703c66b2938a3674"
+    },
+    {
+      "file": "creation-390-bottom.png",
+      "sha256": "811de46f5bb0ef1ad16f53097d6a7630f063e7bad6bc529a116038cad39dbb0b"
+    },
+    {
+      "file": "creation-390.png",
+      "sha256": "ae3e40a9586d5b0712d95bddb0c8536e3d8439ddf2a63c1f9a8553d6dc3e0a27"
+    },
+    {
+      "file": "error-1440.png",
+      "sha256": "3227b0a764f1da7e01420cca199a1b5c807689b7b6f6d8de31df0a3c2a7aebdb"
+    },
+    {
+      "file": "error-390.png",
+      "sha256": "bc722a1cb0f8b1701d0e144798fc81fc2b12937e165ae9af3ad3e44b0c2dff11"
+    },
+    {
+      "file": "issuer-1440.png",
+      "sha256": "8713fa875df6ca252a9712b6ca164e511bef4f564baf1289f9aaae1dd04dd017"
+    },
+    {
+      "file": "issuer-390.png",
+      "sha256": "2adfb67e7db2619742348b57ed1a1b2393ec8588fcc0cd58da81d3129d51d6c3"
+    },
+    {
+      "file": "long-content-320.png",
+      "sha256": "beb94d3039a562a5eff3cc14424283fe2a6fa8010068e840d2d130a5dd059238"
+    },
+    {
+      "file": "overview-1440.png",
+      "sha256": "358a899218be67d3ecc1ab42c037290e8c9318ce3cbd559e4a050b7d77a88b04"
+    },
+    {
+      "file": "overview-2560.png",
+      "sha256": "d4ca193a962677da07b438dba339fb3cc91960567663f876d32a435703b612cf"
+    },
+    {
+      "file": "overview-320.png",
+      "sha256": "630c7cf51b3fe5995b70fb35943a5026cd088487f7b6833d280b724516a90431"
+    },
+    {
+      "file": "overview-390.png",
+      "sha256": "2a8e14d8fd9fbf77c316e42d2d8999bdf3252a897b7c70d9be0602719e677693"
+    },
+    {
+      "file": "overview-768.png",
+      "sha256": "f6c5ce5ce346b38c10ce98b63f8e5cbacc9161f526669cd8fb5480e9c30cfea7"
+    },
+    {
+      "file": "payment-detail-1440.png",
+      "sha256": "273a65a4b324ac40505a347111207921326e9969c09760ebec66b591d725691d"
+    },
+    {
+      "file": "payments-1440.png",
+      "sha256": "acd76f4921d4abfe127183d3e4a1a8e2787b2818c5491e5facc90c55b241299c"
+    },
+    {
+      "file": "payments-2560.png",
+      "sha256": "bd0a96983be2385c65bd76365f93192b928f8016e278fa6aae975b72e3e7420d"
+    },
+    {
+      "file": "payments-320.png",
+      "sha256": "f185836b2d71e3be0295fb61a285556d01119e9adf8f2c581c7ef630cc0a98d6"
+    },
+    {
+      "file": "payments-390.png",
+      "sha256": "968624db26314e01e0ac9bc10177a18393204439242968f30d0e3a161fff2942"
+    },
+    {
+      "file": "payments-768.png",
+      "sha256": "446bfbab6a8f1452e6b1505652e45bc014a62c7629103e53e259f8f37bdf3536"
+    },
+    {
+      "file": "payments-native.png",
+      "sha256": "a11bc3766de351d11f4323049fdb730370946a36d567eb8ea7eaa8813491b3a2"
+    },
+    {
+      "file": "payments-reflow-720.png",
+      "sha256": "383cc91a9dbfdb0855e3cca9f01bdcb26dd7cc872b35ea2e7e994d1c7c4fe2d7"
+    },
+    {
+      "file": "payments-ru-390.png",
+      "sha256": "a8dc073153c853a173b6e7cc30eaa3bd71a6633ac84b17771547699093dd3bf7"
+    },
+    {
+      "file": "portfolio-1440.png",
+      "sha256": "19eea3762d70332fb1163afac004089eea14e773af268209214455ce9cdfdf3a"
+    },
+    {
+      "file": "portfolio-390.png",
+      "sha256": "c5a79d853934707571e42857e9cf6878c51fad0419e1538bfffa4338cdc6ed26"
+    },
+    {
+      "file": "receipts-1440.png",
+      "sha256": "cfe2c4d0c7dfe6b0797e00ae2f8e4ddd916b09c769410bd185c63cc8cd20f554"
+    },
+    {
+      "file": "recovery-retained-1440.png",
+      "sha256": "b7d01782624f138fa7add3867fb736eb1726c84dbfe62bd1a68bc3b084d99318"
+    },
+    {
+      "file": "registry-1440.png",
+      "sha256": "3b3f178cc86fffe7ecafe01c3916b99597e25674c338f7db2edf009b5a78ac00"
+    },
+    {
+      "file": "registry-320.png",
+      "sha256": "65d42660bd4d510d457d88cc17c4775be33ba0527b524c8abb68d4316cbacf3e"
+    },
+    {
+      "file": "registry-390.png",
+      "sha256": "226a8bc4e19eb5af91c3399ba0d4f6430b16016ec1f1d2e629c61f90e5a12c82"
+    },
+    {
+      "file": "review-1440-bottom.png",
+      "sha256": "d5932d10f73c9b78e1085a6e21a64fed80386faba44cef599e9815b336791606"
+    },
+    {
+      "file": "review-1440-middle.png",
+      "sha256": "d5932d10f73c9b78e1085a6e21a64fed80386faba44cef599e9815b336791606"
+    },
+    {
+      "file": "review-1440-viewport.png",
+      "sha256": "02648c3470136330cdd6a81e3399fceb7432d96c3fc9feda604cb3ae66be1c6b"
+    },
+    {
+      "file": "review-1440.png",
+      "sha256": "e961c6cd564fd8ca04c27b9f2e23fe246c0a99c391b364c65ad671be8bf5aa79"
+    },
+    {
+      "file": "review-390-bottom.png",
+      "sha256": "4532d4a9ea24fcf51f5e26cecb1fd9edfb22570c83d80532c5911477bba6cd35"
+    },
+    {
+      "file": "review-390-middle.png",
+      "sha256": "3b7a6c204c81df59e872fded6177ab437c6c005986a6af6c893b47a6066d7437"
+    },
+    {
+      "file": "review-390.png",
+      "sha256": "40c4966b10a97efeb8a49923db9d6f613db42095138aa9607f482ce381f341ea"
+    },
+    {
+      "file": "schedule-1440-bottom.png",
+      "sha256": "09fda06e8fa4663fac65239c49de9a76618cc8b75a500d8c8ae40cd8d14ed418"
+    },
+    {
+      "file": "schedule-1440.png",
+      "sha256": "16d8d04d780749cb17cc934aa4091037d0578decfd91989323e1aa58a6d30844"
+    },
+    {
+      "file": "schedule-390-bottom.png",
+      "sha256": "b0a3145a3c9c0b4c8c0453e5aef9e960db74067ea5b46f99e586af47173afcd9"
+    },
+    {
+      "file": "schedule-390.png",
+      "sha256": "3daffdae2450e398efe71e9dacb8441cde66b33ca537a17c5a604a68b1be2f22"
+    },
+    {
+      "file": "settings-1440.png",
+      "sha256": "85f8bafc4d8e6585878495f1401c04aaf580bf4ce5adc61ab291fcd8da456222"
+    },
+    {
+      "file": "voting-1440.png",
+      "sha256": "e2cb5465e63d587ef4a9b2e2b296c52959595aa494d8001b27a85ae58323a896"
+    },
+    {
+      "file": "voting-390.png",
+      "sha256": "9da1e8a8f98ccee4f467bffdc22166275ae311ebb906375db58d4de98fcea4da"
+    }
+  ]
+}

@@ -12,6 +12,7 @@ import {beginOperation,findOperation,updateOperation,type Operation} from './ope
 import {readCatalog,saveCatalog} from './catalog.ts';
 import {transactionSync} from './storage.ts';
 import {chainIdentity} from './chain-identity.ts';
+import {assertVerifiedProgram} from './program-identity.ts';
 import {saveReceipt,updateReceipt,journalValues,receipt} from './journal.ts';
 import {canonicalJson} from './request-contract.ts';
 
@@ -196,6 +197,7 @@ async function runStep(id:string,plan:BootstrapPlan,step:BootstrapStep,signers:S
   beginOperation(step.operationId,'bootstrap_step','issuer',params);
   transactionSync(()=>{assertActive(id,plan);const current=findOperation(step.operationId);updateOperation(step.operationId,{bond:plan.bond,wallet:plan.roles.issuer,metadata:{...current?.metadata,...params}});});
   if(await reconcileStep(step))return;
+  await assertVerifiedProgram();
   if(step.fundingRole){await ensureSol(id,plan,step,signers[step.fundingRole]);return;}
   if(step.id==='mint'&&!plan.createMint){if(!await validateMint(plan.settlementMint,plan.roles.issuer))throw new AppError('INVALID_MINT','The frozen preexisting settlement mint disappeared');completeStep(step);return;}
   const instructions=await instructionsFor(plan,step,signers);

@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "project": "BondTrace",
+  "preparedOn": "2026-10-08",
+  "mode": "coach",
+  "stage": "submit",
+  "decisionContext": "application",
+  "artifactStatus": "local_draft_for_review",
+  "submitted": false,
+  "target": {
+    "name": "Superteam Kazakhstan x KASE: Corporate Actions on Blockchain",
+    "url": "https://superteam.fun/earn/listing/superteam-kazakhstan-x-kase-side-track-corporate-actions-on-blockchain",
+    "listingRetrievedAt": "2026-10-07T22:12:49.090Z",
+    "formSchemaSource": "docs/14-SUBMISSION.md",
+    "formObservedOn": "2026-10-07",
+    "formSchemaStatus": "captured_labels_and_required_flags; final_current_form_recheck_pending"
+  },
+  "scope": {
+    "verifiedNetwork": "localnet",
+    "settlement": "test settlement units, six decimals",
+    "demoSigning": "generated test signers",
+    "devnetDeployment": "not_verified",
+    "humanWalletSigning": "not_verified",
+    "judgeAccess": "not_verified",
+    "officialMainRegistration": "not_verified",
+    "officialMainSubmission": "not_verified",
+    "bankKaseCustodyIntegration": "not_implemented",
+    "prototypeLimits": "16 registered wallets, 8 fixed coupons, full prefunding, informational voting"
+  },
+  "fields": [
+    {
+      "id": "submission_link",
+      "label": "Link to Your Submission",
+      "required": true,
+      "value": null,
+      "status": "unresolved_public_url",
+      "note": "Insert the verified judge-accessible project/demo page. Localhost is not a public submission URL."
+    },
+    {
+      "id": "tweet_link",
+      "label": "Tweet Link",
+      "required": false,
+      "value": null,
+      "status": "optional_not_created"
+    },
+    {
+      "id": "project_name",
+      "label": "Project Name",
+      "required": true,
+      "value": "BondTrace",
+      "status": "draft_ready"
+    },
+    {
+      "id": "project_description",
+      "label": "Project Description",
+      "required": true,
+      "value": "BondTrace helps a bond issuer service a tokenized test instrument from placement to final retirement. The console shows who is entitled, the exact amount owed, the action to sign and its settlement receipt.\n\nAn issuer creates fixed terms, registers holders, places bonds and reserves all principal and coupon obligations before activation. At each record date, the Solana program fixes coupon rights. Later transfers do not move those earlier rights. Investors claim test settlement tokens, receive principal at maturity while the corresponding bonds burn atomically, and cast informational votes using a proposal snapshot.\n\nSolana makes the entitlement and execution state independently inspectable. An Anchor program enforces the corporate-action rules, and classic SPL Token performs settlement and retirement. The backend reads the required financial accounts in one confirmed context, reconciles exact integer totals and keeps durable recovery IDs. If a response is lost, the same signed operation is checked instead of preparing another payment.\n\nA verified localnet issuer cycle placed fifteen bonds, paid two coupons totaling 1,125 test units and 15,000 principal units, burned all fifteen bonds and left zero in the reserve. Its unsigned preparation survived an API restart. This evidence uses generated test signers; it is not a human-wallet test. A separate 2:54 product video shows an earlier real browser-driven eighteen-bond cycle.\n\nThe prototype supports up to sixteen registered wallets and eight fixed coupons. It is not connected to a bank, KASE or a custodian, and represents no real security. Devnet deployment, human-wallet verification, judge-accessible URLs and official World's Fair registration/submission are not yet confirmed. No customers, partnerships or validated demand are claimed. Next work is external-wallet/devnet verification and an issuer-led pilot after the required legal and operational integrations.",
+      "status": "draft_ready_current_localnet_scope",
+      "evidence": [
+        "docs/22-BACKEND-READINESS.md",
+        "docs/evidence/backend-lifecycle-localnet.json",
+        "docs/13-DEMO.md",
+        "docs/release/JUDGE-TECHNICAL-OVERVIEW.md"
+      ]
+    },
+    {
+      "id": "github_link",
+      "label": "Project Github Link",
+      "required": true,
+      "value": "https://github.com/dimik98330/solana-worldsfair-2026",
+      "status": "private_judge_access_not_verified",
+      "note": "Existing private repository. This is not evidence that judges can access it. Do not change visibility through this draft."
+    },
+    {
+      "id": "website_x",
+      "label": "Project Website / X",
+      "required": false,
+      "value": null,
+      "status": "optional_unresolved_public_url"
+    },
+    {
+      "id": "presentation_link",
+      "label": "Pitch deck or Loom/video presentation",
+      "required": true,
+      "value": null,
+      "status": "unresolved_public_video_url",
+      "localAsset": "artifacts/demo/bondtrace-product-demo.mp4",
+      "localDurationSeconds": 174.021333,
+      "note": "Completed historical localnet product video. It uses generated signers, edited idle waits and an eighteen-bond browser issue. A new issuer-desk shot list is a plan, not a produced video."
+    },
+    {
+      "id": "official_worldsfair_submitted",
+      "label": "Submitted to official World's Fair?",
+      "required": true,
+      "value": null,
+      "allowedValues": ["Yes", "No"],
+      "status": "owner_confirmation_required",
+      "note": "Main submission is not confirmed. Do not select Yes based on Copilot login, local development or this draft. If the main entry has not been sent, the truthful answer is No; verify the side-track acceptance flow before final submission."
+    },
+    {
+      "id": "colosseum_project",
+      "label": "Colosseum project link",
+      "labelStatus": "logical_label_from_captured_project/profile_fields; exact_current_label_pending",
+      "required": null,
+      "value": null,
+      "status": "unresolved_actual_entry_url",
+      "note": "Insert the real created project entry URL. Do not substitute the homepage or invent a slug. Confirm exact current required flag."
+    },
+    {
+      "id": "colosseum_profile",
+      "label": "Colosseum profile link",
+      "labelStatus": "logical_label_from_captured_project/profile_fields; exact_current_label_pending",
+      "required": null,
+      "value": null,
+      "status": "unresolved_actual_profile_url",
+      "note": "Insert the actual registered participant profile URL and confirm exact current required flag."
+    },
+    {
+      "id": "anything_else",
+      "label": "Anything Else",
+      "required": false,
+      "value": "The short current technical overview is docs/release/JUDGE-TECHNICAL-OVERVIEW.md. README contains pinned versions and reproduction commands; docs/22-BACKEND-READINESS.md maps each verification result to its evidence. Source, program ID and recorded signatures refer to localnet. A local Explorer URL requires that validator and is not a publicly verifiable devnet receipt. The existing video and newer backend evidence use different test issues, identified separately.\n\nImplemented: test issue administration, registered holders, immutable record-date rights, exact coupon payments, atomic principal payment and bond retirement, informational snapshot voting, financial reconciliation and durable same-operation recovery. Simulated or absent: real securities, fiat/bank/KASE/custody integration, regulatory onboarding and institutional settlement. Full prefunding is required; excess reserve has no withdrawal path. The prototype uses confirmed commitment and has not had a production security audit.\n\nDevelopment used AI assistance and installed ProofPilot/Solana/design guidance with Anchor, Solana Kit, React and classic SPL Token. No completed competitor product was imported. Generated test accounts are not users or traction. Public asset links and main hackathon entry must be verified before submission.",
+      "status": "draft_ready",
+      "evidence": [
+        "docs/release/JUDGE-TECHNICAL-OVERVIEW.md",
+        "docs/15-API-CONTRACT.md",
+        "README.md"
+      ]
+    }
+  ],
+  "ownerDeclarations": {
+    "adultKazakhstanOneProject": {
+      "status": "user_reported",
+      "note": "User reported adult status, Kazakhstan residence/location and no second team/project. Documentary eligibility is not attested."
+    },
+    "scopeAdherence": "not_checked_not_consented",
+    "kazakhstanKycIfWinner": "not_checked_not_consented",
+    "terms": "not_checked_not_consented"
+  },
+  "mandatoryGates": [
+    {
+      "id": "program_eligibility",
+      "status": "unknown",
+      "reason": "Official main registration and all personal/program conditions are not verified; user statements alone do not attest eligibility."
+    },
+    {
+      "id": "required_materials",
+      "status": "unknown",
+      "reason": "Code/video/prototype exist locally, but judge access and final actual form URLs are unresolved."
+    },
+    {
+      "id": "owner_final_consent",
+      "status": "unknown",
+      "reason": "No checkboxes or final Terms consent have been accepted by this artifact."
+    }
+  ],
+  "review": {
+    "status": "needs_final_current_form_and_source_review",
+    "note": "This draft does not re-score or reset the preserved backend/readiness reviews. Submission readiness is not asserted."
+  },
+  "skills": ["proofpilot", "proofpilot-submission-builder", "submit-to-hackathon", "frontend-design-guidelines", "design-taste"],
+  "continuationRule": "Before substantial follow-up work read AGENTS.md, STATE and relevant installed skills; use ProofPilot coach for product/submission decisions and pass the same rule to subagents. Preserve keys, ledger, evidence and bounded review history."
+}

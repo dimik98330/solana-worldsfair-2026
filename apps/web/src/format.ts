@@ -1,3 +1,5 @@
+import { dateParts, getDisplayTimeZone } from './time-zone';
+
 /** Contract money is integer minor units (6 decimals), never a JS floating point balance. */
 export function integer(value: string | number | bigint | null | undefined): bigint | null {
   if (value == null || !/^-?\d+$/.test(String(value))) return null;
@@ -16,7 +18,8 @@ export function amount(value: string | null | undefined, decimals = 6): string {
   const raw = rawAmount(value, decimals);
   if (!raw) return '--';
   const [whole, fraction] = raw.split('.');
-  return `${whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}${fraction == null ? '' : `.${fraction}`}`;
+  const significant = fraction?.replace(/0+$/, '');
+  return `${whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}${significant ? `.${significant}` : ''}`;
 }
 export function units(value: string | number | bigint | null | undefined): string {
   const n = integer(value);
@@ -53,11 +56,9 @@ export function shortAddress(value?: string, chars = 5): string {
   if (!value) return 'Not available';
   return value.length <= chars * 2 + 3 ? value : `${value.slice(0, chars)}…${value.slice(-chars)}`;
 }
-export function date(value?: string, withTime = false): string {
-  if (!value) return 'Not scheduled';
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return 'Not scheduled';
-  return new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', ...(withTime ? { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' } : {}) }).format(parsed);
+export function date(value?: string, withTime = false, language:'ru'|'en'='en', zone = getDisplayTimeZone()): string {
+  const parts = dateParts(value, zone, language);
+  return withTime && parts.time ? `${parts.date}, ${parts.time}` : parts.date;
 }
 export function safeExplorer(url?: string): string | undefined {
   if (!url) return undefined;

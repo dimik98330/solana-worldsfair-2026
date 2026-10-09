@@ -1,0 +1,4 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {withWalletDeadline,WalletRequestTimeout} from './wallet-deadline';
+test('wallet rejection propagates without relay or pretending confirmation',async()=>{await assert.rejects(()=>withWalletDeadline(async()=>{throw Error('User rejected request');},30),/User rejected/);});
+test('stalled wallet request ends and late signature cannot invoke relay',async()=>{let relay=0;let resolve!:(s:string)=>void;const signature=new Promise<string>(done=>{resolve=done;});const flow=(async()=>{const wire=await withWalletDeadline(()=>signature,10);relay++;return wire;})();await assert.rejects(flow,WalletRequestTimeout);resolve('late signature');await Promise.resolve();assert.equal(relay,0);});
+test('valid timely wallet result reaches the caller exactly once',async()=>{assert.equal(await withWalletDeadline(async()=>'signed bytes',30),'signed bytes');});

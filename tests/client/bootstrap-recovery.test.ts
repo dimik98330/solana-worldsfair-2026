@@ -8,6 +8,7 @@ import {randomUUID} from 'node:crypto';
 // Every worker uses generated TEST signers and mocked RPC in its own ignored namespace.
 // No live RPC, live receipts, real funds or application keys are accessed.
 const source=String.raw`
+import {programRpc} from './tests/client/helpers/program-rpc.ts';
 import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import {createHash} from 'node:crypto';
 import {getAddressDecoder,address} from '@solana/kit';import {getMintEncoder,TOKEN_PROGRAM_ADDRESS} from '@solana-program/token';
 const directory=process.env.BONDTRACE_DATA_DIR,id=process.env.BOOTSTRAP_TEST_ID,scenario=process.env.BOOTSTRAP_TEST_SCENARIO;
@@ -26,6 +27,7 @@ function bondBytes(plan){
 }
 globalThis.fetch=async(_url,init)=>{
  const request=JSON.parse(String(init.body));let result;
+ const deployment=programRpc(request);if(deployment!==undefined)return Response.json({jsonrpc:'2.0',id:request.id,result:deployment});
  const current=apis?.findOperation(activeId),plan=current?.metadata?.bootstrapPlan;
  const next=plan?.steps.find(step=>apis.findOperation(step.operationId)?.status!=='confirmed');
  switch(request.method){
@@ -105,7 +107,11 @@ function worker(directory:string,id:string,scenario:string,network='localnet'){
  return new Promise<{code:number|null;stdout:string;stderr:string}>((resolve,reject)=>{
   const child=spawn(process.execPath,['--import','tsx','--input-type=module','--eval',source],{cwd:process.cwd(),env:{...process.env,BONDTRACE_DATA_DIR:directory,BOOTSTRAP_TEST_ID:id,BOOTSTRAP_TEST_SCENARIO:scenario,BONDTRACE_NETWORK:network,SOLANA_RPC_URL:network==='devnet'?'https://api.devnet.solana.com':'http://127.0.0.1:8899'},windowsHide:true});
   let stdout='',stderr='';child.stdout.on('data',value=>{stdout+=String(value);});child.stderr.on('data',value=>{stderr+=String(value);});child.once('error',reject);
-  const timer=setTimeout(()=>{child.kill();reject(new Error('Synthetic bootstrap worker timeout'));},45000);
+  // Reset/before-send scenarios execute two complete bootstrap phases in one
+  // child. Keep the original per-phase bound without timing out a cold clone
+  // under the suite's four concurrent workers. Financial assertions are unchanged.
+  const phases=scenario.startsWith('reset-')||scenario==='before-send'?2:1;
+  const timer=setTimeout(()=>{child.kill();reject(new Error('Synthetic bootstrap worker timeout: '+scenario));},45000*phases);
   child.once('close',code=>{clearTimeout(timer);resolve({code,stdout,stderr});});
  });
 }
