@@ -1,5 +1,16 @@
 # BondTrace — checkpoint 8 октября 2026
 
+## Jury/live-wallet follow-up — 9 октября 2026, 15:22 UTC+5
+
+Root `C:\Users\dmitrii\Documents\solana`. Активная стадия: bilingual source handoff → закрытие live-wallet проверки и scoped push. Фактически перечитаны AGENTS/START/STATE/backend-focus, ProofPilot coach review→submit/quality, solana-dev frontend/SDK и debug-program/workflow; независимый critic использовал security/Solana/ProofPilot. Пароли/ключи не сохранялись и не используются. Owner разрешил автономную проверку, но CUA запрещает управление chrome-extension страницами; обходов нет, новых owner prompts не открывать без готовности владельца.
+
+Phantom обнаружен, connected и owner-approved; свежая application simulation Passed/5000testlamports feequote. После сообщения владельца о подтверждении extension вернул Unexpectederror. Direct GET operation prepared/not_submitted/signaturenull, localbalance2e9 unchanged, draftaccount absent. Это открытый integrationdefect с неустановленной причиной, не successfulhumanwallet proof. Sanitized public evidence `C:\Users\dmitrii\Documents\solana\docs\evidence\external-wallet-check-20261009.json`; никаких приватных данных кошелька в этом файле.
+
+Scoped changes: optional `npm run wallet:localnet` read/simulation loopback8899→recorded8959, no redirects/mutations; immutable workspace-contained UI selector BONDTRACE_WEB_DIST, finalrealpath assetguard. 8narrowNode tests/typecheck passed; critic W1/W2closed. Guarded APIrestart + aliasrestart сохранили genesis6sNR…/ledger/native scope/release761…; liveHTTPhealthok/known-match, stateconnected, pinnedHTML/2entryassets hashesmatched, aliasgenesis matched/mutation403, readiness advancing+SQLitewrite/read. Logs/results `C:\Users\dmitrii\Documents\solana\.local\jury-delivery\live-followup.json` and followup-tests.log/typecheck.log. Primary live app3160 left open; UI is the validated immutable Git tree720f, APIs/data remain live. This does not publish or overwrite the separate frontend WIP.
+
+Earlier219Node/52UI/39realtransaction cohort and source-verifierFAILED/rootdrift remain attributed to their run. README EN/RU and wallet/delivery docs explicitly preserve unresolved Phantom, devnet/coldhost/submission/access limits. Lead will stage only owned backend/proxy/tests/docs + this checkpoint; independent UI edits stay local. dimik98330 Git identity/private repository push access verified9October10:20UTC via scoped existing GCM, no connector/global changes. Stopping gates: no publicvisibility/mainnet/real funds/paid/finalsubmission; owner records video. Check final remote ref in .local/jury-delivery before handoff.
+
+
 ## Исправление окна аккаунта — 9 октября 2026
 
 Новое поручение владельца по screenshot: узкая неудобная карточка, нижние действия сливаются. Выполнен scoped frontend fix: AccountPicker.tsx/account-picker.css, композиция аккаунта в App.tsx, optionalclassName в Overlay. Диалог1000px desktop, отдельные holders/wallet areas, явные selectable rows/текущий держатель, закреплённые header/footer и нормальная кнопка настроек; phone single scrollbody, intrinsic row heights. Бэкенд/кошелёк/signing callbacks/permissions/recovery/Git/dependencies сохранены; параллельная подготовка публикации ниже не отменяется.

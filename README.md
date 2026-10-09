@@ -177,7 +177,9 @@ After live startup, open the app on3160 and inspect network/instrument details. 
 
 **Your wallet:** choose **My wallet**, then an installed Wallet Standard wallet. It must advertise `solana:localnet` and `solana:signTransaction`; incompatible wallets are not relabelled as another network. Signing stays in the wallet; the API verifies the exact reviewed message and relays it to the configured RPC. See [external signing and live-network verification](docs/release/WALLET-AND-LIVE-VERIFICATION.md).
 
-Do not assume every Phantom/Backpack version supports this localnet: actual advertised extension capabilities and RPC matter. A complete GUI run with a specific extension is not established. Devnet/Phantom becomes a verified path only after program deployment, test funding and an actual signature on that network. The verified localnet lifecycle needs no extension: its generated test identities are real cryptographic signers.
+For extensions that read the standard local endpoint, run `npm run wallet:localnet` in a second terminal after the runtime starts. This optional loopback alias exposes reads/simulation on8899 against the recorded8959 ledger and rejects transaction submission; the app retains its reviewed relay. It refuses an occupied port and does not reconfigure the wallet.
+
+**Phantom check,9October2026:** discovery, owner-approved connection and application-side simulation passed. After owner approval, the extension returned `Unexpected error`; the API remained `not_submitted`, with no signature or fee charged. A successful Phantom transaction is therefore **not verified**, and the cause remains unresolved. See [the exact check](docs/evidence/external-wallet-check-20261009.json). The alias does not establish wallet compatibility. Devnet requires separate deployment/funding/signature evidence. The verified localnet lifecycle needs no extension: its generated test identities are real cryptographic signers.
 
 ## Optional: inspect the saved interface snapshot
 

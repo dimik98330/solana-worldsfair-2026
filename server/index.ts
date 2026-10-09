@@ -8,6 +8,7 @@ import {buildEvidenceReport} from './evidence.ts';
 import {getProgramIdentity} from './program-identity.ts';
 import {runCouponSettlement} from './coupon-run.ts';
 import {planLifecycleRun,runLifecycle,lifecycleRunStatus} from './lifecycle-run.ts';
+import {resolveStaticBuild,staticAssetInside} from './static-build.ts';
 import {receipt} from './journal.ts';
 import {captureRetainedProof,publicExecutionProof} from './proof-retention.ts';
 import {bootstrap} from './seed.ts';
@@ -17,7 +18,7 @@ import {rebroadcastTransaction} from './rebroadcast.ts';
 import {operationStatus} from './operations.ts';
 import {chainIdentity} from './chain-identity.ts';
 import {storageDiagnostics,StorageError,closeStorage,verifyStorageWrite} from './storage.ts';
-const dist=path.resolve('apps/web/dist');
+const dist=resolveStaticBuild(process.cwd(),process.env.BONDTRACE_WEB_DIST);
 const allowedOrigins=new Set([`http://127.0.0.1:${port}`,`http://localhost:${port}`,'http://127.0.0.1:5173','http://localhost:5173']);
 let mutationBusy=false;
 async function mutate<T>(action:()=>Promise<T>){if(mutationBusy)throw new AppError('ACTION_PENDING','Wait for the existing test operation',409);mutationBusy=true;try{return await action();}finally{mutationBusy=false;}}
@@ -59,6 +60,7 @@ const server=http.createServer(async(req,res)=>{
     if(!candidate.startsWith(dist+path.sep))throw new AppError('NOT_FOUND','Not found',404);
     const file=fs.existsSync(candidate)&&fs.statSync(candidate).isFile()?candidate:path.join(dist,'index.html');
     if(!fs.existsSync(file)){res.writeHead(200,{'content-type':'text/html; charset=utf-8'});res.end('<h1>BondTrace API готов</h1><p>Интерфейс разработки: http://127.0.0.1:5173. Для единого запуска выполните npm run build.</p>');return;}
+    if(!staticAssetInside(dist,file))throw new AppError('NOT_FOUND','Not found',404);
     const type=({'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.map':'application/json'} as Record<string,string>)[path.extname(file)]??'application/octet-stream';res.writeHead(200,{'content-type':type,'x-content-type-options':'nosniff'});res.end(fs.readFileSync(file));
   }catch(error){const known=error instanceof AppError?error:error instanceof StorageError?new AppError(error.code,'Public metadata storage is unavailable. Existing signed identifiers must be retained for recovery.',503,true):new AppError('INTERNAL_ERROR','The service could not complete this request. Retain any submitted recovery identifier.',500,true);send(res,known.status,{error:{code:known.code,message:known.message,retryable:known.retryable,recoveryRequired:['RECOVERY_ID_CONFLICT','MESSAGE_ALREADY_SUBMITTED','PLAN_RELEASE_MISMATCH'].includes(known.code)||(req.method==='POST'&&known.status>=500)}});}
 });

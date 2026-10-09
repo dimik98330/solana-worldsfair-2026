@@ -1,0 +1,23 @@
+{
+  "observedAt": "2026-10-09T10:20:21.227Z",
+  "network": "localnet",
+  "genesisHash": "6sNRfcm4QfwRYW1QM8425j5ws7ENXcZkzpTcEd7RRNGA",
+  "programStatus": "known-match",
+  "wallet": "Phantom",
+  "discovered": true,
+  "ownerApprovedConnection": true,
+  "applicationSimulation": "passed",
+  "ownerReportedApproval": true,
+  "attempt": "Create empty draft issue; face1000, fixed coupon50; no issuance or reserve transfer",
+  "extensionResult": "Unexpected error",
+  "cause": "unresolved",
+  "operationId": "c10a3f50986587feeef55bc0676e64fdbc021eb49152e83aba904f09c14030b7",
+  "operationStatus": "prepared",
+  "chainStatus": "not_submitted",
+  "signature": null,
+  "initialLocalLamports": "2000000000",
+  "observedLocalLamports": "2000000000",
+  "draftAccountExists": false,
+  "successfulExtensionTransactionVerified": false,
+  "scope": "Public sanitized engineering observation, not human-wallet/devnet certification. Owner approval is a report; API/RPC statuses and balance/account checks were read directly. No private key or credential is included."
+}

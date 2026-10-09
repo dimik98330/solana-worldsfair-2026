@@ -25,6 +25,7 @@
     "smoke:issuer": "node --import tsx scripts/issuer-smoke.ts",
     "demo:lifecycle": "pwsh -NoProfile -File scripts/lifecycle-demo.ps1",
     "setup:judge": "pwsh -NoProfile -File scripts/judge-setup.ps1",
+    "wallet:localnet": "node scripts/wallet-rpc-proxy.mjs",
     "runtime:start": "node scripts/run-runtime.mjs -RpcPort 8959 -ApiPort 3160 -NativeLedger",
     "runtime:watch": "node scripts/runtime-watchdog.mjs",
     "verify:source": "node scripts/reproduce-source.mjs --lifecycle",
