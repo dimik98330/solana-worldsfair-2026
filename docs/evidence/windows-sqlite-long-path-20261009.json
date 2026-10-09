@@ -1,0 +1,19 @@
+{
+  "observedAt": "2026-10-09T11:25:09Z",
+  "sourceCommit": "4329739ecae0778c56ea36f6f748d4d37bcf7a8b",
+  "failedGitSourceRun": "1cce6909-b4c9-4255-b373-5733102cf3c0",
+  "failedRunStatus": "failed",
+  "passedNodeTests": 240,
+  "failedNodeTests": 1,
+  "lifecycleStarted": false,
+  "case": "Four concurrent catalog projections in a deeply nested source-only Windows workspace",
+  "error": "SQLITE_ERROR14: unable to open database file at BEGIN IMMEDIATE",
+  "databasePathLength": 255,
+  "rollbackJournalPathLength": 263,
+  "diagnosis": "The SQLite Windows VFS used a normal path; its longer rollback journal exceeded legacy MAX_PATH. A new independent path above300characters reproduced the failure before repair.",
+  "repair": "Use path.toNamespacedPath for DatabaseSync open, VACUUM INTO and backup reopen. Keep ordinary logical paths and all namespace/symlink checks.",
+  "beforeRepairRegression": {"passed": 0, "failed": 1},
+  "afterRepairTargetedSuite": {"passed": 27, "failed": 0, "includes": "Commit/reopen/consistent backup above300characters, four writers preserving60distinct entries, existing storage and journal tests"},
+  "typecheckExitCode": 0,
+  "scope": "Actual native SQLite/filesystem regression; no financial or human-wallet transaction. Failed immutable Git-source run preserved; a new complete source run is still required. No test assertion or timeout was weakened."
+}

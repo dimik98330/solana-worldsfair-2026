@@ -159,7 +159,9 @@ function openDatabase() {
     catch (error) { if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error; }
   }
   safeNamespace();
-  const db = new DatabaseSync(databasePath, {enableForeignKeyConstraints: true, enableDoubleQuotedStringLiterals: false, allowExtension: false});
+  // SQLite's Windows VFS also opens a longer rollback-journal filename.
+  // Node fs supports long paths already; give SQLite the extended absolute path too.
+  const db = new DatabaseSync(path.toNamespacedPath(databasePath), {enableForeignKeyConstraints: true, enableDoubleQuotedStringLiterals: false, allowExtension: false});
   let begun = false;
   try {
     // EXTRA includes FULL and syncs the containing directory after DELETE-journal unlink.
@@ -297,9 +299,9 @@ export function backupStorage(absoluteDestination: string) {
   fs.mkdirSync(path.dirname(destination), {recursive: true});
   safeFile(destination);
   fs.closeSync(fs.openSync(destination, 'wx', 0o600));
-  db.prepare('VACUUM INTO ?').run(destination);
+  db.prepare('VACUUM INTO ?').run(path.toNamespacedPath(destination));
   safeFile(destination);
-  const backup = new DatabaseSync(destination, {readOnly: true, allowExtension: false});
+  const backup = new DatabaseSync(path.toNamespacedPath(destination), {readOnly: true, allowExtension: false});
   try {
     integrity(backup);
     if (Number(backup.prepare('PRAGMA user_version').get()!.user_version) !== schemaVersion || Number(backup.prepare('PRAGMA application_id').get()!.application_id) !== applicationId) fail('STORAGE_SCHEMA', 'Backup identity did not match this storage schema');
