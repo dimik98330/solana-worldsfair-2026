@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "commit": "e8f08fb692b18a7f587b49ae67aaefe285d8513a",
+  "tree": "6273d87bff42f314824518334b19f64231a800a6",
+  "runId": "f0b5af56-647a-4853-a273-ab5a24e8f9af",
+  "status": "passed_snapshot",
+  "mode": "verify",
+  "commands": [
+    {
+      "name": "npm-ci",
+      "exitCode": 0
+    },
+    {
+      "name": "application-build",
+      "exitCode": 0
+    },
+    {
+      "name": "toolchain-versions",
+      "exitCode": 0
+    },
+    {
+      "name": "sbf-build-direct",
+      "exitCode": 0
+    },
+    {
+      "name": "frozen-sbf-check",
+      "exitCode": 0
+    },
+    {
+      "name": "node-tests",
+      "exitCode": 0
+    },
+    {
+      "name": "ui-tests",
+      "exitCode": 0
+    }
+  ],
+  "frozenProgram": {
+    "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+    "bytes": 541456,
+    "sha256": "761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd"
+  },
+  "node": {
+    "passed": 266,
+    "failed": 0,
+    "skipped": 10,
+    "scope": "Optional PG integration cases absent env; separate actualPG43test run covers them"
+  },
+  "ui": {
+    "passed": 52,
+    "failed": 0,
+    "skipped": 0
+  },
+  "source": {
+    "files": 233,
+    "currentRuntimeSourceMatches": true,
+    "stagedSourceChanged": [],
+    "runtimeSourceChanged": []
+  },
+  "limits": [
+    "No new financial transaction or validator started by this verify run",
+    "RealPG39transaction and LinuxTLS/backup cohorts remain separate with exactsourceprovenance",
+    "Prepared host/compiler/npm caches; no other physical machine or remoteCI claim"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "scope": "ProofPilot coach application/preparation report quality; not official jury score, production certificate or deployment",
+  "sourceCommit": "e8f08fb692b18a7f587b49ae67aaefe285d8513a",
+  "policyVersion": 4,
+  "mode": "coach",
+  "decisionContext": "application",
+  "disposition": "accepted",
+  "draftCount": 1,
+  "wordCount": 408,
+  "packetSha256": "6e65b21bb3fb595d28bfc6fadbf276944e28585fd58b0a464a152a7f0a6762a4",
+  "draftSha256": "871df825c3952554f2bd54bdf08d398db3dc1a657d0f7b0cc041705a89da3110",
+  "assessmentSha256": "444ecfc9b520b0148bc1863fc6f8ba27ba629448ebc68f7e9ebe532a5c91da4c",
+  "reviewSha256": "66699fbe874edcce835e8f17373d6274a3d3dfec55941c3ceb70708cd02a516a",
+  "reviewer": {
+    "mode": "separate_context",
+    "model": "unknown"
+  },
+  "checks": [
+    {
+      "id": "fact_fidelity",
+      "status": "pass",
+      "note": "The report preserves the actual artifact cohorts: Git58/native SQLite, later actual PostgreSQL-backed localnet, isolated Linux/TLS, and unresolved Phantom. The 39 individual finalized observations are not promoted to parent aggregate finality. Generated signers and test assets are explicit. Cloud, eligibility, demand, partnerships and official scores remain unknown. No runtime was independently reproduced by this reviewer."
+    },
+    {
+      "id": "arithmetic",
+      "status": "pass",
+      "note": "The supplied weights total 100. Checked 10*1000*0.10/2=500 and 10*1000=10000 against the frozen example and checked-u128 source. Parsed raw PG evidence: 29+4+6=39 distinct signatures, 39 finalized observations and 39 nested schema2 finalized proofs. At six settlement decimals, 2500000000 minor=2500 coupon and 25000000000 minor=25000 principal; issued/redeemed=25, supply/vault/remaining obligations=0. The retained PG transcript has 43 pass/0 fail/0 skip."
+    },
+    {
+      "id": "evidence_support",
+      "status": "pass",
+      "note": "Inspected all nine frozen source artifacts, claim mapping, raw financial evidence, retained logs and critical repaired source paths. All nine files matched packet source hashes at initial inspection. Raw PG evidence matches 690024 bytes and b3fc25d84576ace231155280cc15d1ba345a7dbc7f31ce6a0a06707eeb2250e9. Sixteen of seventeen execution-source hashes still match; byte comparison with the retained run source proves the remaining engine delta is exactly one removed trailing LF, already disclosed by the report and provenance. The later hosting-document correction is an inspected adjacent output, not a changed frozen input; exact hashes are in reviewer-note.md."
+    },
+    {
+      "id": "constraints",
+      "status": "pass",
+      "note": "Coach/application context and required independent review match the participant report task. The decision is artifact/complete, not apply/proceed; empty application gates do not waive admission. Owner-assisted account/deployment work is deferred. No official grading, production certification or perfect-project promise is made. Previous FAILED cohorts and PostgreSQL initial/repair1 findings remain preserved; their repair budget is not reset."
+    },
+    {
+      "id": "verdict",
+      "status": "pass",
+      "note": "The limited conclusion permits transition to the owner-assisted deployment stage on inspected local engineering preparation. It does not assert a live Neon/Render service, successful human-wallet transaction, devnet program or completed contest application. Linux financialReady:false and Phantom Unexpected error are disclosed rather than hidden behind green local checks."
+    },
+    {
+      "id": "next_step",
+      "status": "pass",
+      "note": "The next stage produces observable evidence: owner login/secrets, exact devnet program match, final authenticated HTTPS origin, externally signed financial cycle, downloaded backup and same IDs/signatures after restart. Registration, judge access and owner video remain separate unknown conditions. Inspected the corrected adjacent hosting step: distribute, fund full principal-plus-coupon reserve, then seal; no new financial execution is claimed."
+    },
+    {
+      "id": "task_scope",
+      "status": "pass",
+      "note": "The Russian report with short English conclusion covers all five supplied KASE dimensions qualitatively and explains implementation, numeric example, evidence cohorts, source cutoff and remaining owner stage. Current EN/RU README, TECHNICAL, hosting guide and render.yaml were inspected. Two minor adjacent-document inaccuracies were corrected before this initial formal review; the unchanged report/assessment require no semantic repair. The note binds exact final output hashes while preserving frozen source versions."
+    },
+    {
+      "id": "action_bounds",
+      "status": "pass",
+      "note": "The report does not invent provisioning, wallet success, public access, paid services or final submission. This reviewer performed only local source/artifact/log reads, parsing and hashes, read-only Git status/log, and wrote the two assigned review outputs. No tests/builds/services/browser/cloud/accounts/secret files were used. Root-reported later Git-source verification and live UI refresh are excluded from the frozen report's claims."
+    }
+  ],
+  "files": [
+    {
+      "file": "docs/release/PROOFPILOT-PREPARATION-REVIEW-20261009.md",
+      "sha256": "871df825c3952554f2bd54bdf08d398db3dc1a657d0f7b0cc041705a89da3110"
+    },
+    {
+      "file": "docs/research/proofpilot-preparation-independent-20261009.md",
+      "sha256": "d5729832da387a15236c47db4f0a080ed7eb02f1a46cbab0e91738e8fd6a0485"
+    }
+  ],
+  "limits": "Source quotes do not prove entailment, truth, freshness, or full draft coverage. Reviewer mode/model are self-reported; hashes detect local alteration, not a maliciously rewritten history. No model switching or external action is performed.",
+  "adjacentDocumentationCorrections": "D01fundfullreservebeforeseal and D02local/hostedlistener clarified before finalindependentreview; frozenpacket preserved and finaldocSHA in reviewer note",
+  "deferred": [
+    "Owner-assisted Render/Neon deployment and account consent",
+    "Devnet program/funding/full final-origin wallet/restart proof",
+    "Judge access, registration, video and final submission"
+  ],
+  "finalAdjacentDocumentHashes": [
+    {
+      "file": "TECHNICAL.md",
+      "sha256": "f5819ffd484ee302a220ba84297ff6b02d003b72ea9ee76bd167e405822301af"
+    },
+    {
+      "file": "docs/31-HOSTING.md",
+      "sha256": "05230787ae1d8050998ffdb90a9979d5bef5f6d288c3ac9ebd49b078e4416d97"
+    }
+  ]
+}

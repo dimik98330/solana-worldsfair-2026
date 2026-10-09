@@ -45,7 +45,7 @@ flowchart LR
   S --> E[Signatures + retained execution proofs]
 ```
 
-`programs/bondtrace` contains the Anchor program; `packages/client` contains exact arithmetic, instruction construction and bounded state decoding; `server` provides a loopback-only API, program/genesis verification, transactional metadata and recovery; `apps/web` is the existing React/Vite console. Old Bond/Coupon/Proposal/Ballot layouts and fixed initialization remain compatible. The IDL adds rate initialization and a separate FinancialTerms account. Upgrades are verified by actual deployed SBF payload hash.
+`programs/bondtrace` contains the Anchor program; `packages/client` contains exact arithmetic, instruction construction and bounded state decoding; `server` provides a local loopback API or an explicitly authenticated hosted listener on0.0.0.0, program/genesis verification, transactional metadata and recovery; `apps/web` is the existing React/Vite console. Old Bond/Coupon/Proposal/Ballot layouts and fixed initialization remain compatible. The IDL adds rate initialization and a separate FinancialTerms account. Upgrades are verified by actual deployed SBF payload hash.
 
 ## Instrument parameters and exact arithmetic
 
@@ -112,7 +112,7 @@ Finality is separate from the business state: the receipt records actual process
 
 After maturity the parent exposes `awaiting_holder_signature` principal requests. It never signs for or burns a holder's position by issuer authority. Financial closure needs all coupon/principal obligations zero, supply zero and redeemed=issued; a donated surplus is not an unpaid obligation. Parent finality is separately pending/unknown when external holder signatures are not linked to it. The full demonstration independently verifies those actual transaction signatures; the parent does not invent an aggregate signature or promote unknown external provenance.
 
-Issuer instructions enforce Signer, issuer identity, canonical PDAs, token owner/mint/authority and phase/date constraints on-chain. Public prepare operations do not grant authority. The loopback HTTP service also rejects unsupported fields, invalid origins/UTF-8/numeric values and unknown networks. Only localnet/devnet are allowed; mainnet is not an authorized runtime.
+Issuer instructions enforce Signer, issuer identity, canonical PDAs, token owner/mint/authority and phase/date constraints on-chain. Public prepare operations do not grant authority. Both local and authenticated hosted HTTP modes reject unsupported fields, invalid origins/UTF-8/numeric values and unknown networks. Only localnet/devnet are allowed; mainnet is not an authorized runtime.
 
 ## Evidence and practical limits
 
