@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "event": {
+    "id": "kase_2026",
+    "name": "Superteam Kazakhstan x KASE corporate actions participant review",
+    "rules_locator": "User-supplied KASE challenge in this conversation; task preserved in docs/21-BACKEND-FOCUS.md"
+  },
+  "project": {
+    "id": "bondtrace",
+    "name": "BondTrace"
+  },
+  "reviewer": {
+    "id": "codex_coach",
+    "kind": "agent",
+    "name": "Codex participant coach; no official judge role"
+  },
+  "mode": "coach",
+  "evidence_cutoff": "2026-10-09T18:10:42.902Z",
+  "source_policy": {
+    "allowed_kinds": [
+      "submitted",
+      "runtime"
+    ],
+    "description": "Current participant-supplied repository and retained/public runtime evidence only; no organizer account/private coaching/network competitive research. This capture does not extend any official deadline."
+  },
+  "rubric_snapshot": {
+    "id": "kase_corporate_actions_coach",
+    "version": "1.0.0",
+    "label": "KASE supplied weights; qualitative participant review",
+    "origin": "custom",
+    "source_locator": "User-supplied KASE challenge in this conversation; task preserved in docs/21-BACKEND-FOCUS.md",
+    "provenance": "The five weights come from the user-supplied challenge. The optional 0..4 anchors are coach conventions only, not an official judging scale; all numeric scores are deliberately unassigned.",
+    "scale": {
+      "min": 0,
+      "max": 4,
+      "step": 1
+    },
+    "dimensions": [
+      {
+        "id": "technical_execution",
+        "label": "Technical Execution",
+        "weight": 30,
+        "anchors": {
+          "0": "Inspected evidence establishes the criterion is not met.",
+          "2": "Inspected evidence establishes partial fulfillment with material limits.",
+          "4": "Inspected evidence establishes fulfillment within the stated prototype scope."
+        }
+      },
+      {
+        "id": "corporate_action_logic",
+        "label": "Corporate Action Logic",
+        "weight": 25,
+        "anchors": {
+          "0": "Inspected evidence establishes the criterion is not met.",
+          "2": "Inspected evidence establishes partial fulfillment with material limits.",
+          "4": "Inspected evidence establishes fulfillment within the stated prototype scope."
+        }
+      },
+      {
+        "id": "product_ux",
+        "label": "Product & UX",
+        "weight": 20,
+        "anchors": {
+          "0": "Inspected evidence establishes the criterion is not met.",
+          "2": "Inspected evidence establishes partial fulfillment with material limits.",
+          "4": "Inspected evidence establishes fulfillment within the stated prototype scope."
+        }
+      },
+      {
+        "id": "real_world_applicability",
+        "label": "Real-World Applicability",
+        "weight": 15,
+        "anchors": {
+          "0": "Inspected evidence establishes the criterion is not met.",
+          "2": "Inspected evidence establishes partial fulfillment with material limits.",
+          "4": "Inspected evidence establishes fulfillment within the stated prototype scope."
+        }
+      },
+      {
+        "id": "innovation",
+        "label": "Innovation",
+        "weight": 10,
+        "anchors": {
+          "0": "Inspected evidence establishes the criterion is not met.",
+          "2": "Inspected evidence establishes partial fulfillment with material limits.",
+          "4": "Inspected evidence establishes fulfillment within the stated prototype scope."
+        }
+      }
+    ],
+    "admission_checks": [
+      {
+        "id": "engineering_minimums",
+        "label": "Eight minimum Solana functions demonstrated"
+      },
+      {
+        "id": "verification_instructions",
+        "label": "README and technical overview supplied"
+      },
+      {
+        "id": "judge_access",
+        "label": "Judge access to repository confirmed"
+      },
+      {
+        "id": "main_eligibility",
+        "label": "Main registration and eligibility verified"
+      },
+      {
+        "id": "final_video",
+        "label": "Final demo video supplied"
+      },
+      {
+        "id": "final_submission",
+        "label": "Organizer submission/acceptance verified"
+      }
+    ]
+  },
+  "rubric_sha256": "63b229b6401b348146bdfc4357139356603e525ef004bd8394a5d3500086b525",
+  "artifacts": [
+    {
+      "id": "code",
+      "location": "programs/bondtrace/src/lib.rs",
+      "version": "85b653955b33a900f344f4774b3bc78d619b63be209145fc3b54d0d53775b005",
+      "kind": "submitted",
+      "available_at": "2026-10-09T18:10:42.902Z",
+      "observed_at": "2026-10-09T18:10:42.902Z",
+      "basis": "artifact_supported",
+      "scope": "Exact current coaching capture; SHA256 identifies source bytes. Retained runtime observations are attributed to their original run; no formal contest submission/independent live attestation is inferred."
+    },
+    {
+      "id": "cycle",
+      "location": "docs/evidence/hosted-devnet-20261009.json",
+      "version": "36b224e0ff562cc7b63f402db7c17e494df9f1acd86e6494b244e70d2ded5866",
+      "kind": "runtime",
+      "available_at": "2026-10-09T18:10:42.902Z",
+      "observed_at": "2026-10-09T18:10:42.902Z",
+      "basis": "artifact_supported",
+      "scope": "Exact current coaching capture; SHA256 identifies source bytes. Retained runtime observations are attributed to their original run; no formal contest submission/independent live attestation is inferred."
+    },
+    {
+      "id": "wallet",
+      "location": "docs/evidence/hosted-wallet-check-20261009.json",
+      "version": "dce65110798f45440b432bff3ccb588b69af2276ab7e33218994d310657747ef",
+      "kind": "runtime",
+      "available_at": "2026-10-09T18:10:42.902Z",
+      "observed_at": "2026-10-09T18:10:42.902Z",
+      "basis": "artifact_supported",
+      "scope": "Exact current coaching capture; SHA256 identifies source bytes. Retained runtime observations are attributed to their original run; no formal contest submission/independent live attestation is inferred."
+    },
+    {
+      "id": "refresh",
+      "location": "docs/evidence/readiness-refresh-20261009.json",
+      "version": "1ffc63be11f03bfe118284aa8a4aa835df2f12be79e31faf2c517f80ff29f72e",
+      "kind": "runtime",
+      "available_at": "2026-10-09T18:10:42.902Z",
+      "observed_at": "2026-10-09T18:10:42.902Z",
+      "basis": "artifact_supported",
+      "scope": "Exact current coaching capture; SHA256 identifies source bytes. Retained runtime observations are attributed to their original run; no formal contest submission/independent live attestation is inferred."
+    },
+    {
+      "id": "readme",
+      "location": "README.md",
+      "version": "c2a569af1d25c6e306508b696ab77c1f02231965710fd02617d3c85121f86be3",
+      "kind": "submitted",
+      "available_at": "2026-10-09T18:10:42.902Z",
+      "observed_at": "2026-10-09T18:10:42.902Z",
+      "basis": "artifact_supported",
+      "scope": "Exact current coaching capture; SHA256 identifies source bytes. Retained runtime observations are attributed to their original run; no formal contest submission/independent live attestation is inferred."
+    },
+    {
+      "id": "readme_ru",
+      "location": "README.ru.md",
+      "version": "6e8384cd0db9c71d6bdf2237f67dd4a55971fd657aa397f9bfe23239cf61bbd0",
+      "kind": "submitted",
+      "available_at": "2026-10-09T18:10:42.902Z",
+      "observed_at": "2026-10-09T18:10:42.902Z",
+      "basis": "artifact_supported",
+      "scope": "Exact current coaching capture; SHA256 identifies source bytes. Retained runtime observations are attributed to their original run; no formal contest submission/independent live attestation is inferred."
+    },
+    {
+      "id": "technical",
+      "location": "TECHNICAL.md",
+      "version": "36a633b5af0eec8a1c74598e5a9f5711929d9e3792c454863b58066067ebbc84",
+      "kind": "submitted",
+      "available_at": "2026-10-09T18:10:42.902Z",
+      "observed_at": "2026-10-09T18:10:42.902Z",
+      "basis": "artifact_supported",
+      "scope": "Exact current coaching capture; SHA256 identifies source bytes. Retained runtime observations are attributed to their original run; no formal contest submission/independent live attestation is inferred."
+    },
+    {
+      "id": "cleanup",
+      "location": "docs/evidence/publication-cleanup-20261009.json",
+      "version": "4758fd1b4b047249263e8b5d66f51ebd602e7f8e70a0ba1ca64f7769714321ff",
+      "kind": "submitted",
+      "available_at": "2026-10-09T18:10:42.902Z",
+      "observed_at": "2026-10-09T18:10:42.902Z",
+      "basis": "artifact_supported",
+      "scope": "Exact current coaching capture; SHA256 identifies source bytes. Retained runtime observations are attributed to their original run; no formal contest submission/independent live attestation is inferred."
+    },
+    {
+      "id": "guide",
+      "location": "docs/JURY-GUIDE.md",
+      "version": "5bf0bdaef7a1f813f2f106ce84d0f3b0926900e2ea41a0211f5f6afb64c447cb",
+      "kind": "submitted",
+      "available_at": "2026-10-09T18:10:42.902Z",
+      "observed_at": "2026-10-09T18:10:42.902Z",
+      "basis": "artifact_supported",
+      "scope": "Exact current coaching capture; SHA256 identifies source bytes. Retained runtime observations are attributed to their original run; no formal contest submission/independent live attestation is inferred."
+    }
+  ],
+  "admission": [
+    {
+      "id": "engineering_minimums",
+      "status": "passed",
+      "rationale": "Source and actual hosted evidence demonstrate eight technical minimums.",
+      "evidence_refs": [
+        "code",
+        "cycle"
+      ]
+    },
+    {
+      "id": "verification_instructions",
+      "status": "passed",
+      "rationale": "EN/RU README, one-command prepared localnet demo, detailed setup and technical overview supplied.",
+      "evidence_refs": [
+        "readme",
+        "readme_ru",
+        "technical"
+      ]
+    },
+    {
+      "id": "judge_access",
+      "status": "unknown",
+      "rationale": "Separate owner/organizer stage; this code/documentation audit does not verify current authoritative completion.",
+      "evidence_refs": [
+        "guide"
+      ]
+    },
+    {
+      "id": "main_eligibility",
+      "status": "unknown",
+      "rationale": "Separate owner/organizer stage; this code/documentation audit does not verify current authoritative completion.",
+      "evidence_refs": [
+        "guide"
+      ]
+    },
+    {
+      "id": "final_video",
+      "status": "unknown",
+      "rationale": "Separate owner/organizer stage; this code/documentation audit does not verify current authoritative completion.",
+      "evidence_refs": [
+        "guide"
+      ]
+    },
+    {
+      "id": "final_submission",
+      "status": "unknown",
+      "rationale": "Separate owner/organizer stage; this code/documentation audit does not verify current authoritative completion.",
+      "evidence_refs": [
+        "guide"
+      ]
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "technical_execution",
+      "score": null,
+      "basis": "artifact_supported",
+      "confidence": "high",
+      "rationale": "Recorded actual26transaction devnet execution, durable journal and recovery; cold physical setup/production security not certified. Qualitative finding only; no organizer numerical score assigned.",
+      "evidence_refs": [
+        "code",
+        "cycle",
+        "technical",
+        "refresh"
+      ]
+    },
+    {
+      "id": "corporate_action_logic",
+      "score": null,
+      "basis": "artifact_supported",
+      "confidence": "high",
+      "rationale": "All8minimums supported by source/proofs, exact amounts, immutable rights, duplicate rejection and atomic retirement. Qualitative finding only; no organizer numerical score assigned.",
+      "evidence_refs": [
+        "code",
+        "cycle",
+        "technical",
+        "refresh"
+      ]
+    },
+    {
+      "id": "product_ux",
+      "score": null,
+      "basis": "artifact_supported",
+      "confidence": "high",
+      "rationale": "Console inspection and scripted reproduction documented; Phantom connection/simulation only, failed signing retained. Qualitative finding only; no organizer numerical score assigned.",
+      "evidence_refs": [
+        "wallet",
+        "readme",
+        "readme_ru",
+        "guide"
+      ]
+    },
+    {
+      "id": "real_world_applicability",
+      "score": null,
+      "basis": "artifact_supported",
+      "confidence": "high",
+      "rationale": "Permissioned servicing and separated chain/journal implemented; bank/KASE/custody/legal integrations absent or simulated. Qualitative finding only; no organizer numerical score assigned.",
+      "evidence_refs": [
+        "code",
+        "cycle",
+        "technical",
+        "refresh"
+      ]
+    },
+    {
+      "id": "innovation",
+      "score": null,
+      "basis": "artifact_supported",
+      "confidence": "low",
+      "rationale": "Durable orchestration and bound proofs implemented; comparative novelty not researched or scored. Qualitative finding only; no organizer numerical score assigned.",
+      "evidence_refs": [
+        "code",
+        "technical"
+      ]
+    }
+  ]
+}

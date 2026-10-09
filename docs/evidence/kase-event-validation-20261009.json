@@ -1,0 +1,146 @@
+{
+  "schema": "bondtrace.event-validation.v1",
+  "checkedAt": "2026-10-09T18:10:42.902Z",
+  "mode": "coach",
+  "profile": {
+    "id": "kase_corporate_actions_coach",
+    "version": "1.0.0",
+    "origin": "custom",
+    "source_locator": "User-supplied KASE challenge in this conversation; task preserved in docs/21-BACKEND-FOCUS.md",
+    "rubric_sha256": "63b229b6401b348146bdfc4357139356603e525ef004bd8394a5d3500086b525"
+  },
+  "mechanicalCheck": "passed",
+  "numericScoringApplied": false,
+  "total": null,
+  "reason": "Qualitative participant review with supplied weights; no official numerical scale or ranking is claimed",
+  "admissionStatus": "unknown",
+  "admission": [
+    {
+      "id": "engineering_minimums",
+      "status": "passed",
+      "rationale": "Source and actual hosted evidence demonstrate eight technical minimums.",
+      "evidence_refs": [
+        "code",
+        "cycle"
+      ]
+    },
+    {
+      "id": "verification_instructions",
+      "status": "passed",
+      "rationale": "EN/RU README, one-command prepared localnet demo, detailed setup and technical overview supplied.",
+      "evidence_refs": [
+        "readme",
+        "readme_ru",
+        "technical"
+      ]
+    },
+    {
+      "id": "judge_access",
+      "status": "unknown",
+      "rationale": "Separate owner/organizer stage; this code/documentation audit does not verify current authoritative completion.",
+      "evidence_refs": [
+        "guide"
+      ]
+    },
+    {
+      "id": "main_eligibility",
+      "status": "unknown",
+      "rationale": "Separate owner/organizer stage; this code/documentation audit does not verify current authoritative completion.",
+      "evidence_refs": [
+        "guide"
+      ]
+    },
+    {
+      "id": "final_video",
+      "status": "unknown",
+      "rationale": "Separate owner/organizer stage; this code/documentation audit does not verify current authoritative completion.",
+      "evidence_refs": [
+        "guide"
+      ]
+    },
+    {
+      "id": "final_submission",
+      "status": "unknown",
+      "rationale": "Separate owner/organizer stage; this code/documentation audit does not verify current authoritative completion.",
+      "evidence_refs": [
+        "guide"
+      ]
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "technical_execution",
+      "weight": 30,
+      "score": null,
+      "points": null,
+      "basis": "artifact_supported",
+      "confidence": "high",
+      "rationale": "Recorded actual26transaction devnet execution, durable journal and recovery; cold physical setup/production security not certified. Qualitative finding only; no organizer numerical score assigned.",
+      "evidence_refs": [
+        "code",
+        "cycle",
+        "technical",
+        "refresh"
+      ]
+    },
+    {
+      "id": "corporate_action_logic",
+      "weight": 25,
+      "score": null,
+      "points": null,
+      "basis": "artifact_supported",
+      "confidence": "high",
+      "rationale": "All8minimums supported by source/proofs, exact amounts, immutable rights, duplicate rejection and atomic retirement. Qualitative finding only; no organizer numerical score assigned.",
+      "evidence_refs": [
+        "code",
+        "cycle",
+        "technical",
+        "refresh"
+      ]
+    },
+    {
+      "id": "product_ux",
+      "weight": 20,
+      "score": null,
+      "points": null,
+      "basis": "artifact_supported",
+      "confidence": "high",
+      "rationale": "Console inspection and scripted reproduction documented; Phantom connection/simulation only, failed signing retained. Qualitative finding only; no organizer numerical score assigned.",
+      "evidence_refs": [
+        "wallet",
+        "readme",
+        "readme_ru",
+        "guide"
+      ]
+    },
+    {
+      "id": "real_world_applicability",
+      "weight": 15,
+      "score": null,
+      "points": null,
+      "basis": "artifact_supported",
+      "confidence": "high",
+      "rationale": "Permissioned servicing and separated chain/journal implemented; bank/KASE/custody/legal integrations absent or simulated. Qualitative finding only; no organizer numerical score assigned.",
+      "evidence_refs": [
+        "code",
+        "cycle",
+        "technical",
+        "refresh"
+      ]
+    },
+    {
+      "id": "innovation",
+      "weight": 10,
+      "score": null,
+      "points": null,
+      "basis": "artifact_supported",
+      "confidence": "low",
+      "rationale": "Durable orchestration and bound proofs implemented; comparative novelty not researched or scored. Qualitative finding only; no organizer numerical score assigned.",
+      "evidence_refs": [
+        "code",
+        "technical"
+      ]
+    }
+  ],
+  "scope": "Mechanical structure/reference/weight validation only; substantive findings require the separate source-grounded quality review"
+}

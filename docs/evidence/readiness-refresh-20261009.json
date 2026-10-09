@@ -1,0 +1,19 @@
+{
+  "schema": "bondtrace.readiness-refresh.v1",
+  "checkedAt": "2026-10-09T18:01:23.329Z",
+  "scope": "Current public GET-only refresh; no sign/send/rebroadcast/credential access",
+  "origin": "https://bondtrace-devnet.onrender.com",
+  "network": "devnet",
+  "programStatus": "known-match",
+  "programSha256": "761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd",
+  "storageBackend": "postgres",
+  "instrument": "2KWpyE9mQWS6VTviCJFi1b4Zh55rti9xeDS6yk37sU7Y",
+  "couponMinor": "900000000",
+  "principalMinor": "18000000000",
+  "remainingMinor": "0",
+  "wallet": {
+    "status": "prepared",
+    "chainStatus": "not_submitted",
+    "signature": null
+  }
+}

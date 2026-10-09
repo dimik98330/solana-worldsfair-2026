@@ -1,0 +1,184 @@
+{
+  "schema": "bondtrace.project-readme-quality.v1",
+  "checkedAt": "2026-10-09T18:20:03.011Z",
+  "scope": "New whole-project/KASEtechnicalminimum and exactREADME publication review. Accepted as bounded coach artifacts with eight technical functions demonstrated; not organizer acceptance, successful Phantom signing, finalsubmission or officialgrade.",
+  "runs": {
+    "readme": {
+      "mode": "coach",
+      "decisionContext": "application",
+      "policyVersion": 4,
+      "disposition": "accepted",
+      "draftCount": 1,
+      "maxDrafts": 3,
+      "packetSha256": "9bed1f7a9970b64a46a8c0f363bbf571b6acbd49572dea2df1a5c1451a1ccf52",
+      "draftFile": "README.md",
+      "draftSha256": "c2a569af1d25c6e306508b696ab77c1f02231965710fd02617d3c85121f86be3",
+      "assessmentSha256": "e80f36936ee59dfb7970a3bc400ced5bf996018f9e7a9e0105397ac0e2c47377",
+      "reviewSha256": "14a2711d7cc9d3fcbeda94c820bf836cb49e2d1c42491cbb976728deff10bd04",
+      "reviewer": {
+        "mode": "separate_context",
+        "model": "unknown",
+        "verification": "self_reported"
+      },
+      "checks": [
+        {
+          "id": "fact_fidelity",
+          "status": "pass",
+          "note": "Exact frozen English README and current Russian equivalent agree on the hosted bac8475 test cohort: 26 transactions, 900 coupons, 18000 principal and 18 burns. The separate Phantom artifact retains prepared/not_submitted/signature:null, absent attempted account and unchanged test balance; connection/simulation and owner-reported approval are not promoted to signing success. No official acceptance, eligibility, production, bank/KASE integration or customer claim is invented."
+        },
+        {
+          "id": "arithmetic",
+          "status": "pass",
+          "note": "Offline BigInt reconciliation of the retained hosted cohort confirms coupon deltas 500000000 + 250000000 + 150000000 = 900000000 base units, principal 10000000000 + 4000000000 + 4000000000 = 18000000000, burn 10+4+4=18, and zero remaining obligations/supply/vault. Formula 10 x 1000 x 1000/(10000 x 2)=500 agrees with source exact-divisibility arithmetic. There are 22 distinct operation IDs, 4 auxiliaries and 26 distinct signature-bound finalized proofs. Historical test cohorts are not summed."
+        },
+        {
+          "id": "evidence_support",
+          "status": "pass",
+          "note": "Inspected actual program/contexts/state/client math, setup/lifecycle scripts, relay/storage guards, retained hosted proof/restart data and exact final linked JURY/LOCALNET/HISTORY/index/PUBLICATION docs. Each receipt wire/message hash binds to its retained finalized proof; restarted 22 IDs and all 26 proof hashes match. The PNG displays 900 total and 500/250/150 plus connected Phantom only. Latest recorded logs support 288 Node passed/0 failed/10 optional PG skipped and 52 UI. HISTORY final-byte difference from frozen source is whitespace normalization only; final bytes are recorded in the companion review note."
+        },
+        {
+          "id": "constraints",
+          "status": "pass",
+          "note": "Coach/application policy-v4 context matches participant publication/readiness work; both decisions are artifact/complete with no authorization to apply. Eight minimum functions agree with the supplied KASE brief and its retained original source capture. Five supplied weights sum to 100; all event scores remain null and four owner admission gates remain unknown. Localnet/devnet/test-assets, zero-cost provider limitations, private repository access and owner video/submission boundaries remain explicit."
+        },
+        {
+          "id": "verdict",
+          "status": "pass",
+          "note": "Publication-ready is defensible for this exact EN/RU technical README and its stated prototype limits. This is not a final apply/proceed decision: successful Phantom signing remains unverified, judge repository access/registration/final video/submission remain owner stages, and cold physical installation/production security are not certified. Eight technical minimums are supported by the specific recorded Solana test cohort rather than a wallet screenshot."
+        },
+        {
+          "id": "next_step",
+          "status": "pass",
+          "note": "The concrete next steps are owner-provided judge access, final video, authoritative eligibility/registration verification and final submission/receipt. Source publication remains a lead-owned scoped operation after its indexed-source/link/secret checks. The README supplies exact setup/demo commands and instructs recovery of existing unresolved financial IDs rather than replacement signatures; no extra speculative experiment is required for documentation publication."
+        },
+        {
+          "id": "task_scope",
+          "status": "pass",
+          "note": "Actual English README (1410 words), Russian equivalent and every newly linked current guide were read, with final SHA-256 hashes preserved in the companion note. The README covers live inspection, 8 functions, arithmetic, backend/recovery, commands/tests and limitations without an unrelated venture audit. This review does not include concurrent frontend WIP as the publication version."
+        },
+        {
+          "id": "action_bounds",
+          "status": "pass",
+          "note": "No false source/network/runtime access or external action is claimed by this review. I inspected local frozen evidence, source, actual final documents and the provided PNG; I performed offline JSON/hash/BigInt comparisons only. No installs/build/tests, network calls, SQL, browser/wallet actions, Git mutation or private signer/credential content access. Recorded public GET refresh and runtime/restart observations remain supplied artifacts, not my own fresh network observation."
+        }
+      ],
+      "activeIssues": []
+    },
+    "project": {
+      "mode": "coach",
+      "decisionContext": "application",
+      "policyVersion": 4,
+      "disposition": "accepted",
+      "draftCount": 1,
+      "maxDrafts": 3,
+      "packetSha256": "41fb9252894ae89ba712821b3c6494ffcbcc63702e118a4c972886c82d2e3ad0",
+      "draftFile": "docs/release/PROJECT-READINESS-20261009.md",
+      "draftSha256": "0a6be67a84feb7c53e83f687fd0cb5232cfce62a8f8e87af8f3c6cf783f4d37e",
+      "assessmentSha256": "c1c491e54117befccdb7866df5ebde357494e1dfbb95048234c712e35357ca88",
+      "reviewSha256": "7fc85f7a85fd317e40cb54824fa834c352b8adb68693f2b2407fd865a890b1a5",
+      "reviewer": {
+        "mode": "separate_context",
+        "model": "unknown",
+        "verification": "self_reported"
+      },
+      "checks": [
+        {
+          "id": "fact_fidelity",
+          "status": "pass",
+          "note": "The whole-project report preserves the supplied KASE eight-function scope and distinguishes actual test-chain functions from test currency/identities and absent bank/legal/custody integrations. Phantom is explicitly a failed signing observation with unknown internal cause, not a passed human-wallet test. Registration/eligibility, judge access, final video and organizer submission/acceptance remain unknown owner stages. Prior backend/driver/PG/hosted review budgets are historical and not reset by this separate publication assessment."
+        },
+        {
+          "id": "arithmetic",
+          "status": "pass",
+          "note": "Offline BigInt reconciliation of the retained hosted cohort confirms coupon deltas 500000000 + 250000000 + 150000000 = 900000000 base units, principal 10000000000 + 4000000000 + 4000000000 = 18000000000, burn 10+4+4=18, and zero remaining obligations/supply/vault. Formula 10 x 1000 x 1000/(10000 x 2)=500 agrees with source exact-divisibility arithmetic. There are 22 distinct operation IDs, 4 auxiliaries and 26 distinct signature-bound finalized proofs. Historical test cohorts are not summed."
+        },
+        {
+          "id": "evidence_support",
+          "status": "pass",
+          "note": "Retained original KASE capture enumerates the same 8 minimum functions and 3 scenarios. Program/contexts/state implement immutable rate terms, sealed holder registry, frozen-position snapshots, shared coupon paid mask, atomic principal transfer/burn and snapshot-weighted ballots. Actual hosted financial snapshots preserve 10/5/3 rights after 10/4/4 current holdings; retained proof deltas substantiate 900 coupon/18000 principal/18 burn. GET-only restart observations match all 22 IDs, 26 proofs, terms, fixed rights and financial totals. Cleanup physical/hash inspection confirms all 24 local copies and all 27 protected files retained, 16 frames byte-identical, 1186874 bytes counted. Index-only packaging checks remain lead-owned."
+        },
+        {
+          "id": "constraints",
+          "status": "pass",
+          "note": "Coach/application policy-v4 context matches participant publication/readiness work; both decisions are artifact/complete with no authorization to apply. Eight minimum functions agree with the supplied KASE brief and its retained original source capture. Five supplied weights sum to 100; all event scores remain null and four owner admission gates remain unknown. Localnet/devnet/test-assets, zero-cost provider limitations, private repository access and owner video/submission boundaries remain explicit."
+        },
+        {
+          "id": "verdict",
+          "status": "pass",
+          "note": "The qualified conclusion that 8/8 minimum technical functions are demonstrated in the recorded prototype scope is supported. EN/RU documentation can be published with these explicit limits. The conclusion does not claim an official grade, comparative novelty, production readiness, successful Phantom compatibility, timely admission or final submission readiness. Qualitative event-card validation is kept separate from source truth and organizer acceptance."
+        },
+        {
+          "id": "next_step",
+          "status": "pass",
+          "note": "Report names concrete remaining owner stages: repository access, final video, authoritative registration/eligibility and final submission with organizer receipt. A successful compatible human-wallet transaction remains unverified and is preserved as a UX limitation; it is not inserted as an unstated KASE engineering minimum or represented as closed compatibility. The lead must bind the current reviewed files to its exact indexed candidate before scoped publication."
+        },
+        {
+          "id": "task_scope",
+          "status": "pass",
+          "note": "Reviewed the exact 738-word final project report, two policy-v4 frozen packets and assessments, custom coach event profile/card/check, actual EN/RU README, JURY/LOCALNET/HISTORY/index/PUBLICATION guides and PNG. Relevant static source and supplied runtime evidence were inspected; this is not a new runtime/security certification or a review of concurrent frontend WIP. All eight requested review criteria are assessed with explicit scope."
+        },
+        {
+          "id": "action_bounds",
+          "status": "pass",
+          "note": "No false source/network/runtime access or external action is claimed by this review. I inspected local frozen evidence, source, actual final documents and the provided PNG; I performed offline JSON/hash/BigInt comparisons only. No installs/build/tests, network calls, SQL, browser/wallet actions, Git mutation or private signer/credential content access. Recorded public GET refresh and runtime/restart observations remain supplied artifacts, not my own fresh network observation."
+        }
+      ],
+      "activeIssues": []
+    }
+  },
+  "finalFiles": [
+    {
+      "file": "README.md",
+      "sha256": "c2a569af1d25c6e306508b696ab77c1f02231965710fd02617d3c85121f86be3"
+    },
+    {
+      "file": "README.ru.md",
+      "sha256": "6e8384cd0db9c71d6bdf2237f67dd4a55971fd657aa397f9bfe23239cf61bbd0"
+    },
+    {
+      "file": "docs/release/PROJECT-READINESS-20261009.md",
+      "sha256": "0a6be67a84feb7c53e83f687fd0cb5232cfce62a8f8e87af8f3c6cf783f4d37e"
+    },
+    {
+      "file": "docs/JURY-GUIDE.md",
+      "sha256": "5bf0bdaef7a1f813f2f106ce84d0f3b0926900e2ea41a0211f5f6afb64c447cb"
+    },
+    {
+      "file": "docs/LOCALNET-SETUP.md",
+      "sha256": "f1720d9e93b4c1366dfe4c890ea0f53a346ba49e7196e2eea1cd522b8b4eebda"
+    },
+    {
+      "file": "docs/VERIFICATION-HISTORY.md",
+      "sha256": "3eae934e2edd3b2b2a15c5f7293ed046221e381cf42e55e7f1abcb1cf1524d88"
+    },
+    {
+      "file": "docs/README.md",
+      "sha256": "dcd5d2fbc8e9d03ba50181c3ce6031cda08a16857200800e1f9ed099a1c6b859"
+    },
+    {
+      "file": "docs/PUBLICATION.md",
+      "sha256": "54ceb6cae731509f2bbaa5cbb4a3a8b31270798829dc3b3f7cb7767ca1f1d9e4"
+    },
+    {
+      "file": "docs/evidence/hosted-devnet-payments-20261009.png",
+      "sha256": "81ef9b800ddcba74a785ce8777f140ac3ccc272cb2c1a7ce2fff728ed335ef49"
+    }
+  ],
+  "codeChanged": false,
+  "fullRuntimeTestsRerun": false,
+  "recordedTestScope": "Retained288Node/52UI and actual26transactiondevnet/proofs; document cleanup only. FreshpublicGET and index/source-packaging checks are separate.",
+  "independentReview": {
+    "file": "docs/release/PROJECT-README-INDEPENDENT-20261009.md",
+    "sha256": "bb435df45e4d07657c6e14dc423baef4f77676995f0e6a166311cae77c7e920b"
+  },
+  "publicationChecks": {
+    "markdownLinks": 242,
+    "missingPublishedTargets": 0,
+    "localExcludedCopiesPreserved": 24,
+    "protectedIndexHashesMatched": 27,
+    "sourceOnlyStagingFiles": 236,
+    "sourceOnlyStagingBytes": 2302847,
+    "codeAndFinancialExecutionRerun": false,
+    "scope": "Index/source-only structural validation; no new build/runtime proof. Exact reviewed final files retain their hashes."
+  }
+}
