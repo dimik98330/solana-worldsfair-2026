@@ -1,0 +1,105 @@
+{
+  "schema": "bondtrace.linux-hosted-postgres-check.v1",
+  "startedAt": "2026-10-09T13:58:36.245Z",
+  "root": "/opt/bondtrace-pg-hosted-e891d5b6-4807-41cb-a8d0-65cbf5f7aa4c",
+  "source": "/opt/bondtrace-pg-hosted-e891d5b6-4807-41cb-a8d0-65cbf5f7aa4c/source",
+  "nodeVersion": "v22.14.0",
+  "uid": 1000,
+  "scope": "Isolated Linux Node/HTTP/PostgreSQL TLS and portable backup checks. No wallet or financial transaction; not cloud hosting.",
+  "frozenSource": {
+    "runId": "b4013149-c3dd-47e4-b78f-1576a7ce7bdb",
+    "files": 231,
+    "manifestSha256": "88eb227e20dfd76731495296ccea4e818bdb0c587b43687939fcf76ec69ea2de",
+    "verifiedBeforeBuild": true,
+    "verifiedAfterRun": true
+  },
+  "builds": [
+    {
+      "label": "npm-ci",
+      "exitCode": 0
+    },
+    {
+      "label": "web-build",
+      "exitCode": 0
+    }
+  ],
+  "processes": {
+    "firstApiPid": 8854,
+    "secondApiPid": 8892
+  },
+  "verifier": {
+    "label": "verify-hosted",
+    "exitCode": 0
+  },
+  "http": {
+    "checkedAt": "2026-10-09T13:58:53.928Z",
+    "target": "http://127.0.0.1:39555",
+    "network": "devnet",
+    "liveness": true,
+    "authentication": true,
+    "htmlVerified": true,
+    "entryAssetsVerified": true,
+    "entryAssets": [
+      {
+        "path": "/assets/index-vJXHQfMq.js",
+        "type": "text/javascript",
+        "bytes": 415575,
+        "sha256": "2d7b1f559ae5d3a46d80fc1a17b56eda7d0c11ea43c9b37672fdfe27b036b9ad"
+      },
+      {
+        "path": "/assets/index-BP6xJcm5.css",
+        "type": "text/css",
+        "bytes": 140416,
+        "sha256": "6466d7d2339b2cf323ce33deb3b8b897b8e26a33cba0f0e950784a7db403d5b4"
+      }
+    ],
+    "foreignOriginRejected": true,
+    "generatedDemoRejected": true,
+    "storageReadWrite": true,
+    "chainAdvancing": true,
+    "programStatus": "unavailable",
+    "financialReady": false,
+    "scope": "HTTP/configuration/storage-readiness plus actual entry JS/CSS bytes verification. No wallet signature or financial transaction submitted; full financial/wallet checks remain separate. Missing program is allowed only in explicit loopback diagnostic mode."
+  },
+  "tls": {
+    "verifiedCertificate": true,
+    "ssl": true,
+    "version": "TLSv1.3",
+    "cipher": "TLS_AES_256_GCM_SHA384",
+    "publicCaSha256": "b3ab9af627e580b4abbeb383aa8053a5b0346290c2c297828eeaccab20698015"
+  },
+  "backupBefore": {
+    "sha256": "d906a3c495d9a3dded15f8c2604bb086963a8f14fb1b8c8baeb561d26230ce53",
+    "bytes": 28672,
+    "marker": {
+      "nonce": "5db29246-26a8-4103-94c1-ba3589388932",
+      "checkedAt": "2026-10-09T13:58:53.914Z"
+    },
+    "snapshotDataSha256": "e9aaeed97e4766403657e1a099601baa480e337670dc44ffb6e08ee6b4e168a0",
+    "observedGeneration": "1",
+    "manifestSha256": "94c0fa0398606bcd4dc18bc0e2c0227f7a77d23844a3a5a4a1389055bd4edb90"
+  },
+  "backupAfter": {
+    "sha256": "d906a3c495d9a3dded15f8c2604bb086963a8f14fb1b8c8baeb561d26230ce53",
+    "bytes": 28672,
+    "marker": {
+      "nonce": "5db29246-26a8-4103-94c1-ba3589388932",
+      "checkedAt": "2026-10-09T13:58:53.914Z"
+    },
+    "snapshotDataSha256": "e9aaeed97e4766403657e1a099601baa480e337670dc44ffb6e08ee6b4e168a0",
+    "observedGeneration": "1",
+    "manifestSha256": "d1e4384e581591dff82c549aa47566d767668167439b4cb3196c2501e673af39"
+  },
+  "restart": {
+    "sameMarker": true,
+    "sameSnapshotDataHash": true,
+    "sameSqliteHash": true,
+    "noLocalFallback": true,
+    "noSignerDirectory": true,
+    "temporaryBackupCleanup": true
+  },
+  "namespace": "linux-hosted-f797d8b2-e1ef-410b-8166-ada7372eb773",
+  "finishedAt": "2026-10-09T13:58:55.203Z",
+  "status": "passed",
+  "ownedApiStopped": true
+}

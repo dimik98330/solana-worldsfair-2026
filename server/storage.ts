@@ -2,7 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
-import {localDir} from './config.ts';
+import {localDir,storageBackend,postgresOptions} from './config.ts';
+import {PostgresDocumentStore} from './postgres-document-store.ts';
+import {PostgresBridgeError} from './postgres-bridge.ts';
+import {RemoteStorageError} from './remote-postgres-engine.mjs';
+import {RemoteDocumentStateError} from './remote-document-state.ts';
+import {materializePostgresBackup} from './postgres-backup.ts';
 
 /** Only public metadata belongs here. Role keys remain in their existing files. */
 export const schemaVersion = 1;
@@ -18,6 +23,7 @@ const documentDirectories = ['catalog', 'prepared', 'operations', 'receipts'];
 let database: DatabaseSync | undefined;
 let transactionDepth = 0;
 let savepointId = 0;
+let remote:PostgresDocumentStore|undefined;
 
 export class StorageError extends Error {
   constructor(readonly code: string, message: string, options?: ErrorOptions) {
@@ -26,6 +32,12 @@ export class StorageError extends Error {
   }
 }
 function fail(code: string, message: string): never { throw new StorageError(code, message); }
+function withRemote<T>(callback:(store:PostgresDocumentStore)=>T):T{
+ try{
+  if(!remote){safeNamespace();if(statIfPresent(databasePath)||legacyFiles().length)fail('STORAGE_MIGRATION_REQUIRED','Choose an empty scratch namespace; local metadata must be explicitly migrated, never replaced');remote=new PostgresDocumentStore(postgresOptions!);}
+  return callback(remote);
+ }catch(error){if(error instanceof PostgresBridgeError||error instanceof RemoteStorageError||error instanceof RemoteDocumentStateError)throw new StorageError(error.code.startsWith('STORAGE_')?error.code:'STORAGE_LIMIT','Remote public metadata could not be acknowledged; retain existing identifiers and stop new relays');throw error;}
+}
 function isWithin(directory: string, target: string) {
   const relative = path.relative(directory, target);
   return relative === '' || (!relative.startsWith('..' + path.sep) && relative !== '..' && !path.isAbsolute(relative));
@@ -216,6 +228,7 @@ function rejectThenable(value: unknown) {
 /** BEGIN IMMEDIATE protects read/modify/write across processes; nested calls use savepoints. */
 export function transactionSync<T>(callback: () => T): T {
   rejectAsync(callback);
+  if(storageBackend==='postgres')return withRemote(store=>store.transactionSync(()=>{const result=callback();rejectThenable(result);safeNamespace();return result;}));
   const db = openDatabase(), outer = transactionDepth === 0, savepoint = 'bondtrace_' + ++savepointId;
   db.exec(outer ? 'BEGIN IMMEDIATE' : 'SAVEPOINT ' + savepoint);
   transactionDepth++;
@@ -232,12 +245,15 @@ export function transactionSync<T>(callback: () => T): T {
   } finally { transactionDepth--; }
 }
 export function readJson<T>(absoluteFile: string, fallback: T): T {
-  const key = documentKey(absoluteFile), db = openDatabase();
+  const key = documentKey(absoluteFile);
+  if(storageBackend==='postgres')return withRemote(store=>{const body=store.read(key);return body===undefined?fallback:parse<T>(body);});
+  const db = openDatabase();
   const row = db.prepare('SELECT body FROM documents WHERE key = ?').get(key);
   return row ? parse<T>(String(row.body)) : fallback;
 }
 export function writeJson(absoluteFile: string, value: unknown): void {
   const key = documentKey(absoluteFile), body = stringify(value);
+  if(storageBackend==='postgres'){withRemote(store=>store.write(key,body));return;}
   transactionSync(() => {
     openDatabase().prepare('INSERT INTO documents (key, body, updated_at) VALUES (?, ?, ?) ON CONFLICT(key) DO UPDATE SET body = excluded.body, updated_at = excluded.updated_at').run(key, body, new Date().toISOString());
   });
@@ -262,19 +278,21 @@ export function listDocuments(prefix?: string): string[] {
     if (keyPrefix && !documentDirectories.includes(keyPrefix)) validKey(keyPrefix);
     safeDirectories(documentDirectories.includes(keyPrefix) ? candidate : path.dirname(candidate));
   }
-  return openDatabase().prepare('SELECT key FROM documents ORDER BY key').all()
-    .map(row => validKey(String(row.key)))
+  const keys=storageBackend==='postgres'?withRemote(store=>store.keys()):openDatabase().prepare('SELECT key FROM documents ORDER BY key').all().map(row=>String(row.key));
+  return keys.map(key => validKey(key))
     .filter(key => !keyPrefix || key === keyPrefix || key.startsWith(keyPrefix + '/'))
     .map(key => path.join(localDir, ...key.split('/')));
 }
 export interface StorageDiagnostics {
-  databasePath: string; schemaVersion: number; sqliteVersion: string; journalMode: string;
-  synchronous: number; busyTimeoutMs: number; documentCount: number; migrationCount: number; integrityCheck: string[];
+  backend?:'sqlite'|'postgres';databasePath: string; schemaVersion: number; sqliteVersion: string|null; journalMode: string;
+  synchronous: number|null; busyTimeoutMs: number|null; documentCount: number; migrationCount: number; integrityCheck: string[];
+  remote?:ReturnType<PostgresDocumentStore['diagnostics']>;
 }
 export function storageDiagnostics(options: {integrityCheck?: boolean} = {}): StorageDiagnostics {
+  if(storageBackend==='postgres')return withRemote(store=>{const observation=store.diagnostics(true);if(options.integrityCheck)store.exportSnapshot();return {backend:'postgres',databasePath:'remote-postgresql-public-metadata',schemaVersion:1,sqliteVersion:null,journalMode:'provider-managed-WAL',synchronous:null,busyTimeoutMs:null,documentCount:observation.documentCount,migrationCount:observation.migrationCount,integrityCheck:options.integrityCheck?['consistent-public-document-export-validated']:[],remote:observation};});
   const db = openDatabase();
   return {
-    databasePath, schemaVersion: Number(db.prepare('PRAGMA user_version').get()!.user_version),
+    backend:'sqlite',databasePath, schemaVersion: Number(db.prepare('PRAGMA user_version').get()!.user_version),
     sqliteVersion: String(db.prepare('SELECT sqlite_version() AS version').get()!.version),
     journalMode: String(db.prepare('PRAGMA journal_mode').get()!.journal_mode),
     synchronous: Number(db.prepare('PRAGMA synchronous').get()!.synchronous),
@@ -283,7 +301,9 @@ export function storageDiagnostics(options: {integrityCheck?: boolean} = {}): St
     migrationCount: Number(db.prepare('SELECT count(*) AS count FROM legacy_imports').get()!.count), integrityCheck: options.integrityCheck ? integrity(db) : [],
   };
 }
-export function verifyStorageIntegrity(): string[] { return integrity(openDatabase()); }
+export function verifyStorageIntegrity(): string[] {if(storageBackend==='postgres'){withRemote(store=>store.exportSnapshot());return ['consistent-public-document-export-validated'];}return integrity(openDatabase()); }
+/** Fresh writer fencing before signing or sending; native SQLite uses its existing local guards. */
+export function assertStorageRelayReady(){if(storageBackend==='postgres')withRemote(store=>store.assertWritable());}
 /** Explicit readiness POST probes only this public metadata marker, never a financial intent. */
 export function verifyStorageWrite(): {verified: true; checkedAt: string} {
   const marker = path.join(localDir, 'runtime-readiness.json'), nonce = crypto.randomUUID(), checkedAt = new Date().toISOString();
@@ -294,10 +314,13 @@ export function verifyStorageWrite(): {verified: true; checkedAt: string} {
 export function backupStorage(absoluteDestination: string) {
   if (!path.isAbsolute(absoluteDestination) || !isWithin(localDir, path.resolve(absoluteDestination)) || path.extname(absoluteDestination) !== '.sqlite') fail('STORAGE_INVALID_PATH', 'Backup must be a .sqlite file inside its ignored storage namespace');
   if (transactionDepth !== 0) fail('STORAGE_TRANSACTION', 'Backup requires a completed transaction');
-  const destination = path.resolve(absoluteDestination), db = openDatabase();
+  const destination = path.resolve(absoluteDestination);
+  if(destination===databasePath)fail('STORAGE_BACKUP_EXISTS','A backup cannot replace the active metadata filename');
   if (safeFile(destination)) fail('STORAGE_BACKUP_EXISTS', 'Backup destination already exists and will not be overwritten');
   fs.mkdirSync(path.dirname(destination), {recursive: true});
   safeFile(destination);
+  if(storageBackend==='postgres')return withRemote(store=>materializePostgresBackup(store.exportSnapshot(),destination));
+  const db = openDatabase();
   fs.closeSync(fs.openSync(destination, 'wx', 0o600));
   db.prepare('VACUUM INTO ?').run(path.toNamespacedPath(destination));
   safeFile(destination);
@@ -309,6 +332,7 @@ export function backupStorage(absoluteDestination: string) {
   } finally { backup.close(); }
 }
 export function closeStorage(): void {
+  if(storageBackend==='postgres'){if(remote){withRemote(store=>store.close());remote=undefined;}return;}
   if (transactionDepth !== 0) fail('STORAGE_TRANSACTION', 'Cannot close storage while a transaction is active');
   if (database) { database.close(); database = undefined; }
 }

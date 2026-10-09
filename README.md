@@ -112,7 +112,7 @@ flowchart LR
   UI[React console] --> API[Node API: validate / prepare / simulate]
   API --> Wallet[External wallet or explicit test signer]
   Wallet --> Relay[Verify exact signed message]
-  Relay --> Journal[SQLite intent + receipt before send]
+  Relay --> Journal[SQLite locally / PostgreSQL hosted: intent + receipt before send]
   Relay --> RPC[Solana RPC]
   RPC --> Program[BondTrace Anchor program + SPL Token]
   Program --> Accounts[Terms / registry / snapshots / ballots]
@@ -122,7 +122,7 @@ flowchart LR
   Proof --> UI
 ```
 
-Solana enforces issuer/holder authority, fixed rights, shared claim masks and atomic settlement/burn. SQLite stores discovery and recovery metadata, not authoritative ownership. Signed bytes, signature, lifetime and operation ID are committed before network send. The relay accepts only the reviewed message with valid required signatures; wallet private keys stay outside normal signing mode.
+Solana enforces issuer/holder authority, fixed rights, shared claim masks and atomic settlement/burn. SQLite locally, or explicitly selected PostgreSQL for hosting, stores discovery and recovery metadata. Signed bytes, signature, lifetime and operation ID are committed before network send. PostgreSQL requires an acknowledged COMMIT and fences replaced writers before signing/relay; an uncertain commit stops sending and preserves the same recovery identifiers. The relay accepts only the reviewed message with valid required signatures; wallet private keys stay outside normal signing mode.
 
 GET recovery is passive. Explicit rebroadcast can send only the same retained signed bytes before expiry, under the required genesis/release checks. An unknown result never authorizes a replacement payment. The durable lifecycle coordinator pins a manifest and child IDs, bounds each resume and stops at unresolved work. Principal remains holder-signed.
 
@@ -142,6 +142,10 @@ The current release manifest is [programs/bondtrace/release.json](programs/bondt
 |---|---|---|
 | Clean-source application/client suite | **219 Node tests**, **52 UI tests**, application build and frozen SBF hash passed | Exact amounts, parsing, relay/recovery and UI regressions; mocked transports are not live-network evidence |
 |9October backend/hosting follow-up | **241 Node tests**, **52 UI tests** and current app build passed, including the3asset-repair cases | Hosted auth/origin/storage, disabled-signer boundary, RPC redirects and real HTTP missing-asset behavior; separate cohorts |
+| Published Git58 clean reproduction | **243 Node /52 UI**, all11commands passed_snapshot;39actual finalized transactions | Exact immutable Git58 source, native SQLite, new ledger and API/validator restart; [source-bound result](docs/evidence/jury-git58-reproduction-20261009.json) |
+| PostgreSQL preparation | **43 targeted tests,0skipped** against isolated PostgreSQL16.15; default suite266passed/10PGcases skipped,52UI and build passed | Real transactions/TLS/fencing/COMMIT-ack loss/backup; synthetic Solana in the barrier test is separate from real lifecycle proof |
+| Real PostgreSQL-backed lifecycle | **39 actual Solana transactions**, all observed finalized; coupon2,500/principal25,000/burn25/remaining0 | Same IDs/totals after API+validator restart,105-document downloaded backup, no local fallback; [17source hashes and full proof](docs/evidence/postgres-preparation-20261009.json) |
+| Isolated Linux hosted PostgreSQL | Node22.14.0/UID1000, verified TLS1.3, auth/origin/assets, backup/restart passed | [Actual process proof](docs/evidence/hosted-postgres-linux-20261009.json), financialReady:false because devnet program absent; no Render/Neon provisioning |
 | Separate program test run | **3 Rust unit + 16 actual SBF/SPL runtime tests**, including **64 deterministic sequences** | Real compiled program execution in LiteSVM, financial invariants, rejection cases and rollback; separate from the clean live cycle |
 | Main live built-origin lifecycle | **39 distinct localnet transactions**, all observed finalized with retained schema2 proofs | Coupons **2,500**, principal **25,000**, **25** bonds burned; remaining obligations, supply and vault **0**; actual API/validator restart |
 | Separate clean-source lifecycle | **39 distinct localnet transactions**, same financial totals, fresh keys/state/genesis | Reproduction from an allowlisted source copy on the prepared host; compiler/npm caches may be reused |
@@ -170,6 +174,8 @@ BONDTRACE_CI=true bash scripts/setup-isolated-toolchain.sh
 bash scripts/ci-verify.sh
 ```
 
+PostgreSQL integration is separate from the default localnet setup: use a disposable loopback PostgreSQL16 database at127.0.0.1:32545 named bondtrace_tests, set BONDTRACE_TEST_PG_URL only in the test process, then run `npm run test:postgres`. The runner rejects unrelated endpoints and runs sequentially. [Optional local Compose fixture](deploy/postgres-test.compose.yaml) contains a synthetic public test password; its Docker image was not run here. TLS handshake cases additionally need BONDTRACE_TEST_PG_CA and a matching local TLS server. Never reuse the hosted DATABASE_URL for destructive schema/fault tests. The published43-test cohort used a real isolated server and local test CA, with no skipped TLS cases.
+
 This runs application/client/UI/SBF and Rust runtime checks. It does not run the live Windows lifecycle or prove a devnet deployment. The GitHub workflow is manual, not automatically triggered by a push.
 
 ## Try actions yourself and connect a wallet
@@ -184,9 +190,9 @@ For extensions that read the standard local endpoint, run `npm run wallet:localn
 
 ## Hosting preparation
 
-[Hosting guide — English/Russian](docs/31-HOSTING.md) describes the prepared **same-origin Render Docker + persistent SQLite + devnet** path, settings, access, backups and restart checks. [Dockerfile](Dockerfile) and [render.yaml](render.yaml) disable generated signing and require explicit access/origin/durable storage. Outside hosted mode, the existing loopback localnet default remains.
+[Hosting guide — English/Russian](docs/31-HOSTING.md) describes the prepared **free Render native Node + external Neon PostgreSQL + Solana devnet** path. [render.yaml](render.yaml) pins Node22.14.0, one instance, disabled automatic deploys/generated signing, verified database TLS and explicit deployment login/origin. Localnet defaults remain free SQLite with a real validator; hosting needs no WSL or local validator.
 
-Actual isolated Linux verification covered authentication, origin rejection, disabled demo, non-root execution, mounted SQLite surviving restart and a consistent backup. A subsequent repair verifies actual entry JS/CSS bytes and makes missing assets404. These are preparation checks; **no public hosted deployment or successful devnet/Phantom transaction is established**. The Blueprint's paid infrastructure requires separate owner approval; the localnet path above remains independently reproducible at no service cost.
+PostgreSQL persists public recovery metadata independently from Render's ephemeral filesystem; unknown COMMIT outcomes block new sends. Authenticated `/api/metadata/backup` downloads a verified portable SQLite snapshot+manifest; [unpack helper](scripts/unpack-metadata-backup.mjs) checks its hash/integrity without restoring the service. Free providers can sleep and have quotas. **No Render/Neon public deployment or successful devnet/Phantom transaction is established**; account login/deployment is the next owner-assisted stage. The former paid [Docker/SQLite alternative](deploy/render-sqlite.yaml) retains its historical Linux proof and requires separate budget approval.
 
 ## Optional: inspect the saved interface snapshot
 
@@ -213,7 +219,7 @@ npm run preview:ui
 apps/web/             React/Vite console, Wallet Standard, English/Russian UI
 programs/bondtrace/    Anchor program, IDL and expected release manifest
 packages/client/      Exact arithmetic, instructions and state decoding
-server/               HTTP API, coherent reads, SQLite, recovery and proof capture
+server/               HTTP API, coherent reads, SQLite/PostgreSQL, recovery and proof capture
 scripts/              Toolchain, runtime, lifecycle, source reproduction and CI
 tests/                Client/server regressions and real SBF/SPL runtime tests
 docs/evidence/        Public test receipts, manifests and reviewed UI captures

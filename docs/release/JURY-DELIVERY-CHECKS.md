@@ -11,6 +11,10 @@ Prepared9October2026 for the owner's authorized bilingual README/source cleanup/
 
 ## Execution and integrity scopes
 
+Latest preparation9October: [exact Git58 immutable source reproduction](../evidence/jury-git58-reproduction-20261009.json) passed_snapshot,243Node/52UI/all11commands and39real finalized transactions. The Windows long-path failure in Git432 was reproduced/fixed before this new run; older FAILED cohorts below remain intact. Subsequent PostgreSQL source has a separate [43-test/39-real-transaction evidence packet](../evidence/postgres-preparation-20261009.json),17current sourceSHA matches, API+validatorrestart, sameIDs/totals,105document verified download and no SQLite fallback. Six externally signed setup transfers have truthful post-relay receipt attribution. Parent aggregate finality remains unknown for unlinked external holder signatures despite all39individualtxobservedfinalized.
+
+Current default suite:266passed,0failed,10optionalPGcases skipped; separatePGsuite43passed/0skipped covers actualdatabase/TCP/TLS/fencing/COMMIT-loss;52UI/buildpassed. FiveHTTPdownload/unpacktests additionally cover6MiB payload, tampering, existing-output refusal, auth/origin/path, concurrent/aborted response and safe cleanup. [Real Linux hostedPG proof](../evidence/hosted-postgres-linux-20261009.json): nativeNode22.14/UID1000, TLS1.3, exactbuiltassets, auth/origin/demo restrictions, samebackuphash/marker after APIrestart, no localfallback/keys. Devnetprogram absent, financialReady:false explicit; no cloudaccount/provisioning/humanwallet inference. Source/preparation will receive its own privateGitpush/checkpoint. The dated241/52SQLite statements below are historical.
+
 | Check | Actual observation |
 |---|---|
 | Initial188 copy2d7249 | Application/SBF hash passed;218/219 Node passed. Two-phase synthetic worker hit45-second single-phase timeout. No live lifecycle started; failed result retained. |

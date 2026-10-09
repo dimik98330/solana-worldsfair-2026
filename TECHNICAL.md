@@ -37,7 +37,7 @@ flowchart LR
   U[Issuer / holder UI or lifecycle client] --> P[API: validate + prepare + simulate]
   P --> W[External wallet / generated local test signer]
   W --> R[Exact signed-message relay]
-  R --> J[SQLite: receipt + intent before send]
+  R --> J[SQLite locally / PostgreSQL hosted: receipt + intent before send]
   R --> S[Solana program + SPL Token]
   S --> C[Bond / Coupon / Proposal / Ballot accounts]
   C --> V[Coherent confirmed graph + exact reconciliation]
@@ -98,7 +98,11 @@ Voting is the additional corporate action. The issuer creates a bounded-time pro
 
 ## Idempotency, crash recovery and permissions
 
-Wallet relay accepts only the exact prepared message and valid required Ed25519 signatures. SQLite stores signed wire/signature/lifetime/intent before network send, using atomic transactions. Chain confirmation and local projection are separate; a confirmed operation with unfinished metadata remains recoverable with its original ID.
+Wallet relay accepts only the exact prepared message and valid required Ed25519 signatures. The selected SQLite or PostgreSQL adapter stores signed wire/signature/lifetime/intent before network send, using atomic transactions. Chain confirmation and local projection are separate; a confirmed operation with unfinished metadata remains recoverable with its original ID.
+
+For hosted PostgreSQL, a Worker owns the asynchronous pg connection while the facade keeps synchronous transaction callbacks and nested undo. One reserved client executes the entire SQL transaction; transaction-local synchronous_commit=on is verified. The cache/owned writer generation is published only after COMMIT acknowledgement. Unknown commit, timeout, broken rollback or writer fencing poison that process; no local fallback/retry/re-sign. Fresh generation checks precede both private-signing invocations and network send/rebroadcast. A replacement API claims the next generation on its first successful write; passive diagnostics/exports remain observers. Run one writer, preserve its namespace and stop fenced old instances.
+
+Remote bodies are TEXT with exact integer/string validation, bounded8MiB documents/32MiB snapshots and schema/application/network/program binding. Hosted TLS verifies the certificate and hostname; raw URL SSL options cannot disable it. `GET /api/metadata/backup` requires deployment authentication and returns one bounded verified portable SQLite+manifest envelope. The unpack helper verifies hash/integrity and writes new files; automatic restore/migration is deliberately absent. [Hosting details](docs/31-HOSTING.md) distinguish tested loopback PostgreSQL from future Neon/Render and cold-start/provider limits.
 
 GET status endpoints never send transactions. The explicit endpoint `POST /api/transactions/<signature>/rebroadcast` accepts an empty body or `{ "operationId": "<existing-id>" }`. It verifies retained canonical bytes, all signatures, intent binding, genesis, same deployed release and unexpired block height, then sends those same bytes. Confirmed/error receipts remain passive. Expired or pruned unknown receipts do not authorize a newly signed replacement. Ambiguous resend/preflight responses preserve uncertainty because an earlier relay might have succeeded.
 

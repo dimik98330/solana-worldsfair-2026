@@ -1,98 +1,100 @@
-# Hosting preparation / Подготовка хостинга
+# Render + PostgreSQL hosting / Хостинг Render + PostgreSQL
 
 [English README](../README.md) · [Русский README](../README.ru.md)
 
-## Current deployment decision
+## Prepared architecture
 
-Use **one Render Docker web service with a dedicated persistent disk**, the existing Node API and its built React UI on the same HTTPS origin, and Solana **devnet** for chain execution. The localnet validator remains a local verification tool. The hosted service holds public recovery metadata in SQLite; it does not hold investor, issuer or deployment private keys.
+The primary [render.yaml](../render.yaml) runs **one native Node22.14.0 service on Render's free plan**, with the built React UI and API at one HTTPS origin. **External PostgreSQL (Neon) holds public recovery metadata. Solana devnet holds the instrument, fixed holder rights, settlements and burns.** Investor/issuer/deployment private keys never belong in the service or database. The default local development adapter remains SQLite; PostgreSQL is explicit opt-in.
 
 ```mermaid
 flowchart LR
-  Judge[Judge browser + external wallet] -->|HTTPS + deployment login| App[Render: React + Node API]
-  App -->|exact reviewed signed bytes| Devnet[Solana devnet program + SPL]
-  App --> Store[(Persistent SQLite: intents, receipts, proofs)]
-  App -->|reads and simulation| Devnet
-  Wallet[Wallet signs locally] --> Judge
+  Browser[Browser + external wallet] -->|HTTPS + deployment login| App[Render: React + Node API]
+  App -->|verified TLS, acknowledged COMMIT| PG[(Neon PostgreSQL: public recovery metadata)]
+  App -->|reads, simulation, signed transactions| Solana[Solana devnet: program + SPL]
+  Wallet[Wallet signs reviewed message locally] --> Browser
+  App -->|authenticated portable download| Backup[Owner-retained SQLite snapshot + manifest]
 ```
 
-The checked-in [Dockerfile](../Dockerfile), [Render Blueprint](../render.yaml) and [hosted entrypoint](../scripts/start-hosted.ts) are **preparation artifacts**. No Render resource, public URL or paid subscription has been created. Repository visibility remains private.
+These are preparation files. **No Render/Neon resource or public URL has been provisioned.** Account login, consent and actual deployment are the next joint owner stage. The repository remains private. Current proof covers localnet test assets and isolated PostgreSQL; it does not establish live Neon durability, successful human-wallet execution or devnet deployment.
 
-Render's [persistent disks](https://render.com/docs/disks) require a paid service; [free web services](https://render.com/docs/free) lose local SQLite files on restart/redeploy. A zero-cost Render service cannot meet this implementation's durable-journal contract. Do not remove the mount check or relabel an ephemeral demo as durable. If a strict zero-hosting budget remains mandatory, a separately implemented and verified durable external datastore is needed. No paid provisioning is authorized by this preparation.
+## Why this database
 
-Vercel can host the UI, but the current API is a long-running Node process with transactional local SQLite. It is not packaged as a [Vercel Function](https://vercel.com/docs/functions/runtimes/node-js). A split Vercel/Render deployment would add authentication/origin/proxy work without removing the API's storage requirement. The prepared path uses Render for both UI and API.
+PostgreSQL provides transactional storage independent from a sleeping/redeployed web process. It stores public intents, signed transaction bytes, signatures, lifetimes, reconciliation metadata and proofs. It does not replace authoritative Solana accounts. The adapter reserves one pg client for each BEGIN–COMMIT, stages nested changes synchronously and publishes the local cache only after the exact COMMIT acknowledgement. An uncertain commit/timeout poisons that process: **no initial relay; recover the same retained ID/signature from a fresh process**. There is no automatic SQL replay, local fallback or destructive migration.
 
-Official platform references inspected9October2026: [Render Docker](https://render.com/docs/docker), [web services](https://render.com/docs/web-services), [Blueprint fields](https://render.com/docs/blueprint-spec). Platform terms, account consent and costs remain owner decisions.
+One API process is the writer. Its first successful write claims a generation; a replacement process fences the previous writer. Fresh primary checks run immediately before private signing and send/rebroadcast. A fenced process cannot reclaim its generation automatically. Stop the old instance, keep one instance, and disable automatic deploys. Passive CLI checks/backup exports are observers and do not claim a writer. Auxiliary setup transactions in the PG localnet driver use explicit external signing and have separate proof attribution.
 
-## Deployment contract
+Neon compute can suspend while storage remains separate. A cold start or failed connection is a retryable **availability** limitation, never permission to send without an acknowledged journal. Render free instances can also sleep. Free tiers have quotas and no production uptime guarantee; they are suitable for this test prototype, not a promise that a database can never fail. Keep independently retained downloads. The app snapshot limit is32MiB, a document8MiB; it fails closed rather than silently deleting recovery data.
 
-| Setting | Required behavior |
+Official references checked9October2026: [Render free limits](https://render.com/docs/free), [native Node version](https://render.com/docs/node-version), [Blueprint fields](https://render.com/docs/blueprint-spec), [Neon plans](https://neon.com/pricing), [Neon scale to zero](https://neon.com/docs/introduction/scale-to-zero), [pg transactions](https://node-postgres.com/features/transactions), [pg TLS](https://node-postgres.com/features/ssl). Provider terms may change. Render's free PostgreSQL expires; it is not the selected datastore. No paid services are authorized.
+
+## Settings
+
+| Setting | Required value/meaning |
 |---|---|
-| `BONDTRACE_DEPLOYMENT=hosted` | Explicit opt-in; local default remains loopback |
-| `BONDTRACE_NETWORK=devnet` | Official devnet RPC; genesis is checked, mainnet excluded |
-| `BONDTRACE_ENABLE_DEMO=false` | No generated signer/bootstrap; keys are neither read nor created |
-| `BONDTRACE_PUBLIC_ORIGIN` | Exact application HTTPS origin, no credentials/path/query; never infer it from an incoming Host header |
-| `BONDTRACE_HTTP_USER` | Deployment access username,3–64 ASCII letters/digits/underscore/hyphen |
-| `BONDTRACE_HTTP_PASSWORD` | Unique random24–256 printable ASCII characters; supply as a Render secret, never a wallet password or committed file |
-| `BONDTRACE_PERSISTENT_ROOT` | `/app/.local/hosted`, a real dedicated Linux mount; overlay/tmpfs startup is rejected |
-| `BONDTRACE_DATA_DIR` | `/app/.local/hosted/devnet`; namespace below that volume |
-| `PORT` | Platform-assigned valid integer; hosted listener binds0.0.0.0 |
-| `BONDTRACE_RUNTIME_MIN_FREE_MB=64` | Signing/first relay stop below the configured metadata disk budget |
+| NODE_VERSION |22.14.0, same tested baseline |
+| BONDTRACE_DEPLOYMENT |hosted; binds0.0.0.0 on platform PORT |
+| BONDTRACE_STORAGE_BACKEND |postgres; default local adapter is sqlite |
+| DATABASE_URL |Neon server-only connection URL; never a frontend VITE_ variable or committed file |
+| BONDTRACE_DATABASE_TLS |verify-full; certificate/hostname verification cannot be disabled in hosted mode |
+| BONDTRACE_DATABASE_NAMESPACE |Stable8–128 characters: letters/digits, underscore/hyphen; preserve across redeploys |
+| BONDTRACE_DATA_DIR |.local/hosted/devnet; ephemeral scratch only, no local database fallback |
+| BONDTRACE_NETWORK |devnet; exact official RPC and expected genesis |
+| BONDTRACE_ENABLE_DEMO |false; generated signer/bootstrap disabled |
+| BONDTRACE_PUBLIC_ORIGIN |Exact allocated HTTPS origin, no path/query/credentials |
+| BONDTRACE_HTTP_USER |Deployment login,3–64 ASCII letters/digits/underscore/hyphen |
+| BONDTRACE_HTTP_PASSWORD |Unique random24–256 printable ASCII characters, entered as a Render secret |
 
-The entrypoint verifies the mount and changes only its dedicated volume root's ownership, then drops to UID/GID1000 before importing the API. All app/API paths require deployment HTTP Basic authentication; `/healthz` alone returns only `{status:"alive"}` without auth or RPC/database detail. HTTPS terminates at Render. This access password protects the private test deployment; **Solana signatures and on-chain roles still authorize financial instructions**.
+The URL parser accepts only sslmode and channel_binding options and constructs explicit verified TLS options; URL parameters cannot override certificate verification. Unencrypted PG is allowed only with the explicit local-only setting on loopback localnet. Never use that setting for Neon. The database role must create/use the dedicated bondtrace_metadata schema; use a separate project database, not an unrelated production database. Schema/application/network/program bindings reject mismatched state.
 
-The origin allowlist contains only the configured hosted origin. No redirect is followed by the core RPC transport. Normal external-wallet relay retains exact-message verification, commit-before-send, release/genesis binding and explicit uncertain-status recovery. Test execution stays available in explicitly enabled local development; hosted startup refuses it.
+All app/API paths require HTTP Basic deployment login. Only /healthz is public and returns data-free liveness. This login does not replace wallet signatures or Solana role checks. Financial readiness requires the exact deployed release/genesis; HTTP200 liveness alone proves neither. The hosted entrypoint refuses root API execution and never generates signer keys.
 
-## Build, provision and verify
+## Deploy together with the owner
 
-1. Review the current source and owner-approved hosting budget. `render.yaml` selects a paid `starter` service plus1GB disk and disables automatic deploys; **do not provision it before approval**.
-2. Deploy the frozen program to devnet with isolated project deployment tooling and free test SOL. Verify its ID, loader, bytecode hash and genesis through `/api/program`; keep the deployment authority key outside Git and the hosting image. The program ID and expected hash are in `programs/bondtrace/release.json`.
-3. Connect the private GitHub repository to Render as the owner, select the reviewed Blueprint, and supply the exact allocated HTTPS origin and unique deployment login through Render secrets. Mount `/app/.local/hosted`. Run **one instance**; this SQLite adapter is not a distributed database.
-4. Confirm `/healthz` responds and an unauthenticated `/` returns401. Sign in through the browser's normal deployment login, then inspect `/api/health` and `/api/program`. Liveness alone does not establish financial readiness.
-5. Run the HTTP verifier using operator credentials in the local environment, not a URL or shell-history literal:
+1. Create the free Neon project/database and save its connection URL directly in Render secrets. Do not paste it into chat or a repository file. Use a stable namespace and a single API instance.
+2. Deploy the frozen program to Solana devnet using isolated deployment tooling and **test SOL**. Confirm program ID, loader, bytecode SHA-256 and genesis against [release.json](../programs/bondtrace/release.json). The deployment key stays on the owner's machine. Current devnet program/funding is not yet verified.
+3. Connect the private GitHub repository to Render as the owner; review render.yaml (native node, free, no disk, autoDeployTrigger off). Build: npm ci --include=dev --ignore-scripts && npm run build. Start: node --import tsx scripts/start-hosted.ts. No WSL/Rust/validator is required in the hosted Node service.
+4. Supply the exact allocated HTTPS origin, database URL and unique deployment login. Check /healthz200, unauthenticated /401, then authenticated /api/health and /api/program. The metadata backend must be postgres and the deployed program known-match.
+5. Run npm run verify:hosted locally with BONDTRACE_PUBLIC_ORIGIN / BONDTRACE_HTTP_USER / BONDTRACE_HTTP_PASSWORD supplied securely in that process environment. The verifier checks actual entry JS/CSS bytes, MIME/hash, origin/auth/demo restrictions and release matching. Its loopback-only diagnostic override records financialReady:false; it cannot certify a public deployment.
+6. Connect an external devnet wallet, fund test SOL, create/register/distribute/seal an instrument, fund test SPL reserves, capture records, settle coupons, vote, redeem and verify signatures/burn. The hosted service has no demo issuer private key; the issuer signs its own transactions. Use this final public origin for the browser check.
+7. Download metadata, restart/redeploy once, verify the same namespace/IDs/signatures/reconciliation and recover existing operations. Do not create another payment to disguise lost metadata. Record the actual URL/version and results separately from local evidence.
+
+## Backup and recovery
+
+Authenticated GET **/api/metadata/backup** downloads one JSON envelope containing a consistent verified SQLite snapshot (base64), public manifest and SHA-256. The route accepts no filename/path/query/body, allows one bounded response at a time, sends no-store and cleans only its generated scratch files. It exports no wallet/DB credentials. Save it outside Render under owner control, then unpack/verify:
+
+```text
+node scripts/unpack-metadata-backup.mjs downloaded-backup.json new-backup-directory
+```
+
+The helper checks size/hash/schema, SQLite integrity/application identity and writes exclusive new files. It **does not restore** the running service. CLI npm run metadata:check / metadata:backup also supports the selected adapter with its existing server environment. A local backup on the same ephemeral filesystem is not an off-host backup. Provider replication and retention do not substitute for a verified owner download.
+
+A restore of an older journal can omit transactions already executed on-chain. Preserve unresolved signed bytes/IDs, compare genesis/release/signatures/account effects and reconcile before any replacement signature. No automatic restore or migration between local SQLite and remote PostgreSQL is implemented; selecting PG with existing local metadata is refused explicitly. Preserve original ledgers and signer files.
+
+## Verification scope
+
+Current results and exact cutoffs are linked from [README](../README.md) and [delivery checks](release/JURY-DELIVERY-CHECKS.md). The native suite, actual PostgreSQL/TCP fault tests, real localnet financial cycles, isolated Linux hosting and human-wallet/cloud checks are separate cohorts. Synthetic Solana RPC in the COMMIT-loss test proves the persistence barrier, not an SPL transfer. Individual finalized transactions do not establish complete parent attribution when external holder signatures are unlinked.
+
+The [PostgreSQL evidence packet](evidence/postgres-preparation-20261009.json) records43targeted tests/0skips and an actual39-transaction Solana localnet lifecycle: coupon2,500/principal25,000/burn25, API+validatorrestart, sameIDs,105-document verified download, no local SQLite fallback and17source hashes. [Linux hostedPG proof](evidence/hosted-postgres-linux-20261009.json) records nativeNode22.14.0/UID1000, verifiedTLS1.3, auth/origin/demo/assets and identical publicbackuphash/marker after APIrestart. It explicitly records financialReady:false because the official devnet program was absent; it is not Neon/Render verification.
+
+Optional local integration fixture (requires an available Docker engine; not executed in the published cohort):
 
 ```powershell
-# BONDTRACE_PUBLIC_ORIGIN / BONDTRACE_HTTP_USER / BONDTRACE_HTTP_PASSWORD
-# must already be supplied securely for this specific deployment.
-npm run verify:hosted
+docker compose -f deploy/postgres-test.compose.yaml up -d --wait
+# Synthetic public fixture password; never substitute production/Neon credentials.
+$env:BONDTRACE_TEST_PG_URL='postgresql://bondtrace_test:synthetic-local-postgres-test-password@127.0.0.1:32545/bondtrace_tests'
+npm run test:postgres
 ```
 
-6. Connect an external devnet-compatible wallet, fund it with **test SOL**, create a fresh draft, register/distribute before sealing, fund a test SPL reserve, capture the record, settle coupons, vote and redeem. Verify actual signatures and SPL burn/account effects. Never reuse localnet receipts as devnet proof.
-7. Restart/redeploy the hosted service and recover the **same** saved IDs/signatures. Compare reconciliation and retained proof; do not rerun a new financial driver to conceal lost metadata.
+The plain local fixture does not enable TLS; its3handshake cases are explicitly skipped unless a matching local TLS server and BONDTRACE_TEST_PG_CA are supplied. The published43-test cohort used the owned TLS-enabled PostgreSQL server and process-scoped test CA. Stop only a fixture you started, and preserve anything already listening on32545. These tests deliberately inject corruption/connection loss in the test database.
 
-Local image build command: `docker build -t bondtrace-hosting .`. Supply an owned named volume at `/app/.local/hosted` and secret environment values when testing the image; no `target/`, `.local/`, keys, auth files or `.env` enter its build context. The image uses the version-pinned official Node22.14.0 tag; an image digest/build result has not yet been verified here. Browser financial interaction must be checked through the final HTTPS origin, in addition to the loopback HTTP protocol smoke.
-
-## Persistence and recovery
-
-The volume contains only public metadata. Preserve `metadata.sqlite` and its namespace across releases. Existing schema/chain identity guards reject unrelated data or a changed ledger. Before a planned redeploy, use `npm run metadata:check` and `npm run metadata:backup` **inside the running service with its existing environment**. Backups use a consistent SQLite snapshot, integrity validation and a unique destination; they do not export wallet keys. Copy backups to an independently retained destination under owner control. A backup on the same disk is not protection against losing the disk; no off-host backup is claimed.
-
-Do not copy an open SQLite file as a backup or automatically restore an older image of the journal: on-chain actions after that backup may already have executed. Keep every unresolved signature, compare chain/account effects and reconcile before any replacement signature. Render disk redeploys can interrupt availability; the deployment is not claimed to be zero downtime. Public RPC429/history gaps remain explicit service limitations.
-
-## What was actually verified
-
-| Evidence | Scope |
-|---|---|
-| Current Windows Node suite241/241 and app build | Source/backend regressions including3asset-repair cases; mock transports remain mocks |
-|11initial targeted tests on isolated Linux Node22.14.0;14after the supported asset repair | Hosted policy, RPC redirect rejection, disabled signer boundary, entry JS/CSS verification and actual HTTP static routes |
-| Actual Linux hosted process | Correct/incorrect Basic auth, built HTML, foreign-origin403, disabled bootstrap403, devnet genesis/readiness |
-| Actual dedicated ext4 bind mount | Ephemeral startup refused; API UID1000; SQLite marker survived graceful stop/start; consistent backup integrity passed; no generated key directory |
-| Preserved source provenance | Published44ed2fc plus14explicitly hashed hosting overlays; separate from concurrent frontend work |
-
-Public summaries: [initial Linux check](evidence/hosted-linux-20261009.json), [supported asset repair](evidence/hosted-linux-h1-20261009.json). The verifier now checks actual entry JS/CSS responses, MIME, non-HTML content and SHA-256; absent assets return404 rather than an HTML fallback. Its default requires the exact deployed program. An explicit program-gate diagnostic override is accepted only on loopback and is recorded with `financialReady:false`; it cannot certify a public deployment.
-
-These are real Linux process/mount tests, **not Docker-image, Render-public-URL, devnet-financial or human-wallet certification**. Docker Desktop processes were available but its engine API did not become available during the check. Source/logs/test volume were retained; only the owned test API stopped and its test mount was detached.
-
-On9October the official devnet read showed the program absent. One bounded faucet request to a newly generated isolated test signer returned no signature; its observed balance remained0. The request record was retained without automatic repeat. Devnet deployment, full hosted wallet/lifecycle execution and final public URL therefore remain open gates. No funds, account login or paid plan are assumed.
+The former paid Docker + persistent SQLite alternative is retained as [deploy/render-sqlite.yaml](../deploy/render-sqlite.yaml) with [Dockerfile](../Dockerfile). It requires owner-approved spending and an actual dedicated Linux mount; free ephemeral SQLite startup remains refused. Older [Linux SQLite proof](evidence/hosted-linux-20261009.json) and [asset repair](evidence/hosted-linux-h1-20261009.json) retain their original source cutoffs; they are not Neon/Render proof. Docker engine/image execution remains unverified. Vercel alone does not host this long-running Node API and metadata writer; the selected path keeps UI/API on Render.
 
 ## Русский
 
-Подготовлен один Render Docker-сервис: интерфейс и API на одном HTTPS-origin, Solana devnet и постоянный SQLite-диск. Localnet остаётся способом локальной проверки. Пользовательские/деплой-ключи на хостинг не передаются. Dockerfile, render.yaml и hosted-entrypoint — готовые исходники для следующего этапа; платных ресурсов и публичного URL пока нет.
+Основной путь подготовлен для **бесплатного Render native Node22.14.0 + внешнего PostgreSQL Neon**, интерфейс/API на одном HTTPS-origin. Solana devnet хранит выпуск, права держателей, выплаты и сжигание; PostgreSQL — публичный журнал восстановления. Локальный запуск по умолчанию остаётся SQLite. На Render не нужен WSL, Rust или локальный валидатор.
 
-Hosted-режим требует devnet, `BONDTRACE_ENABLE_DEMO=false`, точный HTTPS-origin, отдельные учётные данные доступа для жюри и настоящий Linux mount `/app/.local/hosted`. Он отвергает временную файловую систему, запрещает генерацию/чтение demo-ключей и запускает API от UID1000. Вход в deployment не заменяет подпись кошелька и роли Solana. Только `/healthz` открыт без входа и показывает исключительно liveness.
+После перезапуска Render данные должны читаться из той же БД/namespace, а не с временного диска. Адаптер публикует изменения только после подтверждённого COMMIT, проверяет активного писателя перед подписью/отправкой и останавливает новые отправки при неопределённом результате. Повторная попытка использует прежние подписанные байты и ID. Старый процесс после смены поколения блокируется; работает одна инстанция, автодеплой выключен. Режим hosted требует проверяемый TLS, devnet, demo=false, точный HTTPS-origin и отдельный пароль доступа. Ключи эмитента/держателей/деплоя на сервер и в БД не передаются.
 
-Постоянные диски Render требуют платного сервиса; бесплатный Render теряет SQLite при перезапуске. Подготовленный Blueprint использует `starter` +1GB, поэтому его создание требует отдельного одобрения бюджета. Обходить проверку диска ради бесплатного запуска нельзя. Для строго нулевого бюджета понадобится отдельно реализовать и проверить внешнее постоянное хранилище. Vercel сам по себе не заменяет работающий Node API и SQLite.
+Вместе с владельцем: создать бесплатную Neon БД → развернуть frozen-программу на devnet за тестовые SOL → подключить приватный GitHub к Render → задать secrets из таблицы → проверить вход, программу и реальные JS/CSS → выполнить полный цикл своим devnet-кошельком → скачать backup → перезапустить и проверить прежние IDs/signatures. Аккаунты, согласия и размещение сейчас не выполнялись. Публичного URL, успешного human-wallet сценария и devnet deployment пока нет; localnet evidence их не заменяет.
 
-Порядок запуска: одобрить инфраструктуру → развернуть и проверить frozen-программу на devnet за тестовые SOL → подключить приватный GitHub к Render → задать выделенный HTTPS-origin и уникальный пароль deployment в secrets → смонтировать диск → проверить вход/API/program → выполнить `verify-hosted.mjs` с обязательным совпадением программы → провести полный цикл своим devnet-кошельком → перезапустить сервис и восстановить те же IDs/signatures. Автодеплой отключён; используется одна инстанция.
-
-Проверены241Node-тест, сборка и отдельный Linux-процесс с настоящим ext4 mount: авторизация, origin, запрет demo, UID1000, сохранение SQLite-маркера после перезапуска, integrity backup и отсутствие ключей. Linux-копия имеет собственный manifest; это не proof текущего Render/Docker-image или исполнения финансовых операций на devnet. У devnet-программы пока нет deployment, faucet не вернул подпись и баланс остался0; повторный запрос не отправлялся. Полный hosted/Phantom-сценарий остаётся открытым.
-
-Backups выполнять штатным SQLite snapshot внутри сервиса, отдельно сохранять вне диска, не восстанавливать старый журнал поверх новых ончейн-выплат. Неизвестные статусы восстанавливаются по прежним подписям; новая подпись не является способом восстановления. Видео, доступ жюри, account consent, бюджет, публичная публикация и финальная заявка остаются действиями владельца.
+Backup скачивается после входа через /api/metadata/backup одним JSON-файлом с проверенной SQLite-копией и manifest. Команда выше распакует его в **новую** папку и проверит SHA-256/integrity; автоматического восстановления нет. Сохранять файл нужно вне Render. Старый журнал нельзя восстанавливать поверх уже выполненных ончейн-выплат без сверки. Бесплатные Render/Neon могут засыпать и имеют квоты; это задержка/лимит доступности, не гарантия промышленного uptime. Платный вариант с постоянным SQLite-диском сохранён отдельно и требует одобрения бюджета. Видео, доступ жюри и финальная заявка остаются отдельным этапом владельца.

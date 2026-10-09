@@ -1,0 +1,16 @@
+# Optional disposable LOCAL integration database. Synthetic public test password only.
+# Never connect this fixture to the hosted application or use production credentials.
+services:
+  postgres-test:
+    image: postgres:16.15
+    ports:
+      - 127.0.0.1:32545:5432
+    environment:
+      POSTGRES_DB: bondtrace_tests
+      POSTGRES_USER: bondtrace_test
+      POSTGRES_PASSWORD: synthetic-local-postgres-test-password
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U bondtrace_test -d bondtrace_tests]
+      interval: 3s
+      timeout: 3s
+      retries: 20

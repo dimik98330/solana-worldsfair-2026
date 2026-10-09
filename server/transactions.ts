@@ -3,7 +3,7 @@ import path from 'node:path';
 import {appendTransactionMessageInstructions,compileTransaction,createKeyPairSignerFromBytes,createNoopSigner,createTransactionMessage,generateKeyPairSigner,getBase64EncodedWireTransaction,getTransactionEncoder,getBase58Decoder,getAddressEncoder,partiallySignTransactionMessageWithSigners,pipe,setTransactionMessageComputeUnitLimit,setTransactionMessageFeePayer,setTransactionMessageFeePayerSigner,setTransactionMessageLifetimeUsingBlockhash,type Instruction,type KeyPairSigner,address} from '@solana/kit';
 import {getTransactionDecoder} from '@solana/kit';
 import {applyConfirmedEffect} from './effects.ts';
-import {transactionSync} from './storage.ts';
+import {transactionSync,assertStorageRelayReady} from './storage.ts';
 import {chainIdentity} from './chain-identity.ts';
 import {receipt,saveReceipt,updateReceipt} from './journal.ts';
 import {completePreparedProjection} from './prepared.ts';
@@ -36,6 +36,7 @@ export async function demoSigner(role:string):Promise<KeyPairSigner>{
 }
 export interface SimulationSummary {success:boolean;computeUnits:string;message?:string;}
 export async function buildTransaction(instructions:Instruction[],payerAddress:string,signers:KeyPairSigner[]=[],version:0|1=0,requiredProgramRelease?:ReviewedProgram){
+  assertStorageRelayReady();
   assertRuntimeBudget();
   const deployed=await assertVerifiedProgram();
   const programRelease:ReviewedProgram={programId:deployed.programId,sha256:deployed.expected!.sha256,genesisHash:deployed.genesisHash!};
@@ -46,13 +47,14 @@ export async function buildTransaction(instructions:Instruction[],payerAddress:s
   const payer=signers.find(s=>s.address===payerAddress)??createNoopSigner(address(payerAddress));
   let message:any=pipe(createTransactionMessage({version}),m=>setTransactionMessageFeePayerSigner(payer,m),m=>setTransactionMessageLifetimeUsingBlockhash(lifetime,m),m=>appendTransactionMessageInstructions(instructions,m),m=>setTransactionMessageComputeUnitLimit(1_400_000,m));
   // Version 0 is an explicit localnet/wallet compatibility path. Simulation sizes its CU cap.
+  assertStorageRelayReady();
   let signed=await partiallySignTransactionMessageWithSigners(message);
   let wire=Buffer.from(getTransactionEncoder().encode(signed));
   let simulation=await rpc('simulateTransaction',[wire.toString('base64'),{encoding:'base64',sigVerify:false,commitment:'confirmed'}]);
   if(!simulation?.value||!Object.hasOwn(simulation.value,'err')||!validTransactionError(simulation.value.err)||!Number.isSafeInteger(simulation.context?.slot)||simulation.context.slot<0||!Number.isSafeInteger(simulation.value.unitsConsumed)||simulation.value.unitsConsumed<0||simulation.value.unitsConsumed>1_400_000)throw new AppError('RPC_INVALID','The RPC simulation result is incomplete or inconsistent',503,true);
   if(simulation.value.err){const logs=String(simulation.value.logs?.join(' ')??'');const friendly:Record<string,string>={VotingClosed:'The voting window has closed. No ballot was submitted.',TooEarly:'This action is not due on the chain clock yet.',RecordDateLocked:'Capture the due record date before transferring bonds.',Matured:'This issue has reached maturity; transfers and new proposals are closed.',AlreadyClaimed:'This payment was already claimed. No second payment was submitted.',AlreadyVoted:'This holder already voted on the proposal.',InsufficientReserve:'The settlement reserve does not cover this action.',UnauthorizedIssuer:'Only the issue issuer may perform this action.'};const code=Object.keys(friendly).find(name=>logs.includes('Error Code: '+name+'.'));throw new AppError(code?code.replace(/([a-z])([A-Z])/g,'$1_$2').toUpperCase():'SIMULATION_FAILED',code?friendly[code]:'The chain simulation rejected this action. Refresh the current state and review the inputs.');}
   const used=BigInt(simulation.value.unitsConsumed??0);const limit=Math.min(1_400_000,Math.max(10_000,Math.ceil(Number(used)*1.2)+1000));
-  message=setTransactionMessageComputeUnitLimit(limit,message);signed=await partiallySignTransactionMessageWithSigners(message);wire=Buffer.from(getTransactionEncoder().encode(signed));
+  message=setTransactionMessageComputeUnitLimit(limit,message);assertStorageRelayReady();signed=await partiallySignTransactionMessageWithSigners(message);wire=Buffer.from(getTransactionEncoder().encode(signed));
   const maximum=version===1?4096:1232;if(wire.length>maximum)throw new AppError('TRANSACTION_TOO_LARGE',`Transaction ${wire.length} bytes exceeds ${maximum}`);
   const fee=await rpc('getFeeForMessage',[Buffer.from(signed.messageBytes).toString('base64'),{commitment:'confirmed'}]);
   if(!fee||!Number.isSafeInteger(fee.value)||fee.value<0)throw new AppError('FEE_UNAVAILABLE','The RPC could not quote this message fee. Prepare a fresh review before signing.',503,true);

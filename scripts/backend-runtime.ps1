@@ -94,7 +94,8 @@ $record=[ordered]@{startedAt=(Get-Date).ToUniversalTime().ToString('o');apiOrigi
 $record | ConvertTo-Json | Set-Content -LiteralPath $runtimeFile -Encoding utf8
 $ready=Invoke-RestMethod -Uri ($apiOrigin+'/api/runtime/readiness') -Method Post -ContentType 'application/json' -Body '{}' -TimeoutSec 8
 if($ready.rpcHealth -ne 'ok' -or -not $ready.storage.verified -or $ready.slotAfter -le $ready.slotBefore -or $ready.chain.genesisHash -ne $genesis){throw 'Runtime is alive but not advancing/read-write ready'}
-$record.readiness=@{status="ready";sqliteWriteRead=$true;slotBefore=$ready.slotBefore;slotAfter=$ready.slotAfter}
+$record.readiness=@{status="ready";metadataWriteRead=$true;storageBackend=$(if($env:BONDTRACE_STORAGE_BACKEND -eq 'postgres'){'postgres'}else{'sqlite'});slotBefore=$ready.slotBefore;slotAfter=$ready.slotAfter}
+if($record.readiness.storageBackend -eq 'sqlite'){$record.readiness.sqliteWriteRead=$true}
 $record | ConvertTo-Json | Set-Content -LiteralPath $runtimeFile -Encoding utf8
 $record | ConvertTo-Json
 }finally{$runtimeLock.Dispose()}

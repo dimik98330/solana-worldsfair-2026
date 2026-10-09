@@ -3,11 +3,11 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
-import {generateKeyPairSigner,getTransactionDecoder,getTransactionEncoder,type KeyPairSigner} from '@solana/kit';
+import {appendTransactionMessageInstructions,blockhash,createTransactionMessage,generateKeyPairSigner,getTransactionDecoder,getTransactionEncoder,partiallySignTransactionMessageWithSigners,pipe,setTransactionMessageFeePayerSigner,setTransactionMessageLifetimeUsingBlockhash,type Instruction,type KeyPairSigner} from '@solana/kit';
 import {getTransferSolInstruction} from '@solana-program/system';
 import {getMintToInstruction} from '@solana-program/token';
-import {demoSigner,execute} from '../server/transactions.ts';
-import {network,localDir,rpcUrl} from '../server/config.ts';
+import {demoSigner} from '../server/transactions.ts';
+import {network,localDir,rpcUrl,storageBackend} from '../server/config.ts';
 import {chainClock,rpc,signatureOf} from '../server/rpc.ts';
 import {canonicalJson} from '../server/request-contract.ts';
 import {ata,deriveFinancialTerms} from '../packages/client/src/program.ts';
@@ -22,6 +22,13 @@ const runtime=JSON.parse(fs.readFileSync(runtimeFile,'utf8'));
 assert.equal(network,'localnet');assert.equal(localDir,path.resolve(runtime.dataDirectory));assert.equal(rpcUrl,runtime.rpcUrl);
 assert.equal(runtime.ledgerStorage,'wsl-native','Use the recorded isolated native runtime');assert.equal(runtime.readiness.status,'ready');
 const origin=runtime.apiOrigin as string,runTag=new Date().toISOString().replace(/[^0-9]/g,'').slice(0,17)+'-'+crypto.randomUUID().slice(0,8);
+const externalAuxiliary=storageBackend==='postgres';
+if(externalAuxiliary){
+ // The PG lifecycle must run in the lead's isolated source/runtime namespace.
+ // Never attach this alternate funding path to the owner's original runtime.
+ assert.notEqual(new URL(rpcUrl).port,'8959');assert.notEqual(new URL(origin).port,'3160');
+ assert.equal(new URL(origin).hostname,'127.0.0.1');assert.equal(runtime.programSha256,release.sha256);
+}
 const evidenceFile=process.env.BONDTRACE_STRENGTH_EVIDENCE??process.env.BONDTRACE_EXECUTION_EVIDENCE??`docs/evidence/execution-strengthening-${runTag}.json`;
 assert.match(evidenceFile,/^docs\/evidence\/execution-[a-z0-9-]+\.json$/);assert.equal(fs.existsSync(evidenceFile),false,'Preserve previous evidence');
 const progressFile=path.join(path.dirname(runtimeFile),`strength-progress-${runTag}.json`);
@@ -33,6 +40,54 @@ function checkpoint(stage:string,detail:Record<string,unknown>={}){
  // Public identifiers only: no signer/keypair/raw wire is written here.
  fs.writeFileSync(progressFile,JSON.stringify({scope:'public test recovery metadata',origin,rpcUrl,bond,parentId,receipts,auxiliary,progress},null,2)+'\n');
  console.log(JSON.stringify({stage,bond,parentId,...detail}));
+}
+let auxiliaryRpcId=0;
+/** Direct localnet setup transport. Do not use server rpc(sendTransaction),
+ * buildTransaction/execute or awaitConfirmation here: they touch app storage.
+ * The API remains the only PostgreSQL metadata writer for this lifecycle.
+ */
+async function auxiliaryRpc<T=any>(method:string,params:unknown[]=[]):Promise<T>{
+ assert.equal(externalAuxiliary,true);assert.equal(network,'localnet');
+ const id='strength-aux-'+ ++auxiliaryRpcId;
+ let response:Response;
+ try{response=await fetch(rpcUrl,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id,method,params}),redirect:'error',signal:AbortSignal.timeout(18000)});}
+ catch{throw new Error('Auxiliary RPC response unavailable; recover the saved setup signature without re-signing');}
+ if(!response.ok)throw new Error('Auxiliary RPC HTTP response unavailable; preserve the saved setup signature');
+ let envelope:any;try{envelope=await response.json();}catch{throw new Error('Auxiliary RPC returned invalid JSON; preserve the saved setup signature');}
+ assert.equal(envelope?.jsonrpc,'2.0');assert.equal(envelope?.id,id);assert.equal(Object.hasOwn(envelope,'result'),true,'Auxiliary RPC rejected/interrupted the single request; preserve its saved signature');assert.equal(Object.hasOwn(envelope,'error'),false);
+ return envelope.result as T;
+}
+async function fundAuxiliary(instructions:Instruction[],issuer:KeyPairSigner,actionName:string,publicDetail:Record<string,unknown>,accountAddress?:string){
+ if(!externalAuxiliary){
+  // Preserve the existing SQLite smoke's journal/proof semantics.
+  const {execute}=await import('../server/transactions.ts');
+  const funded=await execute(instructions,issuer,actionName,[],accountAddress);assert.equal(funded.status,'confirmed');
+  auxiliary.push({...publicDetail,signature:funded.signature});return funded;
+ }
+ assert.equal(await auxiliaryRpc('getGenesisHash'),runtime.genesisHash);
+ const latest=await auxiliaryRpc('getLatestBlockhash',[{commitment:'confirmed'}]);
+ assert.equal(typeof latest?.value?.blockhash,'string');assert.ok(Number.isSafeInteger(latest.value.lastValidBlockHeight)&&latest.value.lastValidBlockHeight>=0);
+ // Explicit v0 matches this tested localnet/wallet compatibility lifecycle.
+ const message=pipe(createTransactionMessage({version:0}),m=>setTransactionMessageFeePayerSigner(issuer,m),m=>setTransactionMessageLifetimeUsingBlockhash({blockhash:blockhash(latest.value.blockhash),lastValidBlockHeight:BigInt(latest.value.lastValidBlockHeight)},m),m=>appendTransactionMessageInstructions(instructions,m));
+ const signed=await partiallySignTransactionMessageWithSigners(message),bytes=Buffer.from(getTransactionEncoder().encode(signed)),wire=bytes.toString('base64'),signature=signatureOf(wire);
+ assert.ok(bytes.length<=1232);
+ const fee=await auxiliaryRpc('getFeeForMessage',[Buffer.from(signed.messageBytes).toString('base64'),{commitment:'confirmed'}]);assert.ok(Number.isSafeInteger(fee?.value)&&fee.value>=0);
+ const simulation=await auxiliaryRpc('simulateTransaction',[wire,{encoding:'base64',sigVerify:true,commitment:'confirmed'}]);
+ assert.equal(simulation?.value?.err,null);assert.ok(Number.isSafeInteger(simulation.context?.slot)&&simulation.context.slot>=0);assert.ok(Number.isSafeInteger(simulation.value.unitsConsumed)&&simulation.value.unitsConsumed>=0);
+ const retained={...publicDetail,signature,action:actionName,attribution:'external-localnet-setup-direct-rpc',journalScope:'API-observed-after-relay; no pre-send application receipt',wireSha256:createHash('sha256').update(bytes).digest('hex'),wireBytes:bytes.length,lastValidBlockHeight:latest.value.lastValidBlockHeight,genesisHash:runtime.genesisHash,feeLamports:String(fee.value),simulation:{success:true,contextSlot:simulation.context.slot,computeUnits:String(simulation.value.unitsConsumed)},status:'prepared-before-single-send',submittedAt:new Date().toISOString()};
+ auxiliary.push(retained);checkpoint('before-auxiliary-single-send',{signature,action:actionName,wireSha256:retained.wireSha256});
+ // Test setup only: exactly one transport send, no automatic SQL/journal writer,
+ // no driver retry, no re-signing, and no stored wire/private signer material.
+ assert.equal(await auxiliaryRpc('sendTransaction',[wire,{encoding:'base64',skipPreflight:false,preflightCommitment:'confirmed',maxRetries:0}]),signature);retained.status='submitted';
+ const deadline=Date.now()+30000;
+ while(Date.now()<deadline){
+  const observed=await auxiliaryRpc('getSignatureStatuses',[[signature],{searchTransactionHistory:true}]);
+  assert.ok(Number.isSafeInteger(observed?.context?.slot)&&observed.context.slot>=0);assert.ok(Array.isArray(observed.value)&&observed.value.length===1);
+  const value=observed.value[0];
+  if(value!==null){assert.equal(value.err,null);if(['confirmed','finalized'].includes(value.confirmationStatus)){retained.status='confirmed';return {status:'confirmed' as const,signature};}}
+  await pause(500);
+ }
+ throw new Error('Auxiliary confirmation is unresolved; recover the saved setup signature without re-signing');
 }
 async function api<T=any>(route:string,body?:unknown,timeoutMs=90000):Promise<T>{
  let response:Response|undefined;
@@ -80,13 +135,14 @@ function restart(kind:'Api'|'Validator'){
 }
 async function main(){
  const health=await api('/api/health');assert.equal(health.program.status,'known-match');assert.equal(health.program.observed.sha256,release.sha256);assert.equal(health.chain.genesisHash,runtime.genesisHash);
+ assert.equal(health.storage.backend,storageBackend,'The driver must use the recorded API metadata backend');
  const html=await fetch(origin,{signal:AbortSignal.timeout(15000)});assert.ok(html.ok);assert.match(await html.text(),/<script[^>]+type="module"/);
  const initial=await api('/api/state');assert.ok(initial.instrument?.settlementMint,'Bootstrap the recorded test runtime first');
  const issuer=await demoSigner('issuer'),holders=await Promise.all(Array.from({length:6},()=>generateKeyPairSigner()));assert.equal(initial.instrument.issuer,issuer.address);
  // Test funds only, same original generated issuer/mint. No real asset or airdrop.
  const tokenGap=27_500_000_000n-BigInt(initial.instrument.settlementBalanceMinor);
- if(tokenGap>0n){const source=await ata(issuer.address,initial.instrument.settlementMint),funded=await execute([getMintToInstruction({mint:initial.instrument.settlementMint,token:source,mintAuthority:issuer,amount:tokenGap})],issuer,'strength_test_settlement_funding',[],initial.instrument.settlementMint);assert.equal(funded.status,'confirmed');auxiliary.push({kind:'test-settlement-token-mint',amountMinor:tokenGap.toString(),signature:funded.signature});checkpoint('test-settlement-funded',{signature:funded.signature});}
- for(const holder of holders){const funded=await execute([getTransferSolInstruction({source:issuer,destination:holder.address,amount:10_000_000n})],issuer,'strength_holder_test_funding');assert.equal(funded.status,'confirmed');auxiliary.push({kind:'test-sol-funding',wallet:holder.address,signature:funded.signature});checkpoint('test-holder-funded',{wallet:holder.address,signature:funded.signature});}
+ if(tokenGap>0n){const source=await ata(issuer.address,initial.instrument.settlementMint),funded=await fundAuxiliary([getMintToInstruction({mint:initial.instrument.settlementMint,token:source,mintAuthority:issuer,amount:tokenGap})],issuer,'strength_test_settlement_funding',{kind:'test-settlement-token-mint',amountMinor:tokenGap.toString()},initial.instrument.settlementMint);checkpoint('test-settlement-funded',{signature:funded.signature});}
+ for(const holder of holders){const funded=await fundAuxiliary([getTransferSolInstruction({source:issuer,destination:holder.address,amount:10_000_000n})],issuer,'strength_holder_test_funding',{kind:'test-sol-funding',wallet:holder.address});checkpoint('test-holder-funded',{wallet:holder.address,signature:funded.signature});}
  const start=(await chainClock()).timestamp,record1=start+180n,record2=start+240n,maturity=start+300n;
  await action('initialize_issue',issuer,{seriesId:String(Date.now()),name:'BondTrace · Strengthened lifecycle',settlementMint:initial.instrument.settlementMint,faceValueMinor:'1000000000',rateBps:'1000',couponFrequency:'2',maturityTs:String(maturity),coupons:[{recordTs:String(record1),paymentTs:String(record1+1n),unitAmount:'50000000'},{recordTs:String(record2),paymentTs:String(record2+1n),unitAmount:'50000000'}]});
  const quantities=[10,5,3,2,4,1];
@@ -122,14 +178,26 @@ async function main(){
  while(pending.size&&Date.now()<deadline){for(const signature of [...pending]){if(Date.now()>=deadline)break;const observed=await api('/api/transactions/'+signature,undefined,15000);assert.equal(observed.status,'confirmed');assert.equal(observed.finality.signature,signature);assert.equal(observed.finality.genesisHash,runtime.genesisHash);finalityBySignature.set(signature,observed);if(observed.finality.status==='finalized'&&observed.finality.source==='live-rpc')pending.delete(signature);}if(pending.size)await pause(600);}
  assert.equal(pending.size,0,'Bounded live finality verification timed out; no absent history is promoted');
  const archivedProofs:any[]=[];
- for(const item of all){let observed=await api('/api/transactions/'+item.signature+'/proof');if(observed.executionProof?.proof?.commitment!=='finalized')observed=await api('/api/transactions/'+item.signature+'/proof?retry=true');assert.equal(observed.status,'confirmed');assert.equal(observed.executionProof?.capture?.status,'captured');assert.equal(observed.executionProof?.matchesStoredReceipt,true);assert.equal(observed.executionProof.proof.signature,item.signature);assert.equal(observed.executionProof.proof.expectedWireMatched,true);assert.equal(observed.executionProof.proof.schemaVersion,2);assert.equal(observed.executionProof.proof.commitment,'finalized');assert.equal(observed.executionProof.proof.source,'retained-finalized-rpc-transaction');assert.equal(observed.executionProof.proof.provenance.requestedCommitment,'finalized');assert.equal(observed.executionProof.provenance.source,'retained-observation');archivedProofs.push(observed.executionProof);}
+ for(const item of all){
+  let observed=await api('/api/transactions/'+item.signature+'/proof');if(observed.executionProof?.proof?.commitment!=='finalized')observed=await api('/api/transactions/'+item.signature+'/proof?retry=true');
+  assert.equal(observed.status,'confirmed');assert.equal(observed.executionProof?.capture?.status,'captured');assert.equal(observed.executionProof?.matchesStoredReceipt,true);assert.equal(observed.executionProof.proof.signature,item.signature);
+  const external=externalAuxiliary?auxiliary.find(aux=>aux.signature===item.signature):null;
+  if(external){
+   // The sole API writer observes this external setup signature after relay.
+   // Its proof truthfully lacks an application-retained expected wire; the
+   // driver independently binds the RPC wire hash to its pre-send public hash.
+   assert.equal(observed.executionProof.proof.expectedWireMatched,null);assert.equal(observed.executionProof.proof.transactionSha256,external.wireSha256);
+   external.proofBinding={source:'driver-pre-send-public-wire-sha256',transactionSha256:external.wireSha256,matchesFinalizedRpcWire:true,applicationExpectedWireMatched:null};
+  }else assert.equal(observed.executionProof.proof.expectedWireMatched,true);
+  assert.equal(observed.executionProof.proof.schemaVersion,2);assert.equal(observed.executionProof.proof.commitment,'finalized');assert.equal(observed.executionProof.proof.source,'retained-finalized-rpc-transaction');assert.equal(observed.executionProof.proof.provenance.requestedCommitment,'finalized');assert.equal(observed.executionProof.provenance.source,'retained-observation');archivedProofs.push(observed.executionProof);
+ }
  const beforeRestart={genesis:await rpc('getGenesisHash'),totals:read.reconciliation.totals,supply:read.reconciliation.supply,terms:read.instrument.financialTerms,digest:closed.plan.digest,signatures:[...unique].sort()};
  const restarted=restart('Validator'),afterHealth=await api('/api/health');assert.equal(afterHealth.program.status,'known-match');assert.equal(afterHealth.chain.genesisHash,beforeRestart.genesis);const after=await observe('native-validator-restart');assert.deepEqual(after.reconciliation.totals,beforeRestart.totals);assert.deepEqual(after.reconciliation.supply,beforeRestart.supply);
  const {contextSlot:_beforeSlot,...beforeTerms}=beforeRestart.terms,{contextSlot:_afterSlot,...afterTerms}=after.instrument.financialTerms;assert.deepEqual(afterTerms,beforeTerms);
  const afterJob=await api<LifecycleRunResult>('/api/lifecycle/'+parentId);assert.equal(afterJob.status,'financially_closed');assert.equal(afterJob.plan.digest,beforeRestart.digest);assert.deepEqual(afterJob.stages.flatMap(s=>s.signatures).sort(),closed.stages.flatMap(s=>s.signatures).sort());assert.equal(afterJob.finality.finalityPending,true);
  for(const signature of unique){const observed=await api('/api/transactions/'+signature);assert.equal(observed.status,'confirmed');assert.equal(observed.finality.status,'finalized');assert.ok(['live-rpc','retained-observation'].includes(observed.finality.source));assert.equal(observed.finality.genesisHash,runtime.genesisHash);}
  const exported=await api('/api/evidence?instrument='+bond);assert.equal(exported.integrity.payloadSha256,createHash('sha256').update(canonicalJson(exported.payload)).digest('hex'));
- const result={checkedAt:new Date().toISOString(),scope:'Actual isolated native localnet strengthened release; generated external test signatures and explicit issuer lifecycle execution. No human wallet/devnet/real assets/production proof.',origin,rpcUrl,bond,parentId,program:health.program,receipts,auxiliary,runs,jobs,snapshots,archivedProofs,finality:[...finalityBySignature.values()],runtimeRestart:{beforeGenesis:beforeRestart.genesis,afterGenesis:afterHealth.chain.genesisHash,ledger:restarted.ledger,storage:restarted.ledgerStorage,readiness:restarted.readiness},checks:{onChainAtomicRateTerms:true,beforeDateNoTransaction:true,recordRightsSurviveTransfer:true,externalHolderCouponPlusTwoIssuerBatches:true,apiRestartFixedParentDigestAndChildSignature:true,principalOnlyExternalHolderSigning:true,financialClosureSeparateFromAggregateFinality:true,allActualTransactionsObservedFinalized:true,finalizedRpcProofs:true,nativeValidatorRestartWithoutReset:true,sameParentReplayNoNewSignature:true,firstBatchBytes:batchBytes,firstBatchComputeUnits:firstTx.meta.computeUnitsConsumed},counts:{walletAndDirectIssuerReceipts:receipts.length,couponBatchReceipts:runs.flatMap(r=>r.groups).length,auxiliaryTransactions:auxiliary.length,distinctTransactions:unique.size},state:after,evidenceDigest:exported.integrity};
+ const result={checkedAt:new Date().toISOString(),scope:'Actual isolated native localnet strengthened release; generated external test signatures and explicit issuer lifecycle execution. No human wallet/devnet/real assets/production proof.',metadataBackend:storageBackend,auxiliaryScope:externalAuxiliary?'Direct-RPC generated localnet setup; API-observed after relay, no pre-send app receipt; public driver wire hash independently matches finalized RPC proof.':'Existing SQLite execute journal and retained expected-wire proof.',origin,rpcUrl,bond,parentId,program:health.program,receipts,auxiliary,runs,jobs,snapshots,archivedProofs,finality:[...finalityBySignature.values()],runtimeRestart:{beforeGenesis:beforeRestart.genesis,afterGenesis:afterHealth.chain.genesisHash,ledger:restarted.ledger,storage:restarted.ledgerStorage,readiness:restarted.readiness},checks:{onChainAtomicRateTerms:true,beforeDateNoTransaction:true,recordRightsSurviveTransfer:true,externalHolderCouponPlusTwoIssuerBatches:true,apiRestartFixedParentDigestAndChildSignature:true,principalOnlyExternalHolderSigning:true,financialClosureSeparateFromAggregateFinality:true,allActualTransactionsObservedFinalized:true,finalizedRpcProofs:true,nativeValidatorRestartWithoutReset:true,sameParentReplayNoNewSignature:true,...(externalAuxiliary?{auxiliaryDriverNeverWritesApplicationStorage:true,auxiliaryFinalizedRpcWireMatchesPreSendHash:true}:{}),firstBatchBytes:batchBytes,firstBatchComputeUnits:firstTx.meta.computeUnitsConsumed},counts:{walletAndDirectIssuerReceipts:receipts.length,couponBatchReceipts:runs.flatMap(r=>r.groups).length,auxiliaryTransactions:auxiliary.length,distinctTransactions:unique.size},state:after,evidenceDigest:exported.integrity};
  fs.writeFileSync(evidenceFile,JSON.stringify(result,null,2)+'\n',{flag:'wx'});checkpoint('strengthening-complete',{evidenceFile,distinctTransactions:unique.size});console.log(JSON.stringify({passed:true,bond,parentId,evidenceFile,distinctTransactions:unique.size,couponMinor:'2500000000',principalMinor:'25000000000',burned:'25',aggregateFinality:'unknown-unlinked-external-holder-signatures'}));
 }
 try{await main();}catch(error){checkpoint('stopped-preserve-recovery',{message:error instanceof Error?error.message:'Driver interrupted',progressFile});throw error;}

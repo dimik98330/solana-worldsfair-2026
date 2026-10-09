@@ -1,7 +1,7 @@
 import {rpcUrl,network} from './config.ts';
 import {localDir} from './config.ts';
 import path from 'node:path';
-import {readJson,writeJson,transactionSync} from './storage.ts';
+import {readJson,writeJson,transactionSync,assertStorageRelayReady} from './storage.ts';
 import {receipt,updateReceipt,saveReceipt,boundReceiptFinality,retainedReceiptFinality,type ReceiptRecord,type FinalityObservation,type FinalityLevel} from './journal.ts';
 import {chainIdentity} from './chain-identity.ts';
 import {getSignatureFromTransaction, getTransactionDecoder} from '@solana/kit';
@@ -22,6 +22,7 @@ export function validTransactionError(value:unknown):boolean{
 let next=0;
 export async function rpc<T=any>(method:string,params:unknown[]=[],timeoutMs=18000):Promise<T>{
   const id=++next;
+  if(method==='sendTransaction')assertStorageRelayReady();
   let response:Response;try{response=await fetch(rpcUrl,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id,method,params}),redirect:'error',signal:AbortSignal.timeout(timeoutMs)});}catch{throw new AppError('RPC_UNAVAILABLE','The configured test RPC did not respond',503,true);}
   if(!response.ok)throw new AppError(response.status===429?'RPC_RATE_LIMITED':'RPC_UNAVAILABLE',`RPC returned HTTP ${response.status}`,503,true);
   let result:any;try{result=await response.json();}catch{throw new AppError('RPC_INVALID','The RPC response is not valid JSON',503,true);}

@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {readHostingPolicy,assertHostedVolume} from './hosting-policy.ts';
+import {postgresPolicy} from './postgres-policy.ts';
+import {PROGRAM_ID} from '../packages/client/src/program.ts';
 export const hosting=readHostingPolicy();
 assertHostedVolume(hosting);
 export const network = process.env.BONDTRACE_NETWORK ?? 'localnet';
@@ -12,7 +14,9 @@ if (network==='devnet' && rpcUrl !== 'https://api.devnet.solana.com') throw new 
 export const port = Number(process.env.PORT ?? 3000);
 if(!Number.isInteger(port)||port<1||port>65535)throw new Error('PORT must be an integer from1to65535');
 export const demoEnabled = process.env.BONDTRACE_ENABLE_DEMO !== 'false';
-export const localDir = process.env.BONDTRACE_DATA_DIR ? path.resolve(process.env.BONDTRACE_DATA_DIR) : path.resolve('.local/bondtrace',network);
+export const storageBackend=hosting.storageBackend;
+export const postgresOptions=storageBackend==='postgres'?postgresPolicy(process.env,network as 'localnet'|'devnet',String(PROGRAM_ID)):null;
+export const localDir = hosting.dataDirectory??(process.env.BONDTRACE_DATA_DIR ? path.resolve(process.env.BONDTRACE_DATA_DIR) : path.resolve('.local/bondtrace',network));
 if(!localDir.startsWith(path.resolve('.local')+path.sep))throw new Error('Project data directory must stay inside the ignored .local workspace');
 fs.mkdirSync(localDir,{recursive:true});
 export const fixtureFile = path.join(localDir,'fixture.json');

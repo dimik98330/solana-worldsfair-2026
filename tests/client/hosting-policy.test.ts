@@ -16,6 +16,11 @@ test('hosted mode requires devnet, explicit disabled demo, credentials and exact
 test('hosted storage must be a namespace under the dedicated ignored volume',()=>{
  for(const override of [{BONDTRACE_PERSISTENT_ROOT:undefined},{BONDTRACE_PERSISTENT_ROOT:'.local'},{BONDTRACE_PERSISTENT_ROOT:'../escape'},{BONDTRACE_DATA_DIR:'.local/hosted'},{BONDTRACE_DATA_DIR:'.local/another/devnet'}])assert.throws(()=>readHostingPolicy({...valid,...override},root));
 });
+test('hosted Postgres shares one validated scratch default and requires no ephemeral disk claim',()=>{
+ const policy=readHostingPolicy({...valid,BONDTRACE_STORAGE_BACKEND:'postgres',BONDTRACE_PERSISTENT_ROOT:undefined,BONDTRACE_DATA_DIR:undefined},root);
+ assert.equal(policy.storageBackend,'postgres');assert.equal(policy.persistentRoot,null);assert.equal(policy.dataDirectory,path.resolve(root,'.local/hosted/devnet'));
+ assert.throws(()=>readHostingPolicy({...valid,BONDTRACE_STORAGE_BACKEND:'postgres',BONDTRACE_DATA_DIR:'../outside'},root));
+});
 test('hosted basic authentication refuses missing, wrong and noncanonical input',()=>{
  const policy=readHostingPolicy(valid,root),auth='Basic '+Buffer.from(credentials.user+':'+credentials.password).toString('base64');
  assert.equal(hostingAuthorized(policy,auth),true);

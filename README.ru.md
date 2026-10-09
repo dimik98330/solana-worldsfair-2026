@@ -118,7 +118,7 @@ flowchart LR
   UI[React: эмитент / держатель] --> API[Node API: проверка / подготовка / simulation]
   API --> Wallet[Внешний кошелёк или явный тестовый подписант]
   Wallet --> Relay[Проверка точного подписанного сообщения]
-  Relay --> Journal[SQLite: intent и receipt до отправки]
+  Relay --> Journal[SQLite локально / PostgreSQL на хостинге: intent и receipt до отправки]
   Journal --> RPC[Solana RPC]
   RPC --> Program[Anchor + SPL Token]
   Program --> Accounts[Условия / реестр / снимки / бюллетени]
@@ -128,7 +128,7 @@ flowchart LR
   Proof --> UI
 ```
 
-Solana контролирует права эмитента/держателей, неизменяемые права на выплаты, claim masks и атомарность выплаты/сжигания. SQLite хранит обнаружение и восстановление операций, а владение и расчёты остаются ончейн. Подписанные байты, подпись, срок действия и operation ID сохраняются транзакционно **до отправки**. Relay принимает только проверенное сообщение с валидными обязательными подписями. Приватные ключи обычного пользовательского кошелька в API не передаются.
+Solana контролирует права эмитента/держателей, неизменяемые права на выплаты, claim masks и атомарность выплаты/сжигания. SQLite локально или явно выбранный PostgreSQL на хостинге хранит восстановление операций; владение и расчёты остаются ончейн. Подписанные байты, подпись, срок действия и operation ID сохраняются транзакционно **до отправки**. PostgreSQL требует подтверждённый COMMIT и проверяет активного писателя перед подписью/relay; неопределённый COMMIT останавливает отправку, сохраняя прежний ID. Relay принимает только проверенное сообщение с валидными обязательными подписями. Приватные ключи обычного пользовательского кошелька в API не передаются.
 
 GET-восстановление не отправляет транзакции. Явный rebroadcast допускает только те же сохранённые подписанные байты до истечения срока и с проверкой genesis/release. Неопределённый исход не разрешает новый платёж. Координатор фиксирует manifest и child IDs, ограничивает количество отправок при resume и останавливается при pending/unknown; погашение номинала остаётся подписываемым держателем.
 
@@ -146,6 +146,10 @@ SHA-256: 761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd
 |---|---|---|
 | Чистая копия исходников |219 Node,52 UI, сборка приложения/SBF и совпадение frozen hash | Точные суммы, парсинг, recovery/relay, UI-регрессии; mocked RPC не выдаётся за live chain |
 | Backend/hosting9октября |241Node,52UI и текущая сборка прошли, включая3asset-регрессии | Вход/origin/диск, блокировка demo-подписантов, RPC redirects и настоящий HTTP-отказ для отсутствующих assets; отдельные наборы доказательств |
+| Чистое воспроизведение опубликованного Git58 |243Node/52UI, все11команд passed_snapshot;39настоящих finalized-транзакций | Неизменяемый Git58, SQLite, новый ledger и API/validator restart; [результат с привязкой к source](docs/evidence/jury-git58-reproduction-20261009.json) |
+| PostgreSQL-подготовка |43профильных теста,0пропусков на PostgreSQL16.15; обычный набор266passed/10PGкейсов skipped,52UI и build passed | Настоящие транзакции БД/TLS/fencing/потеря COMMIT-ack/backup; SolanaRPC в barrier-тесте синтетический и отделён от live lifecycle |
+| Настоящий lifecycle с PostgreSQL |39реальных Solana-транзакций, все observed finalized; купоны2 500/номинал25 000/burn25/остаток0 | Прежние IDs/итоги после API+validator restart, скачан backup105документов, local fallback отсутствует; [17source hashes и полный proof](docs/evidence/postgres-preparation-20261009.json) |
+| Отдельный Linux hosted PostgreSQL |Node22.14.0/UID1000, verifiedTLS1.3, auth/origin/assets/backup/restart passed | [Проверка настоящего процесса](docs/evidence/hosted-postgres-linux-20261009.json), financialReady:false из-за отсутствия devnet-программы; без Render/Neon provisioning |
 | Отдельный program-run |3 Rust unit +16 SBF/SPL runtime, включая64 последовательности | Реальный скомпилированный SBF в LiteSVM, финансовые инварианты, отказы и rollback |
 | Основной live API-прогон |39 отдельных localnet-транзакций, observed finalized и schema2proofs |2 500 купонов,25 000 номинала,25 сожжённых облигаций; obligations/supply/vault0; API/validator restart |
 | Отдельный clean-source live-прогон |39 транзакций, те же финансовые итоги, новые keys/state/genesis | Воспроизведение на подготовленном компьютере, с допустимым переиспользованием compiler/npm caches |
@@ -169,7 +173,9 @@ npm run metadata:check
 npm run verify:source
 ```
 
-`verify:source` создаёт новую игнорируемую копию исходников, собирает её и выполняет другой реальный localnet lifecycle с новыми тестовыми транзакциями. В его Windows-прогон Rust-suite не входит: program-тесты выполняются отдельно. `demo:lifecycle`, `smoke` и `smoke:issuer` также создают тестовые выпуски; запускать осознанно. `metadata:check` проверяет SQLite без изменения блокчейна.
+`verify:source` создаёт новую игнорируемую копию исходников, собирает её и выполняет другой реальный localnet lifecycle с новыми тестовыми транзакциями. В его Windows-прогон Rust-suite не входит: program-тесты выполняются отдельно. `demo:lifecycle`, `smoke` и `smoke:issuer` также создают тестовые выпуски; запускать осознанно. `metadata:check` проверяет выбранное хранилище без изменения блокчейна.
+
+PostgreSQL-тесты идут отдельно: нужна одноразовая локальная PostgreSQL16 на127.0.0.1:32545 с БД bondtrace_tests. Задайте BONDTRACE_TEST_PG_URL только в окружении тестового процесса и выполните `npm run test:postgres`; runner отвергает другие адреса и запускает кейсы последовательно. [Необязательный Compose fixture](deploy/postgres-test.compose.yaml) содержит публичный синтетический пароль, его Docker image здесь не запускался. TLS-кейсам дополнительно нужны BONDTRACE_TEST_PG_CA и локальный TLS-сервер с подходящим сертификатом. **Не использовать hosted DATABASE_URL** для schema/fault-тестов. Опубликованный прогон43тестов использовал настоящий отдельный сервер и тестовый CA без пропусков.
 
 В изолированном Ubuntu 24.04 x64 CI runner/container с заранее установленным Node 22.14.0:
 
@@ -192,9 +198,9 @@ Linux CI выполняет application/client/UI/SBF и Rust runtime checks, н
 
 ## Подготовка хостинга
 
-[Руководство EN/RU](docs/31-HOSTING.md) описывает подготовленный путь **Render Docker: интерфейс и API на одном origin, постоянный SQLite и devnet**, настройки, вход жюри, backups и перезапуск. [Dockerfile](Dockerfile) и [render.yaml](render.yaml) отключают генерацию подписантов и требуют явно заданные доступ/origin/постоянный диск. Вне hosted-режима сохраняется локальный запуск.
+[Руководство EN/RU](docs/31-HOSTING.md) описывает подготовленный путь **бесплатный Render native Node + внешний PostgreSQL Neon + Solana devnet**. [render.yaml](render.yaml) фиксирует Node22.14.0, одну инстанцию, выключенный автодеплой/demo, проверяемый TLS и точные доступ/origin. Локально сохраняется бесплатный SQLite с настоящим валидатором; на хостинге WSL/локальный валидатор не нужен.
 
-Отдельный настоящий Linux-процесс проверен на вход, origin, запрет demo, UID1000, сохранение SQLite после перезапуска и consistent backup. Asset-fix проверяет реальные JS/CSS и возвращает404 для отсутствующих файлов. Это подготовка: **публичный deployment и успешные devnet/Phantom-транзакции пока не подтверждены**. Платная инфраструктура Blueprint требует отдельного одобрения владельца; основной localnet-запуск выше остаётся бесплатным и воспроизводимым.
+PostgreSQL хранит журнал отдельно от временной файловой системы Render; неопределённый COMMIT блокирует новые отправки. После входа `/api/metadata/backup` скачивает проверенную SQLite-копию+manifest; [команда распаковки](scripts/unpack-metadata-backup.mjs) сверяет hash/integrity без восстановления сервиса. Бесплатные провайдеры могут засыпать и имеют квоты. **Размещение Render/Neon и успешные devnet/Phantom-транзакции пока не подтверждены**; вход в аккаунты и deployment выполним вместе с владельцем. Прежний платный [Docker/SQLite-вариант](deploy/render-sqlite.yaml) сохранён с отдельной исторической Linux-проверкой и требует одобрения бюджета.
 
 ## Дополнительно: только посмотреть архив интерфейса
 
@@ -221,7 +227,7 @@ npm run preview:ui
 apps/web/             React/Vite, Wallet Standard, русский/английский интерфейс
 programs/bondtrace/    Anchor-программа, IDL, expected release manifest
 packages/client/      Точная арифметика, инструкции, декодирование состояния
-server/               HTTP API, единые reads, SQLite, recovery/proof capture
+server/               HTTP API, единые reads, SQLite/PostgreSQL, recovery/proof capture
 scripts/              Toolchain, runtime, lifecycle, source reproduction и CI
 tests/                Client/server регрессии, настоящие SBF/SPL runtime-тесты
 docs/evidence/        Публичные test receipts/manifests и проверенные UI-снимки

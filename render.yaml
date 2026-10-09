@@ -1,18 +1,30 @@
-# Preparation only: this disk-backed plan is paid. Provision only after owner approval.
+# Preparation only. Accounts/secrets and actual deployment are the joint owner stage.
+# Durable recovery metadata is in external PostgreSQL (Neon), never the free filesystem.
 services:
   - type: web
     name: bondtrace-devnet
-    runtime: docker
-    plan: starter
+    runtime: node
+    plan: free
     numInstances: 1
     autoDeployTrigger: "off"
     healthCheckPath: /healthz
-    dockerfilePath: ./Dockerfile
-    disk:
-      name: bondtrace-metadata
-      mountPath: /app/.local/hosted
-      sizeGB: 1
+    buildCommand: npm ci --include=dev --ignore-scripts && npm run build
+    startCommand: node --import tsx scripts/start-hosted.ts
     envVars:
+      - key: NODE_VERSION
+        value: 22.14.0
+      - key: BONDTRACE_DEPLOYMENT
+        value: hosted
+      - key: BONDTRACE_STORAGE_BACKEND
+        value: postgres
+      - key: BONDTRACE_DATABASE_NAMESPACE
+        value: bondtrace-devnet
+      - key: BONDTRACE_DATA_DIR
+        value: .local/hosted/devnet
+      - key: BONDTRACE_DATABASE_TLS
+        value: verify-full
+      - key: DATABASE_URL
+        sync: false
       - key: BONDTRACE_PUBLIC_ORIGIN
         sync: false
       - key: BONDTRACE_HTTP_USER

@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "scope": "Exact immutable published Git58 native SQLite source reproduction; excludes later PostgreSQL implementation",
+  "commit": "58f3b563392fd143451e1c8ea0935528963d3c53",
+  "tree": "ccf68ebb25ca673de52637ebd69f9de9f4cee408",
+  "runId": "087bd30a-0266-456d-bcd8-9c47107e2169",
+  "status": "passed_snapshot",
+  "commands": [
+    {
+      "name": "npm-ci",
+      "exitCode": 0
+    },
+    {
+      "name": "application-build",
+      "exitCode": 0
+    },
+    {
+      "name": "toolchain-versions",
+      "exitCode": 0
+    },
+    {
+      "name": "sbf-build-direct",
+      "exitCode": 0
+    },
+    {
+      "name": "frozen-sbf-check",
+      "exitCode": 0
+    },
+    {
+      "name": "node-tests",
+      "exitCode": 0
+    },
+    {
+      "name": "ui-tests",
+      "exitCode": 0
+    },
+    {
+      "name": "isolated-native-runtime",
+      "exitCode": 0
+    },
+    {
+      "name": "new-release-lifecycle",
+      "exitCode": 0
+    },
+    {
+      "name": "stop-owned-api",
+      "exitCode": 0
+    },
+    {
+      "name": "stop-owned-validator",
+      "exitCode": 0
+    }
+  ],
+  "checks": {
+    "nodePassed": 243,
+    "uiPassed": 52,
+    "runtimeProcessesStopped": true,
+    "sourceDrift": false
+  },
+  "execution": {
+    "file": "execution-git58-clean-087bd30a-0266-456d-bcd8-9c47107e2169.json",
+    "bytes": 684496,
+    "sha256": "bb72246eb09e27c27db4ddeceeb42b93eca544fe281770b96aac92314b725a47",
+    "bond": "FRKApnBKm8rZzrQcFFAN5Mf8HDgLLkgxEviqGgjjRC4e",
+    "counts": {
+      "walletAndDirectIssuerReceipts": 29,
+      "couponBatchReceipts": 4,
+      "auxiliaryTransactions": 6,
+      "distinctTransactions": 39
+    },
+    "genesisHash": "3qmiQaCsaPxvcTM8VfhJpB7JRHVkr2MrqATgriPMLYmP",
+    "allActualTransactionsObservedFinalized": true,
+    "parentAggregateFinality": "unknown-unlinked-external-holder-signatures",
+    "couponMinor": "2500000000",
+    "principalMinor": "25000000000",
+    "burnUnits": "25",
+    "remainingObligationsMinor": "0"
+  },
+  "limits": [
+    "Prepared host/caches, not another physical clean machine",
+    "No Render/Neon/devnet/human-wallet/final submission certification",
+    "Earlier FAILED source cohorts retained separately"
+  ]
+}

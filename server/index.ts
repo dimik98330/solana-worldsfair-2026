@@ -1,7 +1,8 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
-import {demoEnabled,port,hosting} from './config.ts';
+import {createHash} from 'node:crypto';
+import {demoEnabled,port,hosting,localDir,storageBackend} from './config.ts';
 import {AppError,transactionStatus,rpc} from './rpc.ts';
 import {getState} from './state.ts';
 import {buildEvidenceReport} from './evidence.ts';
@@ -18,7 +19,7 @@ import {submitPrepared} from './transactions.ts';
 import {rebroadcastTransaction} from './rebroadcast.ts';
 import {operationStatus} from './operations.ts';
 import {chainIdentity} from './chain-identity.ts';
-import {storageDiagnostics,StorageError,closeStorage,verifyStorageWrite} from './storage.ts';
+import {storageDiagnostics,StorageError,closeStorage,verifyStorageWrite,backupStorage} from './storage.ts';
 const dist=resolveStaticBuild(process.cwd(),process.env.BONDTRACE_WEB_DIST);
 const allowedOrigins=new Set(hosting.publicOrigin?[hosting.publicOrigin]:[`http://127.0.0.1:${port}`,`http://localhost:${port}`,'http://127.0.0.1:5173','http://localhost:5173']);
 let mutationBusy=false;
@@ -26,12 +27,75 @@ async function mutate<T>(action:()=>Promise<T>){if(mutationBusy)throw new AppErr
 function send(res:http.ServerResponse,status:number,value:unknown){res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store'});res.end(JSON.stringify(value,(_key,item)=>typeof item==='bigint'?item.toString():item));}
 async function body(req:http.IncomingMessage){if(String(req.headers['content-type']??'').split(';')[0].trim().toLowerCase()!=='application/json')throw new AppError('CONTENT_TYPE','Use application/json',415);const parts:Buffer[]=[];let bytes=0;for await(const chunk of req){const part=Buffer.isBuffer(chunk)?chunk:Buffer.from(chunk);bytes+=part.length;if(bytes>65000)throw new AppError('BODY_TOO_LARGE','Request exceeds the 65000-byte limit',413);parts.push(part);}try{const data=new TextDecoder('utf-8',{fatal:true}).decode(Buffer.concat(parts)),value=data?JSON.parse(data):{};if(value===null||typeof value!=='object'||Array.isArray(value))throw new AppError('INVALID_REQUEST','Expected a JSON object');return value;}catch(error){if(error instanceof AppError)throw error;throw new AppError('INVALID_JSON','Use a well-formed UTF-8 JSON body');}}
 function recoveryId(data:Record<string,unknown>){if(data.operationId!==undefined&&data.requestId!==undefined&&data.operationId!==data.requestId)throw new AppError('PARAMETER_CONFLICT','Recovery identifiers disagree');if((data.operationId!==undefined&&typeof data.operationId!=='string')||(data.requestId!==undefined&&typeof data.requestId!=='string'))throw new AppError('INVALID_OPERATION_ID','Recovery identifiers must be strings');const id=data.operationId??data.requestId;if(typeof id!=='string')throw new AppError('MISSING_OPERATION_ID','Generate and retain a recovery identifier before submitting a demo request');return id;}
+const maximumBackupBytes=32*1024*1024,maximumExportBytes=64*1024*1024;
+let backupBusy=false;
+function safeBackupDirectory(directory:string){
+  const relative=path.relative(path.resolve(localDir),directory);
+  if(relative==='..'||relative.startsWith('..'+path.sep)||path.isAbsolute(relative))throw new AppError('BACKUP_PATH_UNSAFE','Public metadata export storage is unavailable',503);
+  let current=path.parse(directory).root;
+  for(const segment of directory.slice(current.length).split(path.sep).filter(Boolean)){
+    current=path.join(current,segment);const stat=fs.lstatSync(path.toNamespacedPath(current));
+    if(stat.isSymbolicLink()||!stat.isDirectory())throw new AppError('BACKUP_PATH_UNSAFE','Public metadata export requires regular scratch directories',503);
+  }
+}
+/** One authenticated portable response; generated scratch artifacts never become durable backups. */
+function downloadMetadataBackup(req:http.IncomingMessage,res:http.ServerResponse,url:URL){
+  if(url.search)throw new AppError('INVALID_REQUEST','Metadata backup accepts no query parameters');
+  if(req.headers.origin&&!allowedOrigins.has(req.headers.origin))throw new AppError('ORIGIN_DENIED','Use the configured BondTrace application origin',403);
+  if(req.headers['sec-fetch-site']==='cross-site')throw new AppError('ORIGIN_DENIED','Metadata export requires the configured application origin',403);
+  if(req.headers['content-length']!==undefined||req.headers['transfer-encoding']!==undefined)throw new AppError('INVALID_REQUEST','Metadata backup accepts no request body');
+  if(backupBusy)throw new AppError('BACKUP_PENDING','Wait for the existing metadata download to finish',409);
+  backupBusy=true;
+  const deadline=setTimeout(()=>res.destroy(),30000);deadline.unref();
+  let directory:string|undefined,owned:fs.Stats|undefined,finished=false;
+  const cleanup=()=>{
+    if(finished)return;finished=true;clearTimeout(deadline);
+    try{
+      if(!directory||!owned)return;
+      safeBackupDirectory(directory);
+      const current=fs.lstatSync(path.toNamespacedPath(directory));
+      if(current.ino!==owned.ino||current.dev!==owned.dev)return;
+      // Never recurse: remove only files created by this exact backup operation.
+      for(const name of ['snapshot.sqlite','snapshot.sqlite.manifest.json','snapshot.sqlite-journal','snapshot.sqlite-wal','snapshot.sqlite-shm']){
+        const file=path.join(directory,name);let stat:fs.Stats;
+        try{stat=fs.lstatSync(path.toNamespacedPath(file));}catch(error){if((error as NodeJS.ErrnoException).code==='ENOENT')continue;throw error;}
+        if(stat.isSymbolicLink()||!stat.isFile())return;
+        fs.unlinkSync(path.toNamespacedPath(file));
+      }
+      fs.rmdirSync(path.toNamespacedPath(directory));
+    }catch{/* Preserve an unverifiable or changed directory; never delete an unrelated path. */}
+    finally{backupBusy=false;}
+  };
+  res.once('finish',cleanup);res.once('close',cleanup);
+  try{
+    const backups=path.resolve(localDir,'backups');
+    // Check existing ancestors before making the fixed backup directory.
+    let ancestor=backups;while(!fs.existsSync(path.toNamespacedPath(ancestor)))ancestor=path.dirname(ancestor);
+    safeBackupDirectory(ancestor);
+    fs.mkdirSync(path.toNamespacedPath(backups),{recursive:true});safeBackupDirectory(backups);
+    directory=path.join(backups,'http-export-'+crypto.randomUUID());fs.mkdirSync(path.toNamespacedPath(directory),{mode:0o700});safeBackupDirectory(directory);owned=fs.lstatSync(path.toNamespacedPath(directory));
+    const location=path.join(directory,'snapshot.sqlite'),result=backupStorage(location),stat=fs.lstatSync(path.toNamespacedPath(location));
+    if(stat.isSymbolicLink()||!stat.isFile()||stat.size>maximumBackupBytes||stat.size!==result.bytes)throw new AppError('BACKUP_LIMIT','Public metadata backup exceeds the32MiB download limit or changed during export',413);
+    const bytes=fs.readFileSync(path.toNamespacedPath(location)),sha256=createHash('sha256').update(bytes).digest('hex');
+    if(bytes.length!==result.bytes||sha256!==result.sha256)throw new AppError('BACKUP_INTEGRITY','Public metadata export could not verify its exact downloaded bytes',503);
+    const source='source' in result?result.source:undefined;
+    const createdAt=new Date().toISOString(),filename='bondtrace-metadata-'+createdAt.replace(/[:.]/g,'-')+'.sqlite';
+    const manifest={filename,createdAt,schemaVersion:result.schemaVersion,bytes:bytes.length,sha256,integrityCheck:result.integrityCheck,
+      source:{backend:storageBackend,scope:'Consistent public metadata only; no signer keys, database credentials or automatic restore',
+        ...(source?{snapshotDataSha256:source.snapshotDataSha256,observedGeneration:source.observedGeneration,acknowledgedAt:source.acknowledgedAt,network:source.network,programId:source.programId}:{})}};
+    const payload=JSON.stringify({schema:'bondtrace.metadata-download.v1',manifest,database:{encoding:'base64',data:bytes.toString('base64')}});
+    if(Buffer.byteLength(payload)>maximumExportBytes)throw new AppError('BACKUP_LIMIT','Public metadata download exceeds the64MiB portable export limit',413);
+    res.writeHead(200,{'content-type':'application/json; charset=utf-8','content-disposition':`attachment; filename="${filename}.json"`,'content-length':Buffer.byteLength(payload),'cache-control':'no-store','x-content-type-options':'nosniff','x-bondtrace-sqlite-sha256':sha256});
+    res.end(payload);
+  }catch(error){cleanup();throw error;}
+}
 const server=http.createServer(async(req,res)=>{
   try{
     const url=new URL(req.url??'/','http://127.0.0.1');
     if(req.method==='GET'&&url.pathname==='/healthz')return send(res,200,{status:'alive'});
     if(!hostingAuthorized(hosting,req.headers.authorization)){res.setHeader('www-authenticate','Basic realm="BondTrace", charset="UTF-8"');throw new AppError('AUTH_REQUIRED','Authenticate to this private test deployment',401);}
     if(req.method==='POST'&&req.headers.origin&&!allowedOrigins.has(req.headers.origin))throw new AppError('ORIGIN_DENIED','Use the configured BondTrace application origin',403);
+    if(req.method==='GET'&&url.pathname==='/api/metadata/backup')return downloadMetadataBackup(req,res,url);
     if(req.method==='GET'&&url.pathname==='/api/health'){const chain=await chainIdentity(),program=await getProgramIdentity();return send(res,200,{status:program.signingAllowed?'ok':'read-only',demo:demoEnabled,storage:storageDiagnostics(),chain,program});}
     if(req.method==='GET'&&url.pathname==='/api/program')return send(res,200,await getProgramIdentity());
     if(req.method==='POST'&&url.pathname==='/api/runtime/readiness'){const data=await body(req);if(Object.keys(data).length)throw new AppError('INVALID_REQUEST','Readiness accepts an empty object');const chain=await chainIdentity(),program=await getProgramIdentity(),rpcHealth=await rpc('getHealth'),slotBefore=await rpc<number>('getSlot',[{commitment:'confirmed'}]);await new Promise(resolve=>setTimeout(resolve,800));const slotAfter=await rpc<number>('getSlot',[{commitment:'confirmed'}]);const storage=verifyStorageWrite();return send(res,200,{chain,program,rpcHealth,slotBefore,slotAfter,storage});}

@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-09T13:59:30.296Z",
+  "scope": "Actual isolated PostgreSQL + Solana localnet lifecycle; generated external test signers; not Render/Neon/devnet/human-wallet",
+  "sourceSnapshotId": "b4013149-c3dd-47e4-b78f-1576a7ce7bdb",
+  "sourceHashes": [
+    {
+      "file": "server/remote-postgres-engine.mjs",
+      "sha256": "051975f5b30c4bdafaeee5bea1c9ab1b9082e466d3c66fbeb48017a5012121b6"
+    },
+    {
+      "file": "server/remote-postgres-engine.d.mts",
+      "sha256": "7f20d2cf9d7304b13459091e9b92dec87e0c363a2bdb787308d975081ab16ac8"
+    },
+    {
+      "file": "server/remote-document-state.ts",
+      "sha256": "bd9a6a1225132911e409c2d3f47ac48c4d5146523a249a7accadc54f4084bc51"
+    },
+    {
+      "file": "server/postgres-policy.ts",
+      "sha256": "3d2739594590f7bd47098f7570b0d94b97786298ac4f649b7168381131500cee"
+    },
+    {
+      "file": "server/postgres-worker.mjs",
+      "sha256": "2acbcf96577f1d1d09666764bbb30a20705298174fe46333da7070c8c506ae49"
+    },
+    {
+      "file": "server/postgres-bridge.ts",
+      "sha256": "6fd5e35ae614a711b2051596e1ad96f5cce56d70b9eba9a39c7f1e8927dc77ee"
+    },
+    {
+      "file": "server/postgres-document-store.ts",
+      "sha256": "99d8548df641e1f85f993dcf26e50a595328d8dd91ac74e388c972c40519412f"
+    },
+    {
+      "file": "server/postgres-backup.ts",
+      "sha256": "e46a518a17663adc636bfc7e886adc138f6974bff80c3e5899c5f18c47c8e080"
+    },
+    {
+      "file": "server/storage.ts",
+      "sha256": "60af3f48b7340962c728dab078c8fb70bc7493c527a489fd072a6a0b0449a991"
+    },
+    {
+      "file": "server/config.ts",
+      "sha256": "2fbe0c09b8a4645f83fa2c6987cf9633a92ab216ec8e30bf58e5803b4936f8af"
+    },
+    {
+      "file": "server/hosting-policy.ts",
+      "sha256": "e7df97796de79986e217e2ef6a01e1e114b580e0ec3f2205712770fe8c17d1f3"
+    },
+    {
+      "file": "server/index.ts",
+      "sha256": "3dd7eb741b94fcbbc9d12e87bb0c18b1bd3867bb296da0ec0ed64b9826953b36"
+    },
+    {
+      "file": "server/rpc.ts",
+      "sha256": "9b1a631a3be77171f6e6fabbee89360f5453ea6030546f9367b9984c0f4b8e5f"
+    },
+    {
+      "file": "server/transactions.ts",
+      "sha256": "86365e2d32aa04c992e641470b728f54c80b27fb916b1bb5db36ccb4814c2fb2"
+    },
+    {
+      "file": "scripts/start-hosted.ts",
+      "sha256": "f31652319e3ae7ed992f78041277b3a42c1cafb6e73ab1365ab94b5dec261918"
+    },
+    {
+      "file": "scripts/backend-runtime.ps1",
+      "sha256": "c1b208bf4b81b15d6a5f6fff8bfc3006dce2e5613e2c7ea4b7e1c270307b9bbb"
+    },
+    {
+      "file": "scripts/strength-smoke.ts",
+      "sha256": "69e6633348fb876ccc7c08a468d1939e779b1815b6538199504544781a090e07"
+    }
+  ],
+  "testCohort": {
+    "passed": 43,
+    "failed": 0,
+    "skipped": 0,
+    "database": "Actual isolated PostgreSQL16.15 loopback",
+    "files": [
+      "tests/client/remote-postgres-engine.test.ts",
+      "tests/client/remote-document-state.test.ts",
+      "tests/client/postgres-policy.test.ts",
+      "tests/client/postgres-bridge.test.ts",
+      "tests/client/postgres-storage.test.ts",
+      "tests/client/postgres-financial-barrier.test.ts",
+      "tests/client/postgres-signing-fence.test.ts",
+      "tests/client/postgres-tls.test.ts"
+    ],
+    "limits": "COMMIT-loss and crypto-fence tests use synthetic SolanaRPC; financial lifecycle below uses a real native validator"
+  },
+  "financial": {
+    "file": "execution-postgres-b4013149-c3dd-47e4-b78f-1576a7ce7bdb.json",
+    "bytes": 690024,
+    "sha256": "b3fc25d84576ace231155280cc15d1ba345a7dbc7f31ce6a0a06707eeb2250e9",
+    "bond": "H57zn4dbof1gSZ8efUxY9WxD9g527xuyRaNPKu5p12Qh",
+    "parentId": "lifecycle-strength-21df6d01-ddf1-496d-9805-cce6b7a84676",
+    "counts": {
+      "walletAndDirectIssuerReceipts": 29,
+      "couponBatchReceipts": 4,
+      "auxiliaryTransactions": 6,
+      "distinctTransactions": 39
+    },
+    "couponMinor": "2500000000",
+    "principalMinor": "25000000000",
+    "burnedUnits": "25",
+    "remainingMinor": "0",
+    "checks": {
+      "onChainAtomicRateTerms": true,
+      "beforeDateNoTransaction": true,
+      "recordRightsSurviveTransfer": true,
+      "externalHolderCouponPlusTwoIssuerBatches": true,
+      "apiRestartFixedParentDigestAndChildSignature": true,
+      "principalOnlyExternalHolderSigning": true,
+      "financialClosureSeparateFromAggregateFinality": true,
+      "allActualTransactionsObservedFinalized": true,
+      "finalizedRpcProofs": true,
+      "nativeValidatorRestartWithoutReset": true,
+      "sameParentReplayNoNewSignature": true,
+      "auxiliaryDriverNeverWritesApplicationStorage": true,
+      "auxiliaryFinalizedRpcWireMatchesPreSendHash": true,
+      "firstBatchBytes": 808,
+      "firstBatchComputeUnits": 193138
+    },
+    "parentAggregateFinality": "unknown-unlinked-external-holder-signatures",
+    "auxiliaryAttribution": "Six setup transfers signed externally; observed post-relay by API; RPC proof hash compared to pre-send driver wire hash"
+  },
+  "restart": {
+    "sameGenesis": true,
+    "beforeGenesis": "HLjN216oeJVr3wLyLEfJv4kfCKGpVRdG1DbqnRk4dUsc",
+    "afterGenesis": "HLjN216oeJVr3wLyLEfJv4kfCKGpVRdG1DbqnRk4dUsc",
+    "metadataBackend": "postgres",
+    "ownedProcessesStopped": true
+  },
+  "backup": {
+    "bytes": 380928,
+    "sha256": "3eed89c078fa43ca9832f5cd93dda25ceff9911673aa5c5aac3e30c50b12dbdf",
+    "manifest": {
+      "filename": "bondtrace-metadata-2026-10-09T13-59-28-418Z.sqlite",
+      "createdAt": "2026-10-09T13:59:28.418Z",
+      "schemaVersion": 1,
+      "bytes": 380928,
+      "sha256": "3eed89c078fa43ca9832f5cd93dda25ceff9911673aa5c5aac3e30c50b12dbdf",
+      "integrityCheck": [
+        "ok"
+      ],
+      "source": {
+        "backend": "postgres",
+        "scope": "Consistent public metadata only; no signer keys, database credentials or automatic restore",
+        "snapshotDataSha256": "4b541b4fa6d86ef77e48bfa977282d98fbfca45ca1decc0e4f568151e4796274",
+        "observedGeneration": "2",
+        "acknowledgedAt": "2026-10-09T13:59:28.393Z",
+        "network": "localnet",
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8"
+      }
+    },
+    "documentCount": 105
+  },
+  "noLocalSQLiteFallback": true,
+  "limits": [
+    "No Neon/Render/public origin or successful human-wallet proof",
+    "Prepared machine/source snapshot; direct SBF compilation verified in separate Git58 cohort",
+    "No provider disaster recovery or automatic restore claimed"
+  ],
+  "postRunSourceNormalization": [
+    {
+      "file": "server/remote-postgres-engine.mjs",
+      "beforeSha256": "051975f5b30c4bdafaeee5bea1c9ab1b9082e466d3c66fbeb48017a5012121b6",
+      "afterSha256": "627ae4e59acba7482a3f4f634f2682e6a01dd92971961339e9cc19465d495c8b",
+      "scope": "Exactly one trailing LF byte removed for Git whitespace check; execution-source hashes above remain unchanged",
+      "exactByteComparisonVerified": true
+    }
+  ]
+}
