@@ -23,6 +23,8 @@ Prepared9October2026 for the owner's authorized bilingual README/source cleanup/
 | Main runtime | Same ledger/genesis6sNR…, HTTPhealthok/programknown-matchSHA761…, coherent confirmedslot73563 verified; no readOnlySnapshot. Observation does not promise future uptime. |
 | Setup helper | Prepared normal setup reused pins; CheckOnly versions/executables passed; inherited distro honored, explicit/env conflict rejected, selection bytes unchanged. |
 | Publication hygiene | Known-secret/path, Markdown links and17frozen media hashes checked;609historical text blobs had no known high-confidence matches. Not a universal guarantee. |
+| Final immutable Git candidate | Tree `720f09f570cf271ef9c8cfeb4938b5e87f581f5e` extracted into a new source directory: npmci, build/typecheck and52UI passed;17frozen media hashes matched from archive bytes. |
+| First verified GitHub push | Source commit `d5e7d75ecff01796cb8ab4c21c116f1681834175`, main, matched remote refs/heads/main after push. Existing private dimik98330/solana-worldsfair-2026; no visibility change. This checkpoint is a later documentation-only update. |
 
 Public [source-run summary](../evidence/jury-source-reproduction-20261009.json) preserves **status failed**,188hashes and all command outcomes. [New39-transaction cohort](../evidence/execution-jury-clean-d236250e-9111-4846-bbdf-6ca093301ba4.json) SHA256 `07906aeb74de943f2d267e78214d210f8c7faf84deb78332e635fbb383a796d6` retains original bytes, individual issue/genesis/signatures. Its helpers were stopped; ledger/data retained. Earlier cohorts remain separate historical evidence.
 
