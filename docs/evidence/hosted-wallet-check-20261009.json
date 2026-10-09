@@ -1,0 +1,42 @@
+{
+  "schema": "bondtrace.hosted-wallet-check.v1",
+  "observedDate": "2026-10-09",
+  "origin": "https://bondtrace-devnet.onrender.com",
+  "network": "devnet",
+  "deployedSource": "bac8475fdbc4ac5b9dd6617020735dae7bb19d66",
+  "wallet": "Phantom",
+  "connection": "owner-confirmed and observed in the actual public app",
+  "review": {
+    "action": "initialize_issue",
+    "name": "BondTrace Phantom devnet verification",
+    "faceValueMinor": "1000000000",
+    "couponUnitMinor": "50000000",
+    "feeLamports": "5000",
+    "simulation": "passed",
+    "scope": "Empty draft only; no bond placement or reserve payment"
+  },
+  "ownerReportedApproval": true,
+  "observedApplicationResult": "Operation not completed: Unexpected error",
+  "operationId": "049f9f9a5f93531da3b6d4e04e8a881568ffb7d1458996d98e54d75e2c99b06d",
+  "apiObservation": {
+    "status": "prepared",
+    "chainStatus": "not_submitted",
+    "projectionStatus": "not_applicable",
+    "signature": null
+  },
+  "successfulHumanWalletTransactionVerified": false,
+  "chainCheck": {
+    "checkedAt": "2026-10-09T17:37:29.223Z",
+    "attemptedBond": "Gwse9mePWKY8NSXujqWYkCfeB5qKPwviqUdNXYD1HKn7",
+    "confirmedAccountAbsent": true,
+    "testWalletBalanceUnchangedLamports": "30000000"
+  },
+  "diagnosis": {
+    "offlineInstalledBridgeTestsPassed": 5,
+    "networkRequestsInOfflineTests": 0,
+    "checked": ["devnet chain forwarding", "native account identity", "exact v0 message and wire", "missing lifetime does not trigger RPC", "provider rejection propagation"],
+    "conclusion": "No chain/codec/lifetime defect established by source and offline tests. The internal wallet rejection cause and selected network inside the extension remain unknown.",
+    "limits": "Synthetic bridge tests do not establish successful Phantom execution. No sign-and-send fallback, new signature, dependency migration or wallet security bypass was performed."
+  },
+  "attribution": "Separate from the completed 26-transaction automated devnet financial cohort; its generated external test signatures are not human-wallet evidence."
+}

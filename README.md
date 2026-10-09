@@ -6,7 +6,26 @@
 
 Built for the Superteam Kazakhstan × KASE corporate-actions challenge at Crypto World's Fair 2026. Issuers manage terms, holders and funding; investors inspect their fixed rights, claim payments, vote and redeem. The English/Russian console keeps amounts, signatures, outstanding obligations and receipts together.
 
-**Verified scope: a permissioned localnet prototype using test SPL assets and generated test signers.** The recorded lifecycle executes on an actual Solana validator. Devnet deployment, human-wallet execution, public hosting, real securities, fiat settlement and KASE integration are not established by this evidence.
+**Live application: [bondtrace-devnet.onrender.com](https://bondtrace-devnet.onrender.com/).** Open it in a normal browser; no deployment login, WSL or local validator is needed. The React console and Node API use Solana **devnet** and **Neon PostgreSQL**, with the exact deployed SBF program verified. Connect a compatible Wallet Standard wallet such as Phantom on devnet; the connected wallet can sign only its own authorized actions. Viewing a holder does not grant that holder's signing rights.
+
+**Test assets, actual blockchain execution.** Localnet verification and live deployment evidence have separate scopes in [the deployment record](docs/33-HOSTED-DEPLOYMENT.md). The owner confirmed Phantom connection to the public origin; successful human-wallet signing remains a separate check. Real securities, fiat settlement and KASE integration are simulated or absent. Free hosting can sleep or return a bounded RPC availability error.
+
+### Check the deployed prototype in a browser
+
+Open [the completed devnet issue](https://bondtrace-devnet.onrender.com/?view=payments&instrument=2KWpyE9mQWS6VTviCJFi1b4Zh55rti9xeDS6yk37sU7Y). Inspect coupon/principal records, holder positions, votes and **Receipts & activity**. Every action has a signature and Explorer link. No wallet is needed to inspect; connecting your own wallet does not grant rights held by the generated test accounts. A new issuer must create and fund its own issue before signing payments.
+
+| Actual hosted check, 9 October 2026 | Observed result |
+|---|---|
+| Real devnet lifecycle through public HTTPS API | 26 distinct finalized transactions: 22 corporate operations + 4 setup transactions |
+| Coupon / principal / token retirement | 900 / 18,000 test settlement units; 18 bonds burned; supply, vault and obligations all zero |
+| Record date / example / additional action | Transfer changed balances10/5/3 →10/4/4; fixed coupon/vote weights stayed10/5/3. Primary holder received500 coupon and10,000 principal. Vote:13 yes /5 no |
+| Render restart + Neon recovery | Same22 operation IDs/26 signatures/proofs/financial totals recovered with GET only; downloaded204,800-byte metadata database passed integrity verification |
+| Current automated checks | 288 Node passed,0 failed,10 optional PostgreSQL skipped;52 UI passed. Separate hosted execution is actual Neon/devnet evidence |
+| Human Phantom check | Connection and simulation passed; after owner approval the wallet returned `Unexpected error`. API received no signature; attempted account absent and test SOL balance unchanged |
+
+[Full hosted evidence and signatures](docs/evidence/hosted-devnet-20261009.json) · [Exact Phantom result](docs/evidence/hosted-wallet-check-20261009.json) · [On-chain instrument](https://explorer.solana.com/address/2KWpyE9mQWS6VTviCJFi1b4Zh55rti9xeDS6yk37sU7Y?cluster=devnet). Historical failed runs and availability limits remain recorded; this is a test prototype, not an official judging or production certificate.
+
+[Hosted verification report](docs/release/HOSTED-VERIFICATION-REPORT-20261009.md) · [Independent offline review](docs/release/HOSTED-EVIDENCE-REVIEW-20261009.md) · [ProofPilot coach protocol result](docs/evidence/proofpilot-hosted-quality-20261009.json): accepted on draft1 after eight checks, with one minor owner-report attribution note retained. This accepts the bounded report; the Phantom signing failure remains unresolved.
 
 ## Get the source
 
@@ -187,15 +206,15 @@ After live startup, open the app on3160 and inspect network/instrument details. 
 
 For extensions that read the standard local endpoint, run `npm run wallet:localnet` in a second terminal after the runtime starts. This optional loopback alias exposes reads/simulation on8899 against the recorded8959 ledger and rejects transaction submission; the app retains its reviewed relay. It refuses an occupied port and does not reconfigure the wallet.
 
-**Phantom check,9October2026:** discovery, owner-approved connection and application-side simulation passed. After owner approval, the extension returned `Unexpected error`; the API remained `not_submitted`, with no signature or fee charged. A successful Phantom transaction is therefore **not verified**, and the cause remains unresolved. See [the exact check](docs/evidence/external-wallet-check-20261009.json). The alias does not establish wallet compatibility. Devnet requires separate deployment/funding/signature evidence. The verified localnet lifecycle needs no extension: its generated test identities are real cryptographic signers.
+**Historical localnet Phantom check,9October2026:** discovery, owner-approved connection and application-side simulation passed. After owner approval, the extension returned `Unexpected error`; the API remained `not_submitted`, with no signature or fee charged. See [the exact check](docs/evidence/external-wallet-check-20261009.json). The later public **devnet** origin is deployed and the owner confirmed Phantom connection there; that does not establish a successful Phantom transaction or repair the historical localnet error. Generated external test identities use real cryptographic signatures; their execution evidence has a separate scope.
 
-## Hosting preparation
+## Hosted application and deployment
 
 [ProofPilot coach preparation review](docs/release/PROOFPILOT-PREPARATION-REVIEW-20261009.md) completed a separate-context review and eight quality checks; [hash-bound result](docs/evidence/proofpilot-preparation-quality-20261009.json). Its conclusion is readiness for the owner-assisted deployment stage, with cloud/wallet/submission gates explicit.
 
-[Hosting guide — English/Russian](docs/31-HOSTING.md) describes the prepared **free Render native Node + external Neon PostgreSQL + Solana devnet** path. [render.yaml](render.yaml) pins Node22.14.0, one instance, disabled automatic deploys/generated signing, verified database TLS and explicit deployment login/origin. Localnet defaults remain free SQLite with a real validator; hosting needs no WSL or local validator.
+[Hosting guide — English/Russian](docs/31-HOSTING.md) describes the **free Render native Node + external Neon PostgreSQL + Solana devnet** deployment. [render.yaml](render.yaml) pins Node22.14.0, one instance, disabled automatic deploys/generated signing, verified database TLS and the exact public origin. The app and ordinary API are public; only operator backup/readiness uses a separate login. Localnet defaults remain free SQLite with a real validator; hosting needs no WSL or local validator.
 
-PostgreSQL persists public recovery metadata independently from Render's ephemeral filesystem; unknown COMMIT outcomes block new sends. Authenticated `/api/metadata/backup` downloads a verified portable SQLite snapshot+manifest; [unpack helper](scripts/unpack-metadata-backup.mjs) checks its hash/integrity without restoring the service. Free providers can sleep and have quotas. **No Render/Neon public deployment or successful devnet/Phantom transaction is established**; account login/deployment is the next owner-assisted stage. The former paid [Docker/SQLite alternative](deploy/render-sqlite.yaml) retains its historical Linux proof and requires separate budget approval.
+PostgreSQL persists public recovery metadata independently from Render's ephemeral filesystem; unknown COMMIT outcomes block new sends. Operator-authenticated `/api/metadata/backup` downloads a verified portable SQLite snapshot+manifest; [unpack helper](scripts/unpack-metadata-backup.mjs) checks its hash/integrity without restoring the service. Free providers can sleep and have quotas. Actual Render/Neon deployment and the canonical devnet program are verified; [current lifecycle/restart status](docs/33-HOSTED-DEPLOYMENT.md) is recorded separately from earlier localnet tests. The former paid [Docker/SQLite alternative](deploy/render-sqlite.yaml) retains its historical Linux proof and requires separate budget approval.
 
 ## Optional: inspect the saved interface snapshot
 
@@ -212,7 +231,7 @@ npm run preview:ui
 
 **Simulated fixtures:** settlement currency has no fiat value; signers represent generated test identities; short schedules make the lifecycle practical to demonstrate. No bank, KASE API, custody/KYC service or legal securities register is integrated.
 
-**Limits:** 16 holders, 8 coupons, four recipients per atomic batch and a finite 32-proposal discovery window; whole bond units; full prefunding; no surplus withdrawal; issuer availability to open redemption; independent settlement-token freeze authority and RPC/history trust. Human-wallet execution, devnet/public deployment, production security/regulatory processes and cold setup on another physical machine require separate validation. Repository access and final contest submission remain separate owner actions.
+**Limits:** 16 holders, 8 coupons, four recipients per atomic batch and a finite 32-proposal discovery window; whole bond units; full prefunding; no surplus withdrawal; issuer availability to open redemption; independent settlement-token freeze authority and RPC/history trust. Successful human-wallet execution, production security/regulatory processes and cold setup on another physical machine require separate validation. Repository access and final contest submission remain separate owner actions.
 
 **Submission video:** the owner will record the final video. Existing [historical video](artifacts/demo/bondtrace-product-demo.mp4) and [captions](artifacts/demo/bondtrace-product-demo.en.srt) are retained for provenance; they show an earlier UI/issue/release and must not be presented as this final version.
 

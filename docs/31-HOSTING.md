@@ -2,20 +2,22 @@
 
 [English README](../README.md) · [Русский README](../README.ru.md)
 
-## Prepared architecture
+## Hosted architecture and current status
 
 The primary [render.yaml](../render.yaml) runs **one native Node22.14.0 service on Render's free plan**, with the built React UI and API at one HTTPS origin. **External PostgreSQL (Neon) holds public recovery metadata. Solana devnet holds the instrument, fixed holder rights, settlements and burns.** Investor/issuer/deployment private keys never belong in the service or database. The default local development adapter remains SQLite; PostgreSQL is explicit opt-in.
 
 ```mermaid
 flowchart LR
-  Browser[Browser + external wallet] -->|HTTPS + deployment login| App[Render: React + Node API]
+  Browser[Browser + external wallet] -->|public HTTPS| App[Render: React + Node API]
   App -->|verified TLS, acknowledged COMMIT| PG[(Neon PostgreSQL: public recovery metadata)]
   App -->|reads, simulation, signed transactions| Solana[Solana devnet: program + SPL]
   Wallet[Wallet signs reviewed message locally] --> Browser
   App -->|authenticated portable download| Backup[Owner-retained SQLite snapshot + manifest]
 ```
 
-These are preparation files. **No Render/Neon resource or public URL has been provisioned.** Account login, consent and actual deployment are the next joint owner stage. The repository remains private. Current proof covers localnet test assets and isolated PostgreSQL; it does not establish live Neon durability, successful human-wallet execution or devnet deployment.
+**Live test application: [bondtrace-devnet.onrender.com](https://bondtrace-devnet.onrender.com).** At the 9 October 2026, 17:38 UTC evidence cutoff, Render Free native Node 22.14.0 in Frankfurt serves source `bac8475fdbc4ac5b9dd6617020735dae7bb19d66`. Neon Free in Frankfurt runs PostgreSQL 16.15 with verified TLS. The exact frozen program is deployed to Solana devnet. The strict public-origin verifier passed again after the actual Render restart: public app/API access, operator-only authentication, real entry JS/CSS, origin/demo restrictions, PostgreSQL read/write and `known-match` / `financialReady:true`.
+
+The separate automated hosted devnet cohort **completed 22 business + 4 auxiliary transactions**, all 26 unique signatures observed finalized with execution proofs. Actual coupon/principal/burn closure, off-host backup and passive same-ID recovery after a provider restart passed; see [public evidence](evidence/hosted-devnet-20261009.json) and [actual deployment checkpoint](33-HOSTED-DEPLOYMENT.md). The earlier RPC429 cohort remains an empty preserved draft. The owner connected Phantom and reported approving a separate empty-draft attempt, but the app returned `Unexpected error`; API status remained `prepared` / `not_submitted` with `signature:null`. **Successful human-wallet execution remains unverified** ([wallet evidence](evidence/hosted-wallet-check-20261009.json)). The repository remains private; generated external test signers, localnet results and isolated Linux proofs do not replace this missing human-wallet result.
 
 ## Why this database
 
@@ -41,22 +43,38 @@ Official references checked9October2026: [Render free limits](https://render.com
 | BONDTRACE_NETWORK |devnet; exact official RPC and expected genesis |
 | BONDTRACE_ENABLE_DEMO |false; generated signer/bootstrap disabled |
 | BONDTRACE_PUBLIC_ORIGIN |Exact allocated HTTPS origin, no path/query/credentials |
-| BONDTRACE_HTTP_USER |Deployment login,3–64 ASCII letters/digits/underscore/hyphen |
-| BONDTRACE_HTTP_PASSWORD |Unique random24–256 printable ASCII characters, entered as a Render secret |
+| BONDTRACE_HTTP_USER |Operator backup/readiness login,3–64 ASCII letters/digits/underscore/hyphen |
+| BONDTRACE_HTTP_PASSWORD |Unique random24–256 printable ASCII characters, entered as a Render secret; not a visitor login |
 
 The URL parser accepts only sslmode and channel_binding options and constructs explicit verified TLS options; URL parameters cannot override certificate verification. Unencrypted PG is allowed only with the explicit local-only setting on loopback localnet. Never use that setting for Neon. The database role must create/use the dedicated bondtrace_metadata schema; use a separate project database, not an unrelated production database. Schema/application/network/program bindings reject mismatched state.
 
-The application and ordinary API routes are public: there is no browser HTTP-login wall for visitors. Wallet signatures and Solana roles authorize financial actions. Operator HTTP Basic authentication remains on `/api/metadata/*` and `/api/runtime/readiness`; operator credentials are still mandatory server secrets. `/healthz` returns data-free liveness. Financial readiness requires the exact deployed release/genesis; HTTP200 liveness alone proves neither. The hosted entrypoint refuses root API execution and never generates signer keys.
+The application and ordinary API routes are public: there is no browser HTTP-login wall for visitors. Wallet signatures and Solana roles authorize financial actions. Operator HTTP Basic authentication remains on `/api/metadata*` and `/api/runtime/readiness`; operator credentials are still mandatory server secrets. `/healthz` returns data-free liveness. Financial readiness requires the exact deployed release/genesis; HTTP200 liveness alone proves neither. The hosted entrypoint refuses root API execution and never generates signer keys.
 
-## Deploy together with the owner
+## Open the application
+
+Open [the HTTPS application](https://bondtrace-devnet.onrender.com) and select an external wallet configured for devnet. No local server, WSL, Rust or validator is needed to use it. Public pages and ordinary API routes require no HTTP password. A connected wallet proves connection only; review and sign each intended operation in the wallet. Keep all issuer, holder and deployment private keys on the owner's workstation.
+
+## Deploy or maintain this configuration
+
+The current deployment is already provisioned. These steps describe a fresh deployment or controlled redeploy; do not create duplicate resources or replace the existing database/namespace to recover an operation.
 
 1. Create the free Neon project/database and save its connection URL directly in Render secrets. Do not paste it into chat or a repository file. Use a stable namespace and a single API instance.
-2. Deploy the frozen program to Solana devnet using isolated deployment tooling and **test SOL**. Confirm program ID, loader, bytecode SHA-256 and genesis against [release.json](../programs/bondtrace/release.json). The deployment key stays on the owner's machine. Current devnet program/funding is not yet verified.
+2. Verify the existing devnet program against [release.json](../programs/bondtrace/release.json) before considering a deployment. The current program is `B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8`, exact payload 541456 bytes / SHA-256 `761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd`. A fresh environment uses isolated deployment tooling and **test SOL**; the deployment key stays on the owner's machine. Preserve uncertain upload receipts and the original buffer instead of depositing rent into replacement buffers blindly.
 3. Connect the private GitHub repository to Render as the owner; review render.yaml (native node, free, no disk, autoDeployTrigger off). Build: npm ci --include=dev --ignore-scripts && npm run build. Start: node --import tsx scripts/start-hosted.ts. No WSL/Rust/validator is required in the hosted Node service.
 4. Supply the exact allocated HTTPS origin, database URL and unique operator login. Check `/healthz`200 and public `/`200 without WWW-Authenticate; unauthenticated metadata backup/readiness must return401. Inspect public `/api/health` and `/api/program`: metadata backend postgres and deployed program known-match are required for financial readiness.
-5. Run npm run verify:hosted locally with BONDTRACE_PUBLIC_ORIGIN / BONDTRACE_HTTP_USER / BONDTRACE_HTTP_PASSWORD supplied securely in that process environment. The verifier checks actual entry JS/CSS bytes, MIME/hash, origin/auth/demo restrictions and release matching. Its loopback-only diagnostic override records financialReady:false; it cannot certify a public deployment.
+5. From the repository root with Node22.14.0 and dependencies installed, run `npm run verify:hosted` with BONDTRACE_PUBLIC_ORIGIN / BONDTRACE_HTTP_USER / BONDTRACE_HTTP_PASSWORD supplied securely in that process environment. For the existing service, the origin is `https://bondtrace-devnet.onrender.com`. The verifier checks actual entry JS/CSS bytes, MIME/hash, origin/auth/demo restrictions, storage and release matching. Its loopback-only diagnostic override records financialReady:false; it cannot certify a public deployment. No WSL is required for this Node verifier. Never put credentials in a command transcript or documentation.
 6. Connect an external devnet wallet, fund test SOL, create/register/distribute the instrument, fund the full principal-plus-coupon test SPL reserve, then seal. Capture records, settle coupons, vote, redeem and verify signatures/burn. The hosted service has no demo issuer private key; the issuer signs its own transactions. Use this final public origin for the browser check.
 7. Download metadata, restart/redeploy once, verify the same namespace/IDs/signatures/reconciliation and recover existing operations. Do not create another payment to disguise lost metadata. Record the actual URL/version and results separately from local evidence.
+
+The hosted build/start commands are:
+
+```text
+npm ci --include=dev --ignore-scripts
+npm run build
+node --import tsx scripts/start-hosted.ts
+```
+
+Set the table's environment values before starting; hosted mode requires PostgreSQL, verified TLS, the exact devnet/origin and operator credentials. These commands run the Node service and do not start a Solana validator. The historical localnet workflow in [README](../README.md) is a separate route with its own local toolchain and ledger.
 
 ## Backup and recovery
 
@@ -70,9 +88,13 @@ The helper checks size/hash/schema, SQLite integrity/application identity and wr
 
 A restore of an older journal can omit transactions already executed on-chain. Preserve unresolved signed bytes/IDs, compare genesis/release/signatures/account effects and reconcile before any replacement signature. No automatic restore or migration between local SQLite and remote PostgreSQL is implemented; selecting PG with existing local metadata is refused explicitly. Preserve original ledgers and signer files.
 
+Devnet RPC requests share a bounded queue. Read-only RPC429 retries are bounded; a transaction send makes exactly one HTTP attempt, with a fresh storage-generation fence after queue admission and immediately before the request. After an uncertain send, retain and reconcile the same operation/signature and signed bytes. Never rerun a cohort's initial execution command to work around rate limiting. Temporary operator-credential copies stay private and must be removed after final checks; retained deployment buffers, test keys and recovery journals have a separate retention purpose and must be preserved.
+
 ## Verification scope
 
 Current results and exact cutoffs are linked from [README](../README.md) and [delivery checks](release/JURY-DELIVERY-CHECKS.md). The native suite, actual PostgreSQL/TCP fault tests, real localnet financial cycles, isolated Linux hosting and human-wallet/cloud checks are separate cohorts. Synthetic Solana RPC in the COMMIT-loss test proves the persistence barrier, not an SPL transfer. Individual finalized transactions do not establish complete parent attribution when external holder signatures are unlinked.
+
+The actual [Render + Neon devnet packet](evidence/hosted-devnet-20261009.json), checked at 17:38:03 UTC on 9 October, records automated cohort `0ecfadd0-5db1-4c19-a16c-78b6cb314902`: coupon 900, principal 18,000, burn 18, remaining mint supply/vault/obligations 0; all amounts are synthetic test SPL units with 6 decimals. Fixed coupon/vote rights 10/5/3 survived a transfer to current holdings 10/4/4. An actual Render service restart at 17:30 UTC was followed by strict readiness and GET-only recovery of the same 22 business IDs and 26 signatures/proofs, without financial POST, new signature or rebroadcast. The first immediate post-restart HTTP502 is retained as an availability failure. The off-host JSON backup contains an integrity-checked 204800-byte SQLite snapshot; no restore was performed. These are observed hosted results, separate from the historical packets below and the unresolved Phantom attempt.
 
 The [PostgreSQL evidence packet](evidence/postgres-preparation-20261009.json) records43targeted tests/0skips and an actual39-transaction Solana localnet lifecycle: coupon2,500/principal25,000/burn25, API+validatorrestart, sameIDs,105-document verified download, no local SQLite fallback and17source hashes. [Linux hostedPG proof](evidence/hosted-postgres-linux-20261009.json) records nativeNode22.14.0/UID1000, verifiedTLS1.3, auth/origin/demo/assets and identical publicbackuphash/marker after APIrestart. It explicitly records financialReady:false because the official devnet program was absent; it is not Neon/Render verification.
 
@@ -91,10 +113,12 @@ The former paid Docker + persistent SQLite alternative is retained as [deploy/re
 
 ## Русский
 
-Основной путь подготовлен для **бесплатного Render native Node22.14.0 + внешнего PostgreSQL Neon**, интерфейс/API на одном HTTPS-origin. Solana devnet хранит выпуск, права держателей, выплаты и сжигание; PostgreSQL — публичный журнал восстановления. Локальный запуск по умолчанию остаётся SQLite. На Render не нужен WSL, Rust или локальный валидатор.
+Приложение уже работает по адресу **[bondtrace-devnet.onrender.com](https://bondtrace-devnet.onrender.com)**: бесплатный Render native Node 22.14.0 и Neon PostgreSQL 16.15 в Frankfurt, интерфейс/API на одном HTTPS-origin. На срезе 9 октября 17:38 UTC развёрнут `bac8475fdbc4ac5b9dd6617020735dae7bb19d66`; программа реально опубликована в devnet с точным проверенным SHA-256. После фактического перезапуска Render повторно проверены публичный доступ, операторская защита, TLS/БД, JS/CSS и `known-match` / `financialReady:true`. Solana хранит выпуск, права держателей, выплаты и сжигание; PostgreSQL — публичный журнал восстановления. Локальный запуск по умолчанию остаётся SQLite. Для использования сайта и hosted Node-пути WSL, Rust и локальный валидатор не нужны.
 
 После перезапуска Render данные должны читаться из той же БД/namespace, а не с временного диска. Адаптер публикует изменения только после подтверждённого COMMIT, проверяет активного писателя перед подписью/отправкой и останавливает новые отправки при неопределённом результате. Повторная попытка использует прежние подписанные байты и ID. Старый процесс после смены поколения блокируется; работает одна инстанция, автодеплой выключен. Hosted требует проверяемый TLS, devnet, demo=false и точный HTTPS-origin. Сайт и обычный API открываются без HTTP-пароля; финансовые действия требуют подписи кошелька. Отдельный операторский пароль защищает только backup/readiness. Ключи эмитента/держателей/деплоя на сервер и в БД не передаются.
 
-Вместе с владельцем: создать бесплатную Neon БД → развернуть frozen-программу на devnet за тестовые SOL → подключить приватный GitHub к Render → задать secrets из таблицы → проверить вход, программу и реальные JS/CSS → выполнить полный цикл своим devnet-кошельком → скачать backup → перезапустить и проверить прежние IDs/signatures. Аккаунты, согласия и размещение сейчас не выполнялись. Публичного URL, успешного human-wallet сценария и devnet deployment пока нет; localnet evidence их не заменяет.
+Отдельный автоматизированный hosted-сценарий завершён: 22 бизнес-операции + 4 вспомогательные транзакции, все 26 подписей наблюдались finalized и имеют execution proof. Купон 900, погашение 18 000 тестовых SPL-единиц, сожжено 18; остатки supply/vault/обязательств — 0. Проверены скачанный backup и GET-only восстановление прежних ID/подписей после реального перезапуска Render без повторной отправки финансовых операций. Первый HTTP502 после перезапуска сохранён как сбой доступности. Первый RPC429-сценарий также сохранён: draft, 0 держателей / 0 выпущено. [Публичное evidence](evidence/hosted-devnet-20261009.json) и [checkpoint](33-HOSTED-DEPLOYMENT.md) содержат точные результаты и историю.
+
+Phantom подключён; владелец сообщил об одобрении отдельной операции создания пустого draft, но приложение вернуло `Unexpected error`, API — `prepared` / `not_submitted` / `signature:null`. Успешная человеческая транзакция не подтверждена; её нельзя подменять результатами автоматизированного сценария. [Wallet evidence](evidence/hosted-wallet-check-20261009.json) сохраняет этот предел проверки. Раздел выше содержит команды для нового окружения/контролируемого redeploy; существующие БД, namespace, операции и буферы сохраняются.
 
 Backup скачивается после входа через /api/metadata/backup одним JSON-файлом с проверенной SQLite-копией и manifest. Команда выше распакует его в **новую** папку и проверит SHA-256/integrity; автоматического восстановления нет. Сохранять файл нужно вне Render. Старый журнал нельзя восстанавливать поверх уже выполненных ончейн-выплат без сверки. Бесплатные Render/Neon могут засыпать и имеют квоты; это задержка/лимит доступности, не гарантия промышленного uptime. Платный вариант с постоянным SQLite-диском сохранён отдельно и требует одобрения бюджета. Видео, доступ жюри и финальная заявка остаются отдельным этапом владельца.

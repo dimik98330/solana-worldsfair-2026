@@ -111,7 +111,10 @@ function worker(directory:string,id:string,scenario:string,network='localnet'){
   // child. Keep the original per-phase bound without timing out a cold clone
   // under the suite's four concurrent workers. Financial assertions are unchanged.
   const phases=scenario.startsWith('reset-')||scenario==='before-send'?2:1;
-  const timer=setTimeout(()=>{child.kill();reject(new Error('Synthetic bootstrap worker timeout: '+scenario));},45000*phases);
+  // The devnet fixture deliberately exercises the real bounded RPC admission
+  // policy, including 1,250 ms same-method gaps, despite intercepting all HTTP.
+  const perPhaseMs=network==='devnet'?180000:45000;
+  const timer=setTimeout(()=>{child.kill();reject(new Error('Synthetic bootstrap worker timeout: '+scenario));},perPhaseMs*phases);
   child.once('close',code=>{clearTimeout(timer);resolve({code,stdout,stderr});});
  });
 }
