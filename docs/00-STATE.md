@@ -1,5 +1,11 @@
 # BondTrace — checkpoint 8 октября 2026
 
+## Active: actual FREE Neon + Render deployment —9October2026
+
+Root `C:\Users\dmitrii\Documents\solana`. Latestowner nowexplicitlyauthorizes actualfreehosting Neon+Render, opensaccounts himself; earlierpreparation-only deploymentgate superseded. No paid/mainnet/realfunds/repositoryvisibility/finalsubmission/newbroadpermissions consent. SkillsreusedProofPilotcoach+solana-dev, actuallyreadECCdeployment-patterns/CUAAPI; read-onlydevnetagent followedAGENTS+skills andwroteignoredsafe notes. Git9c9a6bb wasclean. Ownerloggedinboth; NeonFreePG16Frankfurt `bondtrace-kase`/odd-shape-25117485/productionbr-jolly-morning-b2nzu4y0/databasebondtrace created, all extrasoff. Screenshot `.local/hosting-live/neon-created.png`. Credentials neverprint/commit.
+
+RenderGitHubintegrationawaitsownerper-actiongrant ONLYdimik98330/solana-worldsfair-2026; GitHubCDPinputcommands timedout, no finalinstallclickedbyagent. Neon/Render tabsChrome321325359/360, GitHubinstall321325362 handoff. BlueprintFrankfurtpinaddedtomatchdatabase, stillfree/singlewriter/auth/demo=false. No Renderresourcecreatedyet. Devnetreadonly: actualbinarySHA761…matches, B3accountabsent,6fK…balance0. Correctpreservedprogramkey .local/bondtrace-program-keypair.json verifiedpublickeyonly; generatedtarget/deploykeydiffers. Need3testSOL, explicitpersistentbuffer/exactmaxlen/limitedretry andnoephemeralSeedoutput. `.local/hosting-live/devnet-release-check.{md,public.json}`; no newairdroporTXyet. Leadownssecrets/Git/deploy/browser; no sharededits. Stage/checks in docs/33-HOSTED-DEPLOYMENT.md; nextRenderconnection/env→freefunding/program→actualpublicorigin/wallet/lifecycle/restartproof. Original3160/8959ledger/signers/historyunchanged; do notclaimhostedcompletionfromNeoncreationalone.
+
 ## Active goal: backend, whole project, README, hosting — 9 октября2026
 
 ### Preparation delivered —9October2026, final source e8f08fb

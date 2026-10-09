@@ -5,6 +5,7 @@ services:
     name: bondtrace-devnet
     runtime: node
     plan: free
+    region: frankfurt
     numInstances: 1
     autoDeployTrigger: "off"
     healthCheckPath: /healthz
