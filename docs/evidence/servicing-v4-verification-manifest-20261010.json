@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "kind": "BondTrace public evidence provenance manifest",
+  "generatedAt": "2026-10-10T01:14:08.182Z",
+  "summary": {
+    "artifactId": "servicing-v4-verification-20261010.json",
+    "sha256": "8ad995e4fd2887ec274dbb15f004907f4d896c97e1e4426e03ae9347da62482c",
+    "bytes": 12714
+  },
+  "sourceArtifacts": [
+    {
+      "artifactId": "api-initial-process-record",
+      "sha256": "f8593ca240511e315c4e6df930bed51bbf248a48d58c9836e67ebca14e77a5e0",
+      "bytes": 383
+    },
+    {
+      "artifactId": "api-restarted-process-record",
+      "sha256": "4e9de248aa50f3f53fb42874e0209ee262c4c5afd78120007b341326525662f6",
+      "bytes": 299
+    },
+    {
+      "artifactId": "api-initial-stop-observation",
+      "sha256": "2b3475ed1d541f4b9a5fdd605b62b98671e96c78351eb61601c1f52aa2cc64f0",
+      "bytes": 88
+    },
+    {
+      "artifactId": "lead-api-stop-observer-source",
+      "sha256": "1a22118dc6d13b537b8bedde52a5c325dd6c46953402394cd4c54bba824c881e",
+      "bytes": 1516
+    },
+    {
+      "artifactId": "api-before-stop-state-observation",
+      "sha256": "c8d296a21fb1fc54f4fa5a397e61d46b510a87e2b9a98a7968cad753bea28599",
+      "bytes": 477088
+    },
+    {
+      "artifactId": "api-restarted-startup-log",
+      "sha256": "af92283af9d1ac5c6008e57577c8d72e953de69f32c97120461c581d00a2f77a",
+      "bytes": 226
+    },
+    {
+      "artifactId": "shadow-initial-verifier-log",
+      "sha256": "e6ba44f71d4280658c78c49372c9d76af466552e326a028f5da575e05e32a081",
+      "bytes": 1201
+    },
+    {
+      "artifactId": "shadow-replay-verifier-log",
+      "sha256": "e33dbb05982f4be2302977eb2c9a185870f477f46826b17f69f81393c7d5c264",
+      "bytes": 1201
+    },
+    {
+      "artifactId": "reviewed-source:programs/bondtrace/src/lib.rs",
+      "sha256": "0d40765c930cf1ed48efd4f3d5ffca305d17d35f5d7422e4fc21294e851f8c1c",
+      "bytes": 30291
+    },
+    {
+      "artifactId": "reviewed-source:programs/bondtrace/src/contexts.rs",
+      "sha256": "91e3d22e877811701c4a54a3130baa9aa7496c93af3da1fbeec0fc7ec7b4d2e4",
+      "bytes": 10826
+    },
+    {
+      "artifactId": "reviewed-source:programs/bondtrace/src/state.rs",
+      "sha256": "56dc6dd2967b5be8141798b6eeff0211f2b0acc722520dad6c75af279f38acf9",
+      "bytes": 7954
+    },
+    {
+      "artifactId": "reviewed-source:programs/bondtrace/src/v2.rs",
+      "sha256": "8add603a953ff88e908fba47dc0ffcee2e5b4b21b02c64cc5bdca796bb577a6d",
+      "bytes": 22559
+    },
+    {
+      "artifactId": "reviewed-source:programs/bondtrace/src/v2_contexts.rs",
+      "sha256": "e3dd5d3fdbd39ac92cede7b4f471bc34686b513c7ddf80fbab73d00ccf9c7a51",
+      "bytes": 14986
+    },
+    {
+      "artifactId": "reviewed-source:programs/bondtrace/src/v2_state.rs",
+      "sha256": "f23203fcbaf2cad693db8549ff2b9ff267adab993e62a27cfe9e9648130db2f0",
+      "bytes": 5457
+    },
+    {
+      "artifactId": "reviewed-source:packages/client/src/program.ts",
+      "sha256": "f9d4072cba2c6c763610914440cfb3c95928aa38c2d975dd0f59eacdafe69b2a",
+      "bytes": 22591
+    },
+    {
+      "artifactId": "reviewed-source:tests/program/runtime.rs",
+      "sha256": "6da0ebb5dd97ff33d77ddd6634094adb05f06223b9d34436778876bb8fdefd8f",
+      "bytes": 91990
+    },
+    {
+      "artifactId": "reviewed-source:tests/program/runtime_v2.rs",
+      "sha256": "3854cec3cfc2e185d08bb789f9b470e7da8b608dd654b2458f29a7a627414b2b",
+      "bytes": 23295
+    },
+    {
+      "artifactId": "rust-unit-validation-log",
+      "sha256": "92b571da5b62eb6fcee4a065f92e04a9d13354b41002ffc0aa3afd8b310ed8e6",
+      "bytes": 35816
+    },
+    {
+      "artifactId": "compiled-sbf-runtime-validation-log",
+      "sha256": "c1bfdd9e9999af19dc09a1ac385d4cf1711b690850b9d4e79c1dfdc1f2865e3b",
+      "bytes": 40316
+    },
+    {
+      "artifactId": "latest-v2-runtime-subset-log",
+      "sha256": "7927ea96dabe7fce5a7f3e463bd364c8bb38cdf229c6ba44e64b4cbb9e21144e",
+      "bytes": 36118
+    },
+    {
+      "artifactId": "compiled-sbf-build-log",
+      "sha256": "578bba6f429dabfb2503c43cf89d3db9a4b9aa436d15d5ebf1ae5f454169f4e3",
+      "bytes": 32783
+    },
+    {
+      "artifactId": "latest-v2-subset-driver",
+      "sha256": "6c86c79ee4ae565f05a63cf60f66b5f39b3bb38b1766b308e414a0b3b1d951de",
+      "bytes": 675
+    },
+    {
+      "artifactId": "independent-program-review",
+      "sha256": "0021b674db2d93440a4a45ee0b129b8acfdc390875175d2c40020a9db8db72ed",
+      "bytes": 9586
+    },
+    {
+      "artifactId": "independent-review-source-manifest",
+      "sha256": "4a3b42494293cfc6155297860050e7c6baee0e40c4ea62b9e2c1ff6299090a9e",
+      "bytes": 3744
+    },
+    {
+      "artifactId": "program-review-coordination-record",
+      "sha256": "0fe2f70cc0a964a7ff95a368233bf9de425e2a0df9241e99e498c6e413ab9dba",
+      "bytes": 3856
+    },
+    {
+      "artifactId": "program-review-evidence-manifest",
+      "sha256": "4072a08a925fb3c15a0fa894ac9340d90ab8f092063738b8b04c3aa1e023b8a0",
+      "bytes": 4857
+    },
+    {
+      "artifactId": "serial-node-partial-output",
+      "sha256": "1448b980b857d4def5f7c8a4a6137c636b46a9f05147948aa4e544de3b726016",
+      "bytes": 39550
+    },
+    {
+      "artifactId": "historical-public-devnet-payload-observation",
+      "sha256": "cda98c00650b952cc709d634507612e2e6f982e8d287955cf4f2d02071be534f",
+      "bytes": 831
+    },
+    {
+      "artifactId": "scoped-postgresql-ci-job-log",
+      "sha256": "a3eafc1d0597cb16f8ddab05333f84b9a52955f8d31cc18a823534da333b579d",
+      "bytes": 45594
+    },
+    {
+      "artifactId": "general-github-ci-job-log",
+      "sha256": "f71596d4410f65e5931ecd2fc3e1f79d3926f85ab1fa7483d777845fbe843f96",
+      "bytes": 414315
+    },
+    {
+      "artifactId": "reviewed-native-sbf-payload",
+      "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+      "bytes": 959536,
+      "inspection": "Earlier successful read-only native hash in this task"
+    },
+    {
+      "artifactId": "shadow-observation-initial",
+      "sha256": "3df174eb5d2de59e54efde1a9cdc8520f2f87562393f9ec86f1292f0e217cbb0",
+      "bytes": 1369810,
+      "inspection": "Earlier successful native record inspection and hash in this task"
+    },
+    {
+      "artifactId": "shadow-observation-after-api-restart",
+      "sha256": "2dca43e8c9ebba99cff0798f0e2d352e4206134420cded38262202ade9a11d88",
+      "bytes": 1370182,
+      "inspection": "Earlier successful native record inspection and hash in this task"
+    }
+  ],
+  "selectedMutablePhase": {
+    "artifactId": "serial-node-failed-phase-selection",
+    "sha256": "709fcef20ca7cb67a204e25e6070f0edf89bc620667a90a7f2dc753b5ec7a507",
+    "status": "failed",
+    "scope": "Only the inspected failed Node phase is pinned; the continuing driver is excluded"
+  },
+  "meaning": "Integrity and traceability only; no independent certification or publication claim",
+  "sourceLocationsOmitted": true,
+  "localNormalizationDisclosed": true
+}

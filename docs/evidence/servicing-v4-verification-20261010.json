@@ -1,0 +1,340 @@
+{
+  "schemaVersion": 1,
+  "kind": "BondTrace versioned program, CI and shadow-integration verification",
+  "generatedAt": "2026-10-10T01:14:08.182Z",
+  "program": {
+    "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+    "artifact": {
+      "bytes": 959536,
+      "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+      "scope": "Reviewed native build and observed localnet deployed payload"
+    },
+    "reviewedSourceHashes": [
+      {
+        "file": "programs/bondtrace/src/lib.rs",
+        "sha256": "0d40765c930cf1ed48efd4f3d5ffca305d17d35f5d7422e4fc21294e851f8c1c"
+      },
+      {
+        "file": "programs/bondtrace/src/contexts.rs",
+        "sha256": "91e3d22e877811701c4a54a3130baa9aa7496c93af3da1fbeec0fc7ec7b4d2e4"
+      },
+      {
+        "file": "programs/bondtrace/src/state.rs",
+        "sha256": "56dc6dd2967b5be8141798b6eeff0211f2b0acc722520dad6c75af279f38acf9"
+      },
+      {
+        "file": "programs/bondtrace/src/v2.rs",
+        "sha256": "8add603a953ff88e908fba47dc0ffcee2e5b4b21b02c64cc5bdca796bb577a6d"
+      },
+      {
+        "file": "programs/bondtrace/src/v2_contexts.rs",
+        "sha256": "e3dd5d3fdbd39ac92cede7b4f471bc34686b513c7ddf80fbab73d00ccf9c7a51"
+      },
+      {
+        "file": "programs/bondtrace/src/v2_state.rs",
+        "sha256": "f23203fcbaf2cad693db8549ff2b9ff267adab993e62a27cfe9e9648130db2f0"
+      },
+      {
+        "file": "packages/client/src/program.ts",
+        "sha256": "f9d4072cba2c6c763610914440cfb3c95928aa38c2d975dd0f59eacdafe69b2a"
+      },
+      {
+        "file": "tests/program/runtime.rs",
+        "sha256": "6da0ebb5dd97ff33d77ddd6634094adb05f06223b9d34436778876bb8fdefd8f"
+      },
+      {
+        "file": "tests/program/runtime_v2.rs",
+        "sha256": "3854cec3cfc2e185d08bb789f9b470e7da8b608dd654b2458f29a7a627414b2b"
+      }
+    ],
+    "validation": {
+      "rustUnit": {
+        "passed": 3,
+        "failed": 0
+      },
+      "compiledSbfRuntime": {
+        "passed": 20,
+        "failed": 0
+      },
+      "latestV2RuntimeSubset": {
+        "passed": 2,
+        "failed": 0,
+        "filteredOut": 18,
+        "repeatsSubset": true
+      },
+      "distinctRuntimeTests": 20
+    },
+    "isolatedSbfFixture": {
+      "initialHolders": 33,
+      "postActivationHolders": 34,
+      "coupons": 9,
+      "registryPages": 5,
+      "couponPaidMinor": "14850000000",
+      "principalPaidMinor": "33000000000",
+      "finalMintSupply": "0",
+      "finalVaultMinor": "0",
+      "scope": "Compiled SBF fixture, separate from the live RPC cohort"
+    },
+    "independentReview": {
+      "freshSeparateContext": true,
+      "nonAuthorCritic": true,
+      "materialFindingsEstablished": 0,
+      "formalAudit": false,
+      "reportSha256": "0021b674db2d93440a4a45ee0b129b8acfdc390875175d2c40020a9db8db72ed",
+      "sourceManifestSha256": "4a3b42494293cfc6155297860050e7c6baee0e40c4ea62b9e2c1ff6299090a9e"
+    },
+    "reviewedSourceHashScope": "Inspected local workspace bytes before Git LF normalization; published checkout hashes are separate"
+  },
+  "shadowIntegration": {
+    "operationId": "chain_shadow_v4_20261010",
+    "network": "localnet",
+    "genesisHash": "ECUp236cnJYsd7ZvngFPME4fvGoT5WkGemD2WU48t4kU",
+    "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+    "instrument": "CxUQ7fA3GShnTuiYPBg9RPh4ieZZ332Nevh5PzqatL8t",
+    "selectedCoupon": {
+      "couponId": "0",
+      "wallet": "EW4EiZXVDoNB4pvszJEJuaFYMQ6UUcoJYfCARzZH21N5",
+      "snapshotAddress": "4MQpe4aQNTfmVXS9rEPB8977gA21JyLCWG5WutomdqX9",
+      "units": "10",
+      "amountMinor": "500000000",
+      "settlementDecimals": 6,
+      "amountDecimal": "500"
+    },
+    "actualBuiltProductHttp": true,
+    "actualDirectRpc": true,
+    "built": {
+      "htmlSha256": "98c7f299d88b2e6ccbd522b3c722d524adbcaef8b67f3582ff312bec0e4eb7e3",
+      "assetSha256": "ddc0f991e48ffd2ec938c897b808eb530119b3780bbf5e612fa69235ad76c6ee"
+    },
+    "deployedPayload": {
+      "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+      "bytes": 959536,
+      "programDataAddress": "uZzaw6cRtbnd2JWk9rEirz9g8hZNY6VmUPWBPxuFz2r",
+      "programHeaderSha256": "06517ebf86c25fc7d686f21afcc6e22cb9f2f3a657d7587ae458173798bfd3a7",
+      "programDataHeaderSha256": "c64a5a6ef02d60afd8a4046c0bb1f49f5e042f86d53bc5c68a5fe2bbbb69642e",
+      "sourceToBinaryAttested": false
+    },
+    "financialGraphSha256": "cdfc9e0f99639ead2358f3cfc80a01478b4653316858fa2aee86c4c0fb855ca5",
+    "financialGraphUnchanged": true,
+    "financialState": {
+      "issuedSupply": "48",
+      "redeemedSupply": "0",
+      "mintSupply": "48",
+      "vaultMinor": "69600000000",
+      "couponPaid": "0",
+      "principalPaid": "0",
+      "revision": "140"
+    },
+    "immutableRequestIdentity": {
+      "registryDigest": "3d9e90fc7902405b945f6b9bb2994426180a9c33caf9944d60444692c72310f6",
+      "planDigest": "9688a91f2b108fb54842dab0d0168cf18d952ae26d4145d8c77294f34191801e",
+      "paymentId": "15f653d15244d070faaa27485b482afdf223aa989ce0701e6db1db96b72d00ff",
+      "ackDigest": "7b033781dadd41010bb5d79b836cc7e0812b4c6f396e9acf66f355e0e8b4926e"
+    },
+    "observations": [
+      {
+        "label": "initial",
+        "checkedAt": "2026-10-09T22:46:01.490Z",
+        "exactDescriptorReplay": false,
+        "afterConfirmedSlotRange": {
+          "start": 5605,
+          "end": 5607
+        },
+        "afterFinalizedRightContextSlot": 5576,
+        "auditPayloadSha256": "f503252f785993a2b0f231423fc0dec4745af9c90643d62f64681c74adba6d1c",
+        "verifierProcessRestartVerified": false
+      },
+      {
+        "label": "after-api-restart",
+        "checkedAt": "2026-10-09T22:52:32.372Z",
+        "exactDescriptorReplay": true,
+        "afterConfirmedSlotRange": {
+          "start": 6067,
+          "end": 6068
+        },
+        "afterFinalizedRightContextSlot": 6037,
+        "auditPayloadSha256": "8fa3f09f26e4ced23b7137fd6bbce1011d73228a2d0a6bee9a9ff084831a3b6b",
+        "verifierProcessRestartVerified": false
+      }
+    ],
+    "retainedInitialBaseline": {
+      "confirmedSlotRange": {
+        "start": 5580,
+        "end": 5582
+      },
+      "finalizedRightContextSlot": 5551,
+      "replayBeforeFieldUsesRetainedInitialBaseline": true
+    },
+    "finalizedRight": {
+      "commitment": "finalized",
+      "captureFinalized": true,
+      "claimed": false,
+      "amountMinor": "500000000",
+      "actionDataSha256": "1d2b5cedd5bb3550bad9bcb50af8f974f129083147ecaa503e372fa09dc76476",
+      "snapshotPageAddress": "8ijuu7GYP4yghPa4c6PuS52o6jJF9LoZ1hn469JQX85k",
+      "snapshotDataSha256": "9f0163cc7f088253ee4baaf5fd5219b9c1d40483290b1d6db2d3003bbd7bfb30"
+    },
+    "externalStatus": "simulated-settled",
+    "onChainStatus": "unclaimed",
+    "dispatchAllowed": false,
+    "registryReplayIdentical": true,
+    "ackReplayIdentical": true,
+    "onChainFinancialChange": false,
+    "solanaTransactionsSigned": 0,
+    "rpcWrites": 0,
+    "generatedIntegrationAuthorities": true,
+    "realAssets": false,
+    "bankOrKaseIntegration": false,
+    "partnerConnection": "unverified",
+    "legalRegistryVerified": false,
+    "independentlyAttested": false,
+    "restartAttribution": {
+      "verifierProcessRestartVerified": false,
+      "combinedLeadRecordsSupportApiRestartAndReplay": true,
+      "attribution": "Separate lead process identity and stop observations, followed by retained integration descriptor replay",
+      "initialPid": 37160,
+      "restartedPid": 38570,
+      "initialStartedAt": "2026-10-09T22:33:03.397Z",
+      "restartedStartedAt": "2026-10-09T22:51:26.957Z",
+      "initialStopObserved": true,
+      "stoppedAt": null,
+      "stopTimestampAvailable": false,
+      "sameRecordedDataNamespace": true,
+      "sameRecordedApiAndRpcEndpoints": true,
+      "originalRuntimeUntouchedByRecordedStop": true,
+      "independentAttestation": false,
+      "scope": "Historical observation; not a current process inventory"
+    },
+    "exportVerification": {
+      "nativeRecordsInspectedAndHashedEarlierInTask": true,
+      "canonicalGraphAndAuditRecomputedDuringExport": false,
+      "additionalRecomputationUnavailableReason": "Two bounded read-only attempts failed at the WSL service before execution"
+    }
+  },
+  "scopedPostgresqlCI": {
+    "runId": "38010713994",
+    "jobId": "114089817078",
+    "sourceCommit": "4e5dafa9098e2c9bfea845aa7f452b14375b4d82",
+    "testedViaMergeRef": true,
+    "tests": 43,
+    "passed": 40,
+    "failed": 0,
+    "skipped": 3,
+    "skippedCases": [
+      "TLS verified",
+      "TLS unknown-ca",
+      "TLS wrong-host"
+    ],
+    "url": "https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38010713994/job/114089817078",
+    "scope": "Observed PostgreSQL job only; no overall CI pass inferred"
+  },
+  "generalGithubCI": {
+    "runId": "38010713994",
+    "jobId": "114089816983",
+    "sourceCommit": "4e5dafa9098e2c9bfea845aa7f452b14375b4d82",
+    "testedViaMergeRef": true,
+    "node": {
+      "tests": 362,
+      "passed": 352,
+      "failed": 0,
+      "skipped": 10
+    },
+    "ui": {
+      "tests": 90,
+      "passed": 90,
+      "failed": 0,
+      "skipped": 0
+    },
+    "rustUnit": {
+      "passed": 3,
+      "failed": 0
+    },
+    "compiledSbfRuntime": {
+      "passed": 20,
+      "failed": 0
+    },
+    "compiledArtifactCheck": {
+      "bytes": 959536,
+      "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+      "mode": "verified"
+    },
+    "url": "https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38010713994/job/114089816983",
+    "scope": "Observed completed CI validation log; distinct from the retained local serial failures; no hosted deployment inferred"
+  },
+  "broaderScope": {
+    "actualRpcScaleLifecycleComplete": false,
+    "actualRpcScaleLifecycleStatus": "Not established complete by this packet; lead resumed the retained operation separately",
+    "serialNodeValidation": {
+      "status": "failed-without-final-TAP-totals",
+      "observedFailureCount": 3,
+      "finalTotals": null,
+      "completedAt": "2026-10-10T00:52:12.411Z",
+      "phaseRecordSha256": "709fcef20ca7cb67a204e25e6070f0edf89bc620667a90a7f2dc753b5ec7a507",
+      "allPassClaim": false
+    },
+    "historicalPublicDevnet": {
+      "checkedAt": "2026-10-09T22:21:44.693Z",
+      "payloadSha256": "761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd",
+      "freshDeploymentQuery": false,
+      "newV4DeploymentClaim": false
+    },
+    "scope": "Snapshot at the original generatedAt; later completed RPC lifecycle has its own separately dated report"
+  },
+  "limitations": {
+    "formalAudit": false,
+    "productionCertificate": false,
+    "independentSourceToBinaryAttestation": false,
+    "verifiedTenThousandHolderCapacity": false,
+    "humanWalletSigningEstablished": false,
+    "hashMeaning": "Artifact integrity and provenance only",
+    "classicSplFrozenTransferPolicy": "Permissioned program-mediated transfer; direct external SPL transfer and general DEX compatibility are not established"
+  },
+  "exportPolicy": {
+    "strictFieldWhitelist": true,
+    "opaqueSourceRecordsCopied": false,
+    "sourceLocationsOmitted": true,
+    "logicalArtifactIdsOnly": true
+  },
+  "publishedGitSource": {
+    "head": "4e5dafa9098e2c9bfea845aa7f452b14375b4d82",
+    "mergedAs": "7f822f3b70cfa4388509c16b55c8fb01c4bde1a0",
+    "hashes": [
+      {
+        "file": "programs/bondtrace/src/lib.rs",
+        "sha256": "0d40765c930cf1ed48efd4f3d5ffca305d17d35f5d7422e4fc21294e851f8c1c"
+      },
+      {
+        "file": "programs/bondtrace/src/contexts.rs",
+        "sha256": "91e3d22e877811701c4a54a3130baa9aa7496c93af3da1fbeec0fc7ec7b4d2e4"
+      },
+      {
+        "file": "programs/bondtrace/src/state.rs",
+        "sha256": "56dc6dd2967b5be8141798b6eeff0211f2b0acc722520dad6c75af279f38acf9"
+      },
+      {
+        "file": "programs/bondtrace/src/v2.rs",
+        "sha256": "8add603a953ff88e908fba47dc0ffcee2e5b4b21b02c64cc5bdca796bb577a6d"
+      },
+      {
+        "file": "programs/bondtrace/src/v2_contexts.rs",
+        "sha256": "e3dd5d3fdbd39ac92cede7b4f471bc34686b513c7ddf80fbab73d00ccf9c7a51"
+      },
+      {
+        "file": "programs/bondtrace/src/v2_state.rs",
+        "sha256": "f23203fcbaf2cad693db8549ff2b9ff267adab993e62a27cfe9e9648130db2f0"
+      },
+      {
+        "file": "packages/client/src/program.ts",
+        "sha256": "f9d4072cba2c6c763610914440cfb3c95928aa38c2d975dd0f59eacdafe69b2a"
+      },
+      {
+        "file": "tests/program/runtime.rs",
+        "sha256": "ae76517ff374121f7034614a25c4bdb8b67229e84fb68f87a6ae853502a9bc17"
+      },
+      {
+        "file": "tests/program/runtime_v2.rs",
+        "sha256": "3854cec3cfc2e185d08bb789f9b470e7da8b608dd654b2458f29a7a627414b2b"
+      }
+    ]
+  }
+}

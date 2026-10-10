@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "completedAt": "2026-10-10T01:20:31.315Z",
+  "scope": "Actual matching-release localnet RPC; generated test signers; mock SPL settlement. No human wallet, devnet, production, or 10000-holder capacity claim.",
+  "runId": "paged_scale_20261010_v3",
+  "network": "localnet",
+  "genesisHash": "ECUp236cnJYsd7ZvngFPME4fvGoT5WkGemD2WU48t4kU",
+  "release": {
+    "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+    "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+    "genesisHash": "ECUp236cnJYsd7ZvngFPME4fvGoT5WkGemD2WU48t4kU"
+  },
+  "instrument": "CxUQ7fA3GShnTuiYPBg9RPh4ieZZ332Nevh5PzqatL8t",
+  "initialHolders": 33,
+  "finalHolders": 34,
+  "couponCount": 9,
+  "issuedUnits": "48",
+  "redeemedUnits": "48",
+  "finance": {
+    "current": "0",
+    "principalTotal": "48000000000",
+    "couponTotal": "21600000000",
+    "couponPaid": "21600000000",
+    "principalPaid": "48000000000",
+    "contractual": "69600000000",
+    "remaining": "0",
+    "gap": "0",
+    "surplus": "0"
+  },
+  "primary": {
+    "initialUnits": "10",
+    "couponMinor": "500000000",
+    "principalMinor": "10000000000"
+  },
+  "transfers": {
+    "source": "2FYJqvEddvFoS6Zt5G2aUjydEi9VCV5WMB9jpVBx3g5W",
+    "destination": "2byMmLPfDAQCamrHNGDdFFiA6G3QU2znidKUi1MYWP11",
+    "units": "1",
+    "historicSourceUnits": "5",
+    "futureSourceUnits": "4",
+    "newHistoricUnits": "0",
+    "newFutureUnits": "1"
+  },
+  "vote": {
+    "id": "1",
+    "yesWeight": "13",
+    "noWeight": "5",
+    "duplicateRejectedByRpcSimulation": true
+  },
+  "lateCouponAfterBurn": true,
+  "transactionCount": 253,
+  "corporateAndInstrumentTransactions": 215,
+  "auxiliaryTransactions": 38,
+  "actionCounts": {
+    "redeem_principal_v2": 34,
+    "settle_coupon_v2": 81,
+    "capture_action_page_v2": 55,
+    "test_sol_funding_v2": 36,
+    "finalize_action_v2": 11,
+    "issue_units_v2": 13,
+    "seal_issue_v2": 1,
+    "begin_coupon_v2": 9,
+    "cast_vote_v2": 3,
+    "mock_reserve_v2": 1,
+    "begin_redemption_v2": 1,
+    "fund_vault_v2": 1,
+    "create_proposal_v2": 1,
+    "append_schedule_v2": 2,
+    "initialize_issue_v2": 1,
+    "mock_mint_v2": 1,
+    "transfer_units_v2": 1,
+    "register_holder_v2": 1
+  },
+  "retainedProofGaps": 0,
+  "archivedFinalityObservations": {
+    "finalized": 247,
+    "confirmed": 6
+  },
+  "archivedProofCommitments": {
+    "finalized": 241,
+    "confirmed": 12
+  },
+  "completeFreshHistoryVerified": false,
+  "fullReport": {
+    "name": "servicing-v4-localnet-20261010.json",
+    "bytes": 1680630,
+    "sha256": "4416ab08eb695a3357a6b3b81f680ba4a84c9822c95acff579d91a75c738df22"
+  },
+  "originalCompactReportSha256": "add49bde016d2db51a6724f3e1cb9237ab42ade1a4fce198064e8e6e8a71f548",
+  "freshFinancialRead": {
+    "name": "servicing-v4-financial-read-20261010.json",
+    "bytes": 11255,
+    "sha256": "3be35f400291c9b600fd4b7f5c29964a22b9f2302b5ef86c4a0b9d73577635ac"
+  },
+  "historyObservation": {
+    "name": "servicing-v4-history-observation-20261010.json",
+    "bytes": 22250,
+    "sha256": "51ffcd822827f2e24ee627b56f3d24d02017364040a63f2eafa2ca2d1032551c"
+  },
+  "captureResume": {
+    "actionKind": 1,
+    "actionId": 0,
+    "capturedPages": 1,
+    "frozenHolderCount": 33,
+    "observedAt": "2026-10-09T22:33:10.403Z"
+  },
+  "independentAttestation": false,
+  "claims": {
+    "humanPhantom": false,
+    "publicDevnetV4": false,
+    "bankOrKaseIntegration": false,
+    "realAssets": false,
+    "unlimitedCapacity": false
+  },
+  "note": "Archived finalized/confirmed observations remain attributed to capture time; later unavailable RPC history is not erased. Current on-chain financial closure was separately reread."
+}

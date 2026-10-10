@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "scope": "Local ProofPilot coach evidence-checklist acceptance of the frozen technical report only",
+  "disposition": "accepted",
+  "policyVersion": 4,
+  "draftCount": 1,
+  "packetSha256": "1a9b005bc9acf7630479cd68b72a6418527ad585f754c6d35072c9c32bba6571",
+  "draftSha256": "ca4b177ee3329c243148d911689597d63dec047496bdb5504fb1e5e112726851",
+  "assessmentSha256": "ad6f066c6fc5a30261dc4b7325a90aabfaa22efc7b62bb0fc17b07f965c2d76b",
+  "reviewer": {
+    "mode": "separate_context",
+    "model": "unknown (inherited Codex host model; exact model identifier unavailable)",
+    "verification": "self_reported"
+  },
+  "checks": [
+    {
+      "id": "fact_fidelity",
+      "status": "pass",
+      "note": "The draft preserves the localnet/generated-signer/mock-token population, 33 initial and 34 final holders, nine coupons, and the distinction between archived observations and current RPC availability. The earlier source_program cutoff does not establish RPC completion; the separately dated source_cycle (01:20:31Z) and source_fresh (01:33:36Z) establish the later financial result. The history diagnostic records 75 absent statuses out of 253, without assigning a cause or fresh finality. Ordinary Phantom, partner/customer evidence and public v4 deployment remain unestablished rather than asserted absent in reality."
+    },
+    {
+      "id": "arithmetic",
+      "status": "pass",
+      "note": "Read-only PowerShell decimal calculations reproduced 10*1000*1000/(10000*2)=500 per coupon, 10*1000=10000 principal, 48*50*9=21600 coupons, 48*1000=48000 principal, and 215+38=253 transactions. The recorded actionCounts also sum to 253. Six settlement decimals convert 21600000000 and 48000000000 base units to 21600 and 48000; their sum is the recorded 69600000000 contractual base units. Both 247+6 archived finality observations and the distinct 241+12 proof commitments sum to 253; the draft does not conflate these categories."
+    },
+    {
+      "id": "evidence_support",
+      "status": "pass",
+      "note": "All six packet source files match their frozen SHA256 values. Inspected CI log totals support 352 Node passes/10 optional skips, 90 UI, 3 Rust unit and 20 runtime tests, plus the separate PostgreSQL16.15 job's 40 passes/3 explicit TLS-fixture skips. The CI checkout is the PR merge ref containing source4e5dafa, as disclosed in source_program, and supports the draft's source-verification attribution without a hosted-release claim. The summary and financial reread support closure, historical transfer rights and late coupon after burn. The independent program report supports only its bounded no-substantiated-defect finding; targeted v2 account/context/state source inspection corroborates permissionless capture/opening and bounded pages without claiming an exhaustive audit."
+    },
+    {
+      "id": "constraints",
+      "status": "pass",
+      "note": "The packet correctly declares coach/application with independent review required. The conclusion is restricted to a technical artifact and preserves the zero-paid-service, test-network/generated-signer, real-asset, human-wallet, version and owner-submission boundaries. No eligibility or partner gate is passed by test counts. Paged u32 state is not described as measured unlimited capacity; reviewed source/native v4 is not attributed to the older public v3 payload. Historical failed/partial local validation remains explicitly separate from later successful CI."
+    },
+    {
+      "id": "verdict",
+      "status": "pass",
+      "note": "Artifact/complete is justified for this accurate bounded evidence handoff. It does not authorize deployment/submission or declare the whole product accepted, production-ready, audited, bank-integrated or human-wallet verified. The draft's inference is proportionate to the observed financial closure, distinct verification suites and bounded program review while retaining material unknowns."
+    },
+    {
+      "id": "next_step",
+      "status": "pass",
+      "note": "Delivering the completed source/evidence handoff for source review is the immediate observable action. Public v4 upgrade, ordinary-wallet acceptance, external partner trial and owner contest submission are correctly separate next actions with their own evidence/authorization requirements. Another speculative assessment or financial rerun is not required to complete this frozen report. The concurrently running fresh one-command demo is outside the packet and receives no success claim."
+    },
+    {
+      "id": "task_scope",
+      "status": "pass",
+      "note": "The reviewed draft is a concise 280-word technical handoff within the packet's 850-word limit, with exact paragraph-level claim mapping in the assessment. Application context is declared despite the narrower artifact/complete decision. This review assesses that frozen report and its source entailment, not whole-product design acceptance, market validation, official competition scoring or a new program audit. Findings are reported in Russian in the accompanying note."
+    },
+    {
+      "id": "action_bounds",
+      "status": "pass",
+      "note": "The draft creates no permission to spend, expose credentials, submit, change repository visibility, sign real assets or assert official acceptance. Review operations were limited to local file/source/log reads, Git status, hash and arithmetic checks, and writing the two assigned review artifacts. No network request, product change, installation, Git mutation, runtime control, test or wallet action was performed. This separate context is the reviewer; its exact host model identifier is unavailable and is not invented."
+    }
+  ],
+  "issues": [],
+  "officialJudgingScore": null,
+  "wholeProductPerfectClaim": false,
+  "humanWalletVerified": false,
+  "externalPartnerVerified": false
+}

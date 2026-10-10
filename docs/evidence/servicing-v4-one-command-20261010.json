@@ -1,0 +1,4906 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "checkedAt": "2026-10-10T01:45:59.120Z",
+  "scope": "Actual matching-release localnet RPC; generated test signers; mock SPL settlement. No human wallet, devnet, production, or 10000-holder capacity claim.",
+  "runId": "paged_lifecycle_quick_late_v4",
+  "plan": {
+    "version": 2,
+    "runId": "paged_lifecycle_quick_late_v4",
+    "scale": false,
+    "lateCoupon": true,
+    "createdAt": "2026-10-10T01:36:40.414Z",
+    "seriesId": "1791596200348",
+    "issuer": "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+    "executor": "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+    "settlementMint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+    "holders": [
+      "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+      "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+      "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+      "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW"
+    ],
+    "initialUnits": [
+      "10",
+      "5",
+      "3"
+    ],
+    "couponCount": 2,
+    "faceValueMinor": "1000000000",
+    "couponUnitMinor": "50000000",
+    "reserveMinor": "19800000000",
+    "mintRentLamports": "1461600",
+    "bond": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+    "bondMint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+    "vault": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+    "source": "5gJWgotzxkuwfnx2mrt9aTbEHCsWCd8GVAd5mTGaHeF1",
+    "release": {
+      "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+      "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+      "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+    },
+    "batching": {
+      "version": 1,
+      "initialHolderMax": 3,
+      "couponSettlementMax": 4,
+      "initialHolders": [
+        {
+          "start": 0,
+          "count": 3,
+          "pageIndex": 0,
+          "createRegistryPage": true
+        }
+      ],
+      "coupons": [
+        {
+          "couponIndex": 0,
+          "start": 1,
+          "count": 2,
+          "holderIndexes": [
+            1,
+            2
+          ]
+        },
+        {
+          "couponIndex": 1,
+          "start": 0,
+          "count": 4,
+          "holderIndexes": [
+            0,
+            1,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    "timing": {
+      "firstRecordLeadSeconds": 180,
+      "secondRecordGapSeconds": 180,
+      "remainingRecordGapSeconds": 4,
+      "maturityGapSeconds": 60
+    },
+    "name": "BondTrace · Paged servicing demo",
+    "recordTs": [
+      "1791596435",
+      "1791596615"
+    ],
+    "paymentTs": [
+      "1791596436",
+      "1791596616"
+    ],
+    "maturityTs": "1791596675"
+  },
+  "initialHolders": 3,
+  "finalHolders": 4,
+  "couponCount": 2,
+  "transfers": {
+    "source": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+    "destination": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+    "units": "1",
+    "historicSourceUnits": "5",
+    "futureSourceUnits": "4",
+    "newHistoricUnits": "0",
+    "newFutureUnits": "1"
+  },
+  "primary": {
+    "initialUnits": "10",
+    "couponMinor": "500000000",
+    "principalMinor": "10000000000"
+  },
+  "vote": {
+    "id": "1",
+    "yesWeight": "13",
+    "noWeight": "5",
+    "duplicateRejectedByRpcSimulation": true
+  },
+  "finance": {
+    "current": "0",
+    "principalTotal": "18000000000",
+    "couponTotal": "1800000000",
+    "couponPaid": "1800000000",
+    "principalPaid": "18000000000",
+    "contractual": "19800000000",
+    "remaining": "0",
+    "gap": "0",
+    "surplus": "0"
+  },
+  "finalView": {
+    "address": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+    "bond": {
+      "version": 2,
+      "issuer": "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+      "bondMint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+      "settlementMint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+      "vault": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+      "seriesId": "1791596200348",
+      "faceValue": "1000000000",
+      "rateBps": 1000,
+      "couponFrequency": 2,
+      "maturityTs": "1791596675",
+      "totalIssued": "18",
+      "totalRedeemed": "18",
+      "state": 3,
+      "bump": 255,
+      "revision": "38",
+      "holderCount": 4,
+      "couponCount": 2,
+      "scheduleAppended": 2,
+      "nextCouponIndex": 2,
+      "firstRecordTs": "1791596435",
+      "nextRecordTs": "1791596675",
+      "lastRecordTs": "1791596615",
+      "lastPaymentTs": "1791596616",
+      "couponUnitTotal": "100000000",
+      "activeKind": 0,
+      "activeId": 0,
+      "name": "BondTrace · Paged servicing demo"
+    },
+    "wallets": [
+      "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+      "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+      "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+      "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW"
+    ],
+    "holderRecords": [
+      {
+        "bond": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+        "wallet": "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+        "index": 0,
+        "bump": 254
+      },
+      {
+        "bond": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+        "wallet": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+        "index": 1,
+        "bump": 254
+      },
+      {
+        "bond": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+        "wallet": "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+        "index": 2,
+        "bump": 255
+      },
+      {
+        "bond": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+        "wallet": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+        "index": 3,
+        "bump": 255
+      }
+    ],
+    "holders": [
+      {
+        "address": "F17sdsVnazmdqx3aE8VDrhUxYsmcRgrPWkE9BsvdWSRn",
+        "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+        "owner": "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+        "amount": "0",
+        "state": 2,
+        "closed": false
+      },
+      {
+        "address": "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+        "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+        "owner": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+        "amount": "0",
+        "state": 2,
+        "closed": false
+      },
+      {
+        "address": "9X5xS39ZWLGWUpoog1pi5jQduf4XCzEJkYBiFagdrT6h",
+        "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+        "owner": "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+        "amount": "0",
+        "state": 2,
+        "closed": false
+      },
+      {
+        "address": "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz",
+        "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+        "owner": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+        "amount": "0",
+        "state": 2,
+        "closed": false
+      }
+    ],
+    "schedule": [
+      {
+        "recordTs": "1791596435",
+        "paymentTs": "1791596436",
+        "unitAmount": "50000000"
+      },
+      {
+        "recordTs": "1791596615",
+        "paymentTs": "1791596616",
+        "unitAmount": "50000000"
+      }
+    ],
+    "actions": [
+      {
+        "address": "GxZrNNQ89GPoUuEBppYTkh1kECV6TnuhUDnJ5BrPgih4",
+        "value": {
+          "bond": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+          "kind": 1,
+          "id": 0,
+          "recordTs": "1791596435",
+          "paymentTs": "1791596436",
+          "unitAmount": "50000000",
+          "openedAt": "1791596438",
+          "closesAt": "0",
+          "holderCount": 3,
+          "capturedPages": 1,
+          "totalUnits": "18",
+          "paidTotal": "900000000",
+          "claimedUnits": "18",
+          "yesUnits": "0",
+          "noUnits": "0",
+          "finalized": true,
+          "bump": 252,
+          "title": ""
+        },
+        "pages": [
+          {
+            "action": "GxZrNNQ89GPoUuEBppYTkh1kECV6TnuhUDnJ5BrPgih4",
+            "index": 0,
+            "claimedMask": 7,
+            "votedMask": 0,
+            "paidTotal": "900000000",
+            "bump": 255,
+            "units": [
+              "10",
+              "5",
+              "3"
+            ]
+          }
+        ],
+        "units": [
+          "10",
+          "5",
+          "3"
+        ],
+        "claimed": [
+          true,
+          true,
+          true
+        ],
+        "voted": [
+          false,
+          false,
+          false
+        ],
+        "ballots": []
+      },
+      {
+        "address": "E6VZD3CWmdEW4X2BL69JK4BmMwxm4cKFTXEf4hnCGubG",
+        "value": {
+          "bond": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+          "kind": 1,
+          "id": 1,
+          "recordTs": "1791596615",
+          "paymentTs": "1791596616",
+          "unitAmount": "50000000",
+          "openedAt": "1791596618",
+          "closesAt": "0",
+          "holderCount": 4,
+          "capturedPages": 1,
+          "totalUnits": "18",
+          "paidTotal": "900000000",
+          "claimedUnits": "18",
+          "yesUnits": "0",
+          "noUnits": "0",
+          "finalized": true,
+          "bump": 254,
+          "title": ""
+        },
+        "pages": [
+          {
+            "action": "E6VZD3CWmdEW4X2BL69JK4BmMwxm4cKFTXEf4hnCGubG",
+            "index": 0,
+            "claimedMask": 15,
+            "votedMask": 0,
+            "paidTotal": "900000000",
+            "bump": 255,
+            "units": [
+              "10",
+              "4",
+              "3",
+              "1"
+            ]
+          }
+        ],
+        "units": [
+          "10",
+          "4",
+          "3",
+          "1"
+        ],
+        "claimed": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "voted": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "ballots": []
+      },
+      {
+        "address": "6rTqw44Gpchqd6fmxXhkEs4rrggEZmxwrU7RRijiSsxi",
+        "value": {
+          "bond": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+          "kind": 2,
+          "id": 0,
+          "recordTs": "1791596675",
+          "paymentTs": "1791596675",
+          "unitAmount": "1000000000",
+          "openedAt": "1791596678",
+          "closesAt": "0",
+          "holderCount": 4,
+          "capturedPages": 1,
+          "totalUnits": "18",
+          "paidTotal": "18000000000",
+          "claimedUnits": "18",
+          "yesUnits": "0",
+          "noUnits": "0",
+          "finalized": true,
+          "bump": 254,
+          "title": ""
+        },
+        "pages": [
+          {
+            "action": "6rTqw44Gpchqd6fmxXhkEs4rrggEZmxwrU7RRijiSsxi",
+            "index": 0,
+            "claimedMask": 15,
+            "votedMask": 0,
+            "paidTotal": "18000000000",
+            "bump": 251,
+            "units": [
+              "10",
+              "4",
+              "3",
+              "1"
+            ]
+          }
+        ],
+        "units": [
+          "10",
+          "4",
+          "3",
+          "1"
+        ],
+        "claimed": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "voted": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "ballots": []
+      },
+      {
+        "address": "p2TWjuyyBJtocsef7BkuabaRHoXHTVbGU4LnC6GNaY6",
+        "value": {
+          "bond": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+          "kind": 3,
+          "id": 1,
+          "recordTs": "1791596461",
+          "paymentTs": "0",
+          "unitAmount": "0",
+          "openedAt": "1791596461",
+          "closesAt": "1791596674",
+          "holderCount": 4,
+          "capturedPages": 1,
+          "totalUnits": "18",
+          "paidTotal": "0",
+          "claimedUnits": "0",
+          "yesUnits": "13",
+          "noUnits": "5",
+          "finalized": true,
+          "bump": 253,
+          "title": "Approve the next disclosure pack"
+        },
+        "pages": [
+          {
+            "action": "p2TWjuyyBJtocsef7BkuabaRHoXHTVbGU4LnC6GNaY6",
+            "index": 0,
+            "claimedMask": 0,
+            "votedMask": 7,
+            "paidTotal": "0",
+            "bump": 255,
+            "units": [
+              "10",
+              "5",
+              "3",
+              "0"
+            ]
+          }
+        ],
+        "units": [
+          "10",
+          "5",
+          "3",
+          "0"
+        ],
+        "claimed": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "voted": [
+          true,
+          true,
+          true,
+          false
+        ],
+        "ballots": [
+          {
+            "action": "p2TWjuyyBJtocsef7BkuabaRHoXHTVbGU4LnC6GNaY6",
+            "voter": "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+            "weight": "10",
+            "support": true,
+            "bump": 253
+          },
+          {
+            "action": "p2TWjuyyBJtocsef7BkuabaRHoXHTVbGU4LnC6GNaY6",
+            "voter": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+            "weight": "5",
+            "support": false,
+            "bump": 255
+          },
+          {
+            "action": "p2TWjuyyBJtocsef7BkuabaRHoXHTVbGU4LnC6GNaY6",
+            "voter": "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+            "weight": "3",
+            "support": true,
+            "bump": 255
+          }
+        ]
+      }
+    ],
+    "bondMint": {
+      "mintAuthority": {
+        "__option": "Some",
+        "value": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc"
+      },
+      "supply": "0",
+      "decimals": 0,
+      "isInitialized": true,
+      "freezeAuthority": {
+        "__option": "Some",
+        "value": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc"
+      }
+    },
+    "settlementMint": {
+      "mintAuthority": {
+        "__option": "Some",
+        "value": "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB"
+      },
+      "supply": "19800000000",
+      "decimals": 6,
+      "isInitialized": true,
+      "freezeAuthority": {
+        "__option": "None"
+      }
+    },
+    "vault": {
+      "address": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+      "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+      "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+      "amount": "0",
+      "state": 1,
+      "closed": false
+    },
+    "issuerSettlement": {
+      "address": "5gJWgotzxkuwfnx2mrt9aTbEHCsWCd8GVAd5mTGaHeF1",
+      "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+      "owner": "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+      "amount": "0",
+      "state": 1,
+      "closed": false
+    },
+    "clock": {
+      "slot": "509",
+      "timestamp": "1791596705"
+    },
+    "contextSlot": 509,
+    "startSlot": 509,
+    "accountCount": 28,
+    "proposalIds": [
+      "1"
+    ],
+    "knownProposalIds": [
+      "1"
+    ],
+    "omittedProposalIds": []
+  },
+  "destinationAmounts": [
+    "11000000000",
+    "4450000000",
+    "3300000000",
+    "1050000000"
+  ],
+  "captureResume": {
+    "actionKind": 1,
+    "actionId": 0,
+    "capturedPages": 1,
+    "frozenHolderCount": 3,
+    "observedAt": "2026-10-10T01:40:10.915Z"
+  },
+  "lateCouponAfterBurn": true,
+  "proofCount": 37,
+  "proofs": [
+    {
+      "operationId": "paged_0388a9fc1d1e3282cb42969fc163fcc1817b0d19ba717e76",
+      "step": "principal-open",
+      "action": "begin_redemption_v2",
+      "signature": "64XmGmS8XoMH8qJ9mBYr1kTR2Xooc6cykiiqiDPy9484u7mgpKmFYEksVrCkmRvhyoCKnc7NXxfsAPksMyrR2yXH",
+      "slot": 482,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-confirmed-rpc-transaction",
+          "signature": "64XmGmS8XoMH8qJ9mBYr1kTR2Xooc6cykiiqiDPy9484u7mgpKmFYEksVrCkmRvhyoCKnc7NXxfsAPksMyrR2yXH",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 482,
+          "blockTime": 1791596678,
+          "capturedAt": "2026-10-10T01:45:04.682Z",
+          "commitment": "confirmed",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "confirmed",
+            "observedAt": "2026-10-10T01:45:04.682Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "5b2aea2e0d01db8578140d5b63082f601f2cdad3a24ff3aa2ba97b55ed819776",
+          "messageSha256": "9d5b77d8582b97ec2cf0804fe047c35108279bad53f3795ec2ba75ff38e62b51",
+          "wireBytes": 352,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "14961",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "6rTqw44Gpchqd6fmxXhkEs4rrggEZmxwrU7RRijiSsxi",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "11111111111111111111111111111111",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111"
+          ],
+          "preBalances": [
+            "1983538320",
+            "0",
+            "3111120",
+            "1",
+            "1461600",
+            "1141440",
+            "1"
+          ],
+          "postBalances": [
+            "1981006840",
+            "2526480",
+            "3111120",
+            "1",
+            "1461600",
+            "1141440",
+            "1"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:04.537Z",
+          "commitment": "confirmed"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "64XmGmS8XoMH8qJ9mBYr1kTR2Xooc6cykiiqiDPy9484u7mgpKmFYEksVrCkmRvhyoCKnc7NXxfsAPksMyrR2yXH",
+          "status": "confirmed",
+          "source": "retained-observation",
+          "slot": 482,
+          "contextSlot": 510,
+          "observedAt": "2026-10-10T01:45:25.592Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "confirmed",
+          "observedAt": "2026-10-10T01:45:04.682Z",
+          "slot": 482,
+          "signature": "64XmGmS8XoMH8qJ9mBYr1kTR2Xooc6cykiiqiDPy9484u7mgpKmFYEksVrCkmRvhyoCKnc7NXxfsAPksMyrR2yXH",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_14670691a0cff633195d663291288862942221533068537a",
+      "step": "capture-1-0-0",
+      "action": "capture_action_page_v2",
+      "signature": "2e9TMMKWRvD5KcqVfXYNYkNfzWVWsS7w8MVRtMdVeTP12qZtLRt6yK1WzfskziN8sS8urPbV3rWeUx5XbfBwqwHp",
+      "slot": 256,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "2e9TMMKWRvD5KcqVfXYNYkNfzWVWsS7w8MVRtMdVeTP12qZtLRt6yK1WzfskziN8sS8urPbV3rWeUx5XbfBwqwHp",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 256,
+          "blockTime": 1791596445,
+          "capturedAt": "2026-10-10T01:45:26.223Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:26.223Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "047c0916215be824ab0ceef718b7ee18e222c8bb560c986bd2d15567d41798e6",
+          "messageSha256": "642e25556cf56fbe390c67fdf81770ae35d134ba3fc7184d65dcd68f09d8fe24",
+          "wireBytes": 521,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "27404",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "GSmZr49vBpkeVxsLBGD9CghLZy7BFJy3mu8GKjfTpDPc",
+            "GxZrNNQ89GPoUuEBppYTkh1kECV6TnuhUDnJ5BrPgih4",
+            "11111111111111111111111111111111",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+            "9X5xS39ZWLGWUpoog1pi5jQduf4XCzEJkYBiFagdrT6h",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "EL4x2obe8wGTBKhsNaDUinraPeSavS1Hs4tvjeMVtvTn",
+            "F17sdsVnazmdqx3aE8VDrhUxYsmcRgrPWkE9BsvdWSRn"
+          ],
+          "preBalances": [
+            "1997468520",
+            "3111120",
+            "0",
+            "2526480",
+            "1",
+            "1461600",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1",
+            "3013680",
+            "2039280"
+          ],
+          "postBalances": [
+            "1995716560",
+            "3111120",
+            "1746960",
+            "2526480",
+            "1",
+            "1461600",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1",
+            "3013680",
+            "2039280"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:26.006Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "2e9TMMKWRvD5KcqVfXYNYkNfzWVWsS7w8MVRtMdVeTP12qZtLRt6yK1WzfskziN8sS8urPbV3rWeUx5XbfBwqwHp",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 256,
+          "contextSlot": 510,
+          "observedAt": "2026-10-10T01:45:25.813Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:26.223Z",
+          "slot": 256,
+          "signature": "2e9TMMKWRvD5KcqVfXYNYkNfzWVWsS7w8MVRtMdVeTP12qZtLRt6yK1WzfskziN8sS8urPbV3rWeUx5XbfBwqwHp",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_1789104e05dcc3acbbe93d8f6f176ec1d2ce808bd7db9aaf",
+      "step": "transfer-to-new",
+      "action": "transfer_units_v2",
+      "signature": "mVyCjuitkK2uiNkWagGp2EC98J1LW3ih2bpjV2Eeosn38XHWPyzBmzYoh7eiwRTUvFLet5u7nxpZJvq8sYdvha7",
+      "slot": 280,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "mVyCjuitkK2uiNkWagGp2EC98J1LW3ih2bpjV2Eeosn38XHWPyzBmzYoh7eiwRTUvFLet5u7nxpZJvq8sYdvha7",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 280,
+          "blockTime": 1791596472,
+          "capturedAt": "2026-10-10T01:45:26.821Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:26.821Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "d60586e82bd7ee526f3e1749eecc7c5063943eb1757c0a032309b2a771b1f40e",
+          "messageSha256": "206ca9c87eb609f1997649ee4eecb796ed2012164e3c7fb89cdbde3ea716dd27",
+          "wireBytes": 459,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "51098",
+          "accountKeys": [
+            "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+            "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "63WsWJHUKyVZ5V78b2yq58dT2EgLw2qro6xhEAKp4xto",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "GM4PzdxnT3X4NBodMWDbCvwTeT3XSXpXGDFFGv2Ji1e1",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "100000000",
+            "2039280",
+            "3111120",
+            "2039280",
+            "1461600",
+            "1426800",
+            "1141440",
+            "1",
+            "1426800",
+            "929020800"
+          ],
+          "postBalances": [
+            "99995000",
+            "2039280",
+            "3111120",
+            "2039280",
+            "1461600",
+            "1426800",
+            "1141440",
+            "1",
+            "1426800",
+            "929020800"
+          ],
+          "preTokenBalances": [
+            {
+              "accountIndex": 1,
+              "account": "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "5",
+              "decimals": 0
+            },
+            {
+              "accountIndex": 3,
+              "account": "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 0
+            }
+          ],
+          "postTokenBalances": [
+            {
+              "accountIndex": 1,
+              "account": "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "4",
+              "decimals": 0
+            },
+            {
+              "accountIndex": 3,
+              "account": "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "1",
+              "decimals": 0
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:26.680Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "mVyCjuitkK2uiNkWagGp2EC98J1LW3ih2bpjV2Eeosn38XHWPyzBmzYoh7eiwRTUvFLet5u7nxpZJvq8sYdvha7",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 280,
+          "contextSlot": 511,
+          "observedAt": "2026-10-10T01:45:26.615Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:26.821Z",
+          "slot": 280,
+          "signature": "mVyCjuitkK2uiNkWagGp2EC98J1LW3ih2bpjV2Eeosn38XHWPyzBmzYoh7eiwRTUvFLet5u7nxpZJvq8sYdvha7",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_233e2209a74f41b52fc1c3a8a930cd297f256cb01c698767",
+      "step": "faucet-holder-0",
+      "action": "test_sol_funding_v2",
+      "signature": "23zPxZRQqmmQjdtRggv3poAZd8TPwwbiLpQu8w1SLnekYT1QdUkaocpPHGtMk8wuoLHH2KRkwCd7Nirqz9e9F2oZ",
+      "slot": 41,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": null,
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "23zPxZRQqmmQjdtRggv3poAZd8TPwwbiLpQu8w1SLnekYT1QdUkaocpPHGtMk8wuoLHH2KRkwCd7Nirqz9e9F2oZ",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 41,
+          "blockTime": 1791596237,
+          "capturedAt": "2026-10-10T01:45:27.912Z",
+          "commitment": "finalized",
+          "version": "legacy",
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:27.912Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "f60e3c1190edc644fe72e59bdb719b79ea9295c30e9e87d6e8893d9f0710d879",
+          "messageSha256": "c42a5197dd27e084cf61c1130726a29f8a5155e922f804a3d64afd9721306194",
+          "wireBytes": 215,
+          "expectedWireMatched": null,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "150",
+          "accountKeys": [
+            "HyvfFu3aQiV1ZsLhZrPRnoqPiPBQpxWLYTNtPZMBUVy7",
+            "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+            "11111111111111111111111111111111"
+          ],
+          "preBalances": [
+            "999995999990000",
+            "0",
+            "1"
+          ],
+          "postBalances": [
+            "999995899985000",
+            "100000000",
+            "1"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:27.261Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "23zPxZRQqmmQjdtRggv3poAZd8TPwwbiLpQu8w1SLnekYT1QdUkaocpPHGtMk8wuoLHH2KRkwCd7Nirqz9e9F2oZ",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 41,
+          "contextSlot": 512,
+          "observedAt": "2026-10-10T01:45:27.083Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:27.912Z",
+          "slot": 41,
+          "signature": "23zPxZRQqmmQjdtRggv3poAZd8TPwwbiLpQu8w1SLnekYT1QdUkaocpPHGtMk8wuoLHH2KRkwCd7Nirqz9e9F2oZ",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_23a4a47ef1a66224e499e9dfe71548c2d116157a18d3c9dc",
+      "step": "vote-open",
+      "action": "create_proposal_v2",
+      "signature": "fxDPsswQp1u13tG3WaQCFE7HDu81MwWdSFbfpFNea7BhPUyFaGw1s1UYyomBSAUXcteKFAaeeDzA6iZz7hhUWhq",
+      "slot": 269,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "fxDPsswQp1u13tG3WaQCFE7HDu81MwWdSFbfpFNea7BhPUyFaGw1s1UYyomBSAUXcteKFAaeeDzA6iZz7hhUWhq",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 269,
+          "blockTime": 1791596461,
+          "capturedAt": "2026-10-10T01:45:29.143Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:29.143Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "96877e1ccc0fe6454810c65e29433371be8555bb07eb28b11f6518622361b9ff",
+          "messageSha256": "16e1e56ae70363bec13695df01e2f1570d3f34c29cc3657b7778342fc6adb8e8",
+          "wireBytes": 400,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "16813",
+          "accountKeys": [
+            "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "p2TWjuyyBJtocsef7BkuabaRHoXHTVbGU4LnC6GNaY6",
+            "11111111111111111111111111111111",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111"
+          ],
+          "preBalances": [
+            "1968356600",
+            "3111120",
+            "0",
+            "1",
+            "1461600",
+            "1141440",
+            "1"
+          ],
+          "postBalances": [
+            "1965825120",
+            "3111120",
+            "2526480",
+            "1",
+            "1461600",
+            "1141440",
+            "1"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:28.804Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "fxDPsswQp1u13tG3WaQCFE7HDu81MwWdSFbfpFNea7BhPUyFaGw1s1UYyomBSAUXcteKFAaeeDzA6iZz7hhUWhq",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 269,
+          "contextSlot": 514,
+          "observedAt": "2026-10-10T01:45:28.441Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:29.143Z",
+          "slot": 269,
+          "signature": "fxDPsswQp1u13tG3WaQCFE7HDu81MwWdSFbfpFNea7BhPUyFaGw1s1UYyomBSAUXcteKFAaeeDzA6iZz7hhUWhq",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_32baae1e5f6a5b25169c1038ff3be4b6936cbaa7a1376880",
+      "step": "faucet-holder-1",
+      "action": "test_sol_funding_v2",
+      "signature": "2RvQHFGRNYaZYyD6N5g5sz7MmLWQ9XdjYCFXMjzxHHyF4Sfek9f5faejwHsoBHwFPL77o3URqeN2DAAQSJRoawU",
+      "slot": 44,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": null,
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "2RvQHFGRNYaZYyD6N5g5sz7MmLWQ9XdjYCFXMjzxHHyF4Sfek9f5faejwHsoBHwFPL77o3URqeN2DAAQSJRoawU",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 44,
+          "blockTime": 1791596240,
+          "capturedAt": "2026-10-10T01:45:29.826Z",
+          "commitment": "finalized",
+          "version": "legacy",
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:29.826Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "c5c453041d3e0d8c667ce04f9b6b1d6ea03821b7420fc3763978962afbc610d0",
+          "messageSha256": "0eedcffe002444374fbea2f11e7729fd764d4f3c3960bc72cc91decc9206decf",
+          "wireBytes": 215,
+          "expectedWireMatched": null,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "150",
+          "accountKeys": [
+            "HyvfFu3aQiV1ZsLhZrPRnoqPiPBQpxWLYTNtPZMBUVy7",
+            "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+            "11111111111111111111111111111111"
+          ],
+          "preBalances": [
+            "999995899985000",
+            "0",
+            "1"
+          ],
+          "postBalances": [
+            "999995799980000",
+            "100000000",
+            "1"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:29.518Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "2RvQHFGRNYaZYyD6N5g5sz7MmLWQ9XdjYCFXMjzxHHyF4Sfek9f5faejwHsoBHwFPL77o3URqeN2DAAQSJRoawU",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 44,
+          "contextSlot": 515,
+          "observedAt": "2026-10-10T01:45:29.430Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:29.826Z",
+          "slot": 44,
+          "signature": "2RvQHFGRNYaZYyD6N5g5sz7MmLWQ9XdjYCFXMjzxHHyF4Sfek9f5faejwHsoBHwFPL77o3URqeN2DAAQSJRoawU",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_3abc97f7f4172656e29eb9cc30ccb9433e105d97aa3aae00",
+      "step": "principal-2",
+      "action": "redeem_principal_v2",
+      "signature": "35fdFdk2GFocUsA74sBSp1hv4dZhXvZ2PmDAzU3bvQBDGqFawGAU77GL2MvUy92D2i13emLfiajkc1sZD8ZE9pMG",
+      "slot": 500,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-confirmed-rpc-transaction",
+          "signature": "35fdFdk2GFocUsA74sBSp1hv4dZhXvZ2PmDAzU3bvQBDGqFawGAU77GL2MvUy92D2i13emLfiajkc1sZD8ZE9pMG",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 500,
+          "blockTime": 1791596697,
+          "capturedAt": "2026-10-10T01:45:19.270Z",
+          "commitment": "confirmed",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "confirmed",
+            "observedAt": "2026-10-10T01:45:19.270Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "a8e004c3dd5fa218883de08534a242bd1546aa6a72ff8accd90fc10047c1d6d4",
+          "messageSha256": "a65feb41448ed7f2510ec2a0dae03b2f97063e198ad470c8e0a57be36a8c9a61",
+          "wireBytes": 550,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "54823",
+          "accountKeys": [
+            "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "3syDyhWAJQy1gBmuJCTiBVjGXahYaiYDT5empZdvJKz3",
+            "45mU13BuhsRZ3K1C8A43pxTZjapyti3XuiirNUn1mtf8",
+            "6rTqw44Gpchqd6fmxXhkEs4rrggEZmxwrU7RRijiSsxi",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "9X5xS39ZWLGWUpoog1pi5jQduf4XCzEJkYBiFagdrT6h",
+            "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "ComputeBudget111111111111111111111111111111",
+            "NtFk2EDdedST1GHNQADFNiiA18krbkWjm4uRzAwpbpJ",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "98533400",
+            "1461600",
+            "1746960",
+            "2039280",
+            "2526480",
+            "3111120",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1461600",
+            "1",
+            "1426800",
+            "929020800"
+          ],
+          "postBalances": [
+            "98528400",
+            "1461600",
+            "1746960",
+            "2039280",
+            "2526480",
+            "3111120",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1461600",
+            "1",
+            "1426800",
+            "929020800"
+          ],
+          "preTokenBalances": [
+            {
+              "accountIndex": 3,
+              "account": "45mU13BuhsRZ3K1C8A43pxTZjapyti3XuiirNUn1mtf8",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "300000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 6,
+              "account": "9X5xS39ZWLGWUpoog1pi5jQduf4XCzEJkYBiFagdrT6h",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "3",
+              "decimals": 0
+            },
+            {
+              "accountIndex": 7,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "4500000000",
+              "decimals": 6
+            }
+          ],
+          "postTokenBalances": [
+            {
+              "accountIndex": 3,
+              "account": "45mU13BuhsRZ3K1C8A43pxTZjapyti3XuiirNUn1mtf8",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "3300000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 6,
+              "account": "9X5xS39ZWLGWUpoog1pi5jQduf4XCzEJkYBiFagdrT6h",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 0
+            },
+            {
+              "accountIndex": 7,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "1500000000",
+              "decimals": 6
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:18.961Z",
+          "commitment": "confirmed"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "35fdFdk2GFocUsA74sBSp1hv4dZhXvZ2PmDAzU3bvQBDGqFawGAU77GL2MvUy92D2i13emLfiajkc1sZD8ZE9pMG",
+          "status": "confirmed",
+          "source": "retained-observation",
+          "slot": 500,
+          "contextSlot": 516,
+          "observedAt": "2026-10-10T01:45:30.072Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "confirmed",
+          "observedAt": "2026-10-10T01:45:19.270Z",
+          "slot": 500,
+          "signature": "35fdFdk2GFocUsA74sBSp1hv4dZhXvZ2PmDAzU3bvQBDGqFawGAU77GL2MvUy92D2i13emLfiajkc1sZD8ZE9pMG",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_3ffc9d3aaab775b4afde061724e3c8d55a0e9775fbb0b59a",
+      "step": "finalize-2-0",
+      "action": "finalize_action_v2",
+      "signature": "5rb4KEvVPy52BT4p2jBeDLD66R7roJ2SU2ckpovZWpvFPpn8h8ZtPihqtcwhgS7VZ5C7VGt1dDgP7nt4GZh8WJ6A",
+      "slot": 490,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-confirmed-rpc-transaction",
+          "signature": "5rb4KEvVPy52BT4p2jBeDLD66R7roJ2SU2ckpovZWpvFPpn8h8ZtPihqtcwhgS7VZ5C7VGt1dDgP7nt4GZh8WJ6A",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 490,
+          "blockTime": 1791596687,
+          "capturedAt": "2026-10-10T01:45:11.578Z",
+          "commitment": "confirmed",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "confirmed",
+            "observedAt": "2026-10-10T01:45:11.578Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "e81ac81e8e7a52b09ec6755a3a6247de4a78c9e2dae241c9c2ec1659955e0ead",
+          "messageSha256": "30209a86ceeb06c82927ad15cc99f2c430361b9cb3a1e9891634dea6aa8e1ccf",
+          "wireBytes": 352,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "12297",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "6rTqw44Gpchqd6fmxXhkEs4rrggEZmxwrU7RRijiSsxi",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "HvaaXmBQt4pGPxjFid5sF4DkVS3M7GeA8vEnhBaicwtE"
+          ],
+          "preBalances": [
+            "1979254880",
+            "2526480",
+            "3111120",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "postBalances": [
+            "1979249880",
+            "2526480",
+            "3111120",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:11.206Z",
+          "commitment": "confirmed"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "5rb4KEvVPy52BT4p2jBeDLD66R7roJ2SU2ckpovZWpvFPpn8h8ZtPihqtcwhgS7VZ5C7VGt1dDgP7nt4GZh8WJ6A",
+          "status": "confirmed",
+          "source": "retained-observation",
+          "slot": 490,
+          "contextSlot": 517,
+          "observedAt": "2026-10-10T01:45:30.545Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "confirmed",
+          "observedAt": "2026-10-10T01:45:11.578Z",
+          "slot": 490,
+          "signature": "5rb4KEvVPy52BT4p2jBeDLD66R7roJ2SU2ckpovZWpvFPpn8h8ZtPihqtcwhgS7VZ5C7VGt1dDgP7nt4GZh8WJ6A",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_47feb08dab708ea05ceab99a0c3b01d85f03555167ec686c",
+      "step": "capture-3-1-0",
+      "action": "capture_action_page_v2",
+      "signature": "y6XxHWVcHrmViYBFWuVcUZsp4qizJ3CenyThnqSpWCDLrRebg3VnaZYfCW1em3WXiFvJDiEkjQxPBVc5Gh8HdB8",
+      "slot": 272,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "y6XxHWVcHrmViYBFWuVcUZsp4qizJ3CenyThnqSpWCDLrRebg3VnaZYfCW1em3WXiFvJDiEkjQxPBVc5Gh8HdB8",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 272,
+          "blockTime": 1791596465,
+          "capturedAt": "2026-10-10T01:45:31.698Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:31.698Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "3966e25c48fe22c6feb76a6b85c928b76a734477319c0a015fb95b9bbb5c90a5",
+          "messageSha256": "162f9b5d2b6fe7b3d7f94d465a0c104808d76a94f2a623f7aabb77c6b4d0d568",
+          "wireBytes": 554,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "29958",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "7K4M9T8KadT2jyPwbX2Ki13pAvGfohHWeZhRbjgYbBWf",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "p2TWjuyyBJtocsef7BkuabaRHoXHTVbGU4LnC6GNaY6",
+            "11111111111111111111111111111111",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+            "9X5xS39ZWLGWUpoog1pi5jQduf4XCzEJkYBiFagdrT6h",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "EL4x2obe8wGTBKhsNaDUinraPeSavS1Hs4tvjeMVtvTn",
+            "F17sdsVnazmdqx3aE8VDrhUxYsmcRgrPWkE9BsvdWSRn",
+            "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz"
+          ],
+          "preBalances": [
+            "1995711560",
+            "0",
+            "3111120",
+            "2526480",
+            "1",
+            "1461600",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1",
+            "3013680",
+            "2039280",
+            "2039280"
+          ],
+          "postBalances": [
+            "1993959600",
+            "1746960",
+            "3111120",
+            "2526480",
+            "1",
+            "1461600",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1",
+            "3013680",
+            "2039280",
+            "2039280"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:31.570Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "y6XxHWVcHrmViYBFWuVcUZsp4qizJ3CenyThnqSpWCDLrRebg3VnaZYfCW1em3WXiFvJDiEkjQxPBVc5Gh8HdB8",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 272,
+          "contextSlot": 517,
+          "observedAt": "2026-10-10T01:45:31.440Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:31.698Z",
+          "slot": 272,
+          "signature": "y6XxHWVcHrmViYBFWuVcUZsp4qizJ3CenyThnqSpWCDLrRebg3VnaZYfCW1em3WXiFvJDiEkjQxPBVc5Gh8HdB8",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_4908a051642388d3456559c4c85bc17244b3875bec8f9213",
+      "step": "coupon-open-1",
+      "action": "begin_coupon_v2",
+      "signature": "4aLK9ZMDrXL1cb3Ty1yT8aPw32a8J24qGQzKQ5tcDeFsxBmj8LfFta46kUkgvUsYC2VEer54jZ2Dzb7gN3Vhya3t",
+      "slot": 422,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "4aLK9ZMDrXL1cb3Ty1yT8aPw32a8J24qGQzKQ5tcDeFsxBmj8LfFta46kUkgvUsYC2VEer54jZ2Dzb7gN3Vhya3t",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 422,
+          "blockTime": 1791596618,
+          "capturedAt": "2026-10-10T01:45:32.338Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:32.338Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "c60140f9db394274373da937131e73dd12b5e9f36d70b19f09f679f67a41d9d7",
+          "messageSha256": "8510f5ad101b420fb94bc957e25f4d0a7ec91de9b838f079de7e38c35d75f097",
+          "wireBytes": 389,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "17261",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "E6VZD3CWmdEW4X2BL69JK4BmMwxm4cKFTXEf4hnCGubG",
+            "11111111111111111111111111111111",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "HvaaXmBQt4pGPxjFid5sF4DkVS3M7GeA8vEnhBaicwtE"
+          ],
+          "preBalances": [
+            "1993954600",
+            "3111120",
+            "0",
+            "1",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "postBalances": [
+            "1991423120",
+            "3111120",
+            "2526480",
+            "1",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:32.103Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "4aLK9ZMDrXL1cb3Ty1yT8aPw32a8J24qGQzKQ5tcDeFsxBmj8LfFta46kUkgvUsYC2VEer54jZ2Dzb7gN3Vhya3t",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 422,
+          "contextSlot": 518,
+          "observedAt": "2026-10-10T01:45:32.013Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:32.338Z",
+          "slot": 422,
+          "signature": "4aLK9ZMDrXL1cb3Ty1yT8aPw32a8J24qGQzKQ5tcDeFsxBmj8LfFta46kUkgvUsYC2VEer54jZ2Dzb7gN3Vhya3t",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_4e5dab0497ef729c810c110dbda48dcf61b2bbed95f94d91",
+      "step": "finalize-1-1",
+      "action": "finalize_action_v2",
+      "signature": "3yMVqTbDqAZU6tKVUVego3Vu9vFvXc4KCBUcY3JWHLTHyXEb82BVTS4i6aGVbaN8LxxsX4YnRDoSYowwTMnabBEm",
+      "slot": 428,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "3yMVqTbDqAZU6tKVUVego3Vu9vFvXc4KCBUcY3JWHLTHyXEb82BVTS4i6aGVbaN8LxxsX4YnRDoSYowwTMnabBEm",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 428,
+          "blockTime": 1791596624,
+          "capturedAt": "2026-10-10T01:45:32.810Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:32.810Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "d0f16a203788aecbc372965e20765d918ccf8a44ced754e97b85c37d4a2a9729",
+          "messageSha256": "606ff7c541708bc28e5a3d6c631febab22477aba0169666d44540f9662ed7dae",
+          "wireBytes": 352,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "12306",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "E6VZD3CWmdEW4X2BL69JK4BmMwxm4cKFTXEf4hnCGubG",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "HvaaXmBQt4pGPxjFid5sF4DkVS3M7GeA8vEnhBaicwtE"
+          ],
+          "preBalances": [
+            "1989671160",
+            "3111120",
+            "2526480",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "postBalances": [
+            "1989666160",
+            "3111120",
+            "2526480",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:32.685Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "3yMVqTbDqAZU6tKVUVego3Vu9vFvXc4KCBUcY3JWHLTHyXEb82BVTS4i6aGVbaN8LxxsX4YnRDoSYowwTMnabBEm",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 428,
+          "contextSlot": 519,
+          "observedAt": "2026-10-10T01:45:32.608Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:32.810Z",
+          "slot": 428,
+          "signature": "3yMVqTbDqAZU6tKVUVego3Vu9vFvXc4KCBUcY3JWHLTHyXEb82BVTS4i6aGVbaN8LxxsX4YnRDoSYowwTMnabBEm",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_5562edf642e6b4e3d3826d6179ee844c0d88f5e349e2761b",
+      "step": "principal-0",
+      "action": "redeem_principal_v2",
+      "signature": "4knotbsFeQrhTKt4qfbiTPRPNA78T16TLVmkb81pMiQQqzZzCDQ59BPh14YVrX6LAcQPQg4Jz9SBxehgjCFM8c6Z",
+      "slot": 493,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-confirmed-rpc-transaction",
+          "signature": "4knotbsFeQrhTKt4qfbiTPRPNA78T16TLVmkb81pMiQQqzZzCDQ59BPh14YVrX6LAcQPQg4Jz9SBxehgjCFM8c6Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 493,
+          "blockTime": 1791596689,
+          "capturedAt": "2026-10-10T01:45:14.081Z",
+          "commitment": "confirmed",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "confirmed",
+            "observedAt": "2026-10-10T01:45:14.081Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "e14af4fd257176a820521eb6080e0b23b025d7a765ba76a5480196bb7f0b5bdb",
+          "messageSha256": "bf3ead9ea44523388ae5cd1a854577ca6ebf524523fb627441398e2cb98d2469",
+          "wireBytes": 550,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "56323",
+          "accountKeys": [
+            "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "3syDyhWAJQy1gBmuJCTiBVjGXahYaiYDT5empZdvJKz3",
+            "5Sr2uGomsJShosuCcHU1nxJ5Fv6LBuFXJcx5EWf9ZJoG",
+            "6rTqw44Gpchqd6fmxXhkEs4rrggEZmxwrU7RRijiSsxi",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+            "F17sdsVnazmdqx3aE8VDrhUxYsmcRgrPWkE9BsvdWSRn",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "ComputeBudget111111111111111111111111111111",
+            "E47hVN7B99Mov73dGSz7nxMMcTPU7C15pAuBHRbc8u5h",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "98533400",
+            "1461600",
+            "1746960",
+            "2039280",
+            "2526480",
+            "3111120",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1461600",
+            "1",
+            "1426800",
+            "929020800"
+          ],
+          "postBalances": [
+            "98528400",
+            "1461600",
+            "1746960",
+            "2039280",
+            "2526480",
+            "3111120",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1461600",
+            "1",
+            "1426800",
+            "929020800"
+          ],
+          "preTokenBalances": [
+            {
+              "accountIndex": 3,
+              "account": "5Sr2uGomsJShosuCcHU1nxJ5Fv6LBuFXJcx5EWf9ZJoG",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "500000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 6,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "18500000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 7,
+              "account": "F17sdsVnazmdqx3aE8VDrhUxYsmcRgrPWkE9BsvdWSRn",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "10",
+              "decimals": 0
+            }
+          ],
+          "postTokenBalances": [
+            {
+              "accountIndex": 3,
+              "account": "5Sr2uGomsJShosuCcHU1nxJ5Fv6LBuFXJcx5EWf9ZJoG",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "10500000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 6,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "8500000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 7,
+              "account": "F17sdsVnazmdqx3aE8VDrhUxYsmcRgrPWkE9BsvdWSRn",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 0
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:13.967Z",
+          "commitment": "confirmed"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "4knotbsFeQrhTKt4qfbiTPRPNA78T16TLVmkb81pMiQQqzZzCDQ59BPh14YVrX6LAcQPQg4Jz9SBxehgjCFM8c6Z",
+          "status": "confirmed",
+          "source": "retained-observation",
+          "slot": 493,
+          "contextSlot": 519,
+          "observedAt": "2026-10-10T01:45:33.064Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "confirmed",
+          "observedAt": "2026-10-10T01:45:14.081Z",
+          "slot": 493,
+          "signature": "4knotbsFeQrhTKt4qfbiTPRPNA78T16TLVmkb81pMiQQqzZzCDQ59BPh14YVrX6LAcQPQg4Jz9SBxehgjCFM8c6Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_56237d5488c3616e8da2f8386b3f605da8a4da3659eb634e",
+      "step": "finalize-1-0",
+      "action": "finalize_action_v2",
+      "signature": "2rgbM4wJ63dx59j6pJa8hjTPx7uwGSPgWzqm9JqAyyfXg3AyNVP9MdNS38eV7eynrayh3oVwVEMgcSmPgH62bSLt",
+      "slot": 260,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "2rgbM4wJ63dx59j6pJa8hjTPx7uwGSPgWzqm9JqAyyfXg3AyNVP9MdNS38eV7eynrayh3oVwVEMgcSmPgH62bSLt",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 260,
+          "blockTime": 1791596454,
+          "capturedAt": "2026-10-10T01:45:33.823Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:33.823Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "85530005a884eee8922d370518c92c8e66bc2b049fefbe59c237e7427fcbac90",
+          "messageSha256": "e7719d00604b6242a5a2da10e93b6b4f962aa81d48b6e55bcb2c4a3f78c44037",
+          "wireBytes": 352,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "12313",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "GxZrNNQ89GPoUuEBppYTkh1kECV6TnuhUDnJ5BrPgih4",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "HvaaXmBQt4pGPxjFid5sF4DkVS3M7GeA8vEnhBaicwtE"
+          ],
+          "preBalances": [
+            "1995716560",
+            "3111120",
+            "2526480",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "postBalances": [
+            "1995711560",
+            "3111120",
+            "2526480",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:33.585Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "2rgbM4wJ63dx59j6pJa8hjTPx7uwGSPgWzqm9JqAyyfXg3AyNVP9MdNS38eV7eynrayh3oVwVEMgcSmPgH62bSLt",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 260,
+          "contextSlot": 519,
+          "observedAt": "2026-10-10T01:45:33.388Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:33.823Z",
+          "slot": 260,
+          "signature": "2rgbM4wJ63dx59j6pJa8hjTPx7uwGSPgWzqm9JqAyyfXg3AyNVP9MdNS38eV7eynrayh3oVwVEMgcSmPgH62bSLt",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_567513d7cdc87a69f372d752b04695e3495b33c80609614b",
+      "step": "principal-1",
+      "action": "redeem_principal_v2",
+      "signature": "3jzeozAssmiSgG18F9neDiK8GtJSZBSCsHYzZRbQ4jiehqeL5ewzTfpnB3dN9WQmY6ZVq9PwWxQLeAGa6MPwm7fD",
+      "slot": 496,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-confirmed-rpc-transaction",
+          "signature": "3jzeozAssmiSgG18F9neDiK8GtJSZBSCsHYzZRbQ4jiehqeL5ewzTfpnB3dN9WQmY6ZVq9PwWxQLeAGa6MPwm7fD",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 496,
+          "blockTime": 1791596692,
+          "capturedAt": "2026-10-10T01:45:15.955Z",
+          "commitment": "confirmed",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "confirmed",
+            "observedAt": "2026-10-10T01:45:15.955Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "0c6737384040e7204dd22742339c100cdf1ede960025117a5236fde7d7dee0c9",
+          "messageSha256": "37c5b0617820f3ec6ab2d0dfb8c5258a7e44762283dfe9626c256935a090d579",
+          "wireBytes": 550,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "56323",
+          "accountKeys": [
+            "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "3syDyhWAJQy1gBmuJCTiBVjGXahYaiYDT5empZdvJKz3",
+            "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+            "6rTqw44Gpchqd6fmxXhkEs4rrggEZmxwrU7RRijiSsxi",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "9ytaeDa3WEtbBGwqqmSVDC3yHf3F7SZ7bBdf3tdMDg4e",
+            "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+            "63WsWJHUKyVZ5V78b2yq58dT2EgLw2qro6xhEAKp4xto",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "ComputeBudget111111111111111111111111111111",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "98528400",
+            "1461600",
+            "1746960",
+            "2039280",
+            "2526480",
+            "3111120",
+            "2039280",
+            "2039280",
+            "1426800",
+            "1141440",
+            "1461600",
+            "1",
+            "929020800"
+          ],
+          "postBalances": [
+            "98523400",
+            "1461600",
+            "1746960",
+            "2039280",
+            "2526480",
+            "3111120",
+            "2039280",
+            "2039280",
+            "1426800",
+            "1141440",
+            "1461600",
+            "1",
+            "929020800"
+          ],
+          "preTokenBalances": [
+            {
+              "accountIndex": 3,
+              "account": "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "4",
+              "decimals": 0
+            },
+            {
+              "accountIndex": 6,
+              "account": "9ytaeDa3WEtbBGwqqmSVDC3yHf3F7SZ7bBdf3tdMDg4e",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "450000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 7,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "8500000000",
+              "decimals": 6
+            }
+          ],
+          "postTokenBalances": [
+            {
+              "accountIndex": 3,
+              "account": "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 0
+            },
+            {
+              "accountIndex": 6,
+              "account": "9ytaeDa3WEtbBGwqqmSVDC3yHf3F7SZ7bBdf3tdMDg4e",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "4450000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 7,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "4500000000",
+              "decimals": 6
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:15.860Z",
+          "commitment": "confirmed"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "3jzeozAssmiSgG18F9neDiK8GtJSZBSCsHYzZRbQ4jiehqeL5ewzTfpnB3dN9WQmY6ZVq9PwWxQLeAGa6MPwm7fD",
+          "status": "confirmed",
+          "source": "retained-observation",
+          "slot": 496,
+          "contextSlot": 521,
+          "observedAt": "2026-10-10T01:45:34.387Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "confirmed",
+          "observedAt": "2026-10-10T01:45:15.955Z",
+          "slot": 496,
+          "signature": "3jzeozAssmiSgG18F9neDiK8GtJSZBSCsHYzZRbQ4jiehqeL5ewzTfpnB3dN9WQmY6ZVq9PwWxQLeAGa6MPwm7fD",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_5a0524df8f269f8851d7dfd25cb71b2dd7ba5d3641363e74",
+      "step": "schedule-0",
+      "action": "append_schedule_v2",
+      "signature": "2zJHXXXfoGRpp44cj2SxVnAyGSLhJ1VHe4HzhG8DLhcDqrL9JZmpXB9wZfb81qWgkwPd4Ej49WMjNQUsqqVDerYJ",
+      "slot": 67,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-confirmed-rpc-transaction",
+          "signature": "2zJHXXXfoGRpp44cj2SxVnAyGSLhJ1VHe4HzhG8DLhcDqrL9JZmpXB9wZfb81qWgkwPd4Ej49WMjNQUsqqVDerYJ",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 67,
+          "blockTime": 1791596263,
+          "capturedAt": "2026-10-10T01:37:16.743Z",
+          "commitment": "confirmed",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "confirmed",
+            "observedAt": "2026-10-10T01:37:16.743Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "0181255700c709ded089512fdc58805eb1602bb519f148137cb8b094683d8096",
+          "messageSha256": "5e7dc0201261def2278d2fcff7a9df3fd92a40f1e510418e6ed0836740dda1f7",
+          "wireBytes": 375,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "12716",
+          "accountKeys": [
+            "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "HvaaXmBQt4pGPxjFid5sF4DkVS3M7GeA8vEnhBaicwtE",
+            "11111111111111111111111111111111",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111"
+          ],
+          "preBalances": [
+            "1989867120",
+            "3111120",
+            "0",
+            "1",
+            "1141440",
+            "1"
+          ],
+          "postBalances": [
+            "1987293880",
+            "3111120",
+            "2568240",
+            "1",
+            "1141440",
+            "1"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "unavailable",
+          "attemptedAt": "2026-10-10T01:45:35.706Z",
+          "commitment": "finalized",
+          "code": "TRANSACTION_PROOF_UNAVAILABLE",
+          "message": "The RPC response or wire decoder could not establish a valid execution proof; the existing confirmation is unchanged."
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "2zJHXXXfoGRpp44cj2SxVnAyGSLhJ1VHe4HzhG8DLhcDqrL9JZmpXB9wZfb81qWgkwPd4Ej49WMjNQUsqqVDerYJ",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 67,
+          "contextSlot": 521,
+          "observedAt": "2026-10-10T01:45:34.853Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "confirmed",
+          "observedAt": "2026-10-10T01:37:16.743Z",
+          "slot": 67,
+          "signature": "2zJHXXXfoGRpp44cj2SxVnAyGSLhJ1VHe4HzhG8DLhcDqrL9JZmpXB9wZfb81qWgkwPd4Ej49WMjNQUsqqVDerYJ",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_5f97d1cb92729838825f33220c709e8d070a753b9e473e59",
+      "step": "capture-1-1-0",
+      "action": "capture_action_page_v2",
+      "signature": "iZ2R6MAqGkjc69pb4pJbsKuGhzyuEDb319d9UqKnzdi4hYoDCCAWFynYqdaEZitsVqAxWGmnzXUbvBHdbVYN9az",
+      "slot": 425,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "iZ2R6MAqGkjc69pb4pJbsKuGhzyuEDb319d9UqKnzdi4hYoDCCAWFynYqdaEZitsVqAxWGmnzXUbvBHdbVYN9az",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 425,
+          "blockTime": 1791596622,
+          "capturedAt": "2026-10-10T01:45:40.761Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:40.761Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "721ab30e1166f15401b1363612b4fe959994f15abdd04224416c026617fa3cf1",
+          "messageSha256": "e605cad2e621fe8b4c55c34960b19eb6aad61744b9e5b5809d0e365ebd7a8b15",
+          "wireBytes": 554,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "29845",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "4iQeFUARdjqF8QEoCh15oH5pAikhCaPRa4Rwp1wutGYj",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "E6VZD3CWmdEW4X2BL69JK4BmMwxm4cKFTXEf4hnCGubG",
+            "11111111111111111111111111111111",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+            "9X5xS39ZWLGWUpoog1pi5jQduf4XCzEJkYBiFagdrT6h",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "EL4x2obe8wGTBKhsNaDUinraPeSavS1Hs4tvjeMVtvTn",
+            "F17sdsVnazmdqx3aE8VDrhUxYsmcRgrPWkE9BsvdWSRn",
+            "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz"
+          ],
+          "preBalances": [
+            "1991423120",
+            "0",
+            "3111120",
+            "2526480",
+            "1",
+            "1461600",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1",
+            "3013680",
+            "2039280",
+            "2039280"
+          ],
+          "postBalances": [
+            "1989671160",
+            "1746960",
+            "3111120",
+            "2526480",
+            "1",
+            "1461600",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1",
+            "3013680",
+            "2039280",
+            "2039280"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:40.680Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "iZ2R6MAqGkjc69pb4pJbsKuGhzyuEDb319d9UqKnzdi4hYoDCCAWFynYqdaEZitsVqAxWGmnzXUbvBHdbVYN9az",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 425,
+          "contextSlot": 525,
+          "observedAt": "2026-10-10T01:45:40.587Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:40.761Z",
+          "slot": 425,
+          "signature": "iZ2R6MAqGkjc69pb4pJbsKuGhzyuEDb319d9UqKnzdi4hYoDCCAWFynYqdaEZitsVqAxWGmnzXUbvBHdbVYN9az",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_60dbed8338f7ea3b80df0809de9fb046b4120dbdfe68064f",
+      "step": "fund-vault",
+      "action": "fund_vault_v2",
+      "signature": "voxSeA45LMsMzdHtwdFfsoK1oCgsNF3m5nN9aoNXU39TCT4ZPjduWvMQMDiXSTiX54tbSjZfCMVQiakAoL2bt3h",
+      "slot": 77,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "voxSeA45LMsMzdHtwdFfsoK1oCgsNF3m5nN9aoNXU39TCT4ZPjduWvMQMDiXSTiX54tbSjZfCMVQiakAoL2bt3h",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 77,
+          "blockTime": 1791596273,
+          "capturedAt": "2026-10-10T01:45:41.217Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:41.217Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "6ba75c2ff3d3f10cb23fb00212849c32971dcee5b10a760eb95334fdf5dbe374",
+          "messageSha256": "a9a2cf8b0e421a0f3e00e461be688375afe666c8333e7044d33c98a31b75dd0b",
+          "wireBytes": 393,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "18750",
+          "accountKeys": [
+            "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+            "5gJWgotzxkuwfnx2mrt9aTbEHCsWCd8GVAd5mTGaHeF1",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "ComputeBudget111111111111111111111111111111",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "1973876960",
+            "2039280",
+            "3111120",
+            "2039280",
+            "1141440",
+            "1461600",
+            "1",
+            "929020800"
+          ],
+          "postBalances": [
+            "1973871960",
+            "2039280",
+            "3111120",
+            "2039280",
+            "1141440",
+            "1461600",
+            "1",
+            "929020800"
+          ],
+          "preTokenBalances": [
+            {
+              "accountIndex": 1,
+              "account": "5gJWgotzxkuwfnx2mrt9aTbEHCsWCd8GVAd5mTGaHeF1",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "19800000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 3,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 6
+            }
+          ],
+          "postTokenBalances": [
+            {
+              "accountIndex": 1,
+              "account": "5gJWgotzxkuwfnx2mrt9aTbEHCsWCd8GVAd5mTGaHeF1",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 3,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "19800000000",
+              "decimals": 6
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:41.027Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "voxSeA45LMsMzdHtwdFfsoK1oCgsNF3m5nN9aoNXU39TCT4ZPjduWvMQMDiXSTiX54tbSjZfCMVQiakAoL2bt3h",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 77,
+          "contextSlot": 525,
+          "observedAt": "2026-10-10T01:45:40.883Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:41.217Z",
+          "slot": 77,
+          "signature": "voxSeA45LMsMzdHtwdFfsoK1oCgsNF3m5nN9aoNXU39TCT4ZPjduWvMQMDiXSTiX54tbSjZfCMVQiakAoL2bt3h",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_673890ba5f972f68d4b3c7c0ac2b9c13c085afd10284fa5d",
+      "step": "vote-2",
+      "action": "cast_vote_v2",
+      "signature": "FjrGeA7CwL6kRNsn3gEARM9FoBvtLZ7ehZyn7kmRWFKzCB1x61KfnJTYMu6kDNEZBB541mzWt4BzCrJBcapUxyT",
+      "slot": 292,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "FjrGeA7CwL6kRNsn3gEARM9FoBvtLZ7ehZyn7kmRWFKzCB1x61KfnJTYMu6kDNEZBB541mzWt4BzCrJBcapUxyT",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 292,
+          "blockTime": 1791596488,
+          "capturedAt": "2026-10-10T01:45:42.045Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:42.045Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "b7a34f8539bcbec6891fcdc6941db637233c3b14076c55d0c810f8498fd0b3b1",
+          "messageSha256": "0ccb143c12af70bac4e796e72efd2409a9b0d920cf84fa39c65656124daa3b6f",
+          "wireBytes": 419,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "21451",
+          "accountKeys": [
+            "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+            "7K4M9T8KadT2jyPwbX2Ki13pAvGfohHWeZhRbjgYbBWf",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "BJGVNYcDqtKarszBGeHKxguopzjo7pPF2WqSJJRbQr5o",
+            "p2TWjuyyBJtocsef7BkuabaRHoXHTVbGU4LnC6GNaY6",
+            "11111111111111111111111111111111",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "NtFk2EDdedST1GHNQADFNiiA18krbkWjm4uRzAwpbpJ"
+          ],
+          "preBalances": [
+            "100000000",
+            "1746960",
+            "3111120",
+            "0",
+            "2526480",
+            "1",
+            "1141440",
+            "1",
+            "1426800"
+          ],
+          "postBalances": [
+            "98533400",
+            "1746960",
+            "3111120",
+            "1461600",
+            "2526480",
+            "1",
+            "1141440",
+            "1",
+            "1426800"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:41.522Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "FjrGeA7CwL6kRNsn3gEARM9FoBvtLZ7ehZyn7kmRWFKzCB1x61KfnJTYMu6kDNEZBB541mzWt4BzCrJBcapUxyT",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 292,
+          "contextSlot": 526,
+          "observedAt": "2026-10-10T01:45:41.412Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:42.045Z",
+          "slot": 292,
+          "signature": "FjrGeA7CwL6kRNsn3gEARM9FoBvtLZ7ehZyn7kmRWFKzCB1x61KfnJTYMu6kDNEZBB541mzWt4BzCrJBcapUxyT",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_708772d6b9e54096e72e9ce156ab260c9e3e664ab97b66bc",
+      "step": "principal-3",
+      "action": "redeem_principal_v2",
+      "signature": "4qo7wrV2w1p96izjeJeQsRp4ySh1T2DKGeLRhJW2UQxPo6yMUjkKG5UEbxi3g3vsk8rJKLoahDbV3pRNSVNZ5aYS",
+      "slot": 504,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-confirmed-rpc-transaction",
+          "signature": "4qo7wrV2w1p96izjeJeQsRp4ySh1T2DKGeLRhJW2UQxPo6yMUjkKG5UEbxi3g3vsk8rJKLoahDbV3pRNSVNZ5aYS",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 504,
+          "blockTime": 1791596700,
+          "capturedAt": "2026-10-10T01:45:22.006Z",
+          "commitment": "confirmed",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "confirmed",
+            "observedAt": "2026-10-10T01:45:22.006Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "80f388ac0971d78abcfb3f8e8f6e38acee01aec5fd71577e91077bd878dda5b5",
+          "messageSha256": "fab3aac7ab9c0174e3452d4b704cc1e88beb94d0dfd99fd6cefb300bca4e5ee1",
+          "wireBytes": 550,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "57825",
+          "accountKeys": [
+            "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "3syDyhWAJQy1gBmuJCTiBVjGXahYaiYDT5empZdvJKz3",
+            "6rTqw44Gpchqd6fmxXhkEs4rrggEZmxwrU7RRijiSsxi",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+            "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz",
+            "HzY1J2jUjcZt8iWoUyLuKrLgAmsyM97aVGyR4iXw2VSJ",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "ComputeBudget111111111111111111111111111111",
+            "GM4PzdxnT3X4NBodMWDbCvwTeT3XSXpXGDFFGv2Ji1e1",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "100000000",
+            "1461600",
+            "1746960",
+            "2526480",
+            "3111120",
+            "2039280",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1461600",
+            "1",
+            "1426800",
+            "929020800"
+          ],
+          "postBalances": [
+            "99995000",
+            "1461600",
+            "1746960",
+            "2526480",
+            "3111120",
+            "2039280",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1461600",
+            "1",
+            "1426800",
+            "929020800"
+          ],
+          "preTokenBalances": [
+            {
+              "accountIndex": 5,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "1500000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 6,
+              "account": "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "1",
+              "decimals": 0
+            },
+            {
+              "accountIndex": 7,
+              "account": "HzY1J2jUjcZt8iWoUyLuKrLgAmsyM97aVGyR4iXw2VSJ",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "50000000",
+              "decimals": 6
+            }
+          ],
+          "postTokenBalances": [
+            {
+              "accountIndex": 5,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "500000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 6,
+              "account": "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 0
+            },
+            {
+              "accountIndex": 7,
+              "account": "HzY1J2jUjcZt8iWoUyLuKrLgAmsyM97aVGyR4iXw2VSJ",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "1050000000",
+              "decimals": 6
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:21.891Z",
+          "commitment": "confirmed"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "4qo7wrV2w1p96izjeJeQsRp4ySh1T2DKGeLRhJW2UQxPo6yMUjkKG5UEbxi3g3vsk8rJKLoahDbV3pRNSVNZ5aYS",
+          "status": "confirmed",
+          "source": "retained-observation",
+          "slot": 504,
+          "contextSlot": 527,
+          "observedAt": "2026-10-10T01:45:42.304Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "confirmed",
+          "observedAt": "2026-10-10T01:45:22.006Z",
+          "slot": 504,
+          "signature": "4qo7wrV2w1p96izjeJeQsRp4ySh1T2DKGeLRhJW2UQxPo6yMUjkKG5UEbxi3g3vsk8rJKLoahDbV3pRNSVNZ5aYS",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_79f6419f4acec59746952eb0bfbcf2599ebcf5b12e2c1e64",
+      "step": "initial-holders-0-3",
+      "action": "issue_units_v2",
+      "signature": "49uUSnrJGvFE91vtYDdFScMEPwcsbJ5EJBQspyV1q2ceCeweERwPhNje6Hng5BvG9GN1RXKZk1FTYngpmpnfFvKM",
+      "slot": 72,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "49uUSnrJGvFE91vtYDdFScMEPwcsbJ5EJBQspyV1q2ceCeweERwPhNje6Hng5BvG9GN1RXKZk1FTYngpmpnfFvKM",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 72,
+          "blockTime": 1791596268,
+          "capturedAt": "2026-10-10T01:45:43.962Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:43.962Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "059ac27f7faaa39fe6cd8d1bf9bbc10ecc49b1a8cd1de8ca01e4c4f572c64b32",
+          "messageSha256": "536c500f2b7309545463ddbe8fbec523c4e7b631564986a1b8c1bfa31341f928",
+          "wireBytes": 884,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "251401",
+          "accountKeys": [
+            "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+            "63WsWJHUKyVZ5V78b2yq58dT2EgLw2qro6xhEAKp4xto",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "9X5xS39ZWLGWUpoog1pi5jQduf4XCzEJkYBiFagdrT6h",
+            "E47hVN7B99Mov73dGSz7nxMMcTPU7C15pAuBHRbc8u5h",
+            "EL4x2obe8wGTBKhsNaDUinraPeSavS1Hs4tvjeMVtvTn",
+            "F17sdsVnazmdqx3aE8VDrhUxYsmcRgrPWkE9BsvdWSRn",
+            "NtFk2EDdedST1GHNQADFNiiA18krbkWjm4uRzAwpbpJ",
+            "11111111111111111111111111111111",
+            "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+            "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+            "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "1987293880",
+            "1461600",
+            "0",
+            "0",
+            "3111120",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "1",
+            "100000000",
+            "731913600",
+            "1141440",
+            "1",
+            "100000000",
+            "100000000",
+            "929020800"
+          ],
+          "postBalances": [
+            "1973876960",
+            "1461600",
+            "2039280",
+            "1426800",
+            "3111120",
+            "2039280",
+            "1426800",
+            "3013680",
+            "2039280",
+            "1426800",
+            "1",
+            "100000000",
+            "731913600",
+            "1141440",
+            "1",
+            "100000000",
+            "100000000",
+            "929020800"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [
+            {
+              "accountIndex": 2,
+              "account": "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "5",
+              "decimals": 0
+            },
+            {
+              "accountIndex": 5,
+              "account": "9X5xS39ZWLGWUpoog1pi5jQduf4XCzEJkYBiFagdrT6h",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "3",
+              "decimals": 0
+            },
+            {
+              "accountIndex": 8,
+              "account": "F17sdsVnazmdqx3aE8VDrhUxYsmcRgrPWkE9BsvdWSRn",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "10",
+              "decimals": 0
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:42.684Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "49uUSnrJGvFE91vtYDdFScMEPwcsbJ5EJBQspyV1q2ceCeweERwPhNje6Hng5BvG9GN1RXKZk1FTYngpmpnfFvKM",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 72,
+          "contextSlot": 528,
+          "observedAt": "2026-10-10T01:45:42.529Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:43.962Z",
+          "slot": 72,
+          "signature": "49uUSnrJGvFE91vtYDdFScMEPwcsbJ5EJBQspyV1q2ceCeweERwPhNje6Hng5BvG9GN1RXKZk1FTYngpmpnfFvKM",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_7cb32851ddaa0327e17891f22f8c392a453438d8ec436664",
+      "step": "finalize-3-1",
+      "action": "finalize_action_v2",
+      "signature": "4PFesWv3wYaPqGoFc3DWftowU7YqJe14E4mwUXxyTqUK4t1Y17HLmL5SYk2Lxgkjz27xc5zuR9MyoijkcVTCrUKJ",
+      "slot": 277,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "4PFesWv3wYaPqGoFc3DWftowU7YqJe14E4mwUXxyTqUK4t1Y17HLmL5SYk2Lxgkjz27xc5zuR9MyoijkcVTCrUKJ",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 277,
+          "blockTime": 1791596469,
+          "capturedAt": "2026-10-10T01:45:44.390Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:44.390Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "062e5cde6a9b6fe2741834d7a4ef4d12662cee24024c1bb2fced983a452f0c3e",
+          "messageSha256": "c39cf9edf54c6e435754dd880383298703dafe4b06c117ecfb0c35cb0617dac3",
+          "wireBytes": 352,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "12441",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "p2TWjuyyBJtocsef7BkuabaRHoXHTVbGU4LnC6GNaY6",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "HvaaXmBQt4pGPxjFid5sF4DkVS3M7GeA8vEnhBaicwtE"
+          ],
+          "preBalances": [
+            "1993959600",
+            "3111120",
+            "2526480",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "postBalances": [
+            "1993954600",
+            "3111120",
+            "2526480",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:44.169Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "4PFesWv3wYaPqGoFc3DWftowU7YqJe14E4mwUXxyTqUK4t1Y17HLmL5SYk2Lxgkjz27xc5zuR9MyoijkcVTCrUKJ",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 277,
+          "contextSlot": 529,
+          "observedAt": "2026-10-10T01:45:44.052Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:44.390Z",
+          "slot": 277,
+          "signature": "4PFesWv3wYaPqGoFc3DWftowU7YqJe14E4mwUXxyTqUK4t1Y17HLmL5SYk2Lxgkjz27xc5zuR9MyoijkcVTCrUKJ",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_82bc6e2ca50f87ce126f9f8ab30ba06e2625e4bb2f8bb744",
+      "step": "register-3",
+      "action": "register_holder_v2",
+      "signature": "5yMjFwUf8YcTp485U8GRoUVAACRG9JedN1qVGqp2iisyVQ1hBjns4W51C8kZ3Vuz8FFdbdza5ubZoZAzVdA1LX6L",
+      "slot": 264,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "5yMjFwUf8YcTp485U8GRoUVAACRG9JedN1qVGqp2iisyVQ1hBjns4W51C8kZ3Vuz8FFdbdza5ubZoZAzVdA1LX6L",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 264,
+          "blockTime": 1791596458,
+          "capturedAt": "2026-10-10T01:45:45.141Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:45.141Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "8af961d6c65d71854674f4e8791e9e9e04159c44647ec0d2079c1d6c0970996c",
+          "messageSha256": "a529115bf128e35119b7d72720e16dbd32f64930f3f02555669df91d78d912bb",
+          "wireBytes": 604,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "69220",
+          "accountKeys": [
+            "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "EL4x2obe8wGTBKhsNaDUinraPeSavS1Hs4tvjeMVtvTn",
+            "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz",
+            "GM4PzdxnT3X4NBodMWDbCvwTeT3XSXpXGDFFGv2Ji1e1",
+            "HzY1J2jUjcZt8iWoUyLuKrLgAmsyM97aVGyR4iXw2VSJ",
+            "11111111111111111111111111111111",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+            "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "ComputeBudget111111111111111111111111111111",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "1973866960",
+            "3111120",
+            "3013680",
+            "0",
+            "0",
+            "0",
+            "1",
+            "1461600",
+            "100000000",
+            "731913600",
+            "1141440",
+            "1461600",
+            "1",
+            "929020800"
+          ],
+          "postBalances": [
+            "1968356600",
+            "3111120",
+            "3013680",
+            "2039280",
+            "1426800",
+            "2039280",
+            "1",
+            "1461600",
+            "100000000",
+            "731913600",
+            "1141440",
+            "1461600",
+            "1",
+            "929020800"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [
+            {
+              "accountIndex": 3,
+              "account": "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz",
+              "mint": "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+              "owner": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 0
+            },
+            {
+              "accountIndex": 5,
+              "account": "HzY1J2jUjcZt8iWoUyLuKrLgAmsyM97aVGyR4iXw2VSJ",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 6
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:45.000Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "5yMjFwUf8YcTp485U8GRoUVAACRG9JedN1qVGqp2iisyVQ1hBjns4W51C8kZ3Vuz8FFdbdza5ubZoZAzVdA1LX6L",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 264,
+          "contextSlot": 530,
+          "observedAt": "2026-10-10T01:45:44.808Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:45.141Z",
+          "slot": 264,
+          "signature": "5yMjFwUf8YcTp485U8GRoUVAACRG9JedN1qVGqp2iisyVQ1hBjns4W51C8kZ3Vuz8FFdbdza5ubZoZAzVdA1LX6L",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_8ecd0885ffba4e82de2e1d2644c703b13c24eaf46b702d9e",
+      "step": "vote-1",
+      "action": "cast_vote_v2",
+      "signature": "51xne5eUecqP23BzpyM8n2Cv7UQ12oQfe7DHtdQdw4u7kdHWYPniWj4a1BksM1DkYVivUCenNixR6WAghH3UD6Vh",
+      "slot": 296,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "51xne5eUecqP23BzpyM8n2Cv7UQ12oQfe7DHtdQdw4u7kdHWYPniWj4a1BksM1DkYVivUCenNixR6WAghH3UD6Vh",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 296,
+          "blockTime": 1791596492,
+          "capturedAt": "2026-10-10T01:45:45.523Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:45.523Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "028ed38ad420f1b192d6b4f36e32f69ca5ca4678c2599d5cd6684bcde731c108",
+          "messageSha256": "cb6a9524eef642d8650b5cea65fbfd6cd91e16f3c33a1a4b5d3b58cadeb10f88",
+          "wireBytes": 419,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "21450",
+          "accountKeys": [
+            "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+            "7K4M9T8KadT2jyPwbX2Ki13pAvGfohHWeZhRbjgYbBWf",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "9h1e1gtnqqwnruSQyZqYeowh9p61n1ijLuj6GfgztUh7",
+            "p2TWjuyyBJtocsef7BkuabaRHoXHTVbGU4LnC6GNaY6",
+            "11111111111111111111111111111111",
+            "63WsWJHUKyVZ5V78b2yq58dT2EgLw2qro6xhEAKp4xto",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111"
+          ],
+          "preBalances": [
+            "99995000",
+            "1746960",
+            "3111120",
+            "0",
+            "2526480",
+            "1",
+            "1426800",
+            "1141440",
+            "1"
+          ],
+          "postBalances": [
+            "98528400",
+            "1746960",
+            "3111120",
+            "1461600",
+            "2526480",
+            "1",
+            "1426800",
+            "1141440",
+            "1"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:45.435Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "51xne5eUecqP23BzpyM8n2Cv7UQ12oQfe7DHtdQdw4u7kdHWYPniWj4a1BksM1DkYVivUCenNixR6WAghH3UD6Vh",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 296,
+          "contextSlot": 531,
+          "observedAt": "2026-10-10T01:45:45.285Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:45.523Z",
+          "slot": 296,
+          "signature": "51xne5eUecqP23BzpyM8n2Cv7UQ12oQfe7DHtdQdw4u7kdHWYPniWj4a1BksM1DkYVivUCenNixR6WAghH3UD6Vh",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_9244c946ea4893655ea9c27c9f33856e8a917c246b0307c8",
+      "step": "vote-0",
+      "action": "cast_vote_v2",
+      "signature": "2P8JEGkiaTPGgfwK2FAYFTdQYaqRVhpMY7zGoZQcTQBn3HU4Pju3cKKwDQa6xEZPCWrbB2hVi8pheKqxpctKbU8V",
+      "slot": 288,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "2P8JEGkiaTPGgfwK2FAYFTdQYaqRVhpMY7zGoZQcTQBn3HU4Pju3cKKwDQa6xEZPCWrbB2hVi8pheKqxpctKbU8V",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 288,
+          "blockTime": 1791596484,
+          "capturedAt": "2026-10-10T01:45:46.268Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:46.268Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "2a4388bab0b599e248100fd9075cafba84a6a2276c7c00bbd15b7d6a239e76a7",
+          "messageSha256": "526a5143eb23bc22e7356758769b0d35f8488731c45e95611848706ed6450d8c",
+          "wireBytes": 419,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "24451",
+          "accountKeys": [
+            "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+            "7K4M9T8KadT2jyPwbX2Ki13pAvGfohHWeZhRbjgYbBWf",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "A7kXAiWkXGtvWukJtjsEnGnyFeL4t2TDscttXnsjdbny",
+            "p2TWjuyyBJtocsef7BkuabaRHoXHTVbGU4LnC6GNaY6",
+            "11111111111111111111111111111111",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "E47hVN7B99Mov73dGSz7nxMMcTPU7C15pAuBHRbc8u5h"
+          ],
+          "preBalances": [
+            "100000000",
+            "1746960",
+            "3111120",
+            "0",
+            "2526480",
+            "1",
+            "1141440",
+            "1",
+            "1426800"
+          ],
+          "postBalances": [
+            "98533400",
+            "1746960",
+            "3111120",
+            "1461600",
+            "2526480",
+            "1",
+            "1141440",
+            "1",
+            "1426800"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:45.830Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "2P8JEGkiaTPGgfwK2FAYFTdQYaqRVhpMY7zGoZQcTQBn3HU4Pju3cKKwDQa6xEZPCWrbB2hVi8pheKqxpctKbU8V",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 288,
+          "contextSlot": 531,
+          "observedAt": "2026-10-10T01:45:45.688Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:46.268Z",
+          "slot": 288,
+          "signature": "2P8JEGkiaTPGgfwK2FAYFTdQYaqRVhpMY7zGoZQcTQBn3HU4Pju3cKKwDQa6xEZPCWrbB2hVi8pheKqxpctKbU8V",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_a33420e7fd3fd6f11f3ab9c2ceaf23a152806e41e7606baa",
+      "step": "coupon-open-0",
+      "action": "begin_coupon_v2",
+      "signature": "3hMs9LEstEHxPDmUJeaZQVXF1ES8HTmEKTAwFPfREMvHMCd7RnbMKvNniVyuasJAMaDwDCLokAfqUDt2Rw6mgSgp",
+      "slot": 253,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "3hMs9LEstEHxPDmUJeaZQVXF1ES8HTmEKTAwFPfREMvHMCd7RnbMKvNniVyuasJAMaDwDCLokAfqUDt2Rw6mgSgp",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 253,
+          "blockTime": 1791596438,
+          "capturedAt": "2026-10-10T01:45:47.452Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:47.452Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "dad2b965284fb131f9d3ee9420649cd5cd0201a308f875cde848087bfd225fd4",
+          "messageSha256": "a9b3fdeb8c2e25f125c61b76605897662d1cf52b2dada6b65b140900b1cf8dfa",
+          "wireBytes": 389,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "20261",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "GxZrNNQ89GPoUuEBppYTkh1kECV6TnuhUDnJ5BrPgih4",
+            "11111111111111111111111111111111",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "HvaaXmBQt4pGPxjFid5sF4DkVS3M7GeA8vEnhBaicwtE"
+          ],
+          "preBalances": [
+            "2000000000",
+            "3111120",
+            "0",
+            "1",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "postBalances": [
+            "1997468520",
+            "3111120",
+            "2526480",
+            "1",
+            "1461600",
+            "1141440",
+            "1",
+            "2568240"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:46.689Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "3hMs9LEstEHxPDmUJeaZQVXF1ES8HTmEKTAwFPfREMvHMCd7RnbMKvNniVyuasJAMaDwDCLokAfqUDt2Rw6mgSgp",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 253,
+          "contextSlot": 532,
+          "observedAt": "2026-10-10T01:45:46.518Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:47.452Z",
+          "slot": 253,
+          "signature": "3hMs9LEstEHxPDmUJeaZQVXF1ES8HTmEKTAwFPfREMvHMCd7RnbMKvNniVyuasJAMaDwDCLokAfqUDt2Rw6mgSgp",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_a46deefcf78238be8ce8e5003f169fa7d0e81dafcdbec3a0",
+      "step": "faucet-issuer",
+      "action": "test_sol_funding_v2",
+      "signature": "4zE9BdZTyc7zhdPYTCEqR3fZqAav7suvHt3dCVWLNqhB6GUQofiphJ9zm57CDqi4Tgrqfp34Tom2Wa3JNXSg7kTT",
+      "slot": 34,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": null,
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "4zE9BdZTyc7zhdPYTCEqR3fZqAav7suvHt3dCVWLNqhB6GUQofiphJ9zm57CDqi4Tgrqfp34Tom2Wa3JNXSg7kTT",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 34,
+          "blockTime": 1791596230,
+          "capturedAt": "2026-10-10T01:45:48.310Z",
+          "commitment": "finalized",
+          "version": "legacy",
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:48.310Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "5114c9ea05647291b5b34eab5a75afd0b4759d2194be8fe9c7cd150d48c7fdc0",
+          "messageSha256": "bdba9bfdee3bd69b8003423e3eaf8ef2f4a5da6f1f8249e731b7283ce08c4540",
+          "wireBytes": 215,
+          "expectedWireMatched": null,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "150",
+          "accountKeys": [
+            "HyvfFu3aQiV1ZsLhZrPRnoqPiPBQpxWLYTNtPZMBUVy7",
+            "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+            "11111111111111111111111111111111"
+          ],
+          "preBalances": [
+            "1000000000000000",
+            "0",
+            "1"
+          ],
+          "postBalances": [
+            "999997999995000",
+            "2000000000",
+            "1"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:47.886Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "4zE9BdZTyc7zhdPYTCEqR3fZqAav7suvHt3dCVWLNqhB6GUQofiphJ9zm57CDqi4Tgrqfp34Tom2Wa3JNXSg7kTT",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 34,
+          "contextSlot": 534,
+          "observedAt": "2026-10-10T01:45:47.755Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:48.310Z",
+          "slot": 34,
+          "signature": "4zE9BdZTyc7zhdPYTCEqR3fZqAav7suvHt3dCVWLNqhB6GUQofiphJ9zm57CDqi4Tgrqfp34Tom2Wa3JNXSg7kTT",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_b31150869f281f54efe18a4a82c6589d5cebbb1088700b11",
+      "step": "initialize",
+      "action": "initialize_issue_v2",
+      "signature": "5qSWrhea7wMx1ni1ia4mVZZpMSeebtUVWAZ4hzHgE7ebm2NhDZDVe3BGU7zMDCZDS9QdiXkKqjr2HYG5wiXXrXKz",
+      "slot": 62,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "5qSWrhea7wMx1ni1ia4mVZZpMSeebtUVWAZ4hzHgE7ebm2NhDZDVe3BGU7zMDCZDS9QdiXkKqjr2HYG5wiXXrXKz",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 62,
+          "blockTime": 1791596258,
+          "capturedAt": "2026-10-10T01:45:49.421Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:49.421Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "df4311bda9503280a2007000fd3fb1409db14cdbd1d02bccba36753a0404b96d",
+          "messageSha256": "bcf2866aa20d66621f94ae8850dd4c8b29469a4a2b5e19b5371f5c681bf266cf",
+          "wireBytes": 519,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "31781",
+          "accountKeys": [
+            "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+            "11111111111111111111111111111111",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "ComputeBudget111111111111111111111111111111",
+            "SysvarRent111111111111111111111111111111111",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "1996484120",
+            "0",
+            "0",
+            "0",
+            "1",
+            "1141440",
+            "1461600",
+            "1",
+            "1009200",
+            "929020800"
+          ],
+          "postBalances": [
+            "1989867120",
+            "1461600",
+            "3111120",
+            "2039280",
+            "1",
+            "1141440",
+            "1461600",
+            "1",
+            "1009200",
+            "929020800"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [
+            {
+              "accountIndex": 3,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 6
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:49.112Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "5qSWrhea7wMx1ni1ia4mVZZpMSeebtUVWAZ4hzHgE7ebm2NhDZDVe3BGU7zMDCZDS9QdiXkKqjr2HYG5wiXXrXKz",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 62,
+          "contextSlot": 535,
+          "observedAt": "2026-10-10T01:45:48.851Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:49.421Z",
+          "slot": 62,
+          "signature": "5qSWrhea7wMx1ni1ia4mVZZpMSeebtUVWAZ4hzHgE7ebm2NhDZDVe3BGU7zMDCZDS9QdiXkKqjr2HYG5wiXXrXKz",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_b47e6b3a56ecae5dd93a3bd6f0b681498ca0ae6a2fe31149",
+      "step": "coupon-batch-0-1-2",
+      "action": "settle_coupon_v2",
+      "signature": "2YdvbSTM49TWSxxAmQr2WrHhGdJVi3nMEVM2hS2D56CA8tctEUP6BrCzRVjPX4fsA8rwmHdtvL7yrY8PJZ9n1wcr",
+      "slot": 434,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "2YdvbSTM49TWSxxAmQr2WrHhGdJVi3nMEVM2hS2D56CA8tctEUP6BrCzRVjPX4fsA8rwmHdtvL7yrY8PJZ9n1wcr",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 434,
+          "blockTime": 1791596630,
+          "capturedAt": "2026-10-10T01:45:50.412Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:50.412Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "d1659dc5192407efe2fbf820bae70525c8641124b7ea93e55ef05116a09f9633",
+          "messageSha256": "823b41d27ee85c0e05467265331942f0940f6d4d45b21ced1628b800e8d4def9",
+          "wireBytes": 718,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "105656",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "45mU13BuhsRZ3K1C8A43pxTZjapyti3XuiirNUn1mtf8",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "9ytaeDa3WEtbBGwqqmSVDC3yHf3F7SZ7bBdf3tdMDg4e",
+            "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+            "GSmZr49vBpkeVxsLBGD9CghLZy7BFJy3mu8GKjfTpDPc",
+            "GxZrNNQ89GPoUuEBppYTkh1kECV6TnuhUDnJ5BrPgih4",
+            "11111111111111111111111111111111",
+            "63WsWJHUKyVZ5V78b2yq58dT2EgLw2qro6xhEAKp4xto",
+            "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+            "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "ComputeBudget111111111111111111111111111111",
+            "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+            "NtFk2EDdedST1GHNQADFNiiA18krbkWjm4uRzAwpbpJ",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "1989666160",
+            "0",
+            "3111120",
+            "0",
+            "2039280",
+            "1746960",
+            "2526480",
+            "1",
+            "1426800",
+            "98533400",
+            "731913600",
+            "1141440",
+            "1461600",
+            "1",
+            "98528400",
+            "1426800",
+            "929020800"
+          ],
+          "postBalances": [
+            "1985582600",
+            "2039280",
+            "3111120",
+            "2039280",
+            "2039280",
+            "1746960",
+            "2526480",
+            "1",
+            "1426800",
+            "98533400",
+            "731913600",
+            "1141440",
+            "1461600",
+            "1",
+            "98528400",
+            "1426800",
+            "929020800"
+          ],
+          "preTokenBalances": [
+            {
+              "accountIndex": 4,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "19800000000",
+              "decimals": 6
+            }
+          ],
+          "postTokenBalances": [
+            {
+              "accountIndex": 1,
+              "account": "45mU13BuhsRZ3K1C8A43pxTZjapyti3XuiirNUn1mtf8",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "150000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 3,
+              "account": "9ytaeDa3WEtbBGwqqmSVDC3yHf3F7SZ7bBdf3tdMDg4e",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "250000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 4,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "19400000000",
+              "decimals": 6
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:50.172Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "2YdvbSTM49TWSxxAmQr2WrHhGdJVi3nMEVM2hS2D56CA8tctEUP6BrCzRVjPX4fsA8rwmHdtvL7yrY8PJZ9n1wcr",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 434,
+          "contextSlot": 536,
+          "observedAt": "2026-10-10T01:45:49.638Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:50.412Z",
+          "slot": 434,
+          "signature": "2YdvbSTM49TWSxxAmQr2WrHhGdJVi3nMEVM2hS2D56CA8tctEUP6BrCzRVjPX4fsA8rwmHdtvL7yrY8PJZ9n1wcr",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_b69a694200b7dc5256d61691857cfb3ef703db2d574820c7",
+      "step": "mock-reserve",
+      "action": "mock_reserve_v2",
+      "signature": "cJb5LT7A3chceAjkVAH1AsMbDiXJLRZ5SPmNxMPEVqwrfjqUWh6Cr6aQkCVs3nqd7kGahkUPFTiYmhQaFom44Cn",
+      "slot": 57,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "cJb5LT7A3chceAjkVAH1AsMbDiXJLRZ5SPmNxMPEVqwrfjqUWh6Cr6aQkCVs3nqd7kGahkUPFTiYmhQaFom44Cn",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 57,
+          "blockTime": 1791596253,
+          "capturedAt": "2026-10-10T01:45:54.187Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:54.187Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "c01e25bce89e880eb83ae63a54ac5fae6b121a989731ccd9f845cdfc05512301",
+          "messageSha256": "85a9cd4b007caafbcfe2a53237640d43033f42c8f78bec743c85fa458f4fd2c4",
+          "wireBytes": 361,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "26320",
+          "accountKeys": [
+            "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+            "5gJWgotzxkuwfnx2mrt9aTbEHCsWCd8GVAd5mTGaHeF1",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "11111111111111111111111111111111",
+            "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+            "ComputeBudget111111111111111111111111111111",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "1998528400",
+            "0",
+            "1461600",
+            "1",
+            "731913600",
+            "1",
+            "929020800"
+          ],
+          "postBalances": [
+            "1996484120",
+            "2039280",
+            "1461600",
+            "1",
+            "731913600",
+            "1",
+            "929020800"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [
+            {
+              "accountIndex": 1,
+              "account": "5gJWgotzxkuwfnx2mrt9aTbEHCsWCd8GVAd5mTGaHeF1",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "19800000000",
+              "decimals": 6
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:51.529Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "cJb5LT7A3chceAjkVAH1AsMbDiXJLRZ5SPmNxMPEVqwrfjqUWh6Cr6aQkCVs3nqd7kGahkUPFTiYmhQaFom44Cn",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 57,
+          "contextSlot": 538,
+          "observedAt": "2026-10-10T01:45:51.091Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:54.187Z",
+          "slot": 57,
+          "signature": "cJb5LT7A3chceAjkVAH1AsMbDiXJLRZ5SPmNxMPEVqwrfjqUWh6Cr6aQkCVs3nqd7kGahkUPFTiYmhQaFom44Cn",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_c1ed92a5009f9badc32c5261b6c4d5f728d9e324148bc2a5",
+      "step": "capture-2-0-0",
+      "action": "capture_action_page_v2",
+      "signature": "3YhfJazdwndDmgejDxgGLhQXEy993kkniZoe9U1kNkKJJpt4ZyxhKgNrrGAvy9ZV1HVJJM8RXBvD9of578UQj6Mk",
+      "slot": 485,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "3YhfJazdwndDmgejDxgGLhQXEy993kkniZoe9U1kNkKJJpt4ZyxhKgNrrGAvy9ZV1HVJJM8RXBvD9of578UQj6Mk",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 485,
+          "blockTime": 1791596682,
+          "capturedAt": "2026-10-10T01:45:54.677Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:54.677Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "4a8c8c57d12d80ccdfe6496b090110131f3e2bc4cda028f90ee5a6df8077c82f",
+          "messageSha256": "a1fe24432082871cc3c5eeb9c619dbaa543d5d5eb84e9960c637d10d3182315d",
+          "wireBytes": 554,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "35845",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "3syDyhWAJQy1gBmuJCTiBVjGXahYaiYDT5empZdvJKz3",
+            "6rTqw44Gpchqd6fmxXhkEs4rrggEZmxwrU7RRijiSsxi",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "11111111111111111111111111111111",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "4vf9XUQWiALnxcuzCQcBAUxV78rBLSxCU3YSKnDpYYps",
+            "9X5xS39ZWLGWUpoog1pi5jQduf4XCzEJkYBiFagdrT6h",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "ComputeBudget111111111111111111111111111111",
+            "EL4x2obe8wGTBKhsNaDUinraPeSavS1Hs4tvjeMVtvTn",
+            "F17sdsVnazmdqx3aE8VDrhUxYsmcRgrPWkE9BsvdWSRn",
+            "FJja5gCcEQVLQ32J36wNyyNnjBYjmDpt8kDSRcAKJcz"
+          ],
+          "preBalances": [
+            "1981006840",
+            "0",
+            "2526480",
+            "3111120",
+            "1",
+            "1461600",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1",
+            "3013680",
+            "2039280",
+            "2039280"
+          ],
+          "postBalances": [
+            "1979254880",
+            "1746960",
+            "2526480",
+            "3111120",
+            "1",
+            "1461600",
+            "2039280",
+            "2039280",
+            "1141440",
+            "1",
+            "3013680",
+            "2039280",
+            "2039280"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:54.484Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "3YhfJazdwndDmgejDxgGLhQXEy993kkniZoe9U1kNkKJJpt4ZyxhKgNrrGAvy9ZV1HVJJM8RXBvD9of578UQj6Mk",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 485,
+          "contextSlot": 543,
+          "observedAt": "2026-10-10T01:45:54.355Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:54.677Z",
+          "slot": 485,
+          "signature": "3YhfJazdwndDmgejDxgGLhQXEy993kkniZoe9U1kNkKJJpt4ZyxhKgNrrGAvy9ZV1HVJJM8RXBvD9of578UQj6Mk",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_c2b25c3d1c2e9c6f7c5b5916a876bedf9e7879ef1b3bfdfe",
+      "step": "seal",
+      "action": "seal_issue_v2",
+      "signature": "4wRxoDPTB3Eq3kTZwWuYGvDSrCPGQqL8W3urmamhwDvfckmEpvNCLUtNcVtU8bejQ4XW4RTXK6KFSiCtxbSZKhqK",
+      "slot": 80,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "4wRxoDPTB3Eq3kTZwWuYGvDSrCPGQqL8W3urmamhwDvfckmEpvNCLUtNcVtU8bejQ4XW4RTXK6KFSiCtxbSZKhqK",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 80,
+          "blockTime": 1791596277,
+          "capturedAt": "2026-10-10T01:45:55.394Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:55.394Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "ede1ae6281c73c94d7f8909943fd96f3da02840d4f24618b9def02529a118fc5",
+          "messageSha256": "8a11778658d5132af2186a11f0d3eb84c22ce096ed7e9e21802a98310c28ebb8",
+          "wireBytes": 319,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "8928",
+          "accountKeys": [
+            "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "2mzAyupqyTev4L9GBpZnbJMfXz1xyUYoTafkG6wFcjq2",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+            "ComputeBudget111111111111111111111111111111"
+          ],
+          "preBalances": [
+            "1973871960",
+            "3111120",
+            "1461600",
+            "1141440",
+            "2039280",
+            "1"
+          ],
+          "postBalances": [
+            "1973866960",
+            "3111120",
+            "1461600",
+            "1141440",
+            "2039280",
+            "1"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:55.037Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "4wRxoDPTB3Eq3kTZwWuYGvDSrCPGQqL8W3urmamhwDvfckmEpvNCLUtNcVtU8bejQ4XW4RTXK6KFSiCtxbSZKhqK",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 80,
+          "contextSlot": 544,
+          "observedAt": "2026-10-10T01:45:54.871Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:55.394Z",
+          "slot": 80,
+          "signature": "4wRxoDPTB3Eq3kTZwWuYGvDSrCPGQqL8W3urmamhwDvfckmEpvNCLUtNcVtU8bejQ4XW4RTXK6KFSiCtxbSZKhqK",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_c6f7d359c0935d7383abefbcb68c1d4a4c00f1478069bce3",
+      "step": "coupon-batch-1-0-4",
+      "action": "settle_coupon_v2",
+      "signature": "2BQewTmFc6jwdu8e86sQexTLsShV9axECzbJ7ynq2gVhXite784ygohCGXsV5PA63ieGMrYS6MXnAVXiRkdMketD",
+      "slot": 441,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "2BQewTmFc6jwdu8e86sQexTLsShV9axECzbJ7ynq2gVhXite784ygohCGXsV5PA63ieGMrYS6MXnAVXiRkdMketD",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 441,
+          "blockTime": 1791596637,
+          "capturedAt": "2026-10-10T01:45:55.655Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:55.655Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "6339b2c4b960c19f05c4488122fd8e378e6e6b6af778aafef2b6d19c30b413e1",
+          "messageSha256": "b62ebf15ef08ffd2f3497ff0c86cee372bbbea4fad7fa648cd5c2d89b82a3071",
+          "wireBytes": 972,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "172896",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "45mU13BuhsRZ3K1C8A43pxTZjapyti3XuiirNUn1mtf8",
+            "4iQeFUARdjqF8QEoCh15oH5pAikhCaPRa4Rwp1wutGYj",
+            "5Sr2uGomsJShosuCcHU1nxJ5Fv6LBuFXJcx5EWf9ZJoG",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "9ytaeDa3WEtbBGwqqmSVDC3yHf3F7SZ7bBdf3tdMDg4e",
+            "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+            "E6VZD3CWmdEW4X2BL69JK4BmMwxm4cKFTXEf4hnCGubG",
+            "HzY1J2jUjcZt8iWoUyLuKrLgAmsyM97aVGyR4iXw2VSJ",
+            "11111111111111111111111111111111",
+            "63WsWJHUKyVZ5V78b2yq58dT2EgLw2qro6xhEAKp4xto",
+            "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+            "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+            "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "ComputeBudget111111111111111111111111111111",
+            "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+            "E47hVN7B99Mov73dGSz7nxMMcTPU7C15pAuBHRbc8u5h",
+            "GM4PzdxnT3X4NBodMWDbCvwTeT3XSXpXGDFFGv2Ji1e1",
+            "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+            "NtFk2EDdedST1GHNQADFNiiA18krbkWjm4uRzAwpbpJ",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "1985582600",
+            "2039280",
+            "1746960",
+            "0",
+            "3111120",
+            "2039280",
+            "2039280",
+            "2526480",
+            "2039280",
+            "1",
+            "1426800",
+            "98533400",
+            "100000000",
+            "731913600",
+            "1141440",
+            "1461600",
+            "1",
+            "98533400",
+            "1426800",
+            "1426800",
+            "98528400",
+            "1426800",
+            "929020800"
+          ],
+          "postBalances": [
+            "1983538320",
+            "2039280",
+            "1746960",
+            "2039280",
+            "3111120",
+            "2039280",
+            "2039280",
+            "2526480",
+            "2039280",
+            "1",
+            "1426800",
+            "98533400",
+            "100000000",
+            "731913600",
+            "1141440",
+            "1461600",
+            "1",
+            "98533400",
+            "1426800",
+            "1426800",
+            "98528400",
+            "1426800",
+            "929020800"
+          ],
+          "preTokenBalances": [
+            {
+              "accountIndex": 1,
+              "account": "45mU13BuhsRZ3K1C8A43pxTZjapyti3XuiirNUn1mtf8",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "150000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 5,
+              "account": "9ytaeDa3WEtbBGwqqmSVDC3yHf3F7SZ7bBdf3tdMDg4e",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "250000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 6,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "19400000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 8,
+              "account": "HzY1J2jUjcZt8iWoUyLuKrLgAmsyM97aVGyR4iXw2VSJ",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 6
+            }
+          ],
+          "postTokenBalances": [
+            {
+              "accountIndex": 1,
+              "account": "45mU13BuhsRZ3K1C8A43pxTZjapyti3XuiirNUn1mtf8",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "300000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 3,
+              "account": "5Sr2uGomsJShosuCcHU1nxJ5Fv6LBuFXJcx5EWf9ZJoG",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "500000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 5,
+              "account": "9ytaeDa3WEtbBGwqqmSVDC3yHf3F7SZ7bBdf3tdMDg4e",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "Hcv3awhY7SZzPw8Xa2osNhFhYt8GNyZT6EzhMb8Uj8SY",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "450000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 6,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "18500000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 8,
+              "account": "HzY1J2jUjcZt8iWoUyLuKrLgAmsyM97aVGyR4iXw2VSJ",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "50000000",
+              "decimals": 6
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:55.588Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "2BQewTmFc6jwdu8e86sQexTLsShV9axECzbJ7ynq2gVhXite784ygohCGXsV5PA63ieGMrYS6MXnAVXiRkdMketD",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 441,
+          "contextSlot": 544,
+          "observedAt": "2026-10-10T01:45:55.522Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:55.655Z",
+          "slot": 441,
+          "signature": "2BQewTmFc6jwdu8e86sQexTLsShV9axECzbJ7ynq2gVhXite784ygohCGXsV5PA63ieGMrYS6MXnAVXiRkdMketD",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_cd32732c8e9875bb823d0d06444fa9011f55410a8dc67fd3",
+      "step": "faucet-holder-3",
+      "action": "test_sol_funding_v2",
+      "signature": "4QWdbUrcttFtek81o6XyUqxnT7QMLQPHzgw3Pdx23WETBsXRYcyxNWsgfbb8PMU3mFY9We3XexuM8NLGntsgSF6G",
+      "slot": 48,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": null,
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "4QWdbUrcttFtek81o6XyUqxnT7QMLQPHzgw3Pdx23WETBsXRYcyxNWsgfbb8PMU3mFY9We3XexuM8NLGntsgSF6G",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 48,
+          "blockTime": 1791596244,
+          "capturedAt": "2026-10-10T01:45:56.138Z",
+          "commitment": "finalized",
+          "version": "legacy",
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:56.138Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "3be7c797305713b7aebaacb0ca510d96a41f677c2495b251f78009e3e0f30dcf",
+          "messageSha256": "8e34b85eaf64b8ab52a5260b9d607791e3f6be69437dc60078ab92ef9e127b26",
+          "wireBytes": 215,
+          "expectedWireMatched": null,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "150",
+          "accountKeys": [
+            "HyvfFu3aQiV1ZsLhZrPRnoqPiPBQpxWLYTNtPZMBUVy7",
+            "AS9ZiHgTQaNgG9Pie7m1LLZM7TVoDoh3WP2NQcHVpUhW",
+            "11111111111111111111111111111111"
+          ],
+          "preBalances": [
+            "999995699975000",
+            "0",
+            "1"
+          ],
+          "postBalances": [
+            "999995599970000",
+            "100000000",
+            "1"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:55.768Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "4QWdbUrcttFtek81o6XyUqxnT7QMLQPHzgw3Pdx23WETBsXRYcyxNWsgfbb8PMU3mFY9We3XexuM8NLGntsgSF6G",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 48,
+          "contextSlot": 545,
+          "observedAt": "2026-10-10T01:45:55.726Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:56.138Z",
+          "slot": 48,
+          "signature": "4QWdbUrcttFtek81o6XyUqxnT7QMLQPHzgw3Pdx23WETBsXRYcyxNWsgfbb8PMU3mFY9We3XexuM8NLGntsgSF6G",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_e075e5dca3f5507c28299ea73a2af8a8fc60c20f7b7f4cfc",
+      "step": "coupon-pay-0-0",
+      "action": "settle_coupon_v2",
+      "signature": "3Z7VT1o6R2s6oQtZh76mw6L8a8yeJHtB2oQAqmj3a2nEx7bm9QpLGkDdfMYgx6imwgufhThcKUe8hyo445Cn2Q7L",
+      "slot": 507,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "3Z7VT1o6R2s6oQtZh76mw6L8a8yeJHtB2oQAqmj3a2nEx7bm9QpLGkDdfMYgx6imwgufhThcKUe8hyo445Cn2Q7L",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 507,
+          "blockTime": 1791596703,
+          "capturedAt": "2026-10-10T01:45:56.700Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:56.700Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "06bef6e271042656858656ba4b8e809b21021179848b849602ad6efc57c27dd7",
+          "messageSha256": "915793c099e2ef93361f5e1048596c3aef4259a3ae9e186a15acf35f5ea04056",
+          "wireBytes": 517,
+          "expectedWireMatched": true,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "34120",
+          "accountKeys": [
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "5Sr2uGomsJShosuCcHU1nxJ5Fv6LBuFXJcx5EWf9ZJoG",
+            "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+            "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+            "GSmZr49vBpkeVxsLBGD9CghLZy7BFJy3mu8GKjfTpDPc",
+            "GxZrNNQ89GPoUuEBppYTkh1kECV6TnuhUDnJ5BrPgih4",
+            "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "ComputeBudget111111111111111111111111111111",
+            "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+            "E47hVN7B99Mov73dGSz7nxMMcTPU7C15pAuBHRbc8u5h",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "1979249880",
+            "2039280",
+            "3111120",
+            "2039280",
+            "1746960",
+            "2526480",
+            "1141440",
+            "1461600",
+            "1",
+            "98528400",
+            "1426800",
+            "929020800"
+          ],
+          "postBalances": [
+            "1979244880",
+            "2039280",
+            "3111120",
+            "2039280",
+            "1746960",
+            "2526480",
+            "1141440",
+            "1461600",
+            "1",
+            "98528400",
+            "1426800",
+            "929020800"
+          ],
+          "preTokenBalances": [
+            {
+              "accountIndex": 1,
+              "account": "5Sr2uGomsJShosuCcHU1nxJ5Fv6LBuFXJcx5EWf9ZJoG",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "10500000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 3,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "500000000",
+              "decimals": 6
+            }
+          ],
+          "postTokenBalances": [
+            {
+              "accountIndex": 1,
+              "account": "5Sr2uGomsJShosuCcHU1nxJ5Fv6LBuFXJcx5EWf9ZJoG",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "d8YzbaYy3fi6ce1vNsoPNESUTjtkH5PaQVisK4QvpH9",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "11000000000",
+              "decimals": 6
+            },
+            {
+              "accountIndex": 3,
+              "account": "CgKuJ4RnWbqn1Epy6puRU9zfnnSWBVCMYtD6d1e9CUwy",
+              "mint": "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+              "owner": "7QG8hMCSA7h6vk5emYTrxKd54aQ37w5krcNsBojTfqwc",
+              "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "amount": "0",
+              "decimals": 6
+            }
+          ],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:56.594Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "3Z7VT1o6R2s6oQtZh76mw6L8a8yeJHtB2oQAqmj3a2nEx7bm9QpLGkDdfMYgx6imwgufhThcKUe8hyo445Cn2Q7L",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 507,
+          "contextSlot": 546,
+          "observedAt": "2026-10-10T01:45:56.487Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:56.700Z",
+          "slot": 507,
+          "signature": "3Z7VT1o6R2s6oQtZh76mw6L8a8yeJHtB2oQAqmj3a2nEx7bm9QpLGkDdfMYgx6imwgufhThcKUe8hyo445Cn2Q7L",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_e5191fdbe338bba2792db9b77b2a8bd74d113bdf75e1c895",
+      "step": "faucet-executor",
+      "action": "test_sol_funding_v2",
+      "signature": "3QCZiKoGL3f85LsSB3E3JH4txozbWCDargp8aibJcaa2YUZSdqMPeuE8xkzZYi75fEwfhtBkNrGoDotABH1ziwR",
+      "slot": 38,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": null,
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "3QCZiKoGL3f85LsSB3E3JH4txozbWCDargp8aibJcaa2YUZSdqMPeuE8xkzZYi75fEwfhtBkNrGoDotABH1ziwR",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 38,
+          "blockTime": 1791596234,
+          "capturedAt": "2026-10-10T01:45:57.450Z",
+          "commitment": "finalized",
+          "version": "legacy",
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:57.450Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "30f954b589c189ca4632a18e2666836207bea212799aa87a5af1b44c0c0ac38f",
+          "messageSha256": "a24ee58e6b91a75e2a5194c5a92d5c73634267270c18d6f235d66500c4a1d78d",
+          "wireBytes": 215,
+          "expectedWireMatched": null,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "150",
+          "accountKeys": [
+            "HyvfFu3aQiV1ZsLhZrPRnoqPiPBQpxWLYTNtPZMBUVy7",
+            "Axd9ffq2toYVLmoL5whjmq8qC81LzGXxDRLdUPGiLa9h",
+            "11111111111111111111111111111111"
+          ],
+          "preBalances": [
+            "999997999995000",
+            "0",
+            "1"
+          ],
+          "postBalances": [
+            "999995999990000",
+            "2000000000",
+            "1"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:57.012Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "3QCZiKoGL3f85LsSB3E3JH4txozbWCDargp8aibJcaa2YUZSdqMPeuE8xkzZYi75fEwfhtBkNrGoDotABH1ziwR",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 38,
+          "contextSlot": 546,
+          "observedAt": "2026-10-10T01:45:56.877Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:57.450Z",
+          "slot": 38,
+          "signature": "3QCZiKoGL3f85LsSB3E3JH4txozbWCDargp8aibJcaa2YUZSdqMPeuE8xkzZYi75fEwfhtBkNrGoDotABH1ziwR",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_ed1c93b9fdab81529bf8e8656916d14d139f11be355e616b",
+      "step": "faucet-holder-2",
+      "action": "test_sol_funding_v2",
+      "signature": "2Qps5rvWwvSsi8JzmMiTRTsTGrLNQiQeq4awqZbwAxj8BUqSgAanJ9maFjvdJf5m1ER32Lzuhajm4TTWGuKkpRuP",
+      "slot": 46,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": null,
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "2Qps5rvWwvSsi8JzmMiTRTsTGrLNQiQeq4awqZbwAxj8BUqSgAanJ9maFjvdJf5m1ER32Lzuhajm4TTWGuKkpRuP",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 46,
+          "blockTime": 1791596242,
+          "capturedAt": "2026-10-10T01:45:58.255Z",
+          "commitment": "finalized",
+          "version": "legacy",
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:58.255Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "aa051c1a12ab72ae32f6e671355534dfbfeef02778d7bf012fe5d7b59995605e",
+          "messageSha256": "8fafb3f585b8938b207b14237be35a2b379394b76e905da751c91edd24ed4ba9",
+          "wireBytes": 215,
+          "expectedWireMatched": null,
+          "feeLamports": "5000",
+          "computeUnitsConsumed": "150",
+          "accountKeys": [
+            "HyvfFu3aQiV1ZsLhZrPRnoqPiPBQpxWLYTNtPZMBUVy7",
+            "6X3ptqzr4nawRRXGpp3TeBx9cEFyKPo4QQUYWJkGeHQT",
+            "11111111111111111111111111111111"
+          ],
+          "preBalances": [
+            "999995799980000",
+            "0",
+            "1"
+          ],
+          "postBalances": [
+            "999995699975000",
+            "100000000",
+            "1"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:57.879Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "2Qps5rvWwvSsi8JzmMiTRTsTGrLNQiQeq4awqZbwAxj8BUqSgAanJ9maFjvdJf5m1ER32Lzuhajm4TTWGuKkpRuP",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 46,
+          "contextSlot": 547,
+          "observedAt": "2026-10-10T01:45:57.669Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:58.255Z",
+          "slot": 46,
+          "signature": "2Qps5rvWwvSsi8JzmMiTRTsTGrLNQiQeq4awqZbwAxj8BUqSgAanJ9maFjvdJf5m1ER32Lzuhajm4TTWGuKkpRuP",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    },
+    {
+      "operationId": "paged_ed7a37b9bdc5a7e317e7e777dbbb7b0b2a965010d6ea9bdd",
+      "step": "mock-mint",
+      "action": "mock_mint_v2",
+      "signature": "3ia4kUHXfJ9RxtbGkMpq9w8rMhmf9mTG7d7o4wnKCcfSJ5f7SC5dkGham5LyRDuuFfpQESNSarbgb7QZwkFuegXq",
+      "slot": 53,
+      "chainStatus": "confirmed",
+      "projectionStatus": "complete",
+      "programRelease": {
+        "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+        "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+        "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+      },
+      "execution": {
+        "proof": {
+          "schemaVersion": 2,
+          "source": "retained-finalized-rpc-transaction",
+          "signature": "3ia4kUHXfJ9RxtbGkMpq9w8rMhmf9mTG7d7o4wnKCcfSJ5f7SC5dkGham5LyRDuuFfpQESNSarbgb7QZwkFuegXq",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "slot": 53,
+          "blockTime": 1791596249,
+          "capturedAt": "2026-10-10T01:45:59.018Z",
+          "commitment": "finalized",
+          "version": 0,
+          "provenance": {
+            "source": "live-rpc",
+            "method": "getTransaction",
+            "requestedCommitment": "finalized",
+            "observedAt": "2026-10-10T01:45:59.018Z"
+          },
+          "genesisScope": "caller-confirmed-context-not-returned-by-getTransaction",
+          "transactionSha256": "e824fc5c4e01302542db1f74b3b56580029dd496fb9949a65d0c6cf4c88cd16d",
+          "messageSha256": "17a006affe41e5b4e99d917030daf6ec5d53e8ab9da058edd95fd6cba089f1f6",
+          "wireBytes": 432,
+          "expectedWireMatched": true,
+          "feeLamports": "10000",
+          "computeUnitsConsumed": "3079",
+          "accountKeys": [
+            "Fmo91CmXz5b2Ut1gvH3CwVkA5B2RM8rme48vD2czKADB",
+            "CGtNduxNJ5dTWTqdYTBpSjuCsgRqan1JDazEoXWd2CUz",
+            "11111111111111111111111111111111",
+            "ComputeBudget111111111111111111111111111111",
+            "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          ],
+          "preBalances": [
+            "2000000000",
+            "0",
+            "1",
+            "1",
+            "929020800"
+          ],
+          "postBalances": [
+            "1998528400",
+            "1461600",
+            "1",
+            "1",
+            "929020800"
+          ],
+          "preTokenBalances": [],
+          "postTokenBalances": [],
+          "independentAttestation": false
+        },
+        "capture": {
+          "status": "captured",
+          "attemptedAt": "2026-10-10T01:45:58.551Z",
+          "commitment": "finalized"
+        },
+        "finality": {
+          "schemaVersion": 1,
+          "signature": "3ia4kUHXfJ9RxtbGkMpq9w8rMhmf9mTG7d7o4wnKCcfSJ5f7SC5dkGham5LyRDuuFfpQESNSarbgb7QZwkFuegXq",
+          "status": "finalized",
+          "source": "retained-observation",
+          "slot": 53,
+          "contextSlot": 549,
+          "observedAt": "2026-10-10T01:45:58.480Z",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG"
+        },
+        "provenance": {
+          "source": "retained-observation",
+          "method": "getTransaction",
+          "commitment": "finalized",
+          "observedAt": "2026-10-10T01:45:59.018Z",
+          "slot": 53,
+          "signature": "3ia4kUHXfJ9RxtbGkMpq9w8rMhmf9mTG7d7o4wnKCcfSJ5f7SC5dkGham5LyRDuuFfpQESNSarbgb7QZwkFuegXq",
+          "genesisHash": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+          "schemaVersion": 2
+        },
+        "matchesStoredReceipt": true,
+        "scope": "retained-observation-not-fresh-rpc-attestation"
+      }
+    }
+  ],
+  "proofGaps": [],
+  "independentAttestation": false
+}

@@ -111,6 +111,8 @@ flowchart LR
 
 Contracts: [v4 servicing](docs/34-PAGED-SERVICING.md), [API](docs/15-API-CONTRACT.md), [integration](docs/integrations/PILOT-CONTRACT.md), [pilot runbook](docs/integrations/PILOT-RUNBOOK.md), [hosting](docs/31-HOSTING.md).
 
+[Readiness and the four addressed critiques](docs/35-READINESS.md): the bounded technical report passed ProofPilot coach evidence checks; this is not an official score or complete human-wallet/partner acceptance.
+
 ## Verification
 
 | Cohort | Observed outcome |
@@ -119,11 +121,25 @@ Contracts: [v4 servicing](docs/34-PAGED-SERVICING.md), [API](docs/15-API-CONTRAC
 | Public record date | Current 10/5/3 → 10/4/4; fixed rights 10/5/3. First holder **500 + 10,000**; vote **13/5** |
 | Public restart/backup | Same 22 business IDs/26 signatures recovered by GET; 204,800-byte portable database integrity checked |
 | Current v4 program | SBF build, **3 unit + 20 SBF/SPL runtime tests** passed, including 64 sequences and 33→34 holders/9 coupons |
+| Actual v4 RPC/localnet lifecycle | **33 → 34 holders, 9 coupons, 253 transactions**: 215 instrument/servicing + 38 auxiliary. **21,600 coupons / 48,000 principal / 48 burned**, supply/vault/obligations0; issuer absent from maturity opening; old 500 coupon claimed after burn |
+| Actual prepared one-command launcher | A separate 3 → 4 holder / 2 coupon lifecycle passed; **37/37 signatures freshly finalized**, 1,800 coupons / 18,000 principal / 18 burned and zero supply/vault/obligations. [Independent built-origin/RPC check](docs/evidence/servicing-v4-one-command-check-20261010.json), [full report](docs/evidence/servicing-v4-one-command-20261010.json) |
+| Current isolated GitHub verification | [Source `4e5dafa`, successful run](https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38010713994): **352 Node passed, 0 failed, 10 optional PostgreSQL skipped; 90 UI passed**. Independent SBF rebuild matched the exact v4 hash; 3 Rust unit / 20 runtime cases passed again |
+| Current disposable PostgreSQL job | **40 passed, 0 failed, 3 TLS-fixture skips** using PostgreSQL16.15; the plain local fixture does not establish TLS. Same source/run, separate database job |
 | Current storage | Real-process cold-open contention, namespace/symlink guards, bulk reads and same-ID projection recovery checked separately; complete-run scope is versioned |
 | Adapter on actual local v4 chain | Entitlement **500,000,000** base units; signed shadow/replay survived API restart; financial graph unchanged; no bank dispatch |
 | Historical database | **43 PostgreSQL tests** with TLS fixture passed at their cutoff; this is not a fresh current-source CI result |
 
 [Verification history](docs/VERIFICATION-HISTORY.md) · [CI scope](docs/integrations/CI-VERIFICATION.md). A YAML workflow is not a green remote run. Counts from separate cohorts are not added together. Failed attempts retain their original scope.
+
+Initial local complete runs failed under their documented versions; an older serial cut was stopped with 143 observed passes / 3 fixture timeouts. Those records remain retained. The later green isolated run validates the exact current source and does not retroactively turn failed local runs into passes.
+
+[Compact v4 lifecycle results](docs/evidence/servicing-v4-localnet-summary-20261010.json) · [Full253 transaction proofs, 1.68 MB](docs/evidence/servicing-v4-localnet-20261010.json) · [Program/CI/shadow integration evidence](docs/evidence/servicing-v4-verification-20261010.json). The archived lifecycle records 247 finalized and 6 confirmed observations; a later passive query found 75 older statuses unavailable. [That history limitation](docs/evidence/servicing-v4-history-observation-20261010.json) is retained, and no claim of 253 freshly finalized transactions is made. A separate fresh API read verified revision 496 and zero financial obligations; permanent action accounts and retained transaction proofs remain distinct evidence.
+
+The separate 37-transaction launcher run used `-SkipBuild` with the exact already verified SBF and a separately successful fresh web build. It retained the original 180/180/60-second chain-time schedule and required no retry, replacement ID or wallet prompt. This validates the prepared launcher, while cold-machine provisioning remains separately unverified.
+
+![Actual v4 principal settlement](docs/evidence/ui/servicing-v4-20261010/principal-1440-ru.png)
+
+*Prepared localnet v4, 10 October 2026: 18,000 principal paid, including 10,000 to the primary holder. Generated test signers; separate 37-signature fresh finality check. Warm launcher took 10:41 plus a 24-second web build on this host.*
 
 ```powershell
 npm run typecheck

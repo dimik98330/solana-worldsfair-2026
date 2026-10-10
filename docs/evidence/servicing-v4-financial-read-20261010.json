@@ -1,0 +1,435 @@
+{
+  "checkedAt": "2026-10-10T01:33:36.646Z",
+  "financialStateVerified": true,
+  "instrument": {
+    "address": "CxUQ7fA3GShnTuiYPBg9RPh4ieZZ332Nevh5PzqatL8t",
+    "name": "BondTrace · Paged 33-holder cycle",
+    "symbol": "BOND·TEST",
+    "issuer": "FULK6b2rpcdZffrvMbHF3pGL7neWQ51i2CECcQyckmkL",
+    "bondMint": "2VRxaCC7taDqfru3miJsY2AyfNVqgvA8RXDL2Hhh4kDy",
+    "settlementMint": "Ez1UgU57ZtgnAdWAoNXhMQhPman8AaT4YUpf5mSeHr27",
+    "settlementDecimals": 6,
+    "faceValueMinor": "1000000000",
+    "faceValueDecimal": "1000.000000",
+    "seriesId": "1791584367228",
+    "rateBps": 1000,
+    "couponFrequency": 2,
+    "rateBasis": "on-chain-program-validated-rate-v2",
+    "rateTerms": null,
+    "financialTerms": {
+      "version": 2,
+      "bond": "CxUQ7fA3GShnTuiYPBg9RPh4ieZZ332Nevh5PzqatL8t",
+      "faceValueMinor": "1000000000",
+      "rateBps": 1000,
+      "couponFrequency": 2,
+      "couponUnitMinor": "50000000",
+      "contextSlot": "9742"
+    },
+    "couponUnitMinor": "450000000",
+    "status": "redeemed",
+    "issuedSupply": "48",
+    "redeemedSupply": "48",
+    "recordAt": "2026-10-09T22:32:56.000Z",
+    "paymentAt": "2026-10-09T22:32:57.000Z",
+    "maturityAt": "2026-10-09T22:40:24.000Z",
+    "vaultBalanceMinor": "0",
+    "vaultBalanceDecimal": "0.000000",
+    "requiredReserveMinor": "0",
+    "fundingGapMinor": "0",
+    "settlementBalanceMinor": "0",
+    "settlementBalanceDecimal": "0.000000",
+    "settlementAccountAvailable": true,
+    "version": 2,
+    "holderCount": 34,
+    "couponCount": 9,
+    "scheduleAppended": 9,
+    "revision": "496"
+  },
+  "holderCount": 34,
+  "allHoldingsZero": true,
+  "couponPaidMinor": "21600000000",
+  "principalPaidMinor": "48000000000",
+  "reconciliation": {
+    "status": "verified",
+    "basis": "revision-fenced-confirmed-slot-range",
+    "contextSlot": "9742",
+    "clockSlot": "9740",
+    "chainTimestamp": "1791591503",
+    "supply": {
+      "issuedUnits": "48",
+      "redeemedUnits": "48",
+      "currentUnits": "0",
+      "mintSupplyUnits": "0"
+    },
+    "principal": {
+      "basis": "immutable-maturity-snapshot",
+      "total": {
+        "baseUnits": "48000000000",
+        "decimal": "48000.000000",
+        "decimals": 6
+      },
+      "paid": {
+        "baseUnits": "48000000000",
+        "decimal": "48000.000000",
+        "decimals": 6
+      },
+      "remaining": {
+        "baseUnits": "0",
+        "decimal": "0.000000",
+        "decimals": 6
+      },
+      "claimable": {
+        "baseUnits": "0",
+        "decimal": "0.000000",
+        "decimals": 6
+      }
+    },
+    "coupons": [
+      {
+        "index": "0",
+        "basis": "immutable-record-date-snapshot",
+        "captured": true,
+        "total": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "paid": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "remaining": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "claimable": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "fixedAccrued": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        }
+      },
+      {
+        "index": "1",
+        "basis": "immutable-record-date-snapshot",
+        "captured": true,
+        "total": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "paid": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "remaining": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "claimable": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "fixedAccrued": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        }
+      },
+      {
+        "index": "2",
+        "basis": "immutable-record-date-snapshot",
+        "captured": true,
+        "total": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "paid": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "remaining": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "claimable": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "fixedAccrued": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        }
+      },
+      {
+        "index": "3",
+        "basis": "immutable-record-date-snapshot",
+        "captured": true,
+        "total": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "paid": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "remaining": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "claimable": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "fixedAccrued": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        }
+      },
+      {
+        "index": "4",
+        "basis": "immutable-record-date-snapshot",
+        "captured": true,
+        "total": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "paid": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "remaining": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "claimable": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "fixedAccrued": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        }
+      },
+      {
+        "index": "5",
+        "basis": "immutable-record-date-snapshot",
+        "captured": true,
+        "total": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "paid": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "remaining": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "claimable": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "fixedAccrued": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        }
+      },
+      {
+        "index": "6",
+        "basis": "immutable-record-date-snapshot",
+        "captured": true,
+        "total": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "paid": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "remaining": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "claimable": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "fixedAccrued": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        }
+      },
+      {
+        "index": "7",
+        "basis": "immutable-record-date-snapshot",
+        "captured": true,
+        "total": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "paid": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "remaining": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "claimable": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "fixedAccrued": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        }
+      },
+      {
+        "index": "8",
+        "basis": "immutable-record-date-snapshot",
+        "captured": true,
+        "total": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "paid": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        },
+        "remaining": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "claimable": {
+          "baseUnits": "0",
+          "decimal": "0.000000",
+          "decimals": 6
+        },
+        "fixedAccrued": {
+          "baseUnits": "2400000000",
+          "decimal": "2400.000000",
+          "decimals": 6
+        }
+      }
+    ],
+    "totals": {
+      "contractual": {
+        "baseUnits": "69600000000",
+        "decimal": "69600.000000",
+        "decimals": 6
+      },
+      "principalPaid": {
+        "baseUnits": "48000000000",
+        "decimal": "48000.000000",
+        "decimals": 6
+      },
+      "couponPaid": {
+        "baseUnits": "21600000000",
+        "decimal": "21600.000000",
+        "decimals": 6
+      },
+      "cashPaid": {
+        "baseUnits": "69600000000",
+        "decimal": "69600.000000",
+        "decimals": 6
+      },
+      "remainingObligations": {
+        "baseUnits": "0",
+        "decimal": "0.000000",
+        "decimals": 6
+      },
+      "scheduledCouponForecast": {
+        "baseUnits": "0",
+        "decimal": "0.000000",
+        "decimals": 6
+      },
+      "fixedAccruedCoupon": {
+        "baseUnits": "21600000000",
+        "decimal": "21600.000000",
+        "decimals": 6
+      },
+      "claimableNow": {
+        "baseUnits": "0",
+        "decimal": "0.000000",
+        "decimals": 6
+      },
+      "vault": {
+        "baseUnits": "0",
+        "decimal": "0.000000",
+        "decimals": 6
+      },
+      "fundingGap": {
+        "baseUnits": "0",
+        "decimal": "0.000000",
+        "decimals": 6
+      },
+      "surplus": {
+        "baseUnits": "0",
+        "decimal": "0.000000",
+        "decimals": 6
+      }
+    },
+    "proposalCoverageComplete": false,
+    "catalogProposalsResolved": true,
+    "missingProposalIds": [],
+    "proposalDiscovery": "bounded-local-identifiers-and-active-chain-action"
+  },
+  "context": {
+    "commitment": "confirmed",
+    "slot": "9742",
+    "startSlot": "9738",
+    "endSlot": "9742",
+    "clockSlot": "9740",
+    "chainTimestamp": "1791591503",
+    "accountCount": 151,
+    "basis": "revision-fenced-confirmed-slot-range",
+    "revision": "496",
+    "sameBank": false,
+    "externalSplBalances": "observed-within-slot-range"
+  },
+  "scope": "Fresh built-origin API revision-fenced financial view; independent signature-history diagnostic remains separately incomplete"
+}
