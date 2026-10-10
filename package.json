@@ -38,7 +38,8 @@
     "verify:source": "node scripts/reproduce-source.mjs --lifecycle",
     "metadata:check": "node --env-file-if-exists=.env --import tsx scripts/metadata-check.ts",
     "metadata:backup": "node --env-file-if-exists=.env --import tsx scripts/metadata-check.ts --backup",
-    "report": "node scripts/build-research-report.mjs"
+    "report": "node scripts/build-research-report.mjs",
+    "program:buffer": "node --import tsx scripts/program-buffer-cli.ts"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "5.3.0",
