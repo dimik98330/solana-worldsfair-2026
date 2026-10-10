@@ -4,7 +4,7 @@ import {
   address, appendTransactionMessageInstructions, assertIsTransactionWithinSizeLimit, blockhash, compileTransaction, createTransactionMessage,
   generateKeyPairSigner, getAddressDecoder, getAddressEncoder, getBase58Encoder,
   getCompiledTransactionMessageDecoder, getTransactionDecoder, getTransactionEncoder, pipe,
-  setTransactionMessageFeePayer, setTransactionMessageLifetimeUsingBlockhash, type ReadonlyUint8Array, type SignatureBytes, type Transaction,
+  setTransactionMessageFeePayer, setTransactionMessageLifetimeUsingBlockhash, type ReadonlyUint8Array, type SignatureBytes, type Transaction, type TransactionVersion,
 } from '@solana/kit';
 import { createTransactionSignerFromWalletAccount } from '@solana/wallet-account-signer';
 import { registerWalletHandle } from '@wallet-standard/ui-registry';
@@ -14,11 +14,11 @@ import { signPreparedTransaction, walletSigningMethod, WalletSigningError } from
 
 type Connection = NonNullable<WalletState['connected']>;
 // Fresh ephemeral keys exist only in memory. These are synthetic providers, never Phantom evidence.
-async function fixture(walletName = 'Offline test wallet') {
+async function fixture(walletName = 'Offline test wallet', version: TransactionVersion = 0) {
   const payer = await generateKeyPairSigner();
   const lifetime = { blockhash: blockhash(getAddressDecoder().decode(new Uint8Array(32).fill(9))), lastValidBlockHeight: 12345n };
   const transaction = compileTransaction(pipe(
-    createTransactionMessage({ version: 0 }),
+    createTransactionMessage({ version }),
     message => setTransactionMessageFeePayer(payer.address, message),
     message => setTransactionMessageLifetimeUsingBlockhash(lifetime, message),
     message => appendTransactionMessageInstructions([{ programAddress: address('11111111111111111111111111111111'), data: new Uint8Array([1, 2, 3]) }], message),
@@ -90,7 +90,7 @@ test('API original blockhash and last-valid height reach signer unchanged withou
 });
 
 test('selected Phantom uses documented injected sign-only request once and never Standard fallback', async () => {
-  const value = await fixture('Phantom');
+  const value = await fixture('Phantom', 'legacy');
   await inWindow(value.provider, async () => {
     assert.equal(walletSigningMethod(value.connection), 'phantom-injected');
     const signed = await signPreparedTransaction(value.connection, 'devnet', value.base64);
@@ -119,7 +119,7 @@ test('Standard signer cannot omit required signatures or change its selected acc
 });
 
 test('Phantom account mismatch or disconnection refuses every prompt', async () => {
-  const value = await fixture('Phantom');
+  const value = await fixture('Phantom', 'legacy');
   value.provider.publicKey.toString = () => '11111111111111111111111111111111' as typeof value.payer.address;
   await inWindow(value.provider, async () => assert.rejects(signPreparedTransaction(value.connection, 'devnet', value.base64), /account changed or disconnected/));
   value.provider.publicKey.toString = () => value.payer.address;
@@ -129,13 +129,13 @@ test('Phantom account mismatch or disconnection refuses every prompt', async () 
 });
 
 test('chain, version, signer and lifetime guards run before any approval', async () => {
-  const value = await fixture('Phantom');
+  const value = await fixture('Phantom', 'legacy');
   await inWindow(value.provider, async () => {
     await assert.rejects(signPreparedTransaction(value.connection, 'localnet', value.base64), /does not support localnet/);
     await assert.rejects(signPreparedTransaction(value.connection, 'mainnet' as never, value.base64), /Only localnet and devnet/);
-    Object.assign(value.connection, { supportedTransactionVersions: new Set(['legacy']) });
-    await assert.rejects(signPreparedTransaction(value.connection, 'devnet', value.base64), /does not support the prepared transaction version/);
     Object.assign(value.connection, { supportedTransactionVersions: new Set([0]) });
+    await assert.rejects(signPreparedTransaction(value.connection, 'devnet', value.base64), /does not support the prepared transaction version/);
+    Object.assign(value.connection, { supportedTransactionVersions: new Set(['legacy', 0]) });
     await assert.rejects(signPreparedTransaction(value.connection, 'devnet', value.base64, { lastValidBlockHeight: NaN }), /lifetime is invalid/);
     Object.assign(value.connection.account, { address: '11111111111111111111111111111111' });
     await assert.rejects(signPreparedTransaction(value.connection, 'devnet', value.base64), /does not name your connected account/);
@@ -144,7 +144,7 @@ test('chain, version, signer and lifetime guards run before any approval', async
 });
 
 test('malformed wire is rejected before wallet request', async () => {
-  const value = await fixture('Phantom');
+  const value = await fixture('Phantom', 'legacy');
   await inWindow(value.provider, async () => {
     await assert.rejects(signPreparedTransaction(value.connection, 'devnet', '%%%%'));
     await assert.rejects(signPreparedTransaction(value.connection, 'devnet', Buffer.from([...value.wire, 99]).toString('base64')));
@@ -153,12 +153,12 @@ test('malformed wire is rejected before wallet request', async () => {
 });
 
 test('Phantom plain-object rejection retains numeric code and stage, with no retry or alternate prompt', async () => {
-  const value = await fixture('Phantom');
+  const value = await fixture('Phantom', 'legacy');
   value.provider.request = async () => { value.injectedCalls.push({ method: 'signTransaction', params: { message: '' } }); throw { code: -32603, message: 'Unexpected error', privateDebug: 'must-not-be-rendered' }; };
   await inWindow(value.provider, async () => assert.rejects(signPreparedTransaction(value.connection, 'devnet', value.base64), failure => {
     assert.ok(failure instanceof WalletSigningError);
     assert.equal(failure.stage, 'wallet-request'); assert.equal(failure.code, -32603);
-    assert.match(failure.message, /Phantom, devnet, v0, code -32603/);
+    assert.match(failure.message, /Phantom, devnet, legacy, code -32603/);
     assert.doesNotMatch(failure.message, /privateDebug|must-not-be-rendered/);
     return true;
   }));
@@ -166,20 +166,20 @@ test('Phantom plain-object rejection retains numeric code and stage, with no ret
 });
 
 test('cancellation code is recognizable even when provider omits message', async () => {
-  const value = await fixture('Phantom');
+  const value = await fixture('Phantom', 'legacy');
   value.provider.request = async () => { throw { code: 4001 }; };
   await inWindow(value.provider, async () => assert.rejects(signPreparedTransaction(value.connection, 'devnet', value.base64), /User rejected the wallet request/));
 });
 
 test('unsupported provider response shape is rejected without another request', async () => {
-  const value = await fixture('Phantom');
+  const value = await fixture('Phantom', 'legacy');
   value.provider.request = async () => { value.injectedCalls.push({ method: 'signTransaction', params: { message: '' } }); return { signature: 'not-a-signed-transaction' }; };
   await inWindow(value.provider, async () => assert.rejects(signPreparedTransaction(value.connection, 'devnet', value.base64), /unsupported signed transaction response/));
   assert.equal(value.injectedCalls.length, 1); assert.equal(value.standardCalls.length, 0);
 });
 
 test('changed reviewed message is rejected even with a genuine signature of the altered message', async () => {
-  const value = await fixture('Phantom');
+  const value = await fixture('Phantom', 'legacy');
   const changed = Uint8Array.from(value.wire); changed[changed.length - 2] ^= 1;
   const signedChanged = await value.signedWire(changed);
   value.provider.request = async () => ({ serialize: () => Uint8Array.from(signedChanged) });
@@ -187,7 +187,7 @@ test('changed reviewed message is rejected even with a genuine signature of the 
 });
 
 test('missing or false signatures cannot reach relay despite unchanged message bytes', async () => {
-  const value = await fixture('Phantom');
+  const value = await fixture('Phantom', 'legacy');
   await inWindow(value.provider, async () => {
     value.provider.request = async () => ({ serialize: () => Uint8Array.from(value.wire) });
     await assert.rejects(signPreparedTransaction(value.connection, 'devnet', value.base64), WalletSigningError);
@@ -198,7 +198,7 @@ test('missing or false signatures cannot reach relay despite unchanged message b
 });
 
 test('account switch while approval is open invalidates returned transaction', async () => {
-  const value = await fixture('Phantom');
+  const value = await fixture('Phantom', 'legacy');
   const originalRequest = value.provider.request;
   value.provider.request = async input => {
     const response = await originalRequest(input);
@@ -209,7 +209,7 @@ test('account switch while approval is open invalidates returned transaction', a
 });
 
 test('signed exact bytes reach existing API submit once; interrupted response recovers by GET without re-signing', async () => {
-  const value = await fixture('Phantom');
+  const value = await fixture('Phantom', 'legacy');
   const oldFetch = globalThis.fetch;
   const requests: { path: string; method: string }[] = [];
   let retained: string | undefined;
@@ -234,4 +234,39 @@ test('signed exact bytes reach existing API submit once; interrupted response re
     assert.equal(value.injectedCalls.length, 1); assert.equal(value.standardCalls.length, 0);
     assert.deepEqual(requests, [{ path: '/api/transactions/submit', method: 'POST' }, { path: '/api/operations/existing-operation', method: 'GET' }]);
   } finally { globalThis.fetch = oldFetch; }
+});
+
+test('Phantom v0 selects full-wire native-account Standard before approval and never invokes legacy request', async () => {
+  const value = await fixture('Phantom', 0);
+  value.provider.request = async () => { throw Error('Legacy message-only parser must never receive v0'); };
+  await inWindow(value.provider, async () => {
+    assert.equal(walletSigningMethod(value.connection, 0), 'wallet-standard');
+    const signed = await signPreparedTransaction(value.connection, 'devnet', value.base64,
+      {lastValidBlockHeight: Number(value.lifetime.lastValidBlockHeight)});
+    assert.deepEqual(Uint8Array.from(getTransactionDecoder().decode(Buffer.from(signed, 'base64')).messageBytes), value.transaction.messageBytes);
+  });
+  assert.equal(value.standardCalls.length, 1);
+  assert.deepEqual(value.standardCalls[0].transaction, value.wire);
+  assert.equal(value.standardCalls[0].account, value.account);
+  assert.equal(value.standardCalls[0].chain, 'solana:devnet');
+  assert.equal(value.injectedCalls.length, 0);
+});
+test('Phantom v0 rejection stops after exactly one Standard request, without injected fallback', async () => {
+  const value = await fixture('Phantom', 0);
+  let calls = 0;
+  Object.assign(value.connection, {signer: {address: value.payer.address, modifyAndSignTransactions: async () => {
+    calls++; throw Object.assign(new Error('Rejected versioned test request'), {code: 4001});
+  }}});
+  await inWindow(value.provider, async () => assert.rejects(
+    signPreparedTransaction(value.connection, 'devnet', value.base64), /User rejected/));
+  assert.equal(calls, 1); assert.equal(value.injectedCalls.length, 0);
+});
+test('Phantom v0 account change during approval rejects even a valid returned signature', async () => {
+  const value = await fixture('Phantom', 0);
+  Object.assign(value.connection, {signer: {address: value.payer.address, modifyAndSignTransactions: async () => {
+    const signed = getTransactionDecoder().decode(await value.signedWire());
+    value.provider.isConnected = false; return [signed];
+  }}});
+  await inWindow(value.provider, async () => assert.rejects(
+    signPreparedTransaction(value.connection, 'devnet', value.base64), /account changed or disconnected/));
 });

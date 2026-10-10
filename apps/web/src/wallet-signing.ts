@@ -25,8 +25,11 @@ function phantomProvider(): PhantomProvider | undefined {
 }
 
 /** Choose once, before approval. Never retry a rejected request through another signing path. */
-export function walletSigningMethod(connection: Connection): WalletSigningMethod {
-  return connection.wallet.name === 'Phantom' && phantomProvider() ? 'phantom-injected' : 'wallet-standard';
+export function walletSigningMethod(connection: Connection, version: TransactionVersion = 'legacy'): WalletSigningMethod {
+  // Phantom's message-only request example is a legacy Transaction API. Passing
+  // a v0 compiled message through it fails before approval in the installed wallet.
+  // Versioned transactions use the existing native-account/full-wire Standard bridge.
+  return version === 'legacy' && connection.wallet.name === 'Phantom' && phantomProvider() ? 'phantom-injected' : 'wallet-standard';
 }
 
 function assertPhantomAccount(provider: PhantomProvider, account: string) {
@@ -74,7 +77,7 @@ export async function signPreparedTransaction(connection: Connection, network: N
   if (!equalBytes(bytes, getTransactionEncoder().encode(transaction))) throw new Error('The prepared transaction is not a canonical transaction. Prepare a new preview.');
   const message = getCompiledTransactionMessageDecoder().decode(transaction.messageBytes);
   if (!equalBytes(transaction.messageBytes, getCompiledTransactionMessageEncoder().encode(message))) throw new Error('The prepared transaction message is not canonical. Prepare a new preview.');
-  const method = walletSigningMethod(connection);
+  const method = walletSigningMethod(connection, message.version);
   if (!(connection.account.address in transaction.signatures)) throw new Error('The prepared transaction does not name your connected account as a signer.');
   if (!connection.supportedTransactionVersions.has(message.version)) throw new Error(`This wallet does not support the prepared transaction version (${message.version}). Choose a compatible wallet.`);
   const signer = connection.signer;
@@ -86,8 +89,8 @@ export async function signPreparedTransaction(connection: Connection, network: N
   const input = options.lastValidBlockHeight == null ? transaction : {
     ...transaction, lifetimeConstraint: { blockhash: blockhash(message.lifetimeToken), lastValidBlockHeight: BigInt(options.lastValidBlockHeight) },
   };
-  const provider = method === 'phantom-injected' ? phantomProvider() : undefined;
-  if (method === 'phantom-injected') assertPhantomAccount(provider!, connection.account.address);
+  const provider = connection.wallet.name === 'Phantom' ? phantomProvider() : undefined;
+  if (provider) assertPhantomAccount(provider, connection.account.address);
   let result: Transaction;
   let response: unknown;
   try {
@@ -100,6 +103,7 @@ export async function signPreparedTransaction(connection: Connection, network: N
     throw new WalletSigningError(failure, 'wallet-request', network, message.version, method);
   }
   try {
+    if (provider) assertPhantomAccount(provider, connection.account.address);
     if (method === 'phantom-injected') {
       assertPhantomAccount(provider!, connection.account.address);
       // The documented request response is a signed Transaction with serialize().
