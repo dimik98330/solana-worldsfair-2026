@@ -1,41 +1,46 @@
-# BondTrace: security model и проверка
+# Security and trust model
 
-07.10.2026, verified prototype checkpoint. Skills: ProofPilot coach/direct implementation, solana-dev security/testing/Anchor, review-and-iterate security-basics. Mandatory AGENTS/skill rule сохраняется в каждом handoff. Localnet/devnet test wallets разрешены; mainnet/реальные активы/paid/final submission запрещены. Не запрашивать/не печатать приватные ключи. Lead owns Git/dependencies/STATE.
+[Architecture](../TECHNICAL.md) · [Paged protocol](34-PAGED-SERVICING.md) · [API](15-API-CONTRACT.md)
 
-## Границы доверия
+Current v4 source uses checked Anchor/SPL instructions and a fail-closed relay/recovery journal. This is a verified test prototype, not a production security certification. The separately recorded public v3 deployment has its own release and historical evidence.
 
-Issuer выбирает фиксированные даты/amounts и <=16 permissioned holders **до** первого record date. Seal требует полные тестовые settlement reserves. Holder подписывает собственные transfer, coupon/principal claims и vote. Permissionless payer может capture due coupon, но не изменить amounts/holders. Upgrade authority — отдельный существенный operational trust, не устранённый прототипом. Это не аудит и не production certification.
+## On-chain authority and assets
 
-Classic SPL bond mint/freeze authority — Bond PDA. Minting только Draft, registry immutable Active, никакого issuer withdrawal. Coupon snapshots/claim mask хранятся навсегда; Ballot init PDA once. Snapshot verifies precise canonical keys, SPL program owner/mint and supply conservation; nonzero accounts additionally require wallet/Frozen/no delegate/closeauthority. Missing **empty** canonical ATA разрешена как zero только при system owner+empty data; recreated SPL zero также zero независимо от token owner/delegate/closeauthority. Frozen nonzero account cannot escape registry via direct SPL transfer/burn; actual SPL CPI/runtime checks passed, including direct frozen burn/transfer rejection.
+- Issuer signs creation, schedule append, registry administration, issuance, funding, activation and proposal creation. Minting is draft-only. After activation, v2 may register a **zero-balance** receiver between record locks; existing indices never move and historical prefixes never expand.
+- Any fee payer can open due coupon/maturity capture, capture the next page and finalize complete rights. An absent issuer cannot veto v4 maturity. Even an abandoned voting capture can be finished after its deadline to release the lock.
+- The holder signs transfers, personal coupon claims, voting and principal retirement. Permissionless coupon settlement can pay only the canonical historical beneficiary. It cannot choose another recipient or amount.
+- Principal transfer and the corresponding burn occur in one transaction. Failed payment rolls back burn, totals and masks. Historical coupon rights remain payable after retirement. One shared per-holder/event paid bit protects claim and executor settlement.
 
-Amounts are u64 settlement base units, decimals6; multiplication/addition checked; no rounded floats. Claim transfers fixed snapshot entitlement to a holder-owned token account for correct mint. Principal burn+transfer are atomic; error rolls back burn and mask. All privileged actors typed Signer with has_one issuer; all state canonical PDA constraints and typed Account ownership/discriminator checks. Typed Token program disallows arbitrary CPI target. Transfers/payouts reject source/destination aliasing; Anchor1.1 also rejects duplicate mutable accounts by default.
+Bond mint/freeze authority is the program PDA. Positive holdings remain frozen outside the controlled program transfer/burn path, preventing direct SPL transfer/burn or authority change from bypassing record-date policy. Canonical program owner, discriminator, PDA/bump, mint, ATA, wallet/index and typed Token/System accounts are validated; CPI targets are not supplied freely by the caller. Closed/recreated **zero** canonical ATAs have an explicit checked path; missing financial balances are not generically filled with zeros.
 
-## Known limits / residual risks
+Record-date locks prevent late transfers and registry appends until capture completes. Each event fixes its registry prefix; pages must arrive in order. Finalization reconciles captured units with supply before claims. Amounts use checked u64/u128 arithmetic and BigInt; subunit remainders, overflow, conflicting rates and invalid ordering/dates reject.
 
-- Fully prefunded settlement is suitable for demonstration, may be capital-inefficient in practice; no banking/KASE/custodian integration claimed.
-- Issuer liveness needed to begin redemption; coupon capture is permissionless. Wallet lost keys prevent claims, no recovery path.
-- Settlement mint may retain external mint/freeze authority (test token issuer); freeze can cause payment liveness failure. This trust must be visible in the demo and production design needs independent issuer policy.
-- Program upgrade authority remains capable of changing behavior; no multisig/timelock in MVP.
-- Surplus funding cannot be reclaimed; rent/state are retained to preserve one-shot records.
-- One transaction reads at most16 ATAs. Measured with16 holders: snapshots/proposals fit884 bytes maximum in this run and84_584 CU maximum. CU depends on PDA bumps; simulate each client transaction.
-- Registry holder array permits16 **pre-registered wallets**, not16 arbitrary real investors or proven adoption. No privacy, KYC, compliance/eligibility certification.
-- Voting is informational, no cash-term mutation or malicious-proposal execution path.
+## Relay, storage and observation
 
-## Verification matrix (actual execution)
+Exact prepared message, all required Ed25519 signatures, wallet identity, transaction lifetime, genesis and reviewed program image are checked before relay. Canonical signed bytes/intent/signature/ID commit before send. Same ID/different intent conflicts; an unknown outcome is not permission to re-sign.
 
-| Invariant | Required evidence | Initial status |
-|---|---|---|
-| Valid fixed terms; integer exactness and overflow | Rust helper + runtime bad terms/overflow | Passed |
-| Issuer-only changes; registration/issue/seal before first record | Runtime negative paths | Passed |
-| Full reserve required; wrong mint/owner rejected | Runtime CPI and constraints | Passed, owner and mint redirects rejected without burn/pay/claim-bit changes |
-| External transfer/burn fail on nonzero frozen holdings | SPL runtime negative paths | Passed |
-| Snapshot complete/order; closed zero/recreated zero safe | Runtime regression | Passed, actual SPL close/recreate/owner-change |
-| Transfer record gate and immutable old coupon ownership | Full flow before/after record | Passed |
-| Coupon one-shot; old claim survives post-redemption | Full flow | Passed |
-| Principal maturity, current-owner snapshot, atomic burn+pay one-shot | Full flow | Passed |
-| Snapshot vote weight; unique ballot and window | Full flow negative + positive | Passed |
-|16-holder tx size/CU | Serialized transaction + consumed CU | Passed: capture839bytes/83_376CU, proposal884bytes/84_584CU, begin772bytes/75_763CU |
-| Anchor/SBF compatibility, IDL | Actual build | Passed |
-| Official Solana autofixer findings resolved | MCP tool output + documented dismissals | Passed issues=[], no dismissals |
+SQLite uses DELETE/EXTRA, verified rollback, real interprocess locks and fresh filesystem guards. Typed STORAGE_BUSY is emitted only after known cleanup; uncertain cleanup fails closed. PostgreSQL uses verified TLS, acknowledged COMMIT and writer-generation fencing. Lost acknowledgement/rollback failure poisons the writer instead of enabling local fallback or SQL replay. Keep one hosted writer per namespace; do not point preview deployments at the production recovery journal.
 
-Evidence logs: programs/bondtrace/tooling/runtime-final-results.log (5/0 standalone including new wrong-mint and CU regression asserts), runtime-results.log (5/0 standalone), runtime-idl-binary-results.log (5/0 direct full execution), unit-results.log (3/0). Official program_autofixer structured result saved in mcp-autofixer-result.json. Initial unit test caught a documentation estimate error: Proposal is323 bytes, assertion/docs corrected and unit test passed. This remains local prototype verification; devnet/public/browser/full independent review and production audit are separate gates. No fuzz testing, formal verification or real funds were exercised.
+GET recovery never relays. Explicit rebroadcast may resend only the original verified bytes under expiry/genesis/release guards. Business status, finality observations and retained proof commitment remain separate. Missing/pruned history never upgrades a receipt to freshly finalized.
+
+V2 graph reads use bounded batches and a revision fence, with `sameBank:false` and slot-range disclosure. External SPL observations and bounded proposal discovery are not an atomic/exhaustive bank snapshot. On-chain account validation and fresh simulation still protect execution after an API read.
+
+## Remaining trust and operating assumptions
+
+| Boundary | Current policy / limit |
+|---|---|
+| Program upgrade authority | Can change code; no production multisig/timelock certificate |
+| Settlement-mint authority | External mint/freeze authority can affect availability; test token is not fiat or a regulated bond |
+| Reserve | Full prefunding; no issuer surplus withdrawal; donated surplus is not an unpaid liability |
+| Transfer compatibility | Classic SPL controlled transfers; ordinary SPL/DEX interoperability not claimed |
+| Scale | Pages replace v2 whole-issue16/8 arrays; tested33→34 holders/9 coupons, with explicit API/wire/discovery budgets |
+| Holder keys | Principal needs the holder; no lost-key/legal-title recovery mechanism claimed |
+| Wallet UI | Sign-only transport is tested; successful ordinary human Phantom signing remains unverified |
+| External settlement | Signed sandbox/shadow adapters only; dispatch disabled and on-chain paid bits untouched |
+| RPC/hosting | Availability/history/provider honesty remain assumptions; free-tier uptime is not guaranteed |
+
+## Evidence scope
+
+The matching v4 SBF is959536 bytes with SHA `ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12`. Actual isolated CI rebuilt it and passed3 Rust unit /20 SBF+SPL runtime tests, including64 sequences, authority/account/rate failures, duplicate claims/burn/ballots, frozen vaults, capture locks and atomic payment rollback. Application/PG/browser checks have their separately recorded scopes in [verification history](VERIFICATION-HISTORY.md).
+
+[The prepared launcher](evidence/servicing-v4-one-command-check-20261010.json) additionally completed37 transactions, independently observed finalized, with zero supply/vault/obligations. [The larger cohort](evidence/servicing-v4-localnet-summary-20261010.json) retains253 execution proofs and explicit later history gaps. Neither is a human-wallet test, formal audit, partner endorsement or permission to use mainnet/real assets. Older security notes and their failures remain recoverable at [the pre-cleanup Git snapshot](https://github.com/dimik98330/solana-worldsfair-2026/blob/9b64a52b7ea98a5bd8bb9f81dbfc611d08aa3a4b/docs/11-SECURITY.md).

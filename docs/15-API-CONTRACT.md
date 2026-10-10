@@ -1,95 +1,90 @@
-# BondTrace API — current backend contract
+# API contract — current v4 source
 
-Loopback API for localnet/devnet test assets. All money and bond quantities are exact integer strings in base units: settlement has6 decimals, bonds0. `1000000000` means `1000.000000` test units. No money passes through JavaScript Number. This document supersedes the original eight-action contract.
+[Overview](../TECHNICAL.md) · [Paged protocol](34-PAGED-SERVICING.md) · [Setup](LOCALNET-SETUP.md)
 
-## Read and reconcile
+This contract describes the current source. The recorded public deployment uses the separately identified v3 program; inspect `/api/program` and require the matching release before preparing financial operations. Whole bonds have decimals0; the mock settlement mint has decimals6. Money and quantities are exact decimal integer strings, never JSON floating-point amounts.
 
-`GET /api/health` checks metadata access and actual RPC genesis identity. Changed identity fails closed with `CHAIN_IDENTITY_CHANGED`; preserve old receipts and use a separate ignored namespace. SQLite is built into Node22.14+, schema1, DELETE journal / EXTRA synchronous. Health is not a corporate-action or security proof.
+## Read, reconcile and inspect
 
-`GET /api/state?instrument=<address>` returns issue, registry, all coupons, redemption, discovered proposals, activity, servicing plan and demo availability. Without an instrument it selects the current demo fixture. `GET /api/reconciliation?instrument=<address>` returns just instrument address, financial context, chain identity and reconciliation.
-
-All financial values are read from one confirmed `getMultipleAccounts` context after address discovery. `context` names RPC slot, Clock slot/timestamp and account count. Changing registry/terms/catalog triggers up to3 read retries. Required missing accounts and inconsistent money fail503 with no financial payload; closed empty canonical holder ATAs are an explicit program exception.
-
-`reconciliation.status:verified` means exact holder/mint/issued-minus-burned supply, coupon snapshot/claim masks/paid totals, principal claimed/burned units, reserve and aggregate voting identities passed at that context. It is not a security certificate. Money is `{baseUnits,decimal,decimals:6}`. Totals include contractual, cashPaid, remainingObligations, scheduledCouponForecast, fixedAccruedCoupon, claimableNow, vault, fundingGap and surplus.
-
-Before capture, a coupon is a scheduled forecast. After capture it is fixed historical entitlement, claimable at payment time. Transfer and burn do not erase rights. Rate-based issues created by `initialize_rate_issue` additionally have an immutable FinancialTerms PDA; `instrument.rateBasis: on-chain-program-validated-rate-v1` identifies that verified account. Existing fixed schedules retain their original coupon amounts; historical local rate metadata or signed creation-memo evidence is labelled separately and is not upgraded into a FinancialTerms account. Issuer settlement ATA absence is marked `settlementAccountAvailable:false`, rather than hiding missing required vault data.
-
-Proposals are discovered with confirmed `getProgramAccounts`, a48-byte identity slice and discriminator/instrument filters, independently of local catalog survival. Full proposal values join the same financial bank; discovery is checked again afterward. `proposalDiscovery` records both discovery slots and the financial slot. Equal discovery sets are observations at those banks, not proof of exact exhaustive coverage at the intervening bank; `completeAtFinancialContext` and `proposalCoverageComplete` remain false. `catalogProposalsResolved` names only the known-ID resolution result. Individual ballot sides are not reread: choiceEvidence is proposal-aggregate-only. Activity verification and historical recordSlotSource preserve provenance: imported legacy-unbound slots are not asserted to be fresh genesis-bound confirmations.
-
-`GET /api/servicing?instrument=<address>` returns a read-only plan using chain Clock and reconciled rights. It identifies sequential record captures, payable holder claims, maturity opening, principal claims, transfer locks, and voting eligibility. Ready actions contain unsigned request templates for `/api/actions/prepare`; permissionless capture still needs an explicitly chosen fee-payer wallet. The plan does not send transactions or replace fresh simulation. Zero-weight holders and already-paid claims do not become new payable actions. `principal-redeemed-coupons-outstanding` differs from `settled`: burning all bonds preserves outstanding historical coupon rights.
-
-`GET /api/evidence?instrument=<address>` downloads public JSON with network/genesis/program identity, confirmed context, immutable terms, holders, coupon/redemption rights, proposals, reconciliation, servicing and whitelisted locally retained receipts. Unknown receipts stay unknown; export does not refetch or attest a complete historical transaction archive. SHA-256 covers recursively key-sorted JSON of `payload`; this is file-integrity metadata, not a signature or on-chain commitment. No signer files, signed transaction bytes, or private journal payloads are exported. An absent instrument returns404.
-
-The financial graph includes the numerically smallest32 proposal IDs from the chain/catalog union. Larger proposal sets do not block coupon/principal reads. Every returned identity header is structurally validated; only selected on-chain PDAs are canonically derived and fully read. `selectedIds`, `omittedDiscoveredCount`, `omittedCatalogIds`, `catalogIdsAbsentAtDiscovery` and `unverifiedPdaCount` disclose this window. The complete header identity set is compared before/after the financial read; continuing changes cause the existing three-attempt retry limit. `servicing.votingCoverage` carries the same boundaries.
-
-## Unsigned review and relay
-
-`POST /api/actions/prepare` accepts `{action,walletAddress,bondAddress?,params}` and returns transactionBase64, lastValidBlockHeight, operationId and summary. Every wallet action except creation requires an explicit instrument. Summary includes network, signer, instrument, token/recipients/amount when applicable, simulation and actual fee. Creation includes reviewed immutable terms. Unavailable fee is FEE_UNAVAILABLE503, never zero.
-
-| Action | Required params |
+| Route | Meaning |
 |---|---|
-| initialize_issue | seriesId, name <=64 UTF-8 bytes, settlementMint, positive faceValueMinor, maturityTs,1–8 coupons |
-| register_holder | holderWallet; optional label <=64 UTF-8 bytes |
-| issue_units | holderWallet, positive units |
-| seal_issue | none; requires full principal + all coupons reserve |
-| fund_vault | positive amountMinor |
-| transfer_bonds | targetWallet (alias destination), positive units |
-| capture_coupon / claim_coupon | couponId (alias index), mandatory for multiple coupons |
-| settle_coupon | explicit couponId string0–7; holderWallets array of1–4 unique registered beneficiaries; amounts cannot be supplied |
-| begin_redemption / redeem_principal | none |
-| create_vote | proposalId, title <=96 UTF-8 bytes |
-| cast_vote | proposalId, explicit choice yes/no (alias support true/false) |
+| `GET /healthz` | Process liveness only |
+| `GET /api/health` | Metadata access and actual configured chain identity |
+| `GET /api/program` | Canonical program/ProgramData and expected-versus-observed payload hash |
+| `GET /api/state?instrument=<bond>` | Selected instrument, current holdings, immutable rights, payments, votes, receipts and servicing requests |
+| `GET /api/reconciliation?instrument=<bond>` | Exact supply/liability/reserve reconciliation and its observation context |
+| `GET /api/servicing?instrument=<bond>` | Read-only next-action requests; no signing or dispatch |
+| `GET /api/evidence?instrument=<bond>` | Whitelisted public evidence and integrity digest; no private signer files or retained signed wire |
+| `GET /api/operations/<id>` | Passive same-ID operation/projection recovery |
+| `GET /api/transactions/<signature>` | Live or explicitly retained transaction/finality observation |
+| `GET /api/transactions/<signature>/proof` | Retained execution proof; `?retry=true` explicitly requests read-only recapture |
 
-Coupon rows are `{recordTs,paymentTs,unitAmount}` strings, passed as array or JSON-encoded array. Integers obey u64 and dates the supported ISO range; payment cannot precede record or follow maturity. Unknown fields and conflicting aliases fail before relay. Matching params.bondAddress/instrumentAddress aliases are supported. Canonical intent ignores key order and equivalent supported aliases, while different amounts, role, target or action conflict. No financial amount, title, proposal identity or vote choice is invented.
+With no instrument, selection uses the configured fixture or catalog; it does not invent a financial issue. A selected missing/invalid account fails closed rather than falling back to unrelated holdings. A due uncaptured record and an incomplete capture are different from a finalized claimable snapshot. Principal retirement and all-obligations-settled are also separate states.
 
-`POST /api/transactions/submit` accepts only `{signedTransactionBase64}`. Every required Ed25519 signature verifies against the exact persisted reviewed message. Invalid/unsigned messages cannot poison recovery. The signed bytes, signature, lifetime, operation and receipt commit together before any relay. Repeating the signed message recovers its existing receipt without another send. Wallet keys remain outside the relay.
+V2 financial reads batch up to100 accounts per request, with a4,096-account observation budget. They read the Bond revision before/after the graph and retry a changing graph at most3 times. Returned context exposes its slot interval and `sameBank:false`; this is **not** one atomic Solana bank snapshot. External SPL observations retain their own scope. Legacy single-bank graph reads have their separate implementation; do not apply that claim to v2.
 
-`settle_coupon` delivers immutable coupon rights from the bond vault to canonical beneficiary settlement ATAs. The executor signs/pays SOL costs; beneficiaries do not delegate custody or sign. It shares the same claim mask as `claim_coupon` and remains available after principal burn. A batch is atomic: any recipient failure rolls back all its payments. The review shows `payments[]`, `settlementSource`, `feePayer`, exact transaction fee and separate estimated ATA-rent topup. Current test safety ceilings are1000000 lamports fee and12000000 lamports ATA topup per batch; they are ceilings, not predicted charges. A frozen beneficiary account is rejected explicitly before signing. Simulation still rechecks current state.
+`reconciliation.status:verified` means the inspected exact supply, fixed quantities/masks/totals, principal retirement, reserve and voting aggregates passed the checks at that context. It is not a security certificate or reservation of funds. Unavailable/inconsistent required financial data does not become zero.
 
-`GET /api/program` reports the RPC-observed deployed loader/PDA/bytecode identity against `programs/bondtrace/release.json`; it does not attest source-to-binary reproducibility. `/api/health` reports `read-only` when signing is unavailable. A fresh header/genesis check fences the bounded payload cache. New preparation/generated signing and first relay require the expected release; unsigned reviews persist `{programId,sha256,genesisHash}`. Missing or changed review bindings cannot relay. Known signed-receipt recovery remains available after a release changes. A signature retained concurrently by another sender is rechecked and bound inside the same SQLite transaction; its original receipt is not overwritten or sent again.
+V2 proposal discovery selects up to64 recent known history IDs plus required/active actions within the graph budget. Local discovery retains512 IDs and128 optional labels with sticky truncation disclosure. `completeAtFinancialContext:false` remains explicit; a list of queried IDs is not exhaustive chain discovery. Legacy proposal discovery uses its separate32-ID window.
 
-## Recovery and generated demo
+Scoped inspection:
 
-`GET /api/transactions/:signature` checks RPC and persists live observations. Same-genesis retained confirmation may be returned as recorded-confirmation if history is pruned; it does not claim a fresh RPC receipt. Receipt absence after lifetime expiry remains unknown, since absence cannot prove failure. Retained definitive rejection is separate.
+```text
+GET /api/v2/instruments/<bond>/pages/registry/<page>
+GET /api/v2/instruments/<bond>/pages/schedule/<page>
+GET /api/v2/instruments/<bond>/pages/snapshot/<page>?kind=1&id=0
+```
 
-`GET /api/operations/:id` checks retained signatures and completes local catalog reconciliation. chainStatus and projectionStatus are separate: confirmed chain action can still need local projection recovery. Keep the same ID after uncertainty; do not sign the financial action again. Even old stored errors with signed references are checked. GET never sends transactions.
+Page/action indices are canonical u32 values. Snapshot kinds are1=coupon,2=principal,3=vote; principal ID is0. Duplicate/unsupported query fields reject. A scoped page is not full financial reconciliation.
 
-Demo operation IDs and unsigned transaction hashes reserve a shared recovery namespace atomically. A collision returns `RECOVERY_ID_CONFLICT`409 with `recoveryRequired:true`; a legacy ambiguous pair cannot be relayed or reported as one of its two conflicting operations. Preserve both records and use the already-known signature endpoint to check signed receipts; ambiguity is not permission to sign again.
+## Prepare, sign and submit
 
-`POST /api/demo/action` accepts `{action,role,bondAddress?,params,operationId}`. The client must generate and retain its recovery ID before dispatch; missing/numeric/null IDs fail before signing. Fixed generated issuer/investor1–3 identities are checked against actual public keys. Transfers are restricted to the fixture's generated recipients. Same-ID replay recovers that intent; changed values/target are409. This is a disclosed test harness, separate from human signing.
+`POST /api/actions/prepare` accepts `{action,walletAddress,bondAddress?,operationId?,params}`. Creation has no existing bond address; other financial actions require an explicit selected instrument. The response includes `operationId`, exact `transactionBase64`, `lastValidBlockHeight` and summary of network/signer/accounts/amount/fee/terms. It runs current release/account validation and simulation. An unavailable fee is an error, not a zero fee.
 
-`POST /api/demo/coupon-run` accepts `{operationId,bondAddress,couponId,maxBatches?}`. It is an explicitly started **localnet generated-issuer** executor, not an unattended human wallet. Its issuer must own the instrument. It persists a manifest bound to genesis, release, coupon snapshot, registry and the original unpaid beneficiary groups before signing. Each group has an immutable recovery ID. Default maxBatches4; integer1–4 limits new submissions per invocation and may change on resume without changing the financial plan. Confirmed groups are recovered; pending/unknown children stop the run. Competing claims block stale groups instead of silently changing recipients. New run IDs cannot bypass unresolved prior children. Release requirements are passed through to the signing boundary and checked against retained child evidence. `GET /api/operations/:id` passively reports run status and group signatures; the aggregate run has no invented transaction signature. Normal wallet users can prepare the same fixed-beneficiary batches via `/api/actions/prepare` on either permitted network.
+The wallet signs those exact bytes. `POST /api/transactions/submit` accepts only `{signedTransactionBase64}`. Relay verifies the prepared message and every required Ed25519 signature, signer/account/lifetime, chain/release and durable write barrier. It commits the signed wire, signature, intent and ID before the first send. The server does not silently change a failed sign-only request into wallet broadcast.
 
-At a confirmed receipt, the server attempts bounded public execution-proof capture: actual signed-message hash, slot, fee/CU, accounts and pre/post balances. Capture has a4-second read budget, independent of payment success. Normal reads do not retry missing evidence endlessly. `GET /api/transactions/:signature/proof` returns retained proof and whether it matches the stored receipt; `?retry=true` explicitly retries an unavailable/interrupted capture. Missing history, unsupported transaction formats or incomplete RPC metadata remain explicit evidence gaps. Captured data is a retained RPC observation with caller-bound genesis, not a fresh chain attestation. A later conflicting receipt never makes the old proof current. The evidence export includes these public normalized proofs without keys, logs or raw signed transaction bytes.
+### V2 actions
 
-`POST /api/demo/bootstrap` accepts boolean reset and required client operationId (alias requestId). Persisted immutable plan and child receipts allow explicit same-ID resume of unsubmitted steps. Pending/unknown steps block duplicate sends; GET remains read-only. Devnet insufficient funding does not restart an airdrop loop. Original completed demo catalog is retained when choosing a new demo issue. An explicitly requested new-ID reset of an expired partial plan first reconciles every old signed child, rejects unknown outcomes, archives only a real issue and fences the superseded old plan; it never rewrites immutable dates.
+Use these exact action names for paged instruments. Browser compatibility aliases do not make legacy API actions automatically target v2 accounts. All monetary fields below are integer strings; counters may also be bounded safe integers and are normalized to strings. Unsupported or conflicting fields reject.
 
-Unsigned demo work uses a two-minute database lease. A stopped process can be resumed explicitly under the same intent after that lease expires; an old owner cannot write replacement metadata or relay after its ownership changes. Once a signature exists, the intent is never claimed again. A distinct demo intent cannot silently reuse an old identical signed message from the same blockhash. The UI labels unsigned recovery **Resume test operation**; GET remains passive.
+| Action | `params` | Required authority |
+|---|---|---|
+| `initialize_issue_v2` | `seriesId`, `name`, `settlementMint`, `faceValueMinor`, `maturityTs`, `couponCount`; optional paired `rateBps`/`couponFrequency`, complete `coupons` | Issuer/payer |
+| `append_schedule_v2` | `pageIndex`, `coupons` (1–8 terms) | Issuer |
+| `create_registry_page_v2` | `pageIndex` | Issuer |
+| `register_holder_v2` | `holderWallet`; optional `holderIndex`, `label` | Issuer; zero receiver after activation only between record locks |
+| `issue_units_v2` | `holderWallet`, positive `units` | Issuer, draft only |
+| `fund_vault_v2` | positive `amountMinor` | Issuer |
+| `seal_issue_v2` | empty | Issuer; complete schedule/supply/full reserve required |
+| `transfer_units_v2` | `targetWallet`, positive `units` | Current holder; record/capture/maturity locks enforced |
+| `begin_coupon_v2` | `couponId` | Any fee payer after due record |
+| `begin_redemption_v2` | empty | Any fee payer after maturity and preceding coupon captures |
+| `create_proposal_v2` | `proposalId`, `title`, `closesAt` (Unix seconds) | Issuer before maturity |
+| `capture_action_page_v2` | `actionKind`, `actionId`, `pageIndex` | Any fee payer; exact next page |
+| `finalize_action_v2` | `actionKind`, `actionId` | Any fee payer; complete reconciled capture |
+| `claim_coupon_v2` | `couponId` | Recorded holder |
+| `settle_coupon_v2` | `couponId`, `holderWallet` | Any executor; fixed beneficiary/amount |
+| `redeem_principal_v2` | empty | Corresponding holder; atomic principal transfer and burn |
+| `cast_vote_v2` | `proposalId`, `choice` (`yes`/`no`) | Eligible holder; fixed weight/one ballot |
 
-Signed unknown/pending and confirmed-but-unreconciled records are never evicted by history limits.100 unresolved signed records block new intents while retaining all recovery data. Unsigned reviews last2 minutes with at most128 concurrent live previews. SQLite imports original public JSON metadata once and preserves its bytes; keys are excluded from migration/backup.
+Coupon terms are `{recordTs,paymentTs,unitAmount}` with ordered future dates, payment at/after record and no later than maturity. Complete one-review creation supports up to16 coupons and must match `couponCount`. Larger declared schedules use count-only initialization and explicit page appends; the browser has no larger-calendar append control. In regular-rate mode every coupon must equal nominal×rateBps/(10000×frequency) exactly. Remainders, overflow and contradictory amounts reject; no silent rounding.
 
-## Error contract
+The program protects account identity, PDA/mint/owner, signer and phase constraints even for direct calls bypassing HTTP. Unknown HTTP role text never grants issuer/holder authority.
 
-## Owner audit additions — 8 October 2026
+## Recovery and storage
 
-`initialize_issue.params` additionally accepts optional exact strings `rateBps` and `couponFrequency` together. Bounds1–10000basis points and1–12payments/year. Rate-mode coupon amount is nominal×rate/(10000×frequency); missing `unitAmount` is derived, inconsistent amounts and fractional base units are rejected. Existing fixed/irregular coupons remain valid without this pair. Rate-mode API creation now uses `initialize_rate_issue`: the program atomically creates the Bond and immutable61-byte FinancialTerms PDA (`financial_terms`, Bond address), verifies every coupon with checked u128 arithmetic and rejects a nonzero division remainder. There is no terms-update or retroactive-attachment instruction. The original Bond layout and fixed initializer remain compatible. An issuer-signed Memo in the same transaction is retained as separate provenance in `instrument.rateTerms`. `/api/state` reads and validates the optional FinancialTerms account in the same bank as the financial graph, including owner/PDA/bump/version/nominal and every coupon. `instrument.financialTerms` contains its address, exact amounts, rate, frequency and context slot, or null for older fixed issues.
+Same ID with different intent conflicts. A confirmed chain transaction whose local projection is pending remains recoverable under the original ID. GET status routes never relay or sign. An unknown/expired/pruned receipt does not authorize a replacement payment signature.
 
-`POST /api/transactions/:signature/rebroadcast` accepts `{}` or `{operationId:"existing-id"}`. It can relay only the already retained canonical signed bytes/signature after cryptographic, intent, genesis, current-release and unexpired-lifetime checks. Confirmed/error receipts are passive; unknown/expired history never authorizes a new signature. A fresh preflight/transport error cannot prove an earlier ambiguous send failed, so uncertainty remains recoverable. GET endpoints do not rebroadcast.
+`POST /api/transactions/<signature>/rebroadcast` accepts `{}` or `{operationId:<existing-id>}` only. It can resend the same retained wire after signature/message/genesis/release/expiry checks; it cannot construct a replacement. Confirmed/error outcomes remain passive. Business confirmation, observed finality and retained proof commitment are reported separately.
 
-`seal_issue` rejects a Frozen vault with `VAULT_FROZEN` at API preflight and `InvalidTerms` on-chain. Sufficient amount alone is no longer an activation condition. External later freeze authority is still a disclosed dependency.
+SQLite uses DELETE/EXTRA, verified rollback and interprocess locking. Native contention is `STORAGE_BUSY` only after cleanup is known. A busy GET returns503 with its valid recovery ID when supplied and `recoveryRequired:true`; it does not invent success. Hosted PostgreSQL requires acknowledged COMMIT, verified TLS and writer-generation fencing. Uncertain commit blocks new signing/relay; no empty-local-DB fallback. Keep one writer per namespace.
 
-## Error responses
+`POST /api/runtime/readiness` accepts `{}` and observes chain/program, health, slot progress and storage write/read. It sends no financial transaction. Hosted operator backup/readiness and integration routes retain their authentication/origin/body limits. Portable backup is exported by `GET /api/metadata/backup`; unpacking writes new files, without automatic destructive restore.
 
-`{error:{code,message,retryable,recoveryRequired}}`: invalid requests/signatures400, forbidden403, conflicts409, capacity429, unavailable/inconsistent RPC or storage503. Unexpected HTTP failures use a generic message. POST5xx conservatively requires recovery; no automatic mutation or signature retry. JSON is limited to65000 bytes and decoded as strict UTF-8 after complete chunk assembly, preserving split multibyte text; MIME prefixes are not accepted as application/json.
+## Legacy and integration boundaries
 
-UNKNOWN_STATUS means a signed action may have executed or its local projection is incomplete. Retain operationId/signature and query them. RPC envelope, context and mandatory error fields are validated before storing a confirmation. Synthetic transport/concurrency/crash checks are disclosed separately from actual localnet lifecycle evidence. Financial reads and business confirmation use confirmed commitment; separately observed finalized receipts do not certify production security, provider honesty or banking integration.
+Legacy fixed/rate instructions remain available with their old account layouts and16-holder/8-coupon limits. The current v4 program makes legacy maturity opening permissionless, while the separately recorded older public v3 program retains its original behavior. Never infer deployment from source publication.
 
-## Strengthening additions — 9 October 2026
+`/api/lifecycle/plan`, `/api/lifecycle/resume`, `/api/lifecycle/<id>` and `/api/demo/coupon-run` are the retained legacy coordinator interfaces. V2 servicing is exposed through the explicit actions/read model above and the durable paged lifecycle CLI. Generated signing is an explicit local test capability; hosted demo execution is disabled. Principal always requires the holder.
 
-Receipts expose a separate `finality` observation: schemaVersion1, signature, status (`processed`, `confirmed`, `finalized`, or null), source (`live-rpc`, `retained-observation`, or `legacy-unknown`), observedAt, slot/contextSlot and genesisHash. Business `chainStatus:confirmed` does not imply finalized. Observed finalization can survive same-genesis history pruning with retained provenance; absent history cannot promote an unknown/legacy receipt. Conflicting settled observations are rejected. Proof schema2 records the actual confirmed or finalized `getTransaction` commitment, not a caller label. A bounded upgrade to finalized can fail without discarding the previous confirmed proof; schema1 historical proofs remain readable within their original scope.
-
-`POST /api/lifecycle/plan` and `POST /api/lifecycle/resume` require `{operationId,bondAddress,mode,maxTransactions}`. `mode` is `review-only` or `explicit-localnet-generated-issuer`; maxTransactions is a mandatory integer1–4 limiting new submissions per resume. Planning persists a sealed-instrument manifest bound to genesis, verified release hash/length, issuer, registry, nominal, maturity, every coupon and optional FinancialTerms. Stable child IDs are derived before sending and survive restart. Changing mode/instrument under the same ID conflicts. Generated execution is available only to the explicitly selected localnet fixture issuer; review-only never signs. Dates are checked against chain Clock; leases, unresolved children, stale plans and release changes stop further dispatch.
-
-`GET /api/lifecycle/:id` and `GET /api/operations/:id` passively recover lifecycle status without signing. Stages cover record capture, fixed-beneficiary coupon batches and opening maturity redemption. Principal claims remain `awaiting_holder_signature`: the coordinator never signs as an investor. `financially_closed` requires remaining coupon/principal obligations0, mint supply0 and redeemed units equal issued units; a vault surplus may remain. Financial closure is separate from `finality`: externally satisfied stages or unlinked holder signatures remain unknown/pending in the parent even when another explicit proof index verifies the full transaction cohort. `signature:null` on the parent is intentional; child signatures and finality observations carry the evidence. Voting is a separately reviewed corporate action rather than an automatic lifecycle stage.
-
-`POST /api/runtime/readiness` accepts `{}` only. It returns actual chain/program identity, RPC health, two confirmed slot observations800ms apart and a SQLite write/read verification marker. It does not sign or send chain transactions. The watchdog assesses these observations together with storage and log budgets; this endpoint alone is not a guarantee of continuing readiness. New transaction generation and first relay recheck runtime budgets. RPC maxRetries5 retries the same signed bytes; it does not authorize a new message or signature.
+Signed registry/outbox/ack routes are documented in [the implemented adapter contract](integrations/IMPLEMENTED-ADAPTER.md). They are sandbox/shadow only: no bank dispatcher, no on-chain paid-bit mutation, no legal registry/partner certification. External acknowledgement and SPL payment remain separate facts.

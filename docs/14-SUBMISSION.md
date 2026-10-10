@@ -1,58 +1,40 @@
-# KASE — материалы и поля заявки
+# KASE materials and owner gates
 
-Официальная форма прочитана7октября2026 в авторизованном Chrome. Login подтверждён. Checkbox и Submit не нажимались. На8октября публичный web fetch listing недоступен; повторная Chrome-проверка столкнулась с ошибкой политики браузерного сервиса. Это не означает выход пользователя из аккаунта. Сохранённые требования ниже не подменяются догадками.
+Preparation checklist, **not an accepted submission**. The owner-supplied challenge requires coupon, maturity redemption, one additional action and verifiable Solana logic; external fiat rails may be simulated. See [acceptance](08-SPEC.md) and [bounded readiness](35-READINESS.md).
 
-Источник: https://superteam.fun/earn/listing/superteam-kazakhstan-x-kase-side-track-corporate-actions-on-blockchain . Все три сценария обязательны: купон, maturity redemption и дополнительное действие. Нужны test instrument, holders, record date, точные entitlements, settlement и проверяемый on-chain outcome. External fiat rails могут быть simulated; сама логика и Solana flow должны работать. Наше дополнительное действие — informational bondholder voting.
+The form was inspected7October at [KASE listing](https://superteam.fun/earn/listing/superteam-kazakhstan-x-kase-side-track-corporate-actions-on-blockchain). Recheck actual fields/deadlines at submission; old logins are not current acceptance.
 
-## Поля формы
+| Material | Destination / boundary |
+|---|---|
+| Source | [GitHub](https://github.com/dimik98330/solana-worldsfair-2026), already public at10October publication |
+| Hosted application | [Render devnet](https://bondtrace-devnet.onrender.com/), recorded v3; free service may sleep |
+| Architecture | [TECHNICAL](../TECHNICAL.md), [protocol](34-PAGED-SERVICING.md), [API](15-API-CONTRACT.md) |
+| Reproduction | [English](../README.md) / [Russian](../README.ru.md), [setup](LOCALNET-SETUP.md) |
+| Evidence | [Verification history](VERIFICATION-HISTORY.md), source-bound CI and JSON receipts |
+| Video | [Recorded media scope](13-DEMO.md); final owner-selected accessible URL pending |
+| Main registration/project/profile | Unverified; use actual URLs only |
+| Binding consent / final send | Owner action; accepted submission ID unverified |
 
-| Поле | Обязательно | Подготовленный материал / gate |
-|---|---|---|
-| Link to Your Submission | Да, доступно всем | Предлагается статическая страница recorded demo/evidence; пока только localhost5180 |
-| Tweet Link | Нет | Не создавался |
-| Project Name | Да | BondTrace |
-| Project Description | Да | Английский текст ниже |
-| Project Github Link | Да | https://github.com/dimik98330/solana-worldsfair-2026 — сейчас private |
-| Project Website / X | Нет | Не публиковались; localhost нельзя выдавать за public URL |
-| Pitch deck or Loom/video presentation | Да | artifacts/demo/bondtrace-product-demo.mp4,174.021s; внешний URL pending |
-| Submitted to official World's Fair? | Да, Yes/No | Подача не подтверждена; Yes пока запрещено |
-| Colosseum project/profile links | Поля есть | Нужны реальные созданные URL, не homepage/придуманный slug |
-| Anything Else | Нет | Technical overview, test scope и ограничения ниже |
+## English description draft
 
-Обязательные scope/adheres и Kazakhstan KYC if winner checkboxes, а также Terms при Submit подтверждает владелец в момент действия. Не проставлять их автоматически. Пользователь сообщил adult/Kazakhstan/no other team; остальные личные условия организатора и main registration не подтверждены.
+BondTrace services permissioned tokenized test bonds on Solana: identify holders, fix record-date rights, calculate integer entitlements, settle SPL coupons, pay principal with atomic burns, and record snapshot-weighted votes.
 
-## Project Description — English draft
+The additive v4 protocol has paged holder/schedule/action accounts. Any fee payer can advance due coupon/maturity capture; holders sign principal retirement. Post-activation receivers gain no historical rights. Durable IDs, exact signed messages, transactional metadata and reconciliation support recovery.
 
-BondTrace is a Solana console for corporate actions on permissioned tokenized test bonds. It makes one workflow visible: who is entitled, the exact amount owed, the action to sign and the settlement result.
+The prepared localnet run retained37transactions independently observed finalized:1,800coupon,18,000principal,18burned and zero remaining supply/vault/obligations. A separate33→34holder/9coupon run retained253proofs, with archived finality and later missing history disclosed. Public devnet demonstrates the earlier v3 program with26recorded finalized transactions and restart/backup checks.
 
-An Anchor program fixes coupon rights at the record date, preserves them after later transfers, pays principal at maturity while burning the corresponding bonds, and records snapshot-weighted bondholder votes with one ballot per holder. Classic SPL Token handles settlement and retirement; the interface displays exact six-decimal test amounts and transaction receipts.
+All assets are test tokens. Ordinary Phantom success and public v4 upgrade remain unverified. Registry/settlement adapters operate in sandbox/shadow mode; no real bank/KASE partner, customers, regulated securities or production audit is claimed.
 
-The completed local-validator demo has three generated holders and eighteen test bonds. After Investor01 transfers two bonds, its ten-bond record-date coupon remains500 test units. The full browser cycle settles900 coupon units and18000 principal units, burns all18 bonds and leaves zero supply and vault balance.
+## Русское описание
 
-This is an accelerated test-asset prototype with generated demo signers. Devnet deployment awaits free test-SOL funding, and human external-wallet signing is not yet independently exercised. There are no real securities, fiat/KASE integrations, customers or validated demand. Source, runtime tests, technical overview and a2:54 product demonstration are prepared; public access and official World's Fair registration/submission are still pending.
+BondTrace обслуживает тестовые токенизированные облигации в Solana: реестр → неизменяемые права → точный расчёт → купон/погашение с burn → проверяемый результат. Дополнительное действие — голосование. Исходники v4 и реальные localnet-проверки опубликованы; публичный devnet пока использует v3. Тестовые подписанты, обычный Phantom и внешние интеграции описаны раздельно.
 
-## Короткий русский перевод
+## Final owner checklist
 
-BondTrace — кабинет корпоративных действий тестовых токенизированных облигаций в Solana. Он показывает право держателя, точную сумму, операцию для подписи и реальный результат. Программа сохраняет купонные права после переводов, выплачивает principal с burn при maturity и учитывает голоса по snapshot. Реальный локальный цикл рассчитался по всем18 облигациям. Это test prototype: devnet, подпись человека, публичные ссылки и основная подача ещё не завершены; пользователей, банковской/KASE-интеграции и реальных активов нет.
+1. Confirm main eligibility/registration and actual project/profile URLs.
+2. Choose/upload a video within the required limit; match footage to version/network claims.
+3. Inspect public links anonymously and disclose wallet/deployment limits.
+4. Recheck live form/deadlines; personally confirm binding consent.
+5. Submit only when authorized; retain accepted submission ID/state.
 
-## Anything Else — English draft
-
-Technical overview: docs/18-TECHNICAL-OVERVIEW.md. Reproduction commands and dependency pins are in README.md. The video shows real localnet UI actions with generated test signers; idle waiting is edited. Its signatures refer to localnet and are not publicly verifiable devnet receipts. Browser and API lifecycle evidence identify different test issues. Development used AI assistance, installed ProofPilot/Solana/design guidance, Anchor, Solana Kit, React and classic SPL Token. No completed competitor product was imported. This entry does not claim KASE partnership, institutional settlement, traction or production audit.
-
-## Конкретный вариант доступа жюри
-
-После отдельного разрешения владельца: сделать именно этот репозиторий public и включить GitHub Pages из main/root. Уже подготовлены index.html, .nojekyll, MP4, captions, poster и публичные evidence-файлы без ключей. Предполагаемый URL: https://dimik98330.github.io/solana-worldsfair-2026/ — **не создан и не проверен**. Страница представляет запись/доказательства, не выдаёт статический плеер за live console. Backend/test signing endpoints туда не размещаются.
-
-По проверенной8октября [GitHub documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages), Free поддерживает Pages для public repositories. Это бесплатный конкретный вариант, не обещание доступности ещё не опубликованного сайта. Source publication — отдельное решение: START, общие правила3, запрещает автоматически публиковать private repo.
-
-Локальный preview: npm run submission:preview → http://127.0.0.1:5180 . Реальное приложение: http://127.0.0.1:3000 после build, либо5173 в dev. Эти localhost URL не вставляются в заявку как публичные.
-
-## Порядок оставшихся действий
-
-1. Проверить основной профиль/регистрацию World's Fair и создать реальный project entry. Login Copilot это не заменяет.
-2. Получить разрешение на public source + Pages и проверить материалы без авторизации после публикации.
-3. При доступном free test-SOL выполнить devnet deploy и полный cycle; иначе сохранить честный localnet-only статус и не отмечать devnet passed.
-4. Внести реальные Colosseum/project/video/source URL и окончательный статус в поля KASE.
-5. Владелец подтверждает Terms/scope/KYC и финальную отправку; затем проверяется accepted submission state/ID.
-
-Статус сейчас: **needs work**, не подано. Техническое выполнение localnet доказано; доступность материалов и регистрация — отдельные обязательные gates. На8октября ближайший опубликованный день KZ registration — сегодня, час неизвестен. Global deadline12окт23:59PT =13окт11:59UTC+5; местные сроки не продлеваются. Источники и точные пределы — docs01.
+No social post, organizer message, visibility change, paid hosting, mainnet or real-money action is authorized here.

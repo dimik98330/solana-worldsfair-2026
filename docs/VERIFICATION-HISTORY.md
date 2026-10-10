@@ -4,7 +4,19 @@
 
 These are separate historical verification cohorts, preserved with their source IDs and original results. Words such as current/final in dated underlying reports refer to that report's cutoff. They do not replace the later hosted devnet evidence. No failed run is relabelled successful.
 
-## Verification and evidence
+## Current v4 verification, 10 October 2026
+
+Current contracts: [TECHNICAL](../TECHNICAL.md), [paged servicing](34-PAGED-SERVICING.md). SBF 959,536 bytes/SHA ee2bb0f7…8f1ee12. Actual [CI38010713994](https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38010713994) and main38011919679 passed on their exact source:352 Node/10optional PG skips,90 UI,3 Rust unit/20 runtime; separate PostgreSQL40passed/3TLS-fixture skips. [CI attribution](integrations/CI-VERIFICATION.md).
+
+Prepared launcher:37/37 independently observed finalized transactions,1,800coupon/18,000principal/18burn/all financial closure0. [Report](evidence/servicing-v4-one-command-20261010.json), [fresh observation](evidence/servicing-v4-one-command-check-20261010.json).
+
+Separate33→34holder/9coupon cohort:253proofs,21,600coupon/48,000principal/48burn/all financial closure0. Archived247finalized/6confirmed; a later query missed75statuses.178nonnull statuses did not establish their finality. Fresh financial reread passed revision496. [Summary](evidence/servicing-v4-localnet-summary-20261010.json), [history](evidence/servicing-v4-history-observation-20261010.json). Neither the strict missing-history diagnostic nor failed-before-execution WSL check passed.
+
+Earlier local runs had344total/326pass/8fail/10skip and358total/340pass/8fail/10skip; an older serial partial cut stopped at143pass/3timeouts. Green isolated CI does not erase these failures. Retained ignored logs and immutable Git history preserve their cutoffs. [Readiness](35-READINESS.md) separates report acceptance from official judging.
+
+Public Render remains v3. Ordinary Phantom success and external bank/KASE acceptance remain unverified.
+
+## Historical v3 and earlier cohorts
 
 Recorded backend snapshot: **SBF 541,456 bytes**, program `B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8`, SHA-256:
 
@@ -12,7 +24,7 @@ Recorded backend snapshot: **SBF 541,456 bytes**, program `B3aFCQ25iN3gjmvznAaY5
 761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd
 ```
 
-The current release manifest is [programs/bondtrace/release.json](../programs/bondtrace/release.json). Counts below describe their recorded runs; they do not claim every check was performed in the same run or that historical evidence matches later UI changes.
+The current source release manifest, which now describes v4, is [programs/bondtrace/release.json](../programs/bondtrace/release.json). Counts below describe their recorded runs; they do not claim every check was performed in the same run or that historical evidence matches later UI changes.
 
 | Check | Recorded result | What it establishes |
 |---|---|---|
@@ -53,7 +65,7 @@ bash scripts/ci-verify.sh
 
 PostgreSQL integration is separate from the default localnet setup: use a disposable loopback PostgreSQL16 database at127.0.0.1:32545 named bondtrace_tests, set BONDTRACE_TEST_PG_URL only in the test process, then run `npm run test:postgres`. The runner rejects unrelated endpoints and runs sequentially. [Optional local Compose fixture](../deploy/postgres-test.compose.yaml) contains a synthetic public test password; its Docker image was not run here. TLS handshake cases additionally need BONDTRACE_TEST_PG_CA and a matching local TLS server. Never reuse the hosted DATABASE_URL for destructive schema/fault tests. The published43-test cohort used a real isolated server and local test CA, with no skipped TLS cases.
 
-This runs application/client/UI/SBF and Rust runtime checks. It does not run the live Windows lifecycle or prove a devnet deployment. The GitHub workflow is manual, not automatically triggered by a push.
+This runs application/client/UI/SBF and Rust runtime checks. It does not run the live Windows lifecycle or prove a devnet deployment. At that historical cutoff the workflow was manual. Current pushes to main, pull requests and manual dispatch trigger the workflow; actual runs are attributed above.
 
 
 ---
@@ -109,4 +121,4 @@ BONDTRACE_CI=true bash scripts/setup-isolated-toolchain.sh
 bash scripts/ci-verify.sh
 ```
 
-Linux CI выполняет application/client/UI/SBF и Rust runtime checks, но не полный Windows lifecycle и не devnet deployment. GitHub workflow запускается вручную, а не автоматически после push. Native macOS/ARM-запуск не проверен.
+Linux CI выполняет application/client/UI/SBF и Rust runtime checks, но не полный Windows lifecycle и не devnet deployment. Это историческое описание: текущий workflow запускается также по push в main и pull request; реальные зелёные прогоны указаны выше. Native macOS/ARM-запуск не проверен.

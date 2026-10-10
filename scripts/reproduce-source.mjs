@@ -36,7 +36,7 @@ if (flags.has('--verify') && process.platform !== 'win32') throw new Error('Run 
 // output, old fixtures, evidence archives, or account credentials are copied.
 const rootFiles = new Set(['package.json','package-lock.json','Cargo.toml','Cargo.lock','rust-toolchain.toml','Anchor.toml','tsconfig.json','tsconfig.web.json','vite.config.ts','index.html','.gitignore','.gitattributes','.dockerignore','Dockerfile','render.yaml','AGENTS.md','CODEX_SOLANA_WORLDSFAIR_START.md','README.md','README.ru.md','TECHNICAL.md','PRODUCT.md','DESIGN.md','brand.md']);
 const trees = ['apps/web','packages/client','programs/bondtrace','server','scripts','tests'];
-const documents = ['docs/00-STATE.md','docs/21-BACKEND-FOCUS.md','docs/29-BACKEND-STRENGTHENING.md','docs/31-HOSTING.md'];
+const documents = ['docs/00-STATE.md','docs/21-BACKEND-FOCUS.md','docs/29-BACKEND-STRENGTHENING.md','docs/31-HOSTING.md','docs/11-SECURITY.md','docs/15-API-CONTRACT.md','docs/34-PAGED-SERVICING.md','docs/LOCALNET-SETUP.md'];
 const excludedDirectories = new Set(['.local','.git','.agents','.codex','.claude','.impeccable','node_modules','target','dist','build','coverage','artifacts','fixtures','wallets','keys','credentials']);
 const codeExtensions = new Set(['.ts','.tsx','.js','.mjs','.cjs','.mts','.cts','.css','.html','.rs','.toml','.sh','.ps1']);
 const assetExtensions = new Set(['.svg','.png','.jpg','.jpeg','.webp','.ico','.woff','.woff2','.ttf','.otf']);

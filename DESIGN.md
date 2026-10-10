@@ -196,7 +196,7 @@ BondTrace is an operating issuer and holder application. Deep navy surfaces cont
 
 The implemented world preserves the owner's dark navy direction, English/Russian switch, full desktop width, single field focus edge and existing exact financial/signing semantics. The product presentation is separate. Product commitments live in [PRODUCT.md](PRODUCT.md); the current replacement brief is [docs/frontend/ECC-REDESIGN.md](docs/frontend/ECC-REDESIGN.md). Earlier light-canvas and Settlement Ledger captures are historical.
 
-The9October voting/interaction revision is described in [INTERACTION-RESULTS.md](docs/frontend/INTERACTION-RESULTS.md). Current controls, native navigation and vote layouts below reflect that implemented source. Earlier capture timestamps describe their own source cutoff; current QA and native-window limitations are recorded separately in docs/design-qa.md.
+The9October voting/interaction revision is described in [INTERACTION-RESULTS.md](https://github.com/dimik98330/solana-worldsfair-2026/blob/9b64a52b7ea98a5bd8bb9f81dbfc611d08aa3a4b/docs/frontend/INTERACTION-RESULTS.md). Current controls, native navigation and vote layouts below reflect that implemented source. Earlier capture timestamps describe their own source cutoff; current QA and native-window limitations are recorded separately in docs/design-qa.md.
 
 **Key Characteristics:**
 

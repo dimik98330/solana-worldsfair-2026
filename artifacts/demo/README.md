@@ -1,10 +1,10 @@
-# BondTrace demo assets
+# Historical BondTrace demo assets
 
-This folder contains a reproducible local pipeline for a 16:9 captured-product walkthrough. **The video is edited captured UI, not continuous screen recording or evidence of a human wallet signature.** All assets are test/localnet. The actual frame manifest and final `render-validation.json` determine what was rendered.
+This earlier localnet release is separate from current v4. See [current demo](../../docs/13-DEMO.md). This folder contains a reproducible local pipeline for a 16:9 captured-product walkthrough. **The video is edited captured UI, not continuous screen recording or evidence of a human wallet signature.** All assets are test/localnet. The actual frame manifest and final `render-validation.json` determine what was rendered.
 
 ## Inputs and source
 
-- `SCENE-PLAN.md`: story, constraints, frame direction and ownership.
+- [Archived SCENE-PLAN.md](https://github.com/dimik98330/solana-worldsfair-2026/blob/9b64a52b7ea98a5bd8bb9f81dbfc611d08aa3a4b/artifacts/demo/SCENE-PLAN.md): story, constraints, frame direction and ownership.
 - `scenes.json`: final verified frame/clip manifest, English narration cues, timing, crop bounds and the separately identified browser issue.
 - `scenes.draft.json`: preserved initial story/narration work, not the final render manifest.
 - `narrate.ps1`: installed Microsoft Zira English voice via Windows SAPI; offline, without a paid or external provider.
@@ -12,7 +12,7 @@ This folder contains a reproducible local pipeline for a 16:9 captured-product w
 - Verified screen inputs: lead-provided JPEG files under `docs/evidence/ui`, frozen byte-for-byte under `inputs/` with original paths and hashes in `frozen-inputs.json`.
 - `capture_clips.py`: encodes actual CUA JPEG sequences and timestamps; source-frame hashes and timing are retained beside every clip.
 - Saved integration reference: `docs/evidence/full-smoke-localnet.json`; this is the 7 October local run, separately labelled if later captures use another issue.
-- `docs/18-TECHNICAL-OVERVIEW.md`: English technical scope and limitations.
+- [Archived 18-TECHNICAL-OVERVIEW.md](https://github.com/dimik98330/solana-worldsfair-2026/blob/9b64a52b7ea98a5bd8bb9f81dbfc611d08aa3a4b/docs/18-TECHNICAL-OVERVIEW.md): English technical scope and limitations.
 
 ## Rebuild
 
@@ -46,6 +46,6 @@ Temporary `rendered/**`, `audio/**` and `qa/**` hold reproducible intermediate f
 
 The renderer was compiled with Python; fixed coupon/reserve calculations and eleven confirmed saved proof rows were checked against the local JSON. The distinct browser-cycle JSON has 16 confirmed activity records, 900 coupon, 18,000 principal, 18 bonds retired and zero vault. Local narration was generated and measured; every scene fits its allocated duration. Final WSL FFprobe measured **174.021333 seconds (2:54.021), H.264/AAC, 1920×1080, 30fps, 5,220 video frames**. Complete FFmpeg decode passed. Final action/result frames were visually reviewed; the complete three-row immutable snapshot was checked after its crop repair. WebVTT was checked to contain the same 44 cues/timestamps/text as the SRT. `render-validation.json` is authoritative for the final digest and bytes; `final-assets.json` freezes the delivered files for independent review.
 
-Skills used: installed ProofPilot in coach mode for truthful submission claims; marketing-video, video-craft and design-taste with the listed references in `SCENE-PLAN.md`. Existing user/project direction supplies product, jury audience, duration, brand and test scope, so no redundant interview or design approval loop is required. This is asset preparation, not an application-readiness verdict or an official score.
+Skills used: installed ProofPilot in coach mode for truthful submission claims; marketing-video, video-craft and design-taste with the listed references in [Archived SCENE-PLAN.md](https://github.com/dimik98330/solana-worldsfair-2026/blob/9b64a52b7ea98a5bd8bb9f81dbfc611d08aa3a4b/artifacts/demo/SCENE-PLAN.md). Existing user/project direction supplies product, jury audience, duration, brand and test scope, so no redundant interview or design approval loop is required. This is asset preparation, not an application-readiness verdict or an official score.
 
-Ownership stays limited to this folder and `docs/18-TECHNICAL-OVERVIEW.md`. At continuation read AGENTS/STATE, relevant installed skills and the current capture/evidence cutoff before substantial work. Lead owns STATE, dependencies/config/Git and publication/submission decisions. Never publish keypairs, private account data or generated local signer files.
+Ownership stays limited to this folder and [Archived 18-TECHNICAL-OVERVIEW.md](https://github.com/dimik98330/solana-worldsfair-2026/blob/9b64a52b7ea98a5bd8bb9f81dbfc611d08aa3a4b/docs/18-TECHNICAL-OVERVIEW.md). At continuation read AGENTS/STATE, relevant installed skills and the current capture/evidence cutoff before substantial work. Lead owns STATE, dependencies/config/Git and publication/submission decisions. Never publish keypairs, private account data or generated local signer files.

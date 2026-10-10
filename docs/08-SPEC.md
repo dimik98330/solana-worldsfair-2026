@@ -19,7 +19,7 @@
 | AC11 | Reproducibility | Чистая установка/запуск, seed test data, сохранённые checks/provenance; восстановление/reload сохраняют chain state |
 | AC12 | Submission | Рабочий prototype, demo video, source repo доступный жюри, technical overview; global registration обязательна |
 
-Допуск к финальной подаче: AC01–AC12 покрыты evidence либо конкретная непроверенная часть явно объявлена; наличие исходников не означает passed. External/fiat rails можно моделировать по условиям задания, но логика entitlement и Solana flow должны работать.
+Допуск к финальной подаче требует выполнения обязательных критериев. Объявленная непроверенная часть остаётся непроверенной и не становится passed: AC12/регистрация/финальная отправка пока не подтверждены, обычная подпись Phantom также не подтверждена. Проверенные технические сценарии и их границы перечислены в [README](../README.md) и [readiness](35-READINESS.md). External/fiat rails можно моделировать по условиям задания, но entitlement и Solana flow должны работать.
 
 ## Демо-сценарий
 

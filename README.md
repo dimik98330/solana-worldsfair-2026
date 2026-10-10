@@ -163,3 +163,8 @@ Classic SPL bond accounts remain frozen outside controlled transfers for record-
 The adapter is a concrete pilot boundary. External acceptance needs a named registry/custodian, trusted keys/mappings, bank sandbox, signed reconciliation acceptance and legal/operational owners. No interviews, partnerships, demand, regulatory approval or official judging score are invented.
 
 Private keys, .env, databases, signed intents and browser/auth state stay ignored. Keep independent metadata backups. Registration, final contest submission and demo-video upload remain owner actions.
+
+
+## Evidence report and documentation
+
+`npm run report` creates an **offline HTML verification snapshot** and input SHA-256 manifest in ignored `.local/reports`; it validates retained cohort files and prints the path. It makes no network requests, signs nothing and is not a fresh health/finality check. [Documentation map](docs/README.md) · [Current API](docs/15-API-CONTRACT.md) · [Security/trust](docs/11-SECURITY.md) · [Publication/history](docs/PUBLICATION.md).
