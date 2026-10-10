@@ -18,6 +18,14 @@ $apiOrigin='http://127.0.0.1:'+$ApiPort
 function RpcGenesis { $reply=Invoke-RestMethod -Uri $rpcUrl -Method Post -ContentType 'application/json' -Body '{"jsonrpc":"2.0","id":1,"method":"getGenesisHash"}' -TimeoutSec 2; if($reply.error -or -not $reply.result){throw 'RPC genesis unavailable'}; return $reply.result }
 function PortBusy([int]$Number){return [bool](Get-NetTCPConnection -LocalPort $Number -State Listen -ErrorAction SilentlyContinue)}
 if((PortBusy $ApiPort) -and (-not $prior -or $prior.apiOrigin -ne $apiOrigin)){throw 'API port belongs to another or unrecorded process. Refusing to start a validator for it.'}
+if(PortBusy $ApiPort){
+  $apiListeners=@(Get-NetTCPConnection -LocalPort $ApiPort -State Listen -ErrorAction Stop | Select-Object -ExpandProperty OwningProcess -Unique)
+  if($apiListeners.Count -ne 1 -or $apiListeners[0] -ne $prior.apiProcessId){throw 'API listener differs from the recorded PID; preserve it before any validator launch.'}
+  $apiOwner=Get-Process -Id $apiListeners[0] -ErrorAction Stop
+  $apiCommand=([string](Get-CimInstance Win32_Process -Filter "ProcessId=$($apiListeners[0])").CommandLine).Replace('/','\')
+  $expectedApiScript=[regex]::Escape((Join-Path $projectRoot 'server/index.ts').Replace('/','\'))
+  if($apiOwner.ProcessName -ne 'node' -or $apiOwner.StartTime.ToUniversalTime() -gt ([DateTime]$prior.startedAt).ToUniversalTime() -or $apiCommand -notmatch ('(?:^|\s)"?'+$expectedApiScript+'"?(?:\s|$)')){throw 'Recorded API PID was reused or has another workspace; preserve it.'}
+}
 function WslPath([string]$Path){$converted=((& wsl.exe -d $bondtraceWslDistro --exec wslpath -a $Path.Replace('\','/')) -join '').Trim();if($LASTEXITCODE -ne 0){throw 'WSL path resolution failed'};return $converted}
 $stamp=Get-Date -Format 'yyyyMMddTHHmmssfff'
 $useNative=$NativeLedger -or ($prior -and $prior.ledgerStorage -eq 'wsl-native')

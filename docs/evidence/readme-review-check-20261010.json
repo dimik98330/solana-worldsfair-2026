@@ -1,0 +1,198 @@
+{
+  "schema": "bondtrace.readme-review.v1",
+  "mode": "coach",
+  "reviewerMode": "separate-context",
+  "frozenAt": "2026-10-10T13:17:31.1884242Z",
+  "reviewedSource": "d100f1c1b0f8242a1ed770a86415d52195af0634",
+  "verdict": "accepted bounded bilingual README and evidence handoff after repair2",
+  "materialIssues": 0,
+  "minorIssues": 0,
+  "resolved": [
+    "matching v3/v4 checkout gate",
+    "BUFFER source hash binding",
+    "paged setup hint"
+  ],
+  "checks": {
+    "links": 104,
+    "missing": 0,
+    "reviewedFiles": 33,
+    "ciLogsIndependentlyMatched": true,
+    "englishRussianParity": true
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "reviewedLocalSha256": "a7d1f0215b1969a205b23fa6c4b8a8d3212076a866933a41b2654db97f41bf68",
+      "repositorySha256": "ebb7399fb3f5180ca141378be1a4b464504b0621a5ead5690bb7d5f06253fa1d"
+    },
+    {
+      "path": "README.ru.md",
+      "reviewedLocalSha256": "a9e8446aad82a9a2b5b0a3fea65b963e897213561259b3caf6eb69dd858acc24",
+      "repositorySha256": "4cb99d647ad732ef27e1b8375e83ed8022e79d4c805ed82db2e4bf70f918076e"
+    },
+    {
+      "path": "TECHNICAL.md",
+      "reviewedLocalSha256": "58e6b082210cfe47e0049b303e6f9154ccb8fd09b66b75da9c1170ff3ddce165",
+      "repositorySha256": "58e6b082210cfe47e0049b303e6f9154ccb8fd09b66b75da9c1170ff3ddce165"
+    },
+    {
+      "path": "docs/31-HOSTING.md",
+      "reviewedLocalSha256": "71d25f226b729441b746a8154f38dfa0f3b8781c08baf7ae819508d79246692e",
+      "repositorySha256": "71d25f226b729441b746a8154f38dfa0f3b8781c08baf7ae819508d79246692e"
+    },
+    {
+      "path": "docs/33-HOSTED-DEPLOYMENT.md",
+      "reviewedLocalSha256": "a8ef536dac54e0badffa17f39faedea91c80c9d0b2de1447fd47bee297830fdc",
+      "repositorySha256": "a8ef536dac54e0badffa17f39faedea91c80c9d0b2de1447fd47bee297830fdc"
+    },
+    {
+      "path": "docs/evidence/wallet-buffer-check-20261010.json",
+      "reviewedLocalSha256": "b0b3ac01a17527f4412dcb46d3350d5cb87918b4c0c102b77c942ecdc4e1674c",
+      "repositorySha256": "b0b3ac01a17527f4412dcb46d3350d5cb87918b4c0c102b77c942ecdc4e1674c"
+    },
+    {
+      "path": "package.json",
+      "reviewedLocalSha256": "c57f15715d59d650bf38945eea48fdf299390b986808b41f7f0d73d05ed384b8",
+      "repositorySha256": "c57f15715d59d650bf38945eea48fdf299390b986808b41f7f0d73d05ed384b8"
+    },
+    {
+      "path": "programs/bondtrace/release.json",
+      "reviewedLocalSha256": "4f98f28f05b96350f2801bf66b058126d9a52c19df2c1b8f7316a191d7eb142f",
+      "repositorySha256": "4f98f28f05b96350f2801bf66b058126d9a52c19df2c1b8f7316a191d7eb142f"
+    },
+    {
+      "path": "programs/bondtrace/src/v2.rs",
+      "reviewedLocalSha256": "8add603a953ff88e908fba47dc0ffcee2e5b4b21b02c64cc5bdca796bb577a6d",
+      "repositorySha256": "8add603a953ff88e908fba47dc0ffcee2e5b4b21b02c64cc5bdca796bb577a6d"
+    },
+    {
+      "path": "programs/bondtrace/src/v2_state.rs",
+      "reviewedLocalSha256": "f23203fcbaf2cad693db8549ff2b9ff267adab993e62a27cfe9e9648130db2f0",
+      "repositorySha256": "f23203fcbaf2cad693db8549ff2b9ff267adab993e62a27cfe9e9648130db2f0"
+    },
+    {
+      "path": "programs/bondtrace/src/v2_contexts.rs",
+      "reviewedLocalSha256": "e3dd5d3fdbd39ac92cede7b4f471bc34686b513c7ddf80fbab73d00ccf9c7a51",
+      "repositorySha256": "e3dd5d3fdbd39ac92cede7b4f471bc34686b513c7ddf80fbab73d00ccf9c7a51"
+    },
+    {
+      "path": "packages/client/src/domain.ts",
+      "reviewedLocalSha256": "9c6bff657a5e69740ac7dbfeb6debc593df01520e4b93397743ba352ca67e0d8",
+      "repositorySha256": "9c6bff657a5e69740ac7dbfeb6debc593df01520e4b93397743ba352ca67e0d8"
+    },
+    {
+      "path": "server/transactions.ts",
+      "reviewedLocalSha256": "dbee86c7cdd9f64ddbd138d6fe0e674bc5400bf2e2e40c633224c9f4d60c718e",
+      "repositorySha256": "dbee86c7cdd9f64ddbd138d6fe0e674bc5400bf2e2e40c633224c9f4d60c718e"
+    },
+    {
+      "path": "server/integrations.ts",
+      "reviewedLocalSha256": "0366db14ed00e03debe8a48ae87cf90deb0e6c41139d0fefe1004b93448a2926",
+      "repositorySha256": "0366db14ed00e03debe8a48ae87cf90deb0e6c41139d0fefe1004b93448a2926"
+    },
+    {
+      "path": "apps/web/src/wallet-signing.ts",
+      "reviewedLocalSha256": "c94d05b16d44f1670365f597b7a3a1ff5fc95a1b12e83246868f19c69e91c122",
+      "repositorySha256": "c94d05b16d44f1670365f597b7a3a1ff5fc95a1b12e83246868f19c69e91c122"
+    },
+    {
+      "path": "apps/web/src/wallet-signing.test.ts",
+      "reviewedLocalSha256": "ad92115a943d33edc501a9960525f32695150d2d6e0e1f744a16666e39afd9e0",
+      "repositorySha256": "ad92115a943d33edc501a9960525f32695150d2d6e0e1f744a16666e39afd9e0"
+    },
+    {
+      "path": "scripts/judge-setup.ps1",
+      "reviewedLocalSha256": "66ee8da3eaf9e1d7cbf5868f9a5d6c3d30b54b6806ffab37372f4c4de61106d5",
+      "repositorySha256": "66ee8da3eaf9e1d7cbf5868f9a5d6c3d30b54b6806ffab37372f4c4de61106d5"
+    },
+    {
+      "path": "scripts/lifecycle-demo.ps1",
+      "reviewedLocalSha256": "10f43dee559b24433bd91eefd00b39dce3d55b0800fa1044a64c1ef0fb806e72",
+      "repositorySha256": "10f43dee559b24433bd91eefd00b39dce3d55b0800fa1044a64c1ef0fb806e72"
+    },
+    {
+      "path": "scripts/program-buffer.ts",
+      "reviewedLocalSha256": "b50b97f15687b2467e5a41fc79105146e7aeb67a134e1b57e098e1ee68356ad7",
+      "repositorySha256": "b50b97f15687b2467e5a41fc79105146e7aeb67a134e1b57e098e1ee68356ad7"
+    },
+    {
+      "path": "scripts/program-buffer-cli.ts",
+      "reviewedLocalSha256": "fb71f00a676e94c5e8febcdb3f237367263e9dcbafad2429a07b9845da102137",
+      "repositorySha256": "fb71f00a676e94c5e8febcdb3f237367263e9dcbafad2429a07b9845da102137"
+    },
+    {
+      "path": "scripts/program-buffer-journal.ts",
+      "reviewedLocalSha256": "16025b9e104ef43d59ba07e124008cd65b19352ac2d0fe26e5487de3f4b2aa7a",
+      "repositorySha256": "16025b9e104ef43d59ba07e124008cd65b19352ac2d0fe26e5487de3f4b2aa7a"
+    },
+    {
+      "path": "tests/program-buffer.test.ts",
+      "reviewedLocalSha256": "c1ae5184bb7dc93a11ae220e98d94f7291e91980395865951c7745582940efb3",
+      "repositorySha256": "c1ae5184bb7dc93a11ae220e98d94f7291e91980395865951c7745582940efb3"
+    },
+    {
+      "path": "tests/program-buffer-cli.test.ts",
+      "reviewedLocalSha256": "0c517643a977e9a960c1af89c0dca38656a443c6f64e2063a61e8f10820258c1",
+      "repositorySha256": "0c517643a977e9a960c1af89c0dca38656a443c6f64e2063a61e8f10820258c1"
+    },
+    {
+      "path": "tests/program-buffer-journal.test.ts",
+      "reviewedLocalSha256": "0355daf24389f0c53f361495345e33e53fdbfc7f15bdf97a1585f5aeddf6d727",
+      "repositorySha256": "0355daf24389f0c53f361495345e33e53fdbfc7f15bdf97a1585f5aeddf6d727"
+    },
+    {
+      "path": "tests/program/runtime_v2.rs",
+      "reviewedLocalSha256": "3854cec3cfc2e185d08bb789f9b470e7da8b608dd654b2458f29a7a627414b2b",
+      "repositorySha256": "3854cec3cfc2e185d08bb789f9b470e7da8b608dd654b2458f29a7a627414b2b"
+    },
+    {
+      "path": "docs/evidence/servicing-v4-one-command-check-20261010.json",
+      "reviewedLocalSha256": "cf6909bd84a23c9dccf2cea9a9238724b108bff97a0c1288a14d5d7203db852e",
+      "repositorySha256": "cf6909bd84a23c9dccf2cea9a9238724b108bff97a0c1288a14d5d7203db852e"
+    },
+    {
+      "path": "docs/evidence/servicing-v4-localnet-summary-20261010.json",
+      "reviewedLocalSha256": "ad057f28d6c6a56edda13bda7fd2bd172169db9cf53f3434fcefee9e04f4fcd8",
+      "repositorySha256": "ad057f28d6c6a56edda13bda7fd2bd172169db9cf53f3434fcefee9e04f4fcd8"
+    },
+    {
+      "path": "docs/LOCALNET-SETUP.md",
+      "reviewedLocalSha256": "73d31dee409cdfab2ff6a4de7b3dfa299d88c7c5ed7e641d2ac4173139112880",
+      "repositorySha256": "73d31dee409cdfab2ff6a4de7b3dfa299d88c7c5ed7e641d2ac4173139112880"
+    },
+    {
+      "path": ".gitignore",
+      "reviewedLocalSha256": "578f0895d4e4027aa4c0efddc034a26f80533c8dca6af5b2f46b115b729f6e2f",
+      "repositorySha256": "578f0895d4e4027aa4c0efddc034a26f80533c8dca6af5b2f46b115b729f6e2f"
+    },
+    {
+      "path": "render.yaml",
+      "reviewedLocalSha256": "53400a0e91b8cebf6aebcfe528580fd7aadd47d753e48dbfb38df533829f47e0",
+      "repositorySha256": "53400a0e91b8cebf6aebcfe528580fd7aadd47d753e48dbfb38df533829f47e0"
+    },
+    {
+      "path": "docs/evidence/localnet-recovery-check-20261010.json",
+      "reviewedLocalSha256": "731607aae506d3fe30a4fad03ee666fd1352181f7b0cffe82c5a72868fc094e3",
+      "repositorySha256": "731607aae506d3fe30a4fad03ee666fd1352181f7b0cffe82c5a72868fc094e3"
+    },
+    {
+      "source": "https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38053587760/job/114217455383",
+      "reviewedLogSha256": "1b4defc2a010aaff51c45bddb07c616f97a7ecc30dc9a561462baa691c14689d"
+    },
+    {
+      "source": "https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38053587760/job/114217455508",
+      "reviewedLogSha256": "e7b5916b59a2b64ed4847abf1735b0ef3fcf7967bf2d25445ebb2f8918fbe495"
+    }
+  ],
+  "serialization": "Reviewed local bytes preserved semantically; repository normalizes CRLF to LF, explicit hashes recorded",
+  "originalReviewSha256": "7b33612d86b3c185b734a828061fe9e5c67ac99aa5017e7a1fae6e0df37f0ca8",
+  "exclusions": [
+    "human Phantom success",
+    "public v4 upgrade",
+    "full BUFFER upload",
+    "cold-machine setup",
+    "partner integration",
+    "official judging score",
+    "whole-product certification"
+  ]
+}

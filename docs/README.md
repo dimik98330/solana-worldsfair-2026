@@ -25,6 +25,10 @@ Start with [English README](../README.md) or [Русский README](../README.r
 
 The [evidence directory](evidence) retains transaction receipts, normalized execution proofs, original failures, source/manifest hashes and reviewed UI captures. Compact v4 entry points: [37-transaction launcher](evidence/servicing-v4-one-command-check-20261010.json), [33→34-holder/9-coupon scale run](evidence/servicing-v4-localnet-summary-20261010.json), [program/CI/shadow adapter](evidence/servicing-v4-verification-20261010.json).
 
+[10October wallet/BUFFER supplement](evidence/wallet-buffer-check-20261010.json) records the actual wallet-only service deployment, PR3 CI, bounded localnet BUFFER rehearsal and independent repair1 review. It preserves the unresolved human-wallet/public-v4 scopes and publishes no signed wire or key material.
+
+[Same-ledger recovery check](evidence/localnet-recovery-check-20261010.json) distinguishes preserved37 operation receipts and verified current financial accounts from unavailable fresh historical signature statuses. It uses the existing chain and sends no replacement financial transaction.
+
 Obsolete research, superseded plans and agent handoffs are removed from the current tree after exact local archiving. They remain in [Git snapshot9b64a52](https://github.com/dimik98330/solana-worldsfair-2026/tree/9b64a52b7ea98a5bd8bb9f81dbfc611d08aa3a4b/docs). Paths named by historical evidence refer to their recorded source revision, not necessarily the current checkout. Frozen JSON/media are not rewritten to make an old result current.
 
 Для жюри достаточно README → TECHNICAL → нужный контракт/доказательство. Служебные старые планы не являются текущими ограничениями программы. Исторические результаты, отсутствующая обычная подпись Phantom и непроверенный внешний партнёр не превращаются в успешные проверки при уборке документации.

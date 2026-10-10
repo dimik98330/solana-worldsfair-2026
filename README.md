@@ -12,12 +12,12 @@ The hosted application reads real devnet accounts and transaction receipts. It r
 
 | Version | Verification scope |
 |---|---|
-| Public devnet | Recorded v3 program, SHA `761b993d…077bdfd`: completed lifecycle, 26 finalized transactions, restart and backup. [Deployment record](docs/33-HOSTED-DEPLOYMENT.md). |
+| Public devnet | v3 program, SHA `761b993d…077bdfd`; wallet-only service source `e658553` deployed on 10 October. Completed lifecycle,26 finalized transactions, restart and backup. [Deployment record](docs/33-HOSTED-DEPLOYMENT.md). |
 | Current v4 source | Additive paged accounts, permissionless maturity servicing, post-activation receivers and signed integration adapters. SBF SHA `ee2bb0f7…8f1ee12`; local verification is separate below. |
 | Ordinary Phantom | Connection observed; sign-only transport and exact-message verification implemented and tested. A successful human Phantom transaction is **not yet confirmed**. |
 | External institutions | Signed registry/settlement adapter and shadow reconciliation implemented. No KASE, bank, custodian or customer integration/endorsement is claimed. |
 
-The v4 server requires its matching program image. Do not connect it to the older public program and bypass the hash check. Publishing source does not upgrade a Solana program. The wallet-only source fix is merged; hosted deployment must be checked separately.
+The v4 server requires its matching program image. Do not connect it to the older public program and bypass the hash check. Publishing source does not upgrade a Solana program. The separate wallet-only v3 service deploy was checked through its actual JS asset, program hash, PostgreSQL and unchanged completed issue on 10 October. [Versioned supplement](docs/evidence/wallet-buffer-check-20261010.json).
 
 ![Recorded devnet coupon payments](docs/evidence/hosted-devnet-payments-20261009.png)
 
@@ -84,7 +84,7 @@ WSL is used for Solana compilation/local validator on Windows. Browsing the publ
 3. In a matching local v4 runtime, create an annual-rate/frequency or fixed-calendar issue. Supply dates, settlement mint and terms; review and sign. Registration, issuance and full funding precede activation.
 4. Any account can pay due capture fees. Large snapshots advance page by page in the operations panel. Holders claim coupons or sign their own principal burn/payment; executors settle coupons only to fixed beneficiaries.
 
-The automated demo uses generated signers. Ordinary Phantom signing remains an acceptance gap until a successful transaction is retained. Sign-only relays through the same journal; no silent wallet-broadcast fallback follows a failed prompt.
+The automated demo uses generated signers. Ordinary Phantom signing remains an acceptance gap until a successful transaction is retained. The v0 format repair uses the Wallet Standard full-wire bridge; legacy injected requests stay separate. Set **Phantom → Settings → Developer Settings → Testnet Mode → Solana Devnet** and use free test SOL for fees. Mainnet SOL does not fund this test network. Cancel an insufficient-balance or failed-simulation warning, refresh the example dates and prepare a fresh review; never approve an unsafe prompt to finish the demo. Acceptance requires a retained signature, chain confirmation and the expected issue account. Sign-only relays through the same journal; no silent wallet-broadcast fallback follows a failed prompt.
 
 ## Architecture and backend
 
@@ -123,10 +123,13 @@ Contracts: [v4 servicing](docs/34-PAGED-SERVICING.md), [API](docs/15-API-CONTRAC
 | Current v4 program | SBF build, **3 unit + 20 SBF/SPL runtime tests** passed, including 64 sequences and 33→34 holders/9 coupons |
 | Actual v4 RPC/localnet lifecycle | **33 → 34 holders, 9 coupons, 253 transactions**: 215 instrument/servicing + 38 auxiliary. **21,600 coupons / 48,000 principal / 48 burned**, supply/vault/obligations0; issuer absent from maturity opening; old 500 coupon claimed after burn |
 | Actual prepared one-command launcher | A separate 3 → 4 holder / 2 coupon lifecycle passed; **37/37 signatures freshly finalized**, 1,800 coupons / 18,000 principal / 18 burned and zero supply/vault/obligations. [Independent built-origin/RPC check](docs/evidence/servicing-v4-one-command-check-20261010.json), [full report](docs/evidence/servicing-v4-one-command-20261010.json) |
-| Current isolated GitHub verification | [Source `5678433`, successful run](https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38019153339): **356 Node passed, 0 failed, 10 optional PostgreSQL skipped; 90 UI passed**. Independent SBF rebuild matched the exact v4 hash; 3 Rust unit / 20 runtime cases passed again |
+| Wallet repair with v4, isolated GitHub verification | [PR3 merge checkout, successful run](https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38035694642): **356 Node passed, 0 failed, 10 optional PostgreSQL skipped; 93 UI passed**. Independent SBF rebuild matched the exact v4 hash;3 Rust unit / 20 runtime cases passed again. This run excludes the later BUFFER tool |
 | Current disposable PostgreSQL job | **40 passed, 0 failed, 3 TLS-fixture skips** using PostgreSQL16.15; the plain local fixture does not establish TLS. Same source/run, separate database job |
 | Current storage | Real-process cold-open contention, namespace/symlink guards, bulk reads and same-ID projection recovery checked separately; complete-run scope is versioned |
 | Adapter on actual local v4 chain | Entitlement **500,000,000** base units; signed shadow/replay survived API restart; financial graph unchanged; no bank dispatch |
+| BUFFER preparation tool, separate check | **29 targeted tests passed**, typecheck/build passed; independent critic accepted repair1. Recorded localnet 2701-byte buffer stopped after 2 signed transactions, then resumed the same journal/buffer to 5 distinct transactions and a finalized byte hash. Existing program unchanged. This is not a full-image/devnet upload or upgrade |
+| Core + wallet + BUFFER, full main CI | [Source `d100f1c`, successful run](https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38053587760): **385 Node passed, 0 failed, 10 optional PostgreSQL skipped; 93 UI passed; 3 Rust unit / 20 SBF runtime passed**. Exact v4 image rebuilt; separate PostgreSQL 40 passed / 3 TLS-fixture skips. The later Windows runtime ownership guard was checked separately |
+| Same-ledger crash recovery | Invalid empty snapshot isolated with backups, previous ledger resumed. **37 original operation IDs/signatures recovered by GET**, financial graph unchanged at 1,800 coupon / 18,000 principal / 18 burned, zero obligations. Fresh RPC statuses for all37 old signatures were unavailable; the earlier finalized observations are retained separately. [Recovery check](docs/evidence/localnet-recovery-check-20261010.json) |
 | Historical database | **43 PostgreSQL tests** with TLS fixture passed at their cutoff; this is not a fresh current-source CI result |
 
 [Verification history](docs/VERIFICATION-HISTORY.md) · [CI scope](docs/integrations/CI-VERIFICATION.md). A YAML workflow is not a green remote run. Counts from separate cohorts are not added together. Failed attempts retain their original scope.

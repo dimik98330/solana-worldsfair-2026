@@ -1,0 +1,244 @@
+{
+  "schema": "bondtrace.wallet-buffer-verification.v1",
+  "at": "2026-10-10T12:45:39.114Z",
+  "scope": "Wallet format repair and bounded BUFFER operations supplement; no complete human-wallet/public-v4 acceptance",
+  "wallet": {
+    "sourceCommit": "e658553632a8289c575494b0691e6c36ab92e7f0",
+    "deployId": "dep-db4urvqd0e5s73dj3qbg",
+    "observedAt": "2026-10-10T12:43:51.728Z",
+    "origin": "https://bondtrace-devnet.onrender.com",
+    "asset": {
+      "path": "/assets/index-DRI4xkk7.js",
+      "bytes": 424522,
+      "sha256": "d02dd927a8198d2ad311876d2c0ef82c5b6d4c407719437a5302b23e623e3be8",
+      "phantomInjectedCodePresent": true
+    },
+    "programSha256": "761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd",
+    "programPayloadBytes": 541456,
+    "storage": "postgres",
+    "preservedCohort": {
+      "couponBaseUnits": "900000000",
+      "principalBaseUnits": "18000000000",
+      "remainingObligationsBaseUnits": "0"
+    },
+    "humanTransactionVerified": false,
+    "oldRequests": [
+      {
+        "status": "prepared",
+        "chainStatus": "not_submitted",
+        "signature": null
+      },
+      {
+        "status": "prepared",
+        "chainStatus": "not_submitted",
+        "signature": null
+      }
+    ],
+    "derivedDraft": "Gwse9mePWKY8NSXujqWYkCfeB5qKPwviqUdNXYD1HKn7",
+    "derivedDraftObserved": false,
+    "diagnosis": "Legacy message-only injected requests are selected only for legacy; v0 uses existing Wallet Standard full wire/native account. Prior before-prompt format failure retained."
+  },
+  "ci": {
+    "runId": 38035694642,
+    "url": "https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38035694642",
+    "status": "success",
+    "headCommit": "e658553632a8289c575494b0691e6c36ab92e7f0",
+    "testedPullMerge": "c3d12f3313a95f25162a1503be624f3b0617f8c0",
+    "backend": {
+      "total": 366,
+      "passed": 356,
+      "failed": 0,
+      "skipped": 10
+    },
+    "ui": {
+      "passed": 93,
+      "failed": 0,
+      "skipped": 0
+    },
+    "rustUnit": {
+      "passed": 3
+    },
+    "sbfRuntime": {
+      "passed": 20
+    },
+    "postgres": {
+      "total": 43,
+      "passed": 40,
+      "failed": 0,
+      "skipped": 3
+    },
+    "sbfBytes": 959536,
+    "sbfSha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+    "excludesNewBufferTooling": true
+  },
+  "buffer": {
+    "observedAt": "2026-10-10T08:04:16.124Z",
+    "id": "buffer_rehearsal_109a63e78ce847d8bef7d343cf9a65e6",
+    "intent": {
+      "version": 1,
+      "id": "buffer_rehearsal_109a63e78ce847d8bef7d343cf9a65e6",
+      "network": "localnet",
+      "endpoint": "http://127.0.0.1:8999/",
+      "expectedGenesis": "FufYwudH3kBwAwCAqrL7vmCFsNHLgJ9kVTphrps8axeG",
+      "bufferAddress": "BE5u2UZhn8wnPcvqQfwoHWj5nfAD47Q4o7hhjT7eZbBj",
+      "authorityAddress": "J9rASYFwBRZuRdKFd2utziwDxHiyhKX7i9EPedaLC7Xh",
+      "imageSha256": "293d48ed409ca1b42f81bd73c80ffd4ef7441f77e979585ae909e0ecc09ad14e",
+      "imageLength": 2701,
+      "chunkSize": 900
+    },
+    "status": "bufferReady",
+    "interruptedAfterSigned": 2,
+    "totalDistinctSigned": 5,
+    "writeChunks": 4,
+    "existingProgramUnchanged": true,
+    "finalBufferContextSlot": "21855",
+    "transactions": [
+      {
+        "kind": "create",
+        "offset": 0,
+        "length": 0,
+        "signature": "5DFpR8tMRY6HX9TReBCyoBtRJHD5JE7SyPawxiZcieXKcYkJdBuwjPJwCpoAs8iSiuiHWrQUU5rVhhh7Xx7RevHi",
+        "feeLamports": "10000",
+        "rentLamports": "19947360"
+      },
+      {
+        "kind": "write",
+        "offset": 0,
+        "length": 900,
+        "signature": "37JHzzKGCGAn2KLcaei9UWsHgpDtSTUWptAgEA4rGWiwWRdQngn6zv4wBsyZWH3wu1Yz4xRMSUoFSUc52YWyqjpW",
+        "feeLamports": "5000",
+        "rentLamports": "0"
+      },
+      {
+        "kind": "write",
+        "offset": 900,
+        "length": 900,
+        "signature": "4AvyRfPqXr2LY6p8PAiFZL9hKaZy6cFEBQ6UXu93hTmFAQs9JbocUqfX98Au9iUqTvtoFZtGxqmaoQ41g7s6dEcW",
+        "feeLamports": "5000",
+        "rentLamports": "0"
+      },
+      {
+        "kind": "write",
+        "offset": 1800,
+        "length": 900,
+        "signature": "vEDhMwu28dRwY3ipTf38rooYff4s7Fzau1qTJfgRc7eHD61ksNsUiXiPe6VE9yLPRAq9Pt2VUcVeahzD46XVTdT",
+        "feeLamports": "5000",
+        "rentLamports": "0"
+      },
+      {
+        "kind": "write",
+        "offset": 2700,
+        "length": 1,
+        "signature": "3KHFWW9SWintkmRgoD9hEVuHq7rprtt1PmTUaSY7tdzT8v11zSV9QYqagLe2ALmNoAvFrBib4cxjLgb2hKKWrWpR",
+        "feeLamports": "5000",
+        "rentLamports": "0"
+      }
+    ],
+    "sourceHashes": {
+      "scripts/program-buffer.ts": "b50b97f15687b2467e5a41fc79105146e7aeb67a134e1b57e098e1ee68356ad7",
+      "scripts/program-buffer-cli.ts": "fb71f00a676e94c5e8febcdb3f237367263e9dcbafad2429a07b9845da102137",
+      "scripts/program-buffer-journal.ts": "16025b9e104ef43d59ba07e124008cd65b19352ac2d0fe26e5487de3f4b2aa7a",
+      "tests/program-buffer.test.ts": "c1ae5184bb7dc93a11ae220e98d94f7291e91980395865951c7745582940efb3",
+      "tests/program-buffer-cli.test.ts": "0c517643a977e9a960c1af89c0dca38656a443c6f64e2063a61e8f10820258c1",
+      "tests/program-buffer-journal.test.ts": "0355daf24389f0c53f361495345e33e53fdbfc7f15bdf97a1585f5aeddf6d727"
+    },
+    "checks": {
+      "passed": 29,
+      "failed": 0,
+      "skipped": 0,
+      "typecheck": "passed",
+      "independentReview": "repair1 accepted, no material issues in bounded tooling"
+    },
+    "initialIssue": "BUF-001: dangling file link followed before rejection; actual external24576B synthetic file creation reproduced. Fixed via direct lstat ignoring only ENOENT.",
+    "repair": "Independent repro rejects before external file and writer creation; streaming response collection bounded to16MiB and cancelled on excess.",
+    "retainedFailure": "New dangling-junction regression:5passed/1failed before repair; invalid strip-types loader attempt kept separately.",
+    "excluded": [
+      "full959536B upload",
+      "public devnet staging",
+      "program extend/upgrade/close",
+      "human wallet transaction"
+    ],
+    "reviewedBeforeTrailingWhitespaceNormalization": {
+      "scripts/program-buffer-cli.ts": "81acfb3e1d61e04ab2226e098231d37fd759a7d83ce003fb5d8bdd151489b19d",
+      "tests/program-buffer.test.ts": "c1ae5184bb7dc93a11ae220e98d94f7291e91980395865951c7745582940efb3",
+      "scripts/program-buffer.ts": "b50b97f15687b2467e5a41fc79105146e7aeb67a134e1b57e098e1ee68356ad7",
+      "scripts/program-buffer-journal.ts": "4d0ec53609afc25d331cd80ba491352d4310a46f4a232d34a8aa5a5c81baf5ce",
+      "tests/program-buffer-cli.test.ts": "e8a836320dcf67c08aa50def4ce308bab8a3aaf7d5ad238519a5ece3517e9225",
+      "tests/program-buffer-journal.test.ts": "e8945be33bfd39fbb07f4859129d5dc06f489cf26eecdfd38d22803cbaa7a958"
+    },
+    "byteOnlyNormalization": {
+      "paths": [
+        "scripts/program-buffer-cli.ts",
+        "scripts/program-buffer-journal.ts",
+        "tests/program-buffer-cli.test.ts",
+        "tests/program-buffer-journal.test.ts"
+      ],
+      "verified": "Original reviewed hashes reconstructed by changing only trailing newline sequence; behavior/tests unchanged",
+      "sourceCommit": "d100f1c1b0f8242a1ed770a86415d52195af0634"
+    },
+    "fullSourceCi": {
+      "sourceCommit": "d100f1c1b0f8242a1ed770a86415d52195af0634",
+      "runId": 38053587760,
+      "url": "https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38053587760",
+      "status": "success",
+      "backend": {
+        "total": 395,
+        "passed": 385,
+        "failed": 0,
+        "skipped": 10
+      },
+      "ui": {
+        "passed": 93,
+        "failed": 0,
+        "skipped": 0
+      },
+      "rustUnit": {
+        "passed": 3,
+        "failed": 0
+      },
+      "sbfRuntime": {
+        "passed": 20,
+        "failed": 0
+      },
+      "postgres": {
+        "total": 43,
+        "passed": 40,
+        "failed": 0,
+        "skipped": 3
+      },
+      "sbfBytes": 959536,
+      "sbfSha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+      "scope": "Core, wallet and BUFFER source; later runtime API ownership guard verified separately on Windows",
+      "logSha256": "1b4defc2a010aaff51c45bddb07c616f97a7ecc30dc9a561462baa691c14689d",
+      "postgresLogSha256": "e7b5916b59a2b64ed4847abf1735b0ef3fcf7967bf2d25445ebb2f8918fbe495"
+    }
+  },
+  "upgrade": {
+    "observedAt": "2026-10-10T12:44:25.558Z",
+    "network": "devnet",
+    "genesis": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+    "slot": 509544901,
+    "payerLamports": "2121575440",
+    "programDataLamports": "2751475320",
+    "target": {
+      "bytes": 959536,
+      "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+      "bufferRentLamports": "4875281080",
+      "programDataRentLamports": "4875321720",
+      "programDataAdditionalRentLamports": "2123846400"
+    },
+    "rentFloorLamports": "6999127480",
+    "additionalRentFundingFloorLamports": "4877552040",
+    "feesAdditional": true,
+    "publicV4Upgraded": false,
+    "scope": "Read-only rents/balance; not a live deployment fee guarantee"
+  },
+  "exclusions": [
+    "signed wires",
+    "key material",
+    "credentials",
+    "browser auth state",
+    "official score",
+    "partner acceptance"
+  ]
+}

@@ -1,5 +1,15 @@
 # Actual hosted deployment — 9 October 2026
 
+## Current supplement — 10 October 2026
+
+The service received a **wallet-only v3 deployment**, source `e658553632a8289c575494b0691e6c36ab92e7f0`, Render `dep-db4urvqd0e5s73dj3qbg`. Actual HTML/JS asset `index-DRI4xkk7.js`, PostgreSQL, program SHA `761b993d…077bdfd` and the previous completed issue were read back on 10 October. [Versioned supplement](evidence/wallet-buffer-check-20261010.json). The older observations below retain their original cutoff.
+
+V0 signing now selects the existing Wallet Standard full-wire/native-account path; injected message-only requests are limited to legacy. The repair was exercised in a v4 PR merge checkout:356 Node /93 UI /3 Rust unit /20 SBF runtime passed, separate PostgreSQL40 passed/3 TLS-fixture skips. The new BUFFER tooling is a separate29-test cohort. Neither CI nor the service deploy certifies a human Phantom transaction.
+
+The new request reached a real Phantom approval window. Its warning showed an insufficient balance; the owner later reported selecting Devnet and seeing 0.03 test SOL. Passive API/RPC at 12:41 UTC still found the two retained operations `not_submitted` / `signature:null` and no derived draft account. Ordinary wallet acceptance remains open. Public v4 is also pending: at 12:44 UTC the upgrade payer had 2.121575440 test SOL; BUFFER rent plus ProgramData extension require 6.999127480 test SOL **before fees**, leaving at least 4.877552040 test SOL plus fees unfunded. No partial devnet staging or upgrade was executed.
+
+GitHub deployment metadata reported main's revision for a manually selected service commit; it was not used to infer the runtime version. The verified Render build/source and served asset are recorded separately. Automatic deployment remains disabled; keep **[skip render]**, and never deploy main/v4 against the v3 program.
+
 Stage: actual free Neon + Render deployment, authorized by the owner with owner-operated account login. This supersedes the earlier preparation-only hosting gate. Public repository visibility, paid plans, mainnet/real assets and final contest submission remain outside authorization.
 
 ## Verified status at 17:38 UTC

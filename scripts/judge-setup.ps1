@@ -36,4 +36,4 @@ if(-not(Test-Path -LiteralPath $selectionPath)){
   New-Item -ItemType Directory -Force -Path (Split-Path $selectionPath) | Out-Null
   [IO.File]::WriteAllText($selectionPath,(@{distro=$Distro} | ConvertTo-Json)+[Environment]::NewLine,[Text.UTF8Encoding]::new($false))
 }
-Write-Output "Ready: Node$nodeVersion, WSL$Distro, Rust1.91.0, Agave3.1.10, Anchor1.1.2. Run npm run demo:lifecycle."
+Write-Output "Ready: Node$nodeVersion, WSL$Distro, Rust1.91.0, Agave3.1.10, Anchor1.1.2. Run npm run demo:paged:lifecycle."

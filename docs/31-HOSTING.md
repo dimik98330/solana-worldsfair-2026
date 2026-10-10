@@ -58,6 +58,8 @@ Open [the HTTPS application](https://bondtrace-devnet.onrender.com) and select a
 
 The current deployment is already provisioned. These steps describe a fresh deployment or controlled redeploy; do not create duplicate resources or replace the existing database/namespace to recover an operation.
 
+**Select the matching checkout before steps 2–7.** For maintenance of the existing public v3 service, use the separately reviewed wallet-only commit `e658553632a8289c575494b0691e6c36ab92e7f0`, whose manifest expects 541456 bytes/SHA761b993d…077bdfd. Keep main/v4 in a separate checkout for local verification. Do not build/deploy main against the existing v3 program, edit the manifest to bypass a mismatch, or infer service code from GitHub's manual-deploy metadata. For a v4 public rollout, first complete the controlled program upgrade and independently verify 959536 bytes/SHAee2bb0f7…8f1ee12, then select the matching reviewed v4 service revision. Preserve the same database/namespace and one-writer fence. [Actual service supplement](33-HOSTED-DEPLOYMENT.md#current-supplement--10-october-2026).
+
 1. Create the free Neon project/database and save its connection URL directly in Render secrets. Do not paste it into chat or a repository file. Use a stable namespace and a single API instance.
 2. Verify the existing devnet program against [release.json](../programs/bondtrace/release.json) before considering a deployment. The current program is `B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8`, exact payload 541456 bytes / SHA-256 `761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd`. A fresh environment uses isolated deployment tooling and **test SOL**; the deployment key stays on the owner's machine. Preserve uncertain upload receipts and the original buffer instead of depositing rent into replacement buffers blindly.
 3. Connect the private GitHub repository to Render as the owner; review render.yaml (native node, free, no disk, autoDeployTrigger off). Build: npm ci --include=dev --ignore-scripts && npm run build. Start: node --import tsx scripts/start-hosted.ts. No WSL/Rust/validator is required in the hosted Node service.
@@ -110,6 +112,22 @@ npm run test:postgres
 The plain local fixture does not enable TLS; its3handshake cases are explicitly skipped unless a matching local TLS server and BONDTRACE_TEST_PG_CA are supplied. The published43-test cohort used the owned TLS-enabled PostgreSQL server and process-scoped test CA. Stop only a fixture you started, and preserve anything already listening on32545. These tests deliberately inject corruption/connection loss in the test database.
 
 The former paid Docker + persistent SQLite alternative is retained as [deploy/render-sqlite.yaml](../deploy/render-sqlite.yaml) with [Dockerfile](../Dockerfile). It requires owner-approved spending and an actual dedicated Linux mount; free ephemeral SQLite startup remains refused. Older [Linux SQLite proof](evidence/hosted-linux-20261009.json) and [asset repair](evidence/hosted-linux-h1-20261009.json) retain their original source cutoffs; they are not Neon/Render proof. Docker engine/image execution remains unverified. Vercel alone does not host this long-running Node API and metadata writer; the selected path keeps UI/API on Render.
+
+## Paged-v4 upgrade preparation: paced BUFFER staging
+
+The public program remains v3; uploading source does not upgrade it. The supplemental [account/balance observation](evidence/wallet-buffer-check-20261010.json) records a rent-only funding gap; current live fees must be added before staging. Failed free faucet requests are preserved; no repeated request loop, paid RPC, real funds or closing the existing program is used to fund an upgrade.
+
+`node --import tsx scripts/program-buffer-cli.ts --help` describes a separate explicit BUFFER tool. `npm.cmd run program:buffer -- --help` also works in Windows PowerShell; the PowerShell npm wrapper can consume `--help`. Default mode only reads the supplied image and chain accounts; it creates no journal, reads no keypair and sends no transaction:
+
+```text
+node --import tsx scripts/program-buffer-cli.ts --network=devnet --rpc=https://api.devnet.solana.com --genesis=EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG --id=<retained-id> --authority=<pubkey> --buffer=<pubkey> --image=<reviewed-image-path> --sha256=<exact-image-sha256> --bytes=<exact-image-length>
+```
+
+These are placeholders, not a copy/paste deployment command. For explicit staging, the operator additionally supplies `--stage`, local `--authority-keypair=<path>`, a new `--buffer-keypair=<path>` when creating a buffer, and integer lamport limits `--max-fees`, `--max-tx-fee`, `--max-rent`. There is no implicit/default wallet. Devnet uses one RPC at a time, at least 1250 ms between all request starts and 900-byte writes; each transaction is simulated and its fee/rent/balance checked before signing. Signed bytes and lifetime are durably committed before a single send.429/403/unknown stops new signing. Resume with the **same ID, network, image, actors and buffer**; retained signatures and finalized bytes are reconciled first, with no replacement signing or automatic rebroadcast.
+
+Preserve `.local/program-buffer/<id>/journal` and explicit local test keys; never upload them to Render or Git. The CLI cannot extend, upgrade or close a program. `bufferReady` certifies only the finalized BUFFER bytes. A program upgrade additionally requires full funding, correct authority, canonical ProgramData extension, its later slot, controlled writer quiescence, matching API/image rollout, exact public readback and same-ID financial recovery. A v3 rollback is unsafe after new v4 accounts or integration records are written.
+
+Verification: 29 targeted tests/typecheck/build and independent repair1 review passed. One actual localnet 2701-byte synthetic buffer resumed after a 2-transaction limit and ended with 5 distinct transactions/4 write chunks, matching finalized bytes and unchanged existing program. Full 959536-byte upload, devnet staging and the final upgrade remain unverified. The tool is preparation evidence, not a public-v4 deployment.
 
 ## Русский
 
