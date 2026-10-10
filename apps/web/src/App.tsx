@@ -175,7 +175,7 @@ function Console({ state, loading, error, refresh,chooseInstrument }: { state: C
         if (!prepared || !wallet.connected) throw new Error('Reconnect your wallet and prepare a new transaction.');
         if (prepared.summary.simulation?.success !== true) throw new Error('A successful network simulation is required before signing. The API has not provided one.');
         setTx({ ...current, status: 'signing' });
-        const signed = await signPreparedTransaction(wallet.connected, state.network, prepared.transactionBase64);
+        const signed = await signPreparedTransaction(wallet.connected, state.network, prepared.transactionBase64, {lastValidBlockHeight: prepared.lastValidBlockHeight});
         try { localStorage.setItem(pendingKey, JSON.stringify({ ...current, status: 'pending' })); } catch { /* Visible operation lock still prevents resubmission. */ }
         setTx({ ...current, status: 'pending' }); submitted = true;
         result = await api.submit(signed);
