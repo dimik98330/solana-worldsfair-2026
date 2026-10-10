@@ -32,3 +32,6 @@ Current API/security/status/frontend signposts supersede stale issuer-only matur
 The supported `npm run report` command now creates ignored offline verification HTML plus an input-digest manifest from published v4 evidence. It no longer calls the product unimplemented. Narrow CLI tests cover valid reports, changed evidence, incomplete signature observations and HTML escaping. Source staging explicitly includes current API/security/protocol/setup guides and still excludes owner state, keys and evidence archives.
 
 This cleanup does not establish ordinary Phantom success, public v4 deployment or organizer acceptance.
+
+
+Cleanup published as5678433fcc0ae4ebbee1bedc03b6af0dce6ee63a. Actual [CI38019153339](https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38019153339) succeeded:356Node/90UI/3Rust unit/20SBF-runtime and separatePG40with3TLS-fixture skips. [CI/review scope](evidence/source-cleanup-ci-20261010.json). Independent review initially found1material/3minor documentation issues; repair1 closed all4. Final local guards found256Markdown links/29Git blob dependencies without missing targets and486protected bytes unchanged. Remote main readback confirmed38Markdown and108archived Markdown absent. Subsequent delivery edits only record actual results; no source/financial reexecution is implied.

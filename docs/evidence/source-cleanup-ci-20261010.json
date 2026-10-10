@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-10T03:16:58.727Z",
+  "sourceCommit": "5678433fcc0ae4ebbee1bedc03b6af0dce6ee63a",
+  "runId": 38019153339,
+  "url": "https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38019153339",
+  "conclusion": "success",
+  "general": {
+    "jobId": 114116051462,
+    "conclusion": "success",
+    "logBytes": 414709,
+    "logSha256": "b599ba3e7bac9a30029f533e63cd438010fe11c54d88992fa46e199738099d6f",
+    "node": {
+      "total": 366,
+      "passed": 356,
+      "failed": 0,
+      "skipped": 10,
+      "skipScope": "optional separate PostgreSQL cases"
+    },
+    "ui": {
+      "total": 90,
+      "passed": 90,
+      "failed": 0,
+      "skipped": 0
+    },
+    "rustUnit": {
+      "passed": 3,
+      "failed": 0
+    },
+    "compiledSbfRuntime": {
+      "passed": 20,
+      "failed": 0
+    },
+    "program": {
+      "bytes": 959536,
+      "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12"
+    }
+  },
+  "postgres": {
+    "jobId": 114116051304,
+    "conclusion": "success",
+    "version": "16.15",
+    "total": 43,
+    "passed": 40,
+    "failed": 0,
+    "skipped": 3,
+    "skipScope": "TLS handshake fixture not configured in the disposable plain database job",
+    "logBytes": 44421,
+    "logSha256": "b28da012ff277625246d07936389f07a9f206e5b210b95113a79deb16ada3530"
+  },
+  "scope": {
+    "newReportCliCases": 4,
+    "financialTreesUnchangedFrom": "9b64a52",
+    "sourceOnlyReportTestsAlsoPassed": true,
+    "hostedV4Upgrade": false,
+    "humanPhantomVerified": false,
+    "bankOrKasePartnerVerified": false,
+    "officialScoreOrSubmissionAcceptance": false
+  },
+  "review": {
+    "mode": "ProofPilot coach independent code/document review",
+    "initialMaterial": 1,
+    "initialMinor": 3,
+    "repair": 1,
+    "residualMaterial": 0,
+    "residualMinor": 0,
+    "initialReportSha256": "2b5057f28e0bc66d8a0df4272643e13e7b0f3ac9afab9fc521f718b69a9160ac",
+    "repairReportSha256": "e421632c890363c73f559725480d57e072c07525aa630309d299de3c8c67db4a"
+  }
+}

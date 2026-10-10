@@ -15,3 +15,10 @@ Official references checked10October2026: [workflow events](https://docs.github.
 ## Observed run,10 October2026
 
 [Run38010713994](https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38010713994), source4e5dafa9098e2c9bfea845aa7f452b14375b4d82, completed successfully. Native job114089816983 ran00:49:51–01:02:41UTC: full Node362total/352pass/0fail/10optionalPGskip; UI90pass/0fail; integration-verifier command passed; Rust3unit/20runtime passed; actual rebuilt959536B SBF matched ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12. The separate PostgreSQL job114089817078 completed43total/40pass/0fail/3TLSfixture skips. Local failed/partial runs remain separately retained; this does not certify public v4 deployment, ordinary Phantom, bank/KASE integration or production security.
+
+
+## Source cleanup and report verification, 10 October 2026
+
+Actual [run38019153339](https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38019153339), source5678433fcc0ae4ebbee1bedc03b6af0dce6ee63a, **completed successfully**. General job114116051462:366 Node total/356passed/0failed/10optional PostgreSQL skips;90 UI passed/0failed;3 Rust unit/20 compiled-SBF runtime passed. Rebuilt959,536-byte SBF again matched ee2bb0f7…8f1ee12. PostgreSQL job114116051304:43total/40passed/0failed/3TLS-fixture skips.
+
+[Version-bound summary](../evidence/source-cleanup-ci-20261010.json) retains downloaded-log digests, source identity and limits. Four new CLI cases cover the repaired offline report; they also passed in source-only staging without archived ledger fixtures. Historical evidence/report bytes remain unchanged. This run does not upgrade public v4, verify ordinary Phantom, prove bank/KASE partnership or accept a contest submission.

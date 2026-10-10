@@ -6,6 +6,8 @@ These are separate historical verification cohorts, preserved with their source 
 
 ## Current v4 verification, 10 October 2026
 
+Latest [run38019153339](https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38019153339), source5678433, completed successfully: **356 Node passed/0failed/10optional PG skips,90 UI,3 Rust unit/20 runtime**; separate PostgreSQL **40passed/0failed/3TLS-fixture skips**. Four new report CLI cases passed; compiled959,536-byte SBF hash remains ee2bb0f7…8f1ee12. [Exact source/log summary](evidence/source-cleanup-ci-20261010.json). Older source-bound counts below remain historical.
+
 Current contracts: [TECHNICAL](../TECHNICAL.md), [paged servicing](34-PAGED-SERVICING.md). SBF 959,536 bytes/SHA ee2bb0f7…8f1ee12. Actual [CI38010713994](https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38010713994) and main38011919679 passed on their exact source:352 Node/10optional PG skips,90 UI,3 Rust unit/20 runtime; separate PostgreSQL40passed/3TLS-fixture skips. [CI attribution](integrations/CI-VERIFICATION.md).
 
 Prepared launcher:37/37 independently observed finalized transactions,1,800coupon/18,000principal/18burn/all financial closure0. [Report](evidence/servicing-v4-one-command-20261010.json), [fresh observation](evidence/servicing-v4-one-command-check-20261010.json).

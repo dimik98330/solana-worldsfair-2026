@@ -1,8 +1,18 @@
 # BondTrace — current checkpoint, 10 October 2026
 
-## Active stage: source/documentation cleanup and final verification
+## Stage: backend/source handoff and documentation cleanup delivered
 
-Owner authorized autonomous backend strengthening and a clear bilingual GitHub handoff. KASE remains the chosen project; no idea-selection restart. Financial source was verified at4e5dafa and merged as7f822f3; documentation/evidence publication9b64a52 followed. This continuation consolidates obsolete Markdown, fixes the offline report command and updates current signposts. A new report-script CI run is required before claiming its full suite passed.
+Owner authorized autonomous backend strengthening and a clear bilingual GitHub handoff. KASE remains the chosen project; no idea-selection restart. Financial source was verified at4e5dafa and merged as7f822f3; documentation/evidence publication9b64a52 followed. This continuation consolidates obsolete Markdown, fixes the offline report command and updates current signposts. Actual cleanup-source CI38019153339 is now green; final edits record evidence/docs only.
+
+## Final publication verification — 10 October 2026
+
+Cleanup/source5678433fcc0ae4ebbee1bedc03b6af0dce6ee63a was pushed and remotely read back. Actual run38019153339 **SUCCESS**:366Node total/356passed/0failed/10optional PG skips;90UI;3Rust unit/20SBF-runtime; separate realPG40passed/0failed/3TLS-fixture skips. Exact959,536-byte SBF matched ee2 again. [CI summary](evidence/source-cleanup-ci-20261010.json). The following final docs-only revision preserves that tested source.
+
+Independent cleanup review found1material/3minor; repair1 closed all4.38Markdown remain;108obsoleteMarkdown+oldHTML are archived;256localMarkdown links and29Git blob references resolve.486financial-source/evidence/media bytes were preserved. Remote API readback verified9files and7unchanged financial trees against9b64a52.
+
+Report CLI tests passed4/4 in full checkout and source-only staging. Actual7-input report/typecheck passed. Source-only stage268files/2,851,985bytes; no installs, builds, ledger or credentials copied. Transient localhealth503 recovered200; passive reconciliation remained1,800coupon/18,000principal/18burn/zero obligations. Public health200 confirmed older761/v3. One certificate/timeout failure during GitHub read was retained; secure repeated read succeeded, TLS was never disabled.
+
+Root entry sync archives original bytes and preserves main.tsx+fourCSS hashes. Product/source/Git publication stays in the managed workspace; Root main98/dirty source and original release/runtime remain untouched.
 
 ## Verified functionality and limits
 
@@ -33,6 +43,6 @@ Do not recreate removed research/review docs, reinstall skills, or interpret his
 
 Applied installed ProofPilot **coach** (bounded plan→review), ECC living-docs-governance/source-command-update-docs/coding-standards, with previously read Solana/security/testing/review/browser guidance reused. No reinstall/global permission changes. Lead owns product edits/Git; inventory and final critic are disjoint read-only.
 
-Next: complete archive/link guards, report tests and source-only staging; fresh independent review; scoped secret/index checks; verified dimik98330 transport, commit/push with [skip render], actual CI and remote readback. Preserve all prior evidence and failed attempts.
+Final step: docs/evidence-only publication with [skip ci] [skip render], exact remote readback and Root checkpoint sync. No further automatic polishing or financial writes are needed. Public v4 upgrade/human-wallet acceptance require missing funding/browser capability; owner registration/video upload/final submission remain separate.
 
 Stopping gate: no mainnet, real funds, paid services, repository visibility change, new binding consent, final contest submission or messages to people. Chrome debugger/native popup capability is unavailable; no private-profile/raw-CDP/password bypass. Owner eligibility, video upload and final submission are unverified and separate. Do not change honest README limits to say everything passed.
