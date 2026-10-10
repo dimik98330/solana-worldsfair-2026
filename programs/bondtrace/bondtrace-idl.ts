@@ -14,6 +14,187 @@ export type Bondtrace = {
   },
   "instructions": [
     {
+      "name": "appendScheduleV2",
+      "discriminator": [
+        181,
+        244,
+        224,
+        180,
+        82,
+        231,
+        116,
+        164
+      ],
+      "accounts": [
+        {
+          "name": "issuer",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "schedulePage",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  99,
+                  104,
+                  101,
+                  100,
+                  117,
+                  108,
+                  101,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "arg",
+                "path": "pageIndex"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "pageIndex",
+          "type": "u32"
+        },
+        {
+          "name": "coupons",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "couponTerms"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginCouponV2",
+      "discriminator": [
+        117,
+        58,
+        196,
+        31,
+        5,
+        229,
+        238,
+        191
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          },
+          "relations": [
+            "schedulePage"
+          ]
+        },
+        {
+          "name": "action",
+          "writable": true
+        },
+        {
+          "name": "schedulePage"
+        },
+        {
+          "name": "bondMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "index",
+          "type": "u32"
+        }
+      ]
+    },
+    {
       "name": "beginRedemption",
       "discriminator": [
         216,
@@ -27,11 +208,12 @@ export type Bondtrace = {
       ],
       "accounts": [
         {
-          "name": "issuer",
-          "signer": true,
-          "relations": [
-            "bond"
-          ]
+          "name": "executor",
+          "docs": [
+            "Permissionless caller; opening fixes rights but cannot change recipients.",
+            "Kept first in the account list for legacy transaction wire compatibility."
+          ],
+          "signer": true
         },
         {
           "name": "bond",
@@ -68,6 +250,208 @@ export type Bondtrace = {
         }
       ],
       "args": []
+    },
+    {
+      "name": "beginRedemptionV2",
+      "discriminator": [
+        197,
+        61,
+        95,
+        158,
+        199,
+        75,
+        47,
+        14
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "action",
+          "writable": true
+        },
+        {
+          "name": "bondMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "captureActionPageV2",
+      "discriminator": [
+        95,
+        76,
+        72,
+        146,
+        111,
+        196,
+        81,
+        211
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          },
+          "relations": [
+            "action",
+            "registryPage"
+          ]
+        },
+        {
+          "name": "action",
+          "writable": true
+        },
+        {
+          "name": "registryPage",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "arg",
+                "path": "pageIndex"
+              }
+            ]
+          }
+        },
+        {
+          "name": "snapshotPage",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  110,
+                  97,
+                  112,
+                  115,
+                  104,
+                  111,
+                  116,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "action"
+              },
+              {
+                "kind": "arg",
+                "path": "pageIndex"
+              }
+            ]
+          }
+        },
+        {
+          "name": "bondMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "pageIndex",
+          "type": "u32"
+        }
+      ]
     },
     {
       "name": "captureCoupon",
@@ -253,6 +637,140 @@ export type Bondtrace = {
       ]
     },
     {
+      "name": "castVoteV2",
+      "discriminator": [
+        232,
+        233,
+        147,
+        178,
+        8,
+        96,
+        39,
+        123
+      ],
+      "accounts": [
+        {
+          "name": "voter",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          },
+          "relations": [
+            "action",
+            "holderRecord"
+          ]
+        },
+        {
+          "name": "action",
+          "writable": true,
+          "relations": [
+            "snapshotPage"
+          ]
+        },
+        {
+          "name": "holderRecord",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  104,
+                  111,
+                  108,
+                  100,
+                  101,
+                  114,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "account",
+                "path": "voter"
+              }
+            ]
+          }
+        },
+        {
+          "name": "snapshotPage",
+          "writable": true
+        },
+        {
+          "name": "ballot",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  108,
+                  108,
+                  111,
+                  116,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "action"
+              },
+              {
+                "kind": "account",
+                "path": "voter"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "support",
+          "type": "bool"
+        }
+      ]
+    },
+    {
       "name": "claimCoupon",
       "discriminator": [
         210,
@@ -348,6 +866,231 @@ export type Bondtrace = {
           "type": "u8"
         }
       ]
+    },
+    {
+      "name": "claimCouponV2",
+      "discriminator": [
+        109,
+        38,
+        152,
+        203,
+        65,
+        97,
+        27,
+        224
+      ],
+      "accounts": [
+        {
+          "name": "executor",
+          "signer": true
+        },
+        {
+          "name": "beneficiary"
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          },
+          "relations": [
+            "action",
+            "holderRecord"
+          ]
+        },
+        {
+          "name": "action",
+          "writable": true,
+          "relations": [
+            "snapshotPage"
+          ]
+        },
+        {
+          "name": "holderRecord",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  104,
+                  111,
+                  108,
+                  100,
+                  101,
+                  114,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "account",
+                "path": "beneficiary"
+              }
+            ]
+          }
+        },
+        {
+          "name": "snapshotPage",
+          "writable": true
+        },
+        {
+          "name": "settlementMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          },
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "destination",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "beneficiary"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "settlementMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
     },
     {
       "name": "createProposal",
@@ -452,6 +1195,278 @@ export type Bondtrace = {
       ]
     },
     {
+      "name": "createProposalV2",
+      "discriminator": [
+        4,
+        223,
+        226,
+        68,
+        187,
+        224,
+        151,
+        218
+      ],
+      "accounts": [
+        {
+          "name": "issuer",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "action",
+          "writable": true
+        },
+        {
+          "name": "bondMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "proposalId",
+          "type": "u32"
+        },
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "closesAt",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "createRegistryPageV2",
+      "discriminator": [
+        100,
+        130,
+        135,
+        149,
+        49,
+        40,
+        25,
+        130
+      ],
+      "accounts": [
+        {
+          "name": "issuer",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "registryPage",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "arg",
+                "path": "pageIndex"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "pageIndex",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "finalizeActionV2",
+      "discriminator": [
+        18,
+        184,
+        120,
+        86,
+        125,
+        33,
+        82,
+        84
+      ],
+      "accounts": [
+        {
+          "name": "executor",
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          },
+          "relations": [
+            "action",
+            "nextSchedulePage"
+          ]
+        },
+        {
+          "name": "action",
+          "writable": true
+        },
+        {
+          "name": "bondMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "nextSchedulePage",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  99,
+                  104,
+                  101,
+                  100,
+                  117,
+                  108,
+                  101,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "account",
+                "path": "bond.finalizeSchedulePageAction.kind",
+                "account": "bondV2"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "fundVault",
       "discriminator": [
         26,
@@ -517,6 +1532,103 @@ export type Bondtrace = {
                   117,
                   108,
                   116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          },
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "fundVaultV2",
+      "discriminator": [
+        9,
+        127,
+        56,
+        113,
+        141,
+        70,
+        101,
+        23
+      ],
+      "accounts": [
+        {
+          "name": "funder",
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "settlementMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "source",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  118,
+                  50
                 ]
               },
               {
@@ -674,6 +1786,153 @@ export type Bondtrace = {
               }
             }
           }
+        }
+      ]
+    },
+    {
+      "name": "initializeIssueV2",
+      "discriminator": [
+        83,
+        44,
+        16,
+        227,
+        184,
+        146,
+        123,
+        251
+      ],
+      "accounts": [
+        {
+          "name": "issuer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "issuer"
+              },
+              {
+                "kind": "arg",
+                "path": "seriesId"
+              }
+            ]
+          }
+        },
+        {
+          "name": "bondMint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          }
+        },
+        {
+          "name": "settlementMint"
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "seriesId",
+          "type": "u64"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "faceValue",
+          "type": "u64"
+        },
+        {
+          "name": "maturityTs",
+          "type": "i64"
+        },
+        {
+          "name": "couponCount",
+          "type": "u32"
+        },
+        {
+          "name": "rateBps",
+          "type": "u16"
+        },
+        {
+          "name": "frequency",
+          "type": "u8"
         }
       ]
     },
@@ -924,6 +2183,199 @@ export type Bondtrace = {
       ]
     },
     {
+      "name": "issueUnitsV2",
+      "discriminator": [
+        112,
+        173,
+        47,
+        5,
+        73,
+        63,
+        194,
+        137
+      ],
+      "accounts": [
+        {
+          "name": "issuer",
+          "signer": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          },
+          "relations": [
+            "holderRecord"
+          ]
+        },
+        {
+          "name": "holderRecord",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  104,
+                  111,
+                  108,
+                  100,
+                  101,
+                  114,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "account",
+                "path": "holderRecord.wallet",
+                "account": "holderV2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "bondMint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "holderBonds",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "holderRecord.wallet",
+                "account": "holderV2"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bondMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "redeemPrincipal",
       "discriminator": [
         146,
@@ -1107,6 +2559,325 @@ export type Bondtrace = {
       "args": []
     },
     {
+      "name": "redeemPrincipalV2",
+      "discriminator": [
+        21,
+        136,
+        87,
+        233,
+        26,
+        175,
+        182,
+        36
+      ],
+      "accounts": [
+        {
+          "name": "holder",
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          },
+          "relations": [
+            "action",
+            "holderRecord"
+          ]
+        },
+        {
+          "name": "action",
+          "writable": true,
+          "relations": [
+            "snapshotPage"
+          ]
+        },
+        {
+          "name": "holderRecord",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  104,
+                  111,
+                  108,
+                  100,
+                  101,
+                  114,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "account",
+                "path": "holder"
+              }
+            ]
+          }
+        },
+        {
+          "name": "snapshotPage",
+          "writable": true
+        },
+        {
+          "name": "bondMint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "holderBonds",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "holder"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bondMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "settlementMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          },
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "destination",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "holder"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "settlementMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "registerHolder",
       "discriminator": [
         113,
@@ -1269,6 +3040,209 @@ export type Bondtrace = {
       "args": []
     },
     {
+      "name": "registerHolderV2",
+      "discriminator": [
+        136,
+        60,
+        127,
+        158,
+        185,
+        97,
+        173,
+        225
+      ],
+      "accounts": [
+        {
+          "name": "issuer",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          },
+          "relations": [
+            "registryPage"
+          ]
+        },
+        {
+          "name": "registryPage",
+          "writable": true
+        },
+        {
+          "name": "holderRecord",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  104,
+                  111,
+                  108,
+                  100,
+                  101,
+                  114,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "account",
+                "path": "wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "wallet"
+        },
+        {
+          "name": "holderBonds",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "wallet"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bondMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "bondMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "index",
+          "type": "u32"
+        }
+      ]
+    },
+    {
       "name": "sealIssue",
       "discriminator": [
         204,
@@ -1333,6 +3307,92 @@ export type Bondtrace = {
                   117,
                   108,
                   116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          },
+          "relations": [
+            "bond"
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "sealIssueV2",
+      "discriminator": [
+        114,
+        143,
+        195,
+        133,
+        148,
+        190,
+        62,
+        213
+      ],
+      "accounts": [
+        {
+          "name": "issuer",
+          "signer": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "bondMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "vault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  118,
+                  50
                 ]
               },
               {
@@ -1542,6 +3602,231 @@ export type Bondtrace = {
       ]
     },
     {
+      "name": "settleCouponV2",
+      "discriminator": [
+        24,
+        132,
+        105,
+        105,
+        131,
+        28,
+        164,
+        37
+      ],
+      "accounts": [
+        {
+          "name": "executor",
+          "signer": true
+        },
+        {
+          "name": "beneficiary"
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          },
+          "relations": [
+            "action",
+            "holderRecord"
+          ]
+        },
+        {
+          "name": "action",
+          "writable": true,
+          "relations": [
+            "snapshotPage"
+          ]
+        },
+        {
+          "name": "holderRecord",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  104,
+                  111,
+                  108,
+                  100,
+                  101,
+                  114,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "account",
+                "path": "beneficiary"
+              }
+            ]
+          }
+        },
+        {
+          "name": "snapshotPage",
+          "writable": true
+        },
+        {
+          "name": "settlementMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          },
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "destination",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "beneficiary"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "settlementMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "transferUnits",
       "discriminator": [
         65,
@@ -1609,9 +3894,331 @@ export type Bondtrace = {
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "transferUnitsV2",
+      "discriminator": [
+        170,
+        179,
+        3,
+        85,
+        119,
+        156,
+        215,
+        244
+      ],
+      "accounts": [
+        {
+          "name": "holder",
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond.issuer",
+                "account": "bondV2"
+              },
+              {
+                "kind": "account",
+                "path": "bond.seriesId",
+                "account": "bondV2"
+              }
+            ]
+          },
+          "relations": [
+            "sourceHolder",
+            "destinationHolder"
+          ]
+        },
+        {
+          "name": "bondMint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "sourceHolder",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  104,
+                  111,
+                  108,
+                  100,
+                  101,
+                  114,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "account",
+                "path": "holder"
+              }
+            ]
+          }
+        },
+        {
+          "name": "destinationHolder",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  104,
+                  111,
+                  108,
+                  100,
+                  101,
+                  114,
+                  95,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "account",
+                "path": "destinationHolder.wallet",
+                "account": "holderV2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "source",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "holder"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bondMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "destination",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "destinationHolder.wallet",
+                "account": "holderV2"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bondMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
     }
   ],
   "accounts": [
+    {
+      "name": "actionV2",
+      "discriminator": [
+        4,
+        54,
+        13,
+        121,
+        181,
+        187,
+        15,
+        229
+      ]
+    },
     {
       "name": "ballot",
       "discriminator": [
@@ -1626,6 +4233,19 @@ export type Bondtrace = {
       ]
     },
     {
+      "name": "ballotV2",
+      "discriminator": [
+        170,
+        216,
+        195,
+        250,
+        56,
+        114,
+        163,
+        124
+      ]
+    },
+    {
       "name": "bond",
       "discriminator": [
         224,
@@ -1636,6 +4256,19 @@ export type Bondtrace = {
         246,
         111,
         196
+      ]
+    },
+    {
+      "name": "bondV2",
+      "discriminator": [
+        16,
+        18,
+        101,
+        41,
+        213,
+        144,
+        208,
+        17
       ]
     },
     {
@@ -1665,6 +4298,19 @@ export type Bondtrace = {
       ]
     },
     {
+      "name": "holderV2",
+      "discriminator": [
+        199,
+        131,
+        204,
+        226,
+        127,
+        241,
+        7,
+        177
+      ]
+    },
+    {
       "name": "proposal",
       "discriminator": [
         26,
@@ -1675,6 +4321,45 @@ export type Bondtrace = {
         136,
         53,
         33
+      ]
+    },
+    {
+      "name": "registryPageV2",
+      "discriminator": [
+        213,
+        133,
+        102,
+        238,
+        189,
+        81,
+        107,
+        133
+      ]
+    },
+    {
+      "name": "schedulePageV2",
+      "discriminator": [
+        38,
+        252,
+        228,
+        20,
+        145,
+        115,
+        9,
+        81
+      ]
+    },
+    {
+      "name": "snapshotPageV2",
+      "discriminator": [
+        123,
+        51,
+        59,
+        148,
+        191,
+        54,
+        224,
+        89
       ]
     }
   ],
@@ -1690,6 +4375,19 @@ export type Bondtrace = {
         114,
         4,
         38
+      ]
+    },
+    {
+      "name": "actionReceiptV2",
+      "discriminator": [
+        249,
+        138,
+        69,
+        65,
+        245,
+        108,
+        17,
+        175
       ]
     },
     {
@@ -1821,6 +4519,36 @@ export type Bondtrace = {
       "code": 6022,
       "name": "recordDatePassed",
       "msg": "Draft changes must finish before the first coupon record date"
+    },
+    {
+      "code": 6023,
+      "name": "invalidPage",
+      "msg": "Expected the canonical page and the next sequential page index"
+    },
+    {
+      "code": 6024,
+      "name": "snapshotLocked",
+      "msg": "A paged snapshot is in progress; transfers and registry changes are locked"
+    },
+    {
+      "code": 6025,
+      "name": "scheduleIncomplete",
+      "msg": "Append the complete immutable coupon schedule before continuing"
+    },
+    {
+      "code": 6026,
+      "name": "snapshotNotFinalized",
+      "msg": "Finalize every snapshot page before claiming or voting"
+    },
+    {
+      "code": 6027,
+      "name": "invalidActionKind",
+      "msg": "The action kind does not support this operation"
+    },
+    {
+      "code": 6028,
+      "name": "invalidHolderIndex",
+      "msg": "Expected the next append-only registry position"
     }
   ],
   "types": [
@@ -1865,12 +4593,163 @@ export type Bondtrace = {
       }
     },
     {
+      "name": "actionReceiptV2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "action",
+            "type": "pubkey"
+          },
+          {
+            "name": "kind",
+            "type": "u8"
+          },
+          {
+            "name": "executor",
+            "type": "pubkey"
+          },
+          {
+            "name": "beneficiary",
+            "type": "pubkey"
+          },
+          {
+            "name": "units",
+            "type": "u64"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "actionV2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "kind",
+            "type": "u8"
+          },
+          {
+            "name": "id",
+            "type": "u32"
+          },
+          {
+            "name": "recordTs",
+            "type": "i64"
+          },
+          {
+            "name": "paymentTs",
+            "type": "i64"
+          },
+          {
+            "name": "unitAmount",
+            "type": "u64"
+          },
+          {
+            "name": "openedAt",
+            "type": "i64"
+          },
+          {
+            "name": "closesAt",
+            "type": "i64"
+          },
+          {
+            "name": "holderCount",
+            "docs": [
+              "Registry prefix frozen when capture starts. Later holders have no rights."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "capturedPages",
+            "type": "u32"
+          },
+          {
+            "name": "totalUnits",
+            "type": "u64"
+          },
+          {
+            "name": "paidTotal",
+            "type": "u64"
+          },
+          {
+            "name": "claimedUnits",
+            "type": "u64"
+          },
+          {
+            "name": "yesUnits",
+            "type": "u64"
+          },
+          {
+            "name": "noUnits",
+            "type": "u64"
+          },
+          {
+            "name": "finalized",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
       "name": "ballot",
       "type": {
         "kind": "struct",
         "fields": [
           {
             "name": "proposal",
+            "type": "pubkey"
+          },
+          {
+            "name": "voter",
+            "type": "pubkey"
+          },
+          {
+            "name": "weight",
+            "type": "u64"
+          },
+          {
+            "name": "support",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ballotV2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "action",
             "type": "pubkey"
           },
           {
@@ -1980,6 +4859,129 @@ export type Bondtrace = {
             "type": {
               "vec": "u64"
             }
+          }
+        ]
+      }
+    },
+    {
+      "name": "bondV2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "issuer",
+            "type": "pubkey"
+          },
+          {
+            "name": "bondMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "settlementMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "seriesId",
+            "type": "u64"
+          },
+          {
+            "name": "faceValue",
+            "type": "u64"
+          },
+          {
+            "name": "rateBps",
+            "type": "u16"
+          },
+          {
+            "name": "frequency",
+            "type": "u8"
+          },
+          {
+            "name": "maturityTs",
+            "type": "i64"
+          },
+          {
+            "name": "totalIssued",
+            "type": "u64"
+          },
+          {
+            "name": "totalRedeemed",
+            "type": "u64"
+          },
+          {
+            "name": "state",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "revision",
+            "docs": [
+              "Optimistic read fence for paginated RPC reads. Every program mutation",
+              "touching this instrument's economic graph increments it exactly once."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "holderCount",
+            "type": "u32"
+          },
+          {
+            "name": "couponCount",
+            "type": "u32"
+          },
+          {
+            "name": "scheduleAppended",
+            "type": "u32"
+          },
+          {
+            "name": "nextCouponIndex",
+            "type": "u32"
+          },
+          {
+            "name": "firstRecordTs",
+            "type": "i64"
+          },
+          {
+            "name": "nextRecordTs",
+            "type": "i64"
+          },
+          {
+            "name": "lastRecordTs",
+            "type": "i64"
+          },
+          {
+            "name": "lastPaymentTs",
+            "type": "i64"
+          },
+          {
+            "name": "couponUnitTotal",
+            "type": "u64"
+          },
+          {
+            "name": "activeKind",
+            "docs": [
+              "Zero means no capture. One instrument has at most one capture in flight."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "activeId",
+            "type": "u32"
+          },
+          {
+            "name": "name",
+            "type": "string"
           }
         ]
       }
@@ -2152,6 +5154,33 @@ export type Bondtrace = {
       }
     },
     {
+      "name": "holderV2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "index",
+            "docs": [
+              "Append-only; never reused or changed, even after a zero balance or burn."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
       "name": "proposal",
       "type": {
         "kind": "struct",
@@ -2201,6 +5230,100 @@ export type Bondtrace = {
           {
             "name": "bump",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "registryPageV2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "index",
+            "type": "u32"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "wallets",
+            "type": {
+              "vec": "pubkey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "schedulePageV2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "index",
+            "type": "u32"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "terms",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "couponTerms"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "snapshotPageV2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "action",
+            "type": "pubkey"
+          },
+          {
+            "name": "index",
+            "type": "u32"
+          },
+          {
+            "name": "claimedMask",
+            "type": "u8"
+          },
+          {
+            "name": "votedMask",
+            "type": "u8"
+          },
+          {
+            "name": "paidTotal",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "units",
+            "type": {
+              "vec": "u64"
+            }
           }
         ]
       }

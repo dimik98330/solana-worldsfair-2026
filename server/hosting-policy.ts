@@ -29,7 +29,7 @@ export function readHostingPolicy(env:NodeJS.ProcessEnv=process.env,root=process
 function authDigest(value:string){return createHash('sha256').update(value).digest();}
 /** Public application routes use wallet authorization; these operator routes retain HTTP auth. */
 export function requiresOperatorAuthorization(pathname:string){
-  return pathname==='/api/runtime/readiness'||pathname==='/api/metadata'||pathname.startsWith('/api/metadata/');
+  return pathname==='/api/runtime/readiness'||pathname==='/api/metadata'||pathname.startsWith('/api/metadata/')||pathname==='/api/integrations'||pathname.startsWith('/api/integrations/');
 }
 export function hostingAuthorized(policy:HostingPolicy,authorization:string|undefined){
   if(policy.mode==='local')return true;

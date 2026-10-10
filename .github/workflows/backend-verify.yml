@@ -1,13 +1,19 @@
 name: Backend verification
 on:
+  push:
+    branches: [main]
+  pull_request:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: backend-verify-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   verify:
     runs-on: ubuntu-24.04
     container: ubuntu:24.04
-    timeout-minutes: 45
+    timeout-minutes: 75
     steps:
       - name: Prepare isolated runner
         run: apt-get update -qq && apt-get install -y --no-install-recommends ca-certificates git curl
@@ -21,3 +27,36 @@ jobs:
         run: BONDTRACE_CI=true bash scripts/setup-isolated-toolchain.sh
       - name: Verify source, frozen release and invariants
         run: bash scripts/ci-verify.sh
+  postgres:
+    name: Disposable PostgreSQL persistence and recovery
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16.15
+        env:
+          POSTGRES_DB: bondtrace_tests
+          POSTGRES_USER: bondtrace_test
+          # Public synthetic fixture credential, never an application secret.
+          POSTGRES_PASSWORD: synthetic-local-postgres-test-password
+        ports:
+          - 32545:5432
+        options: >-
+          --cpus 1 --memory 512m
+          --health-cmd "pg_isready -U bondtrace_test -d bondtrace_tests"
+          --health-interval 3s --health-timeout 3s --health-retries 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, verified 2026-10-08
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4, verified 2026-10-08
+        with:
+          node-version: 22.14.0
+      - name: Install locked application dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+      - name: Exercise actual isolated PostgreSQL and injected failures
+        env:
+          BONDTRACE_TEST_PG_URL: postgresql://bondtrace_test:synthetic-local-postgres-test-password@127.0.0.1:32545/bondtrace_tests
+        # The existing runner rejects every nonfixture host/port/database.
+        # This plain local service explicitly skips its three TLS handshake cases.
+        run: npm run test:postgres

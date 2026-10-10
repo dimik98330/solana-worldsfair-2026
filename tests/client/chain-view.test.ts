@@ -192,7 +192,8 @@ test('getState retains GUI fields, exposes exact context/reconciliation and neve
     const {getState} = await import('../../server/state.ts'), state = await getState(b.bondAddress);
     assert.equal(state.slot, '51'); assert.equal(state.context.accountCount, 10); assert.equal(state.instrument.faceValueDecimal, '1000.000000');
     assert.equal(state.coupons[0].totalMinor, '500000000'); assert.equal(state.coupons[0].recordSlot, ''); assert.equal(state.coupons[0].capturedAt, null);
-    assert.equal(state.coupons[0].basis, 'scheduled-forecast'); assert.equal(state.reconciliation.totals.remainingObligations.decimal, '10500.000000'); assert.equal(m.requests.length, 4);
+    assert.equal(state.coupons[0].basis, 'scheduled-forecast'); assert.equal(state.reconciliation.totals.remainingObligations.decimal, '10500.000000'); assert.equal(m.requests.length, 5);
+    assert.equal(m.requests[0].method,'getAccountInfo'); assert.equal(m.requests[0].params[0],b.bondAddress); // Version discovery precedes the unchanged coherent financial bank.
   } finally { globalThis.fetch = originalFetch; }
 });
 

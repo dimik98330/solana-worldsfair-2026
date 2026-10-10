@@ -6,12 +6,12 @@ import { date, integer, units } from './format';
 import { useDisplayPreferences } from './display-preferences';
 import { captureDraftInstants, draftHasInput, issuerDraftKey, parseIssuerDraft, rebaseDraft, resolveDraftSeconds, type IssuerDraftSnapshot } from './issuer-draft';
 import { dateParts, timeZoneLabel } from './time-zone';
-import { addressError, issuanceError, issueReserve, localDateInput, MAX_COUPONS, MAX_HOLDERS, parseBondCount, parseSettlementAmount, utf8Error, validateIssueDraft, type CouponDraft, type IssueDraft } from './issuer-validation';
+import { addressError, fillAnnualCoupons, issuanceError, issueCreationRequest, issueReserve, localDateInput, MAX_COUPONS, MAX_PAGED_CREATION_COUPONS, MAX_HOLDERS, newIssueDraft, parseBondCount, parseSettlementAmount, utf8Error, validateIssueDraft, type CouponDraft, type IssueDraft } from './issuer-validation';
 import type { ChainState } from './types';
 import './issuer.css';
 
 export interface IssuerIntent {
-  action: 'initialize_issue' | 'register_holder' | 'issue_units' | 'seal_issue' | 'fund_vault';
+  action: 'initialize_issue' | 'initialize_issue_v2' | 'register_holder' | 'issue_units' | 'seal_issue' | 'fund_vault';
   params: Record<string, string>;
   title: string;
   explanation: string;
@@ -86,13 +86,14 @@ export function IssuerSetup({ state, walletAddress, canAct, busy, onAction, lang
   const beforeCutoff = Number.isSafeInteger(nowSeconds) && Number.isFinite(cutoff) && nowSeconds < cutoff;
   const isIssuer = Boolean(walletAddress && walletAddress === instrument?.issuer);
   const draft = instrument?.status === 'draft';
-  const canAdmin = Boolean(draft && isIssuer && canAct && !busy && state.connected && beforeCutoff);
+  const canAdmin = Boolean(draft && isIssuer && canAct && !busy && state.connected && !state.readOnlySnapshot && beforeCutoff);
   const connectedHint = state.readOnlySnapshot ? tr('Saved snapshot is read-only. Use the live test network to submit an issue.', 'Сохранённый снимок доступен только для просмотра. Для создания выпуска нужна действующая тестовая сеть.') : busy ? tr('Finish the current transaction first.', 'Сначала завершите текущую операцию.') : !state.connected ? tr('Refresh the chain connection.', 'Обновите подключение к сети.') : !walletAddress ? tr('Connect a wallet or choose the workspace issuer.', 'Подключите кошелёк или выберите эмитента в рабочем пространстве.') : !canAct ? tr('Resolve the current operation or refresh chain state.', 'Завершите текущую операцию или обновите данные сети.') : !isIssuer ? tr('Choose this issue’s issuer wallet to manage placement.', 'Для размещения выберите кошелёк эмитента этого выпуска.') : !beforeCutoff ? tr('The first record date has passed. Placement and activation are closed.', 'Первый срез уже прошёл. Размещение и активация недоступны.') : '';
   const walletProblem = addressError(holderWallet) || (state.holders.some(holder => holder.wallet === holderWallet.trim()) ? 'This wallet is already registered for this issue.' : null);
   const labelProblem = utf8Error(holderLabel, 'Holder label');
   const countProblem = instrument ? issuanceError(bondCount, instrument.issuedSupply, reserve.unitMinor) : 'Select an issue first.';
   const holderProblem = state.holders.some(holder => holder.wallet === selectedHolder) ? null : 'Choose a registered holder.';
-  const registeredFull = state.holders.length >= MAX_HOLDERS;
+  const pagedIssue = instrument?.version === 2;
+  const registeredFull = !pagedIssue && state.holders.length >= MAX_HOLDERS;
   const supplyPositive = (integer(instrument?.issuedSupply) ?? 0n) > 0n;
   const reserveReady = reserve.gapMinor === '0' && reserve.requiredMinor != null && supplyPositive;
   const remainingBalance = (instrument as typeof instrument & { settlementBalanceMinor?: string } | null)?.settlementBalanceMinor;
@@ -170,7 +171,7 @@ export function IssuerSetup({ state, walletAddress, canAct, busy, onAction, lang
       {connectedHint && <Notice warning><p>{connectedHint}</p></Notice>}
       <div className="issuer-workspace-grid">
         <div className="issuer-placement">
-          <Panel title={tr('Register & place', 'Регистрация и размещение')} action={<Badge>{state.holders.length} / {MAX_HOLDERS} {tr('holders', 'держателей')}</Badge>}>
+          <Panel title={tr('Register & place', 'Регистрация и размещение')} action={<Badge>{state.holders.length}{!pagedIssue && <> / {MAX_HOLDERS}</>} {tr('holders', 'держателей')}</Badge>}>
             <div className="issuer-panel-body">
               <p className="issuer-intro">{tr('Register a wallet, then allocate whole bonds to it.', 'Зарегистрируйте кошелёк, затем разместите на нём целые облигации.')}</p>
               <div className="issuer-holder-list" aria-label={tr('Confirmed registered holders', 'Зарегистрированные держатели')}>
@@ -225,8 +226,8 @@ export function IssuerSetup({ state, walletAddress, canAct, busy, onAction, lang
                 <ChecklistRow index={4} complete={reserveReady} label={tr('Payments covered', 'Выплаты обеспечены')} detail={reserveReady ? tr('Principal and all coupons', 'Номинал и все купоны') : tr('Fund the vault first', 'Сначала пополните резерв')} />
                 <ChecklistRow index={5} complete={beforeCutoff} label={tr('Before first record date', 'До первого среза')} detail={date(instrument.recordAt, true, language)} />
               </ul>
-              <div className="issuer-seal-warning"><LockKeyhole size={16} aria-hidden="true" /><p>{tr('Activation permanently closes registration and placement.', 'Активация навсегда завершает регистрацию и размещение.')}</p></div>
-              <Button variant="primary" disabled={!canAdmin || !reserveReady || !state.holders.length || Boolean(reserve.error)} busy={busy} onClick={() => { if (!canAdmin || !reserveReady) return; onAction({ action: 'seal_issue', params: {}, title: 'Activate and seal issue', explanation: 'Seal this draft and begin its corporate-action lifecycle. This permanently closes holder registration and additional issuance. Principal and every fixed coupon are prefunded; the program rechecks supply and reserves.', amountMinor: reserve.requiredMinor }); }}>{tr('Review activation', 'Проверить активацию')}<ArrowRight size={16} aria-hidden="true" /></Button>
+              <div className="issuer-seal-warning"><LockKeyhole size={16} aria-hidden="true" /><p>{pagedIssue ? tr('Activation permanently closes placement. Zero-balance receivers can be registered later when transfers are available.', 'Активация навсегда завершает размещение. Получателей с нулевым балансом можно регистрировать позже, когда разрешены переводы.') : tr('Activation permanently closes registration and placement.', 'Активация навсегда завершает регистрацию и размещение.')}</p></div>
+              <Button variant="primary" disabled={!canAdmin || !reserveReady || !state.holders.length || Boolean(reserve.error)} busy={busy} onClick={() => { if (!canAdmin || !reserveReady) return; onAction({ action: 'seal_issue', params: {}, title: 'Activate and seal issue', explanation: pagedIssue ? 'Seal this draft and close additional issuance. Principal and every coupon are prefunded. New zero-balance receivers may be registered later while transfers are available; past snapshot rights remain unchanged.' : 'Seal this draft and begin its corporate-action lifecycle. This permanently closes holder registration and additional issuance. Principal and every fixed coupon are prefunded; the program rechecks supply and reserves.', amountMinor: reserve.requiredMinor }); }}>{tr('Review activation', 'Проверить активацию')}<ArrowRight size={16} aria-hidden="true" /></Button>
               {activationHint && <p className="issuer-action-reason">{activationHint}</p>}
             </div>
           </Panel>
@@ -245,8 +246,8 @@ function NewIssueForm({ state, walletAddress, canAct, busy, nowSeconds, onAction
   const id = useId();
   const { timeZone } = useDisplayPreferences();
   const storageKey = issuerDraftKey(state.network, walletAddress);
-  function emptySnapshot(): IssuerDraftSnapshot { return { version: 1, timeZone, instants: {}, step: 0, testDates: false,
-    draft: { seriesId: generatedSeriesId(), name: '', settlementMint: state.instrument?.settlementMint || '', faceValue: '', maturityLocal: '', coupons: [newCoupon()] } }; }
+  function emptySnapshot(): IssuerDraftSnapshot { return { version: 2, timeZone, instants: {}, step: 0, testDates: false,
+    draft: newIssueDraft(generatedSeriesId(), state.instrument?.settlementMint || '', crypto.randomUUID()) }; }
   const [snapshot, setSnapshot] = useState<IssuerDraftSnapshot>(() => {
     try {
       const stored = parseIssuerDraft(localStorage.getItem(storageKey))
@@ -268,6 +269,7 @@ function NewIssueForm({ state, walletAddress, canAct, busy, nowSeconds, onAction
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [touched, setTouched] = useState<Set<string>>(() => new Set());
   const [tried, setTried] = useState(false);
+  const [calculationError, setCalculationError] = useState<string | null>(null);
   const form = useRef<HTMLFormElement>(null);
   const stepHeading = useRef<HTMLHeadingElement>(null);
   const [focusRequest, setFocusRequest] = useState<{ target: 'error' | 'heading'; sequence: number }>({ target: 'error', sequence: 0 });
@@ -282,7 +284,9 @@ function NewIssueForm({ state, walletAddress, canAct, busy, nowSeconds, onAction
   }, [focusRequest]);
   const pendingCreation = useRef<{ seriesId: string; issuer: string } | null>(snapshot.pendingCreation || null);
   const confirmedSeries = state.instrument?.seriesId;
-  const validation = validateIssueDraft(draft, nowSeconds, timeZone, current.instants);
+  const pagedCreation = draft.protocol === 'paged', annualMode = pagedCreation && draft.couponMode === 'annual-rate';
+  const maxCoupons = pagedCreation ? MAX_PAGED_CREATION_COUPONS : MAX_COUPONS;
+  const validation = validateIssueDraft(draft, nowSeconds, timeZone, current.instants, { version: pagedCreation ? 2 : 1 });
   // Keep exact amounts readable if a date expires while the user is reviewing.
   // validateIssueDraft remains the authority for whether an intent can be created.
   const reviewFace = parseSettlementAmount(draft.faceValue).value;
@@ -291,9 +295,9 @@ function NewIssueForm({ state, walletAddress, canAct, busy, nowSeconds, onAction
     ? reviewCoupons.reduce<bigint>((total, value) => total + BigInt(value!), BigInt(reviewFace)).toString()
     : undefined;
   const timezone = timeZoneLabel(timeZone, language);
-  const canCreate = Boolean(canAct && !busy && walletAddress && state.connected && Number.isSafeInteger(nowSeconds));
+  const canCreate = Boolean(canAct && !busy && walletAddress && state.connected && !state.readOnlySnapshot && Number.isSafeInteger(nowSeconds));
   const creationHint = state.readOnlySnapshot ? tr('Saved snapshot is read-only. Use the live test network to submit an issue.', 'Сохранённый снимок доступен только для просмотра. Для создания выпуска нужна действующая тестовая сеть.') : busy ? tr('Finish the current transaction first.', 'Сначала завершите текущую операцию.') : !state.connected ? tr('Refresh the chain connection to continue.', 'Обновите подключение к сети, чтобы продолжить.') : !walletAddress ? tr('Connect a wallet or choose the workspace issuer.', 'Подключите кошелёк или выберите эмитента в рабочем пространстве.') : !canAct ? tr('Resolve the current operation or refresh chain state.', 'Завершите текущую операцию или обновите данные сети.') : '';
-  const termKeys = ['name', 'faceValue', 'settlementMint', 'seriesId'];
+  const termKeys = ['name', 'faceValue', 'settlementMint', 'seriesId', ...(annualMode ? ['annualRate', 'couponFrequency'] : [])];
   function fieldError(key: string) { return touched.has(key) ? localizedIssuerError(validation.errors[key], language) : undefined; }
   function touch(key: string) { setTouched(previous => new Set([...previous, key])); }
   function clearError(key: string) { setTouched(previous => { if (!previous.has(key)) return previous; const next = new Set(previous); next.delete(key); return next; }); }
@@ -324,8 +328,15 @@ function NewIssueForm({ state, walletAddress, canAct, busy, nowSeconds, onAction
     setSnapshot(emptySnapshot());
     setTouched(new Set()); setTried(false); setAdvancedOpen(false);
   }, [confirmedSeries, state.instrument?.issuer, state.instrument?.settlementMint]);
-  function update(key: keyof Omit<IssueDraft, 'coupons'>, value: string) { setDraft(previous => ({ ...previous, [key]: value })); clearError(key); if (key === 'maturityLocal') setTestDates(false); }
+  function update<K extends keyof Omit<IssueDraft, 'coupons'>>(key: K, value: IssueDraft[K]) { setDraft(previous => ({ ...previous, [key]: value })); clearError(key); setCalculationError(null); if (key === 'maturityLocal') setTestDates(false); }
   function updateCoupon(key: string, field: keyof Omit<CouponDraft, 'key'>, value: string) { setDraft(previous => ({ ...previous, coupons: previous.coupons.map(coupon => coupon.key === key ? { ...coupon, [field]: value } : coupon) })); clearError(`coupon.${key}.${field}`); if (field !== 'amount') setTestDates(false); }
+  function calculateCoupons() {
+    const result = fillAnnualCoupons(draft);
+    setCalculationError(result.error);
+    if (!result.draft) { setTouched(previous => new Set([...previous, 'faceValue', 'annualRate', 'couponFrequency'])); focusError(); return; }
+    setDraft(result.draft);
+    setTouched(previous => new Set([...previous].filter(key => !key.endsWith('.amount'))));
+  }
   function shortDates() {
     const first = Math.ceil((nowSeconds + 15 * 60) / 60) * 60;
     setDraft(previous => ({ ...previous, coupons: previous.coupons.map((coupon, index) => ({ ...coupon, recordLocal: localDateInput(first + index * 20 * 60, timeZone), paymentLocal: localDateInput(first + index * 20 * 60 + 10 * 60, timeZone) })), maturityLocal: localDateInput(first + previous.coupons.length * 20 * 60, timeZone) }));
@@ -351,7 +362,9 @@ function NewIssueForm({ state, walletAddress, canAct, busy, nowSeconds, onAction
     if (!canCreate) return;
     pendingCreation.current = { seriesId: draft.seriesId, issuer: walletAddress! };
     persist({ ...current, pendingCreation: pendingCreation.current });
-    onAction({ action: 'initialize_issue', params: { ...validation.params }, title: tr('Create a new bond issue', 'Создать новый выпуск'), explanation: tr('Create a separate issue with the selected signer as issuer. Nominal, settlement mint, maturity and fixed coupons become immutable. Bonds and reserve funding are added in separate operations.', 'Создать отдельный выпуск с выбранным кошельком эмитента. Номинал, расчётный токен, погашение и фиксированные купоны нельзя будет изменить. Размещение облигаций и пополнение резерва выполняются отдельно.') });
+    const creation = issueCreationRequest(draft, nowSeconds, timeZone, current.instants);
+    if (!creation) return;
+    onAction({ action: creation.action, params: { ...creation.params }, title: tr('Create a new bond issue', 'Создать новый выпуск'), explanation: tr('Create a separate issue and its complete coupon schedule in one transaction with the selected signer as issuer. Nominal, settlement mint, maturity and coupon terms become immutable. Bonds and reserve funding are added separately.', 'Создать отдельный выпуск и полное расписание купонов одной транзакцией с выбранным кошельком эмитента. Номинал, расчётный токен, погашение и условия купонов неизменны. Облигации и резерв добавляются отдельно.') });
   }
   function readableDate(key: string, value: string) {
     const seconds = resolveDraftSeconds(value, timeZone, current.instants[key]);
@@ -377,7 +390,14 @@ function NewIssueForm({ state, walletAddress, canAct, busy, nowSeconds, onAction
       {step === 0 && <fieldset disabled={busy} className="issuer-flow-terms"><legend className="sr-only">{tr('Issue terms', 'Условия выпуска')}</legend>
         <TextField id={`${id}-name`} label={tr('Issue name', 'Название выпуска')} placeholder={tr('e.g. October bond issue', 'Например, октябрьский выпуск')} value={draft.name} onChange={event => update('name', event.target.value)} onBlur={() => touch('name')} error={fieldError('name')} />
         <TextField id={`${id}-face`} label={tr('Nominal per bond', 'Номинал одной облигации')} placeholder="1000" value={draft.faceValue} inputMode="decimal" onChange={event => update('faceValue', event.target.value)} onBlur={() => touch('faceValue')} error={fieldError('faceValue')} hint={tr('Amount repaid at maturity. Settlement units, up to 6 decimal places.', 'Сумма при погашении. Расчётные единицы, до 6 знаков после точки.')} />
+        {pagedCreation && <div className="issuer-field"><label htmlFor={`${id}-coupon-mode`}>{tr('Coupon terms', 'Условия купонов')}</label><select id={`${id}-coupon-mode`} value={draft.couponMode} onChange={event => update('couponMode', event.target.value as 'fixed' | 'annual-rate')}><option value="annual-rate">{tr('Annual rate', 'Годовая ставка')}</option><option value="fixed">{tr('Fixed amounts · irregular schedule', 'Фиксированные суммы · нерегулярный график')}</option></select></div>}
+        {annualMode && <>
+          <TextField id={`${id}-annual-rate`} label={tr('Annual rate (%)', 'Годовая ставка (%)')} value={draft.annualRate ?? '10'} inputMode="decimal" onChange={event => update('annualRate', event.target.value)} onBlur={() => touch('annualRate')} error={fieldError('annualRate')} hint={tr('Up to 2 decimal places. Coupon = nominal × annual rate ÷ payments per year.', 'До 2 знаков после точки. Купон = номинал × годовая ставка ÷ выплат в год.')} />
+          <div className="issuer-field"><label htmlFor={`${id}-frequency`}>{tr('Coupon payments per year', 'Купонных выплат в год')}</label><select id={`${id}-frequency`} value={draft.couponFrequency ?? '2'} onChange={event => update('couponFrequency', event.target.value)} onBlur={() => touch('couponFrequency')} aria-invalid={Boolean(fieldError('couponFrequency')) || undefined} aria-describedby={fieldError('couponFrequency') ? `${id}-frequency-error` : undefined}>{Array.from({ length: 12 }, (_, index) => <option key={index + 1} value={String(index + 1)}>{index + 1}</option>)}</select>{fieldError('couponFrequency') && <p id={`${id}-frequency-error`} className="issuer-field-error" role="alert">{fieldError('couponFrequency')}</p>}</div>
+          <div className="issuer-form-action"><Button onClick={calculateCoupons}><Banknote size={17} aria-hidden="true" />{tr('Calculate coupon amounts', 'Рассчитать суммы купонов')}</Button>{calculationError && <p className="issuer-field-error" role="alert" tabIndex={-1}>{localizedIssuerError(calculationError, language)}</p>}</div>
+        </>}
         <details className="issuer-technical-details" open={advancedOpen} onToggle={event => setAdvancedOpen(event.currentTarget.open)}><summary><ChevronDown size={16} aria-hidden="true" />{tr('Settlement token & technical details', 'Расчётный токен и технические данные')}</summary><div>
+          <div className="issuer-field"><label htmlFor={`${id}-protocol`}>{tr('Issue protocol', 'Протокол выпуска')}</label><select id={`${id}-protocol`} value={draft.protocol ?? 'legacy'} onChange={event => update('protocol', event.target.value as 'legacy' | 'paged')}><option value="paged">{tr('Paged issue', 'Постраничный выпуск')}</option><option value="legacy">{tr('Legacy compatibility · 8 coupons / 16 holders', 'Прежний протокол · 8 купонов / 16 держателей')}</option></select><p className="issuer-field-hint">{pagedCreation ? tr('Up to 16 coupons in one creation review. Larger schedules use separate paged setup.', 'До 16 купонов в одной проверке создания. Более длинные расписания добавляются постранично отдельно.') : tr('Compatibility mode preserves the original fixed-amount issue.', 'Режим совместимости сохраняет прежний выпуск с фиксированными суммами.')}</p></div>
           <TextField id={`${id}-mint`} label={tr('Settlement token address', 'Адрес расчётного токена')} value={draft.settlementMint} onChange={event => update('settlementMint', event.target.value)} onBlur={() => touch('settlementMint')} error={fieldError('settlementMint')} hint={tr('Use an existing classic SPL mint with exactly 6 decimals.', 'Нужен существующий classic SPL токен с точностью 6 знаков.')} autoCapitalize="none" />
           <p className="issuer-field-hint">{tr('Name limit:', 'Ограничение названия:')} {new TextEncoder().encode(draft.name.trim()).byteLength} / 64 UTF-8 {tr('bytes', 'байт')}.</p>
           <p className="issuer-field-hint">{tr('Issue identifier', 'Идентификатор выпуска')}: <code>{draft.seriesId}</code></p>
@@ -387,18 +407,19 @@ function NewIssueForm({ state, walletAddress, canAct, busy, nowSeconds, onAction
       {step === 0 && <aside className="issuer-term-summary" aria-label={tr('Draft financial terms', 'Финансовые условия черновика')}><h3><Banknote size={19} aria-hidden="true" />{tr('Per bond', 'На облигацию')}</h3><dl><div><dt>{tr('Principal', 'Номинал')}</dt><dd><Money value={reviewFace ?? undefined} /></dd></div><div><dt>{tr('Fixed coupons', 'Фиксированные купоны')}</dt><dd>{draft.coupons.length}</dd></div><div><dt>{tr('Total reserve', 'Полный резерв')}</dt><dd><Money value={reviewReserve} /></dd></div></dl><p>{tr('Settlement units · 6 decimal places', 'Расчётные единицы · 6 знаков')}</p><div className="issuer-term-authority"><WalletCards size={17} aria-hidden="true" /><span>{tr('Issuer account', 'Кошелёк эмитента')}<Address value={walletAddress} /></span></div></aside>}
       {step === 1 && <fieldset disabled={busy} className="issuer-flow-schedule"><legend className="sr-only">{tr('Payment schedule', 'Расписание выплат')}</legend>
         <div className="issuer-schedule-toolbar"><p><Clock3 size={16} aria-hidden="true" />{tr('All dates and times:', 'Все даты и время:')} <strong>{timezone}</strong></p><Button onClick={shortDates} disabled={busy || !Number.isSafeInteger(nowSeconds)}><Clock3 size={16} aria-hidden="true" />{tr('Fill a 15-minute example', 'Пример через 15 минут')}</Button></div>
+        {annualMode && <div className="issuer-form-action"><Button onClick={calculateCoupons} disabled={busy}><Banknote size={17} aria-hidden="true" />{tr('Calculate coupon amounts', 'Рассчитать суммы купонов')}</Button><p className="issuer-field-hint">{tr('Annual rate:', 'Годовая ставка:')} {draft.annualRate}% · {draft.couponFrequency} {tr('payments per year', 'выплат в год')}. {tr('This fills every coupon amount without changing your dates.', 'Суммы всех купонов будут заполнены. Даты сохранятся.')}</p>{calculationError && <p className="issuer-field-error" role="alert" tabIndex={-1}>{localizedIssuerError(calculationError, language)}</p>}</div>}
         {testDates && <p className="issuer-field-hint">{tr('First record starts in about 15 minutes. Register, place, fund and activate beforehand.', 'Первый срез примерно через 15 минут. До него зарегистрируйте держателей, разместите облигации, пополните резерв и активируйте выпуск.')}</p>}
         <div className="issuer-flow-coupons">{draft.coupons.map((coupon, index) => <fieldset className="issuer-flow-coupon" key={coupon.key}><legend className="sr-only">{tr('Coupon', 'Купон')} {index + 1}</legend>
           <div className="issuer-flow-coupon-top"><h3><CalendarDays size={19} aria-hidden="true" />{tr('Coupon', 'Купон')} {index + 1}</h3>
             <Button variant="ghost" aria-label={`${tr('Remove coupon', 'Удалить купон')} ${index + 1}`} disabled={draft.coupons.length === 1 || busy} onClick={() => { setDraft(previous => ({ ...previous, coupons: previous.coupons.filter(row => row.key !== coupon.key) })); window.requestAnimationFrame(() => form.current?.querySelector<HTMLButtonElement>('[data-add-coupon]')?.focus()); }}><Trash2 size={16} aria-hidden="true" />{tr('Remove', 'Удалить')}</Button>
           </div>
           <div className="issuer-flow-date-pair">
-            <TextField id={`${id}-${coupon.key}-amount`} label={tr('Payment per bond', 'Выплата на облигацию')} placeholder="0.00" inputMode="decimal" value={coupon.amount} onChange={event => updateCoupon(coupon.key, 'amount', event.target.value)} onBlur={() => touch(`coupon.${coupon.key}.amount`)} error={fieldError(`coupon.${coupon.key}.amount`)} hint={tr('Settlement units, up to 6 decimal places.', 'Расчётные единицы, до 6 знаков после точки.')} />
+            <TextField id={`${id}-${coupon.key}-amount`} label={tr('Payment per bond', 'Выплата на облигацию')} placeholder="0.00" inputMode="decimal" value={coupon.amount} onChange={event => updateCoupon(coupon.key, 'amount', event.target.value)} onBlur={event => { if (event.relatedTarget instanceof HTMLElement && event.relatedTarget.closest('button[data-add-coupon],button[type="submit"]')) return; touch(`coupon.${coupon.key}.amount`); }} error={fieldError(`coupon.${coupon.key}.amount`)} hint={tr('Settlement units, up to 6 decimal places.', 'Расчётные единицы, до 6 знаков после точки.')} />
             <DateTimeField id={`${id}-${coupon.key}-record`} label={tr('Record date', 'Дата среза держателей')} value={coupon.recordLocal} onChange={value => updateCoupon(coupon.key, 'recordLocal', value)} error={fieldError(`coupon.${coupon.key}.recordLocal`)} hint={tr('Fixes who is entitled to this coupon.', 'Определяет, кому принадлежит право на этот купон.')} disabled={busy} language={language} timeZone={timeZone} />
             <DateTimeField id={`${id}-${coupon.key}-payment`} label={tr('Payment date', 'Дата выплаты')} value={coupon.paymentLocal} onChange={value => updateCoupon(coupon.key, 'paymentLocal', value)} error={fieldError(`coupon.${coupon.key}.paymentLocal`)} hint={tr('Claims open at this time, after the record.', 'С этого времени можно получить выплату. Не раньше среза.')} disabled={busy} language={language} timeZone={timeZone} />
           </div>
         </fieldset>)}</div>
-        <div className="issuer-schedule-footer"><Button data-add-coupon onClick={() => { const coupon = newCoupon(); setDraft(previous => ({ ...previous, coupons: [...previous.coupons, coupon] })); window.requestAnimationFrame(() => document.getElementById(`${id}-${coupon.key}-amount`)?.focus()); }} disabled={busy || draft.coupons.length >= MAX_COUPONS}><Plus size={16} aria-hidden="true" />{tr('Add coupon', 'Добавить купон')}</Button><span className="issuer-field-hint">{draft.coupons.length} / {MAX_COUPONS}</span></div>
+        <div className="issuer-schedule-footer"><Button data-add-coupon onClick={() => { const coupon = newCoupon(); setDraft(previous => ({ ...previous, coupons: [...previous.coupons, coupon] })); window.requestAnimationFrame(() => document.getElementById(`${id}-${coupon.key}-amount`)?.focus()); }} disabled={busy || draft.coupons.length >= maxCoupons}><Plus size={16} aria-hidden="true" />{tr('Add coupon', 'Добавить купон')}</Button><span className="issuer-field-hint">{draft.coupons.length} / {maxCoupons}</span></div>
         <div className="issuer-flow-maturity"><div className="issuer-maturity-principal"><Banknote size={21} aria-hidden="true" /><div><span>{tr('Principal per bond', 'Номинал на облигацию')}</span><Money value={reviewFace ?? undefined} /></div></div><DateTimeField id={`${id}-maturity`} label={tr('Principal repayment', 'Погашение номинала')} value={draft.maturityLocal} onChange={value => update('maturityLocal', value)} error={fieldError('maturityLocal')} hint={tr('Final repayment date. Every coupon payment must be on or before it.', 'Дата возврата номинала. Все купоны должны выплачиваться до неё или в этот день.')} disabled={busy} language={language} timeZone={timeZone} /></div>
         {tried && validation.errors.schedule && <p className="issuer-field-error" role="alert" tabIndex={-1}>{localizedIssuerError(validation.errors.schedule, language)}</p>}
       </fieldset>}
@@ -406,6 +427,7 @@ function NewIssueForm({ state, walletAddress, canAct, busy, nowSeconds, onAction
         {!validation.params && <Notice warning><p>{tr('Some terms or dates need updating. Select “Check fields” to return to them.', 'Некоторые условия или даты нужно обновить. Нажмите «Проверить поля», чтобы вернуться к ним.')}</p></Notice>}
         <dl className="issuer-review-terms"><div><dt>{tr('Issue name', 'Название выпуска')}</dt><dd>{draft.name.trim()}</dd></div><div><dt>{tr('Nominal per bond', 'Номинал одной облигации')}</dt><dd><Money value={reviewFace ?? undefined} /></dd></div><div><dt>{tr('Principal repayment', 'Погашение номинала')}</dt><dd>{readableDate('maturityLocal', draft.maturityLocal)}</dd></div><div><dt>{tr('Reserve per bond', 'Резерв на облигацию')}</dt><dd><Money value={reviewReserve} /></dd></div></dl>
         <p className="issuer-review-unit">{tr('Amounts in settlement units. Reserve covers principal and all fixed coupons.', 'Суммы в расчётных единицах. Резерв покрывает номинал и все фиксированные купоны.')}</p>
+        <dl className="issuer-review-terms"><div><dt>{tr('Issue protocol', 'Протокол выпуска')}</dt><dd>{pagedCreation ? tr('Paged issue', 'Постраничный выпуск') : tr('Legacy compatibility', 'Прежний протокол')}</dd></div><div><dt>{tr('Coupon terms', 'Условия купонов')}</dt><dd>{annualMode ? `${draft.annualRate}% · ${draft.couponFrequency} ${tr('payments per year', 'выплат в год')}` : tr('Fixed amounts', 'Фиксированные суммы')}</dd></div></dl>
         <div className="issuer-review-coupons"><h3><CalendarDays size={18} aria-hidden="true" />{tr('Coupon payments', 'Купонные выплаты')}</h3>{draft.coupons.map((coupon, index) => <div key={coupon.key}><strong>{tr('Coupon', 'Купон')} {index + 1}</strong><dl><div><dt>{tr('Per bond', 'На облигацию')}</dt><dd><Money value={reviewCoupons[index] ?? undefined} /></dd></div><div><dt>{tr('Record', 'Срез')}</dt><dd>{readableDate(`coupon.${coupon.key}.recordLocal`, coupon.recordLocal)}</dd></div><div><dt>{tr('Payment', 'Выплата')}</dt><dd>{readableDate(`coupon.${coupon.key}.paymentLocal`, coupon.paymentLocal)}</dd></div></dl></div>)}</div>
         <p className="issuer-field-hint">{tr('Timezone', 'Часовой пояс')}: {timezone}</p>
         <details className="issuer-technical-details" open><summary><ChevronDown size={16} aria-hidden="true" />{tr('Token and signing authority', 'Токен и кошелёк эмитента')}</summary><div><dl className="issuer-review-authority"><div><dt>{tr('Settlement token', 'Расчётный токен')}</dt><dd><Address value={draft.settlementMint.trim()} full /></dd></div><div><dt>{tr('Issuer wallet', 'Кошелёк эмитента')}</dt><dd><Address value={walletAddress} full /></dd></div><div><dt>{tr('Issue identifier', 'Идентификатор выпуска')}</dt><dd><code>{draft.seriesId}</code></dd></div></dl></div></details>
@@ -433,6 +455,12 @@ function localizedIssuerError(message: string | undefined | null, language: 'ru'
     'Record date must be later than the previous coupon record date.': 'Срез должен быть позже среза предыдущего купона.',
     'Payment cannot precede this coupon record date.': 'Выплата не может быть раньше среза этого купона.',
     'Payment cannot precede the previous coupon payment.': 'Выплата не может быть раньше выплаты предыдущего купона.',
+    'Payment must be later than the previous coupon payment.': 'Выплата должна быть позже выплаты предыдущего купона.',
+    'Enter an annual percentage with up to 2 decimals, such as 10 or 10.25.': 'Укажите годовую ставку с точностью до 2 знаков после точки: например, 10 или 10.25.',
+    'Annual rate must be between 0.01% and 100%.': 'Годовая ставка должна быть от 0.01% до 100%.',
+    'Choose between 1 and 12 coupon payments per year.': 'Выберите от 1 до 12 купонных выплат в год.',
+    'Nominal, annual rate and frequency must produce a positive exact coupon in 6-decimal settlement units. No rounding is applied.': 'Номинал, ставка и частота должны давать положительный точный купон с 6 знаками после точки. Округление не применяется.',
+    'Coupon must equal nominal × annual rate ÷ payments per year. Use Calculate coupon amounts or choose fixed amounts.': 'Купон должен равняться номиналу × ставке ÷ выплат в год. Нажмите «Рассчитать суммы купонов» или выберите фиксированные суммы.',
     'Payment must be on or before maturity.': 'Выплата должна быть не позже погашения.',
     'Chain time is unavailable. Refresh the connection before creating an issue.': 'Время сети недоступно. Обновите подключение.',
     'Nominal plus all coupons per bond exceeds the on-chain integer limit. Reduce the amounts.': 'Номинал и купоны превышают лимит на облигацию. Уменьшите суммы.',
@@ -458,6 +486,6 @@ function localizedIssuerError(message: string | undefined | null, language: 'ru'
   if (message.startsWith('Holder label uses ')) return 'Имя держателя превышает 64 UTF-8 байта. Сократите его.';
   if (message.startsWith('Holder label cannot contain ')) return 'Имя должно быть одной строкой без управляющих символов.';
   if (message.startsWith('Amount exceeds ')) return 'Сумма превышает допустимый предел.';
-  if (message.startsWith('Add between ')) return 'Добавьте от 1 до 8 купонов.';
+  if (message.startsWith('Add between ')) return message.includes('16') ? 'Добавьте от 1 до 16 купонов для одной проверки создания.' : 'Добавьте от 1 до 8 купонов.';
   return message;
 }

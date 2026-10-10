@@ -17,6 +17,7 @@ import type {ReviewedProgram} from './prepared.ts';
 import {PROGRAM_ID} from '../packages/client/src/program.ts';
 import {createHash} from 'node:crypto';
 import {assertRuntimeBudget} from './runtime-budget.ts';
+import {v2ActionNames} from './v2-contract.ts';
 const settlementDiscriminator=createHash('sha256').update('global:settle_coupon').digest().subarray(0,8);
 async function verifyReviewedProgram(reviewed?:ReviewedProgram){
  if(!reviewed)throw new AppError('PREPARATION_VERSION_UNBOUND','This unsigned review predates release verification. Prepare a fresh review before signing.',409);
@@ -74,7 +75,7 @@ export async function execute(instructions:Instruction[],actor:KeyPairSigner,kin
  catch(error){if(error instanceof AppError&&error.definitive){updateReceipt(signature,{chainStatus:'error',projectionStatus:'complete',error:error.message});throw error;}throw new AppError('UNKNOWN_STATUS','Submission response was interrupted. Recover the retained receipt before another signature.',503);}
  let result;try{result=await awaitConfirmation(signature);}catch(error){if(error instanceof AppError&&error.code==='TRANSACTION_FAILED'){updateReceipt(signature,{chainStatus:'error',projectionStatus:'complete',error:error.message});throw error;}throw new AppError('UNKNOWN_STATUS','Confirmation is unavailable. Retain the saved signature and recovery identifier.',503);}
  // The generic signer has no catalog projection. Action-specific callers reconcile theirs.
- if(result.status==='confirmed'&&!['initialize_issue','register_holder','issue_units','seal_issue','create_vote'].includes(kind))updateReceipt(signature,{projectionStatus:'complete'});
+ if(result.status==='confirmed'&&!v2ActionNames.has(kind)&&!['initialize_issue','register_holder','issue_units','seal_issue','create_vote'].includes(kind))updateReceipt(signature,{projectionStatus:'complete'});
  return {...result,simulation:prepared.simulation,bytes:prepared.bytes};
 }
 export async function submitPrepared(signedTransactionBase64:string){

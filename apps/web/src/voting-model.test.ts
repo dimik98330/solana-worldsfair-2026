@@ -16,6 +16,8 @@ test('ballot state distinguishes no account, no rights, recorded ballot and clos
   assert.equal(votingAccountStatus(proposal, 'holder'), 'eligible');
   assert.equal(votingAccountStatus({ ...proposal, status: 'closed' }, 'holder'), 'closed');
   assert.equal(votingAccountStatus({ ...proposal, status: 'closed' }), 'closed');
+  assert.equal(votingAccountStatus({ ...proposal, status: 'capturing' }, 'holder'), 'capturing');
+  assert.equal(votingAccountStatus({ ...proposal, status: 'capturing' }), 'capturing');
 });
 
 test('invalid and zero voting weights never permit a ballot', () => {

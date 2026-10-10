@@ -4,7 +4,7 @@ import { zonedInput, zonedSeconds } from './time-zone';
 export interface DraftInstant { local: string; seconds: number }
 export type DraftInstants = Record<string, DraftInstant>;
 export interface IssuerDraftSnapshot {
-  version: 1;
+  version: 1 | 2;
   draft: IssueDraft;
   timeZone: string;
   instants: DraftInstants;
@@ -16,7 +16,7 @@ export interface IssuerDraftSnapshot {
 export const issuerDraftKey = (network: string, wallet?: string) => `bondtrace.issue-draft.v1:${network}:${wallet || 'unassigned'}`;
 
 export function draftHasInput(draft: IssueDraft): boolean {
-  return Boolean(draft.name || draft.faceValue || draft.maturityLocal || draft.coupons.some(coupon => coupon.amount || coupon.recordLocal || coupon.paymentLocal));
+  return Boolean(draft.name || draft.faceValue || draft.maturityLocal || draft.protocol === 'legacy' || draft.couponMode === 'fixed' || (draft.annualRate !== undefined && draft.annualRate !== '10') || (draft.couponFrequency !== undefined && draft.couponFrequency !== '2') || draft.coupons.length > 1 || draft.coupons.some(coupon => coupon.amount || coupon.recordLocal || coupon.paymentLocal));
 }
 
 function scheduleValues(draft: IssueDraft): [string, string][] {
@@ -68,15 +68,17 @@ export function parseIssuerDraft(value: string | null): IssuerDraftSnapshot | nu
   try {
     const parsed = JSON.parse(value) as IssuerDraftSnapshot;
     const draft = parsed?.draft;
-    if (parsed.version !== 1 || typeof parsed.timeZone !== 'string' || !draft || !Array.isArray(draft.coupons)
-      || draft.coupons.length < 1 || draft.coupons.length > 8 || !Number.isInteger(parsed.step) || parsed.step < 0 || parsed.step > 2
+    if (![1, 2].includes(parsed.version) || typeof parsed.timeZone !== 'string' || !draft || !Array.isArray(draft.coupons)
+      || draft.coupons.length < 1 || draft.coupons.length > (parsed.version === 2 ? 16 : 8) || !Number.isInteger(parsed.step) || parsed.step < 0 || parsed.step > 2
       || !['seriesId', 'name', 'settlementMint', 'faceValue', 'maturityLocal'].every(key => typeof draft[key as keyof IssueDraft] === 'string')
       || !draft.coupons.every(coupon => coupon && ['key', 'recordLocal', 'paymentLocal', 'amount'].every(key => typeof coupon[key as keyof typeof coupon] === 'string'))
       || new Set(draft.coupons.map(coupon => coupon.key)).size !== draft.coupons.length) return null;
+    if (parsed.version === 2 && (!['legacy', 'paged'].includes(draft.protocol ?? '') || !['fixed', 'annual-rate'].includes(draft.couponMode ?? '') || typeof draft.annualRate !== 'string' || typeof draft.couponFrequency !== 'string')) return null;
     new Intl.DateTimeFormat('en', { timeZone: parsed.timeZone });
     const pending = parsed.pendingCreation;
     if (pending && (typeof pending.seriesId !== 'string' || typeof pending.issuer !== 'string' || pending.seriesId !== draft.seriesId)) return null;
-    return { version: 1, draft, timeZone: parsed.timeZone, step: parsed.step, testDates: Boolean(parsed.testDates),
-      instants: captureDraftInstants(draft, parsed.timeZone, parsed.instants || {}), ...(pending ? { pendingCreation: pending } : {}) };
+    const migratedDraft: IssueDraft = parsed.version === 1 ? { ...draft, protocol: 'legacy', couponMode: 'fixed', annualRate: '10', couponFrequency: '2' } : draft;
+    return { version: 2, draft: migratedDraft, timeZone: parsed.timeZone, step: parsed.step, testDates: Boolean(parsed.testDates),
+      instants: captureDraftInstants(migratedDraft, parsed.timeZone, parsed.instants || {}), ...(pending ? { pendingCreation: pending } : {}) };
   } catch { return null; }
 }

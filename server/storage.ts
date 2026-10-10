@@ -18,8 +18,10 @@ const busyTimeoutMs = 5_000;
 const legacyRootDocuments = ['fixture.json', 'activity.json', 'prepared.json', 'operations.json', 'lifetimes.json'];
 const rootDocuments = [...legacyRootDocuments, 'journal-migration.json', 'chain-identity.json', 'runtime-readiness.json'];
 const catalogDocument = /^catalog\/[1-9A-HJ-NP-Za-km-z]{32,44}\.json$/;
-const recordDocuments = [/^prepared\/[a-f0-9]{64}\.json$/, /^operations\/[A-Za-z0-9_-]{8,100}\.json$/, /^receipts\/[1-9A-HJ-NP-Za-km-z]{60,100}\.json$/];
-const documentDirectories = ['catalog', 'prepared', 'operations', 'receipts'];
+const recordDocuments = [/^prepared\/[a-f0-9]{64}\.json$/, /^operations\/[A-Za-z0-9_-]{8,100}\.json$/, /^receipts\/[1-9A-HJ-NP-Za-km-z]{60,100}\.json$/,
+  /^integration-registry\/[a-f0-9]{64}\.json$/, /^integration-outbox\/[a-f0-9]{64}\.json$/,
+  /^integration-plan\/[A-Za-z0-9_-]{8,100}\.json$/, /^integration-ack\/[a-f0-9]{64}\.json$/];
+const documentDirectories = ['catalog', 'prepared', 'operations', 'receipts', 'integration-registry', 'integration-outbox', 'integration-plan', 'integration-ack'];
 let database: DatabaseSync | undefined;
 let transactionDepth = 0;
 let savepointId = 0;
@@ -59,17 +61,27 @@ function safeDirectories(directory: string) {
     if (info.isSymbolicLink() || !info.isDirectory()) fail('STORAGE_UNSAFE_PATH', 'Storage requires regular local directories');
   }
 }
-function safeFile(file: string) {
-  safeDirectories(path.dirname(file));
+function regularFileInfo(file: string) {
   const info = statIfPresent(file);
   if (info && (info.isSymbolicLink() || !info.isFile())) fail('STORAGE_UNSAFE_PATH', 'Storage requires regular local files');
   return info;
+}
+function safeFile(file: string) {
+  safeDirectories(path.dirname(file));
+  return regularFileInfo(file);
 }
 function safeNamespace() {
   const ignoredRoot = path.resolve('.local');
   if (!path.isAbsolute(localDir) || !isWithin(ignoredRoot, localDir) || localDir === ignoredRoot) fail('STORAGE_INVALID_PATH', 'Storage must stay inside the ignored project .local directory');
   safeDirectories(localDir);
-  for (const suffix of ['', '-journal', '-wal', '-shm']) safeFile(databasePath + suffix);
+  try {
+    // Deduplicate ancestors only within this synchronous invocation. Each SQLite
+    // file still gets its own fresh lstat/type check; no path result is cached.
+    for (const suffix of ['', '-journal', '-wal', '-shm']) regularFileInfo(databasePath + suffix);
+  } finally {
+    // Detect a persistent ancestor replacement between the individual checks.
+    safeDirectories(localDir);
+  }
 }
 function validKey(key: string) {
   if (!rootDocuments.includes(key) && !catalogDocument.test(key) && !recordDocuments.some(pattern => pattern.test(key))) fail('STORAGE_INVALID_PATH', 'Only approved public metadata documents can be stored');
@@ -161,6 +173,38 @@ function importLegacy(db: DatabaseSync) {
   // An absent file is absent at the migration boundary. Never replay stale JSON later.
   db.prepare('INSERT INTO storage_meta (key, value) VALUES (?, ?)').run('legacy_import_complete', new Date().toISOString());
 }
+function nativeBusy(error: unknown): boolean {
+  const item = error as {code?: unknown; errcode?: unknown} | null;
+  return item?.code === 'ERR_SQLITE_ERROR' && typeof item.errcode === 'number'
+    && Number.isSafeInteger(item.errcode) && (item.errcode & 255) === 5;
+}
+function storageBusy(error: unknown): unknown {
+  return nativeBusy(error)
+    ? new StorageError('STORAGE_BUSY', 'Public metadata is busy; retain existing recovery identifiers before explicitly retrying.', {cause: error})
+    : error;
+}
+/** Node22.14 exposes no transaction-state getter. An empty deferred transaction
+ * and verified rollback prove a failed outer BEGIN left no active transaction.
+ * This probe does not read/write the database or invoke the user's callback. */
+function verifyFailedBegin(db: DatabaseSync, error: unknown) {
+  try { db.exec('BEGIN DEFERRED'); db.exec('ROLLBACK'); }
+  catch (rollbackError) { throw new AggregateError([error, rollbackError], 'Storage BEGIN failed and clean transaction state could not be verified'); }
+}
+/** Called inside a fresh read or write transaction; no schema/marker cache. */
+function inspectDatabase(db: DatabaseSync) {
+  const version = Number(db.prepare('PRAGMA user_version').get()!.user_version);
+  const identity = Number(db.prepare('PRAGMA application_id').get()!.application_id);
+  const tables = db.prepare("SELECT name FROM sqlite_schema WHERE type = 'table' AND name NOT LIKE 'sqlite_%'").all();
+  if (version !== 0 && (version !== schemaVersion || identity !== applicationId)) fail('STORAGE_SCHEMA', 'Unsupported or unrelated SQLite storage; no migration was attempted');
+  if (version === 0 && (identity !== 0 || tables.length !== 0)) fail('STORAGE_SCHEMA', 'Unrecognized SQLite storage; existing database was retained');
+  if (version === schemaVersion && ['documents', 'storage_meta', 'legacy_imports'].some(name => !tables.some(row => row.name === name)))
+    fail('STORAGE_SCHEMA', 'SQLite storage schema is incomplete; existing database was retained');
+  integrity(db);
+  const journal = String(db.prepare('PRAGMA journal_mode').get()!.journal_mode);
+  if (journal !== 'delete') fail('STORAGE_SCHEMA', 'SQLite storage requires the DELETE rollback journal');
+  const imported = version === schemaVersion && Boolean(db.prepare('SELECT value FROM storage_meta WHERE key = ?').get('legacy_import_complete'));
+  return {version, imported};
+}
 function openDatabase() {
   safeNamespace();
   if (database) return database;
@@ -178,19 +222,20 @@ function openDatabase() {
   try {
     // EXTRA includes FULL and syncs the containing directory after DELETE-journal unlink.
     db.exec('PRAGMA busy_timeout = 5000; PRAGMA trusted_schema = OFF; PRAGMA temp_store = MEMORY; PRAGMA synchronous = EXTRA;');
-    db.exec('BEGIN IMMEDIATE'); begun = true;
-    // Inspect schema and migration marker under the same lock, including first-open races.
-    const version = Number(db.prepare('PRAGMA user_version').get()!.user_version);
-    const identity = Number(db.prepare('PRAGMA application_id').get()!.application_id);
-    const tables = db.prepare("SELECT name FROM sqlite_schema WHERE type = 'table' AND name NOT LIKE 'sqlite_%'").all();
-    if (version !== 0 && (version !== schemaVersion || identity !== applicationId)) fail('STORAGE_SCHEMA', 'Unsupported or unrelated SQLite storage; no migration was attempted');
-    if (version === 0 && (identity !== 0 || tables.length !== 0)) fail('STORAGE_SCHEMA', 'Unrecognized SQLite storage; existing database was retained');
-    integrity(db);
-    const journal = String(db.prepare('PRAGMA journal_mode').get()!.journal_mode);
-    // New SQLite files use DELETE. Do not silently convert an unexpected WAL database.
-    if (journal !== 'delete') fail('STORAGE_SCHEMA', 'SQLite storage requires the DELETE rollback journal');
-    if (version === 0) {
-      db.exec(`CREATE TABLE IF NOT EXISTS documents (
+    // An initialized DB can be checked alongside a RESERVED writer. A cold
+    // reader must not acquire a writer reservation merely to inspect metadata.
+    db.exec('BEGIN DEFERRED'); begun = true;
+    const inspected = inspectDatabase(db);
+    if (inspected.version !== schemaVersion || !inspected.imported) {
+      // Never upgrade this read snapshot: release it before competing for the
+      // writer lock, then revalidate after another initializer may have won.
+      try { db.exec('ROLLBACK'); begun = false; }
+      catch (rollbackError) { throw new AggregateError([rollbackError], 'Storage read validation rollback could not be verified'); }
+      safeNamespace();
+      db.exec('BEGIN IMMEDIATE'); begun = true;
+      const locked = inspectDatabase(db);
+      if (locked.version === 0) {
+        db.exec(`CREATE TABLE IF NOT EXISTS documents (
         key TEXT PRIMARY KEY NOT NULL,
         body TEXT NOT NULL CHECK (json_valid(body)),
         updated_at TEXT NOT NULL
@@ -204,15 +249,24 @@ function openDatabase() {
       ) STRICT;
       PRAGMA application_id = 1112822339;
       PRAGMA user_version = 1;`);
+      }
+      importLegacy(db);
     }
-    importLegacy(db);
     db.exec('COMMIT'); begun = false;
+    safeNamespace();
     fs.chmodSync(databasePath, 0o600);
     database = db;
     return db;
   } catch (error) {
-    try { if (begun) db.exec('ROLLBACK'); } finally { db.close(); }
-    throw error;
+    let failure = error;
+    try {
+      if (begun) db.exec('ROLLBACK');
+      else if (nativeBusy(error)) verifyFailedBegin(db, error);
+    } catch (rollbackError) { failure = new AggregateError([error, rollbackError], 'Storage open failed and rollback could not be verified'); }
+    try { db.close(); }
+    catch (closeError) { throw new AggregateError([failure, closeError], 'Storage open failed and connection cleanup could not be verified'); }
+    // Aggregate rollback uncertainty is deliberately never normalized as BUSY.
+    throw storageBusy(failure);
   }
 }
 function rejectAsync(callback: Function) {
@@ -230,7 +284,11 @@ export function transactionSync<T>(callback: () => T): T {
   rejectAsync(callback);
   if(storageBackend==='postgres')return withRemote(store=>store.transactionSync(()=>{const result=callback();rejectThenable(result);safeNamespace();return result;}));
   const db = openDatabase(), outer = transactionDepth === 0, savepoint = 'bondtrace_' + ++savepointId;
-  db.exec(outer ? 'BEGIN IMMEDIATE' : 'SAVEPOINT ' + savepoint);
+  try { db.exec(outer ? 'BEGIN IMMEDIATE' : 'SAVEPOINT ' + savepoint); }
+  catch (error) {
+    if (outer && nativeBusy(error)) { verifyFailedBegin(db, error); throw storageBusy(error); }
+    throw error;
+  }
   transactionDepth++;
   try {
     const result = callback();
@@ -268,20 +326,61 @@ export function updateJson<T>(absoluteFile: string, fallback: T, mutator: (curre
     return parse<T>(stringify(next));
   });
 }
-/** Returns absolute logical filenames; these files need not exist after legacy import. */
-export function listDocuments(prefix?: string): string[] {
+function documentPrefix(prefix?: string) {
   let keyPrefix = '';
   if (prefix !== undefined) {
+    if (typeof prefix !== 'string' || prefix.includes('\0')) fail('STORAGE_INVALID_PATH', 'Document prefix must be a valid local path');
     const candidate = path.isAbsolute(prefix) ? path.resolve(prefix) : path.resolve(localDir, prefix);
     if (!isWithin(localDir, candidate)) fail('STORAGE_INVALID_PATH', 'Document prefix must remain inside its storage namespace');
     keyPrefix = path.relative(localDir, candidate).split(path.sep).join('/').replace(/\/$/, '');
     if (keyPrefix && !documentDirectories.includes(keyPrefix)) validKey(keyPrefix);
+  }
+  return keyPrefix;
+}
+/** Returns absolute logical filenames; these files need not exist after legacy import. */
+export function listDocuments(prefix?: string): string[] {
+  const keyPrefix = documentPrefix(prefix);
+  if (prefix !== undefined) {
+    const candidate = path.join(localDir, ...keyPrefix.split('/'));
     safeDirectories(documentDirectories.includes(keyPrefix) ? candidate : path.dirname(candidate));
   }
   const keys=storageBackend==='postgres'?withRemote(store=>store.keys()):openDatabase().prepare('SELECT key FROM documents ORDER BY key').all().map(row=>String(row.key));
   return keys.map(key => validKey(key))
     .filter(key => !keyPrefix || key === keyPrefix || key.startsWith(keyPrefix + '/'))
     .map(key => path.join(localDir, ...key.split('/')));
+}
+/** One synchronous metadata snapshot, ordered by logical key; no per-row database reads. */
+export function readDocuments<T>(prefix?: string): T[] {
+  const keyPrefix = documentPrefix(prefix), groups = new Set<string>();
+  const guardGroup = (group: string) => {
+    if (group && !groups.has(group)) { safeDirectories(path.join(localDir, group)); groups.add(group); }
+  };
+  safeNamespace();
+  try {
+    // Guard an explicitly selected directory even when it contains no documents.
+    guardGroup(documentDirectories.includes(keyPrefix) ? keyPrefix : keyPrefix.split('/').slice(0, -1).join('/'));
+    // Keep the all-key validation of listDocuments: an invalid stored key fails closed,
+    // including keys outside the requested prefix. Bodies still come from one SELECT.
+    const rows = storageBackend === 'postgres'
+      ? withRemote(store => store.keys().map(key => ({ key, body: store.read(key) })))
+      : openDatabase().prepare('SELECT key, body FROM documents ORDER BY key').all();
+    const values: T[] = [];
+    for (const row of rows) {
+      const key = validKey(String(row.key));
+      if (keyPrefix && key !== keyPrefix && !key.startsWith(keyPrefix + '/')) continue;
+      guardGroup(key.includes('/') ? key.slice(0, key.indexOf('/')) : '');
+      // Ancestors were checked once for this group; each logical file is still fresh.
+      const info = statIfPresent(path.join(localDir, ...key.split('/')));
+      if (info && (info.isSymbolicLink() || !info.isFile())) fail('STORAGE_UNSAFE_PATH', 'Storage requires regular local files');
+      if (typeof row.body !== 'string') fail('STORAGE_INVALID_JSON', 'Stored public metadata is not valid JSON');
+      values.push(parse<T>(row.body));
+    }
+    return values;
+  } finally {
+    // Catch namespace/group replacement during the read without a global path cache.
+    safeNamespace();
+    for (const group of groups) safeDirectories(path.join(localDir, group));
+  }
 }
 export interface StorageDiagnostics {
   backend?:'sqlite'|'postgres';databasePath: string; schemaVersion: number; sqliteVersion: string|null; journalMode: string;

@@ -1,6 +1,8 @@
 import {getCreateAssociatedTokenIdempotentInstruction} from '@solana-program/token';
 import {address,createNoopSigner,type Instruction} from '@solana/kit';
 import * as program from '../packages/client/src/program.ts';
+import {makeV2Action} from './v2.ts';
+import {v2ActionNames} from './v2-contract.ts';
 import {entitlement,hasClaim,uint} from '../packages/client/src/domain.ts';
 import {readBond,programAccount} from './state.ts';
 import {AppError,chainClock,explorer} from './rpc.ts';
@@ -9,7 +11,7 @@ import {buildTransaction,demoSigner,execute} from './transactions.ts';
 import {demoEnabled,network} from './config.ts';
 import {rememberPrepared} from './prepared.ts';
 import {beginOperation,operationStatus,updateOperation} from './operations.ts';
-export const supportedActions=new Set(['capture_coupon','claim_coupon','settle_coupon','begin_redemption','redeem_principal','create_vote','cast_vote','transfer_bonds','fund_vault']);
+export const supportedActions=new Set(['capture_coupon','claim_coupon','settle_coupon','begin_redemption','redeem_principal','create_vote','cast_vote','transfer_bonds','fund_vault',...v2ActionNames]);
 import {makeCouponSettlement} from './coupon-settlement.ts';
 import {adminActions,makeAdminAction} from './admin.ts';
 import {applyConfirmedEffect} from './effects.ts';
@@ -23,6 +25,7 @@ import {receipt} from './journal.ts';
 export type ActionRequest={action:string;bondAddress?:string;walletAddress?:string;role?:string;operationId?:string;requestId?:string;params?:Record<string,unknown>};
 export async function makeAction(request:ActionRequest,wallet:string){
   request=normalizeRequest(request);
+  if(v2ActionNames.has(request.action))return makeV2Action(request,wallet);
   if(!supportedActions.has(request.action)&&!adminActions.has(request.action))throw new AppError('UNKNOWN_ACTION','Unsupported corporate action');
   let actor:string;try{actor=String(address(wallet));}catch{throw new AppError('INVALID_WALLET','Invalid wallet address');}
   const selected=request.bondAddress??(typeof request.params?.bondAddress==='string'?request.params.bondAddress:undefined);
@@ -48,7 +51,7 @@ export async function makeAction(request:ActionRequest,wallet:string){
   }
   return {instructions,bondAddress,proofAccount,amount,metadata:undefined as Record<string,unknown>|undefined,summary:{network,action:request.action,signer:actor,instrumentAddress:bondAddress,...(amount!==undefined?{amountMinor:amount.toString(),token,tokenDecimals,recipients}:{})}};
 }
-export async function prepareAction(request:ActionRequest){request=normalizeRequest(request);if(!request.walletAddress)throw new AppError('MISSING_WALLET','The signing wallet address is required');if(request.action!=='initialize_issue'&&!request.bondAddress)throw new AppError('MISSING_INSTRUMENT','Select the instrument address explicitly before preparing a wallet transaction');await chainIdentity();const built=await makeAction(request,String(request.walletAddress??''));const prepared=await buildTransaction(built.instructions,built.summary.signer,[],0);const operationId=rememberPrepared(prepared.transactionBase64,{action:request.action,wallet:built.summary.signer,bond:built.bondAddress,account:built.proofAccount,lastValidBlockHeight:prepared.lastValidBlockHeight,programRelease:prepared.programRelease,params:{...request.params,bondAddress:built.bondAddress},metadata:built.metadata});return {...prepared,operationId,summary:{...built.summary,programRelease:prepared.programRelease,simulation:prepared.simulation,feeLamports:prepared.feeLamports}};}
+export async function prepareAction(request:ActionRequest){request=normalizeRequest(request);if(!request.walletAddress)throw new AppError('MISSING_WALLET','The signing wallet address is required');if(!['initialize_issue','initialize_issue_v2'].includes(request.action)&&!request.bondAddress)throw new AppError('MISSING_INSTRUMENT','Select the instrument address explicitly before preparing a wallet transaction');await chainIdentity();const built=await makeAction(request,String(request.walletAddress??''));const prepared=await buildTransaction(built.instructions,built.summary.signer,[],0);const operationId=rememberPrepared(prepared.transactionBase64,{action:request.action,wallet:built.summary.signer,bond:built.bondAddress,account:built.proofAccount,lastValidBlockHeight:prepared.lastValidBlockHeight,programRelease:prepared.programRelease,params:{...request.params,bondAddress:built.bondAddress},metadata:built.metadata});return {...prepared,operationId,summary:{...built.summary,programRelease:prepared.programRelease,simulation:prepared.simulation,feeLamports:prepared.feeLamports}};}
 let demoBusy=false;
 export async function demoAction(request:ActionRequest,policy:{requiredProgramRelease?:ReviewedProgram}={}){
   request=normalizeRequest(request);
@@ -57,12 +60,12 @@ export async function demoAction(request:ActionRequest,policy:{requiredProgramRe
   const f=fixture();if(!f?.complete)throw new AppError('DEMO_NOT_READY','Initialize the test instrument first');
   const role=String(request.role??'');if(!['issuer','investor1','investor2','investor3'].includes(role))throw new AppError('INVALID_DEMO_ROLE','Choose a generated demo role');
   const resolvedSigner=await demoSigner(role);if(resolvedSigner.address!==f.roles[role])throw new AppError('DEMO_SIGNER_MISMATCH','Generated signer does not match its recorded identity',403);
-  const derived=request.action==='initialize_issue'?await program.deriveBond(resolvedSigner.address,BigInt(String(request.params?.seriesId))):undefined;
+  const derived=request.action==='initialize_issue'?await program.deriveBond(resolvedSigner.address,BigInt(String(request.params?.seriesId))):request.action==='initialize_issue_v2'?await program.deriveBondV2(resolvedSigner.address,BigInt(String(request.params?.seriesId))):undefined;
   if(derived&&request.bondAddress&&request.bondAddress!==derived)throw new AppError('INSTRUMENT_MISMATCH','Creation target must match the selected issuer and series');
   const selected=derived??request.bondAddress??f.bond;request={...request,bondAddress:selected,params:{...request.params,bondAddress:selected}};const operationId=request.operationId??request.requestId??crypto.randomUUID();const claim=claimDemoOperation(operationId,request.action,role,request.params??{});if(!claim.claimed)return operationStatus(operationId);
   demoBusy=true;try{
     const signer=await demoSigner(role);if(signer.address!==f.roles[role])throw new AppError('DEMO_SIGNER_MISMATCH','Generated test signer does not match fixture',403);
-    if(request.action==='transfer_bonds'&&!Object.values(f.roles).includes(String(request.params?.targetWallet??request.params?.destination??'')))throw new AppError('EXTERNAL_DESTINATION','Demo transfers may only target this fixture',403);
+    if(['transfer_bonds','transfer_units_v2'].includes(request.action)&&!Object.values(f.roles).includes(String(request.params?.targetWallet??request.params?.destination??'')))throw new AppError('EXTERNAL_DESTINATION','Demo transfers may only target this fixture',403);
     const built=await makeAction(request,signer.address);transactionSync(()=>{assertDemoLease(operationId,claim.owner!);updateOperation(operationId,{wallet:String(signer.address),bond:built.bondAddress,params:{...request.params,bondAddress:built.bondAddress},metadata:built.metadata});});const signedIxs=built.instructions.map(ix=>({...ix,accounts:ix.accounts?.map(meta=>meta.address===signer.address&&meta.role>=2?{...meta,signer}:meta)}));
     const result=await execute(signedIxs,signer,request.action,[],built.proofAccount,signature=>{assertDemoLease(operationId,claim.owner!);const recorded=receipt(signature)?.programRelease,required=policy.requiredProgramRelease;if(required&&(!recorded||recorded.sha256!==required.sha256||recorded.programId!==required.programId||recorded.genesisHash!==required.genesisHash))throw new AppError('PROGRAM_RELEASE_CHANGED','The signed child does not match its immutable execution plan; it was not relayed.',409);updateOperation(operationId,{signature,status:'pending',programRelease:recorded});},built.bondAddress,policy.requiredProgramRelease);
     updateOperation(operationId,{status:result.status,chainStatus:result.status,projectionStatus:'pending'});

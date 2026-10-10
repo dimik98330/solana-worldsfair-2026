@@ -37,7 +37,7 @@ export function buildServicing(view: View, financial = reconcile(view)) {
     }
   });
   const redemptionReason = bond.state === 0 ? 'issue-not-active' : now < bond.maturityTs ? 'maturity-not-reached' : bond.nextCouponIndex !== bond.couponTerms.length ? 'coupon-records-incomplete' : null;
-  push({id: 'redemption:open', action: 'begin_redemption', status: bond.state >= 2 ? 'complete' : redemptionReason ? (redemptionReason === 'maturity-not-reached' ? 'waiting' : 'blocked') : 'ready', dueAt: isoTimestamp(bond.maturityTs), signer: issuer, walletAddress: String(bond.issuer), reason: bond.state >= 2 ? null : redemptionReason, amountMinor: null, units: null, params: {}});
+  push({id: 'redemption:open', action: 'begin_redemption', status: bond.state >= 2 ? 'complete' : redemptionReason ? (redemptionReason === 'maturity-not-reached' ? 'waiting' : 'blocked') : 'ready', dueAt: isoTimestamp(bond.maturityTs), signer: {kind:'any-fee-payer',wallet:null}, reason: bond.state >= 2 ? null : redemptionReason, amountMinor: null, units: null, params: {}});
   if (bond.state >= 2) bond.redemptionUnits.forEach((units, position) => {
     if (units === 0n) return;
     const wallet = String(bond.holderWallets[position]);

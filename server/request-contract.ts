@@ -2,8 +2,9 @@ import {address} from '@solana/kit';
 import {MAX_U64} from '../packages/client/src/domain.ts';
 import {AppError} from './rpc.ts';
 import {normalizeRateDescriptor,verifyRateAmounts} from './rate-terms.ts';
+import {v2ActionNames,normalizeV2Request} from './v2-contract.ts';
 
-export const actionNames=new Set(['initialize_issue','register_holder','issue_units','seal_issue','capture_coupon','claim_coupon','settle_coupon','begin_redemption','redeem_principal','create_vote','cast_vote','transfer_bonds','fund_vault']);
+export const actionNames=new Set(['initialize_issue','register_holder','issue_units','seal_issue','capture_coupon','claim_coupon','settle_coupon','begin_redemption','redeem_principal','create_vote','cast_vote','transfer_bonds','fund_vault',...v2ActionNames]);
 function fail(code:string,message:string):never{throw new AppError(code,message);}
 function object(value:unknown):Record<string,unknown>{if(value===null||typeof value!=='object'||Array.isArray(value))fail('INVALID_REQUEST','Expected an object containing named action parameters');return value as Record<string,unknown>;}
 export function canonicalJson(value:unknown):string {
@@ -26,6 +27,7 @@ function alias(params:Record<string,unknown>,a:string,b:string,normalize:(v:unkn
 export interface ContractRequest {action:string;walletAddress?:string;role?:string;operationId?:string;requestId?:string;bondAddress?:string;params:Record<string,unknown>;}
 /** No amount, title or proposal identity is invented by the service. */
 export function normalizeRequest(value:unknown):ContractRequest {
+  if(value&&typeof value==='object'&&!Array.isArray(value)&&v2ActionNames.has(String((value as Record<string,unknown>).action)))return normalizeV2Request(value);
   const request=object(value);if(Object.keys(request).some(k=>!['action','walletAddress','role','operationId','requestId','bondAddress','params'].includes(k)))fail('UNEXPECTED_PARAMETER','The action request contains unsupported fields');if(typeof request.action!=='string'||!actionNames.has(request.action))fail('UNKNOWN_ACTION','Choose a supported corporate or issuer action');
   const raw=request.params===undefined?{}:object(request.params),params:Record<string,unknown>={};
   const target=alias({...raw,bondAddress:request.bondAddress??raw.bondAddress},'bondAddress','instrumentAddress',v=>key(v,'bondAddress'));

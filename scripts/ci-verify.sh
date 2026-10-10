@@ -26,6 +26,7 @@ bash scripts/build-program.sh
 node scripts/write-program-release.mjs --check
 npm test
 npm run test:ui
+npm run test:integration-verifier
 cargo test -p bondtrace --lib
 cargo test -p bondtrace --test runtime -- --nocapture --test-threads=1
 echo 'PASS native Linux application/client/UI/SBF/runtime checks; no live cluster deployment claimed'

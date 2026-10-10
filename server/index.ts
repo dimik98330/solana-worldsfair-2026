@@ -13,15 +13,18 @@ import {resolveStaticBuild,staticAssetInside} from './static-build.ts';
 import {hostingAuthorized,requiresOperatorAuthorization} from './hosting-policy.ts';
 import {receipt} from './journal.ts';
 import {captureRetainedProof,publicExecutionProof} from './proof-retention.ts';
+import {createIntegrationService,readIntegrationAuthorities} from './integrations.ts';
 import {bootstrap} from './seed.ts';
 import {demoAction,prepareAction} from './actions.ts';
 import {submitPrepared} from './transactions.ts';
 import {rebroadcastTransaction} from './rebroadcast.ts';
 import {operationStatus} from './operations.ts';
 import {chainIdentity} from './chain-identity.ts';
+import {readV2Page} from './v2.ts';
 import {storageDiagnostics,StorageError,closeStorage,verifyStorageWrite,backupStorage} from './storage.ts';
 const dist=resolveStaticBuild(process.cwd(),process.env.BONDTRACE_WEB_DIST);
 const allowedOrigins=new Set(hosting.publicOrigin?[hosting.publicOrigin]:[`http://127.0.0.1:${port}`,`http://localhost:${port}`,'http://127.0.0.1:5173','http://localhost:5173']);
+const integrations=createIntegrationService({readView:getState,readIdentity:chainIdentity,authorities:readIntegrationAuthorities()});
 let mutationBusy=false;
 async function mutate<T>(action:()=>Promise<T>){if(mutationBusy)throw new AppError('ACTION_PENDING','Wait for the existing test operation',409);mutationBusy=true;try{return await action();}finally{mutationBusy=false;}}
 function send(res:http.ServerResponse,status:number,value:unknown){res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store'});res.end(JSON.stringify(value,(_key,item)=>typeof item==='bigint'?item.toString():item));}
@@ -95,9 +98,27 @@ const server=http.createServer(async(req,res)=>{
     if(req.method==='GET'&&url.pathname==='/healthz')return send(res,200,{status:'alive'});
     if(requiresOperatorAuthorization(url.pathname)&&!hostingAuthorized(hosting,req.headers.authorization)){res.setHeader('www-authenticate','Basic realm="BondTrace operator", charset="UTF-8"');throw new AppError('AUTH_REQUIRED','Authenticate to access operator controls',401);}
     if(req.method==='POST'&&req.headers.origin&&!allowedOrigins.has(req.headers.origin))throw new AppError('ORIGIN_DENIED','Use the configured BondTrace application origin',403);
+    if(req.method==='GET'&&url.pathname==='/api/integrations/capabilities')return send(res,200,integrations.capabilities());
+    if(req.method==='POST'&&url.pathname==='/api/integrations/registry/import'){const data=await body(req);return send(res,200,await mutate(()=>integrations.importRegistry(data)));}
+    if(req.method==='GET'&&/^\/api\/integrations\/registry\/[^/]+$/.test(url.pathname))return send(res,200,integrations.registryStatus(url.pathname.split('/').pop()!));
+    if(req.method==='POST'&&url.pathname==='/api/integrations/settlement/plan'){const data=await body(req);return send(res,200,await mutate(()=>integrations.planSettlement(data)));}
+    if(req.method==='POST'&&url.pathname==='/api/integrations/settlement/reconcile'){const data=await body(req);return send(res,200,await mutate(()=>integrations.reconcileAck(data)));}
+    if(req.method==='GET'&&/^\/api\/integrations\/settlement\/[^/]+$/.test(url.pathname))return send(res,200,await integrations.settlementStatus(url.pathname.split('/').pop()!));
+    if(req.method==='GET'&&/^\/api\/integrations\/audit\/[^/]+$/.test(url.pathname))return send(res,200,await integrations.auditExport(url.pathname.split('/').pop()!));
     if(req.method==='GET'&&url.pathname==='/api/metadata/backup')return downloadMetadataBackup(req,res,url);
     if(req.method==='GET'&&url.pathname==='/api/health'){const chain=await chainIdentity(),program=await getProgramIdentity();return send(res,200,{status:program.signingAllowed?'ok':'read-only',demo:demoEnabled,storage:storageDiagnostics(),chain,program});}
     if(req.method==='GET'&&url.pathname==='/api/program')return send(res,200,await getProgramIdentity());
+    const pageRoute=/^\/api\/v2\/instruments\/([^/]+)\/pages\/(registry|schedule|snapshot)\/(0|[1-9][0-9]{0,9})$/.exec(url.pathname);
+    if(req.method==='GET'&&pageRoute){
+      const category=pageRoute[2] as 'registry'|'schedule'|'snapshot',query=[...url.searchParams.keys()];
+      if(query.some(key=>!['kind','id'].includes(key))||new Set(query).size!==query.length
+        ||category!=='snapshot'&&query.length>0||category==='snapshot'&&query.length!==2)
+        throw new AppError('INVALID_REQUEST','Snapshot pages require exactly kind and id; other pages accept no query');
+      const kind=url.searchParams.get('kind'),id=url.searchParams.get('id');
+      if(category==='snapshot'&&(!/^[123]$/.test(kind??'')||!/^(0|[1-9][0-9]{0,9})$/.test(id??'')))
+        throw new AppError('INVALID_ACTION_ID','Use action kind1/2/3 and a canonical u32 ID');
+      return send(res,200,await readV2Page(pageRoute[1],category,Number(pageRoute[3]),category==='snapshot'?{actionKind:Number(kind) as 1|2|3,actionId:Number(id)}:{}));
+    }
     if(req.method==='POST'&&url.pathname==='/api/runtime/readiness'){const data=await body(req);if(Object.keys(data).length)throw new AppError('INVALID_REQUEST','Readiness accepts an empty object');const chain=await chainIdentity(),program=await getProgramIdentity(),rpcHealth=await rpc('getHealth'),slotBefore=await rpc<number>('getSlot',[{commitment:'confirmed'}]);await new Promise(resolve=>setTimeout(resolve,800));const slotAfter=await rpc<number>('getSlot',[{commitment:'confirmed'}]);const storage=verifyStorageWrite();return send(res,200,{chain,program,rpcHealth,slotBefore,slotAfter,storage});}
     if(req.method==='GET'&&['/api/state','/api/reconciliation','/api/servicing','/api/evidence'].includes(url.pathname)){
       const identity=await chainIdentity(),state=await getState(url.searchParams.get('instrument')??undefined);
@@ -131,7 +152,11 @@ const server=http.createServer(async(req,res)=>{
     if(!fs.existsSync(file)){res.writeHead(200,{'content-type':'text/html; charset=utf-8'});res.end('<h1>BondTrace API готов</h1><p>Интерфейс разработки: http://127.0.0.1:5173. Для единого запуска выполните npm run build.</p>');return;}
     if(!staticAssetInside(dist,file))throw new AppError('NOT_FOUND','Not found',404);
     const type=({'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.map':'application/json'} as Record<string,string>)[path.extname(file)]??'application/octet-stream';res.writeHead(200,{'content-type':type,'x-content-type-options':'nosniff'});res.end(fs.readFileSync(file));
-  }catch(error){const known=error instanceof AppError?error:error instanceof StorageError?new AppError(error.code,'Public metadata storage is unavailable. Existing signed identifiers must be retained for recovery.',503,true):new AppError('INTERNAL_ERROR','The service could not complete this request. Retain any submitted recovery identifier.',500,true);send(res,known.status,{error:{code:known.code,message:known.message,retryable:known.retryable,recoveryRequired:['RECOVERY_ID_CONFLICT','MESSAGE_ALREADY_SUBMITTED','PLAN_RELEASE_MISMATCH'].includes(known.code)||(req.method==='POST'&&known.status>=500)}});}
+  }catch(error){
+    const known=error instanceof AppError?error:error instanceof StorageError?new AppError(error.code,'Public metadata storage is unavailable. Existing signed identifiers must be retained for recovery.',503,true):new AppError('INTERNAL_ERROR','The service could not complete this request. Retain any submitted recovery identifier.',500,true);
+    const busyOperationId=known.code==='STORAGE_BUSY'&&req.method==='GET'?/^\/api\/operations\/([a-zA-Z0-9_-]{8,100})$/.exec((req.url??'').split('?')[0])?.[1]:undefined;
+    send(res,known.status,{error:{code:known.code,message:known.message,retryable:known.retryable,...(busyOperationId?{operationId:busyOperationId}:{}),recoveryRequired:Boolean(busyOperationId)||['RECOVERY_ID_CONFLICT','MESSAGE_ALREADY_SUBMITTED','PLAN_RELEASE_MISMATCH'].includes(known.code)||(req.method==='POST'&&known.status>=500)}});
+  }
 });
 server.headersTimeout=10000;server.requestTimeout=30000;server.keepAliveTimeout=5000;
 server.listen(port,hosting.bindHost,()=>console.log(`BondTrace ${hosting.publicOrigin??'http://127.0.0.1:'+port} · test networks only`));

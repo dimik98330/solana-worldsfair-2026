@@ -7,10 +7,13 @@ import {readJson,listDocuments,transactionSync} from './storage.ts';
 import {fixture, jsonWrite, type Fixture} from './store.ts';
 import {validateRateEvidence,type RateTermsEvidence} from './rate-terms.ts';
 
+export interface V2DiscoveryWindow {proposalLimit:512;holderLabelLimit:128;proposalHistoryTruncated:boolean;holderLabelsTruncated:boolean;}
 export interface CatalogRecord extends Fixture {
   source: 'wallet' | 'demo';
+  protocolVersion?: 2;
   holderLabels?: Record<string, string>;
   rateTerms?: RateTermsEvidence;
+  discoveryWindow?: V2DiscoveryWindow;
 }
 const directory = path.join(localDir, 'catalog');
 const MAX_RECORD_BYTES = 32_768;
@@ -34,6 +37,9 @@ function object(value: unknown): Record<string, unknown> {
 }
 function validate(value: unknown): CatalogRecord {
   const v = object(value), source = v.source;
+  if(v.protocolVersion!==undefined&&v.protocolVersion!==2)fail('Invalid instrument protocol version');
+  let discoveryWindow:V2DiscoveryWindow|undefined;
+  if(v.discoveryWindow!==undefined){const w=object(v.discoveryWindow);if(v.protocolVersion!==2||Object.keys(w).some(k=>!['proposalLimit','holderLabelLimit','proposalHistoryTruncated','holderLabelsTruncated'].includes(k))||w.proposalLimit!==512||w.holderLabelLimit!==128||typeof w.proposalHistoryTruncated!=='boolean'||typeof w.holderLabelsTruncated!=='boolean')fail('Invalid V2 discovery cache disclosure');discoveryWindow={proposalLimit:512,holderLabelLimit:128,proposalHistoryTruncated:w.proposalHistoryTruncated,holderLabelsTruncated:w.holderLabelsTruncated};}
   if (source !== 'wallet' && source !== 'demo') fail('Invalid catalog source');
   const roles: Record<string, string> = {}, roleEntries = Object.entries(object(v.roles));
   if (!roleEntries.length || roleEntries.length > 17) fail('Invalid catalog roles');
@@ -42,12 +48,12 @@ function validate(value: unknown): CatalogRecord {
     roles[role] = key(wallet);
   }
   if (!roles.issuer) fail('Catalog issuer is required');
-  if (!Array.isArray(v.proposalIds) || v.proposalIds.length > 32) fail('Invalid catalog proposals');
+  if (!Array.isArray(v.proposalIds) || v.proposalIds.length > (v.protocolVersion===2?512:32)) fail('Invalid catalog proposals');
   const proposalIds = [...new Set(v.proposalIds.map(uint))];
   const holderLabels: Record<string, string> = {};
   if (v.holderLabels !== undefined) {
     const labels = Object.entries(object(v.holderLabels));
-    if (labels.length > 16) fail('Too many catalog holder labels');
+    if (labels.length > (v.protocolVersion===2?512:16)) fail('Too many catalog holder labels');
     for (const [wallet, label] of labels) holderLabels[key(wallet)] = text(label, 64);
   }
   if (typeof v.complete !== 'boolean' || typeof v.accelerated !== 'boolean') fail('Invalid catalog flags');
@@ -56,13 +62,15 @@ function validate(value: unknown): CatalogRecord {
   if (typeof v.couponFrequency !== 'number' || !Number.isSafeInteger(v.couponFrequency) || v.couponFrequency < 0 || v.couponFrequency > 12) fail('Invalid catalog frequency');
   const rateTerms = v.rateTerms === undefined ? undefined : validateRateEvidence(v.rateTerms, key(v.bond), roles.issuer);
   if (rateTerms && (v.rateBps !== Number(rateTerms.rateBps) || v.couponFrequency !== Number(rateTerms.couponFrequency))) fail('Catalog annual rate and frequency differ from signed creation evidence');
-  if (source === 'wallet' && !rateTerms && (v.rateBps !== 0 || v.couponFrequency !== 0)) fail('Fixed coupon terms do not imply an annual rate');
+  if (source === 'wallet' && !rateTerms && v.protocolVersion!==2 && (v.rateBps !== 0 || v.couponFrequency !== 0)) fail('Fixed coupon terms do not imply an annual rate');
   const record: CatalogRecord = {
     seriesId: uint(v.seriesId), bond: key(v.bond), name: text(v.name, 64), settlementMint: key(v.settlementMint),
     createdAt: v.createdAt, rateBps: v.rateBps, couponFrequency: v.couponFrequency, roles, proposalIds,
     complete: v.complete, accelerated: v.accelerated, source,
+    ...(v.protocolVersion===2?{protocolVersion:2 as const}:{}),
     ...(Object.keys(holderLabels).length ? {holderLabels} : {}),
     ...(rateTerms ? {rateTerms} : {}),
+    ...(discoveryWindow?{discoveryWindow}:{}),
   };
   if (v.bootstrapSignature !== undefined) {
     if (typeof v.bootstrapSignature !== 'string' || !/^[1-9A-HJ-NP-Za-km-z]{60,100}$/.test(v.bootstrapSignature)) fail('Invalid catalog signature');

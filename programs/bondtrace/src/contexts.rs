@@ -179,9 +179,11 @@ pub struct SettleCoupon<'info> {
 
 #[derive(Accounts)]
 pub struct BeginRedemption<'info> {
-    pub issuer: Signer<'info>,
+    /// Permissionless caller; opening fixes rights but cannot change recipients.
+    /// Kept first in the account list for legacy transaction wire compatibility.
+    pub executor: Signer<'info>,
     #[account(mut, seeds = [b"bond", bond.issuer.as_ref(), &bond.series_id.to_le_bytes()],
-        bump = bond.bump, has_one = issuer @ BondError::UnauthorizedIssuer, has_one = bond_mint)]
+        bump = bond.bump, has_one = bond_mint)]
     pub bond: Box<Account<'info, Bond>>,
     pub bond_mint: Account<'info, Mint>,
 }

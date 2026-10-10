@@ -41,7 +41,8 @@ test('draft expiry, underfunding, and outstanding captures are explicit actionab
   v.clock.timestamp=50n;v.vault.amount=1n;assert.equal(buildServicing(v).actions[0].reason,'reserve-incomplete');
   v.vault.amount=10500_000000n;assert.equal(buildServicing(v).actions[0].status,'ready');
   v.bond.state=1;v.clock.timestamp=300n;assert.equal(buildServicing(v).actions.find(a=>a.action==='begin_redemption')?.reason,'coupon-records-incomplete');
-  capture(v);assert.equal(buildServicing(v).actions.find(a=>a.action==='begin_redemption')?.status,'ready');
+  capture(v);const redemption=buildServicing(v).actions.find(a=>a.action==='begin_redemption')!;
+  assert.equal(redemption.status,'ready');assert.deepEqual(redemption.signer,{kind:'any-fee-payer',wallet:null});assert.equal(redemption.walletAddress,undefined);
 });
 test('later due coupon cannot skip earlier record; voting excludes zero weights and duplicate ballots',()=>{
   const v=model();v.bond.couponTerms.push({recordTs:120n,paymentTs:220n,unitAmount:25_000000n});v.coupons.push(null);v.vault.amount+=250_000000n;
