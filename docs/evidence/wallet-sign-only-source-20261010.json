@@ -1,0 +1,42 @@
+{
+  "schema": "bondtrace.wallet-source-check.v1",
+  "checkedAt": "2026-10-10T00:07:12.2865300Z",
+  "scope": "Frontend sign-only repair on the existing v3 backend/program. Real Phantom extension signing remains unverified.",
+  "build": "passed",
+  "uiTests": {
+    "failed": 0,
+    "skipped": 0,
+    "passed": 67
+  },
+  "programRelease": {
+    "schemaVersion": 1,
+    "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+    "loader": "BPFLoaderUpgradeable",
+    "programLen": 541456,
+    "sha256": "761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd",
+    "releaseId": "financial-terms-lifecycle-v3"
+  },
+  "sourceFiles": [
+    {
+      "sha256": "2f438180ac795b3d881d9d7bf79e660e3f9c7135e9c78ea1b13152d9163e0601",
+      "file": "apps/web/src/App.tsx"
+    },
+    {
+      "sha256": "3bedf3aa918a74b689e64aece70c7b42a9a2d4f3aa8ffe30930d305c95d72d6b",
+      "file": "apps/web/src/wallet.tsx"
+    },
+    {
+      "sha256": "ff86e41f7f0e9fa62cb2e92ee4069a29d2658e76cfa45afbf5185e0f877a21f8",
+      "file": "apps/web/src/wallet-signing.ts"
+    },
+    {
+      "sha256": "fe4ca81535ee54426429d957c77f8f308ce1ddad0eaa77814c5ac6d1b408df47",
+      "file": "apps/web/src/wallet-signing.test.ts"
+    }
+  ],
+  "verificationLimits": [
+    "Provider responses in automated tests are synthetic; Ed25519/wire validation uses actual cryptography.",
+    "No user wallet prompt or Solana transaction was sent in this source check.",
+    "No backend, database, program, environment, credentials or wallet keys changed."
+  ]
+}
