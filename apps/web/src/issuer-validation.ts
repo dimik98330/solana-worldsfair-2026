@@ -6,11 +6,49 @@ import { resolveDraftSeconds, type DraftInstants } from './issuer-draft';
 export const U64_MAX = 18_446_744_073_709_551_615n;
 export const ISSUE_NAME_MAX_BYTES = 64;
 export const MAX_COUPONS = 8;
+/** One reviewed creation transaction may carry at most two schedule pages. */
+export const MAX_PAGED_CREATION_COUPONS = 16;
 export const MAX_HOLDERS = 16;
 export type ParsedInteger = { value: string; error: null } | { value: null; error: string };
 export interface CouponDraft { key: string; recordLocal: string; paymentLocal: string; amount: string }
-export interface IssueDraft { seriesId: string; name: string; settlementMint: string; faceValue: string; maturityLocal: string; coupons: CouponDraft[] }
-export interface IssueParams { seriesId: string; name: string; settlementMint: string; faceValueMinor: string; maturityTs: string; coupons: string }
+export interface IssueDraft { seriesId: string; name: string; settlementMint: string; faceValue: string; maturityLocal: string; coupons: CouponDraft[]; protocol?: 'legacy' | 'paged'; couponMode?: 'fixed' | 'annual-rate'; annualRate?: string; couponFrequency?: string }
+export interface IssueParams { seriesId: string; name: string; settlementMint: string; faceValueMinor: string; maturityTs: string; coupons: string; couponCount?: string; rateBps?: string; couponFrequency?: string }
+export interface IssueValidationOptions { version?: 1 | 2 }
+export function newIssueDraft(seriesId: string, settlementMint: string, couponKey: string): IssueDraft {
+  return { seriesId, settlementMint, name: '', faceValue: '', maturityLocal: '', coupons: [{ key: couponKey, recordLocal: '', paymentLocal: '', amount: '' }], protocol: 'paged', couponMode: 'annual-rate', annualRate: '10', couponFrequency: '2' };
+}
+
+/** Percent input to basis points, using exact decimal strings, never floating point. */
+export function parseAnnualRate(input: string): ParsedInteger {
+  const value = input.trim();
+  if (!/^\d{1,20}(?:\.\d{1,2})?$/.test(value)) return { value: null, error: 'Enter an annual percentage with up to 2 decimals, such as 10 or 10.25.' };
+  const [whole, fraction = ''] = value.split('.'), bps = BigInt(whole) * 100n + BigInt(fraction.padEnd(2, '0'));
+  return bps < 1n || bps > 10_000n ? { value: null, error: 'Annual rate must be between 0.01% and 100%.' } : { value: bps.toString(), error: null };
+}
+export function parseCouponFrequency(input: string): ParsedInteger {
+  const value = input.trim();
+  if (!/^\d{1,2}$/.test(value) || BigInt(value) < 1n || BigInt(value) > 12n) return { value: null, error: 'Choose between 1 and 12 coupon payments per year.' };
+  return { value: BigInt(value).toString(), error: null };
+}
+export function calculateAnnualCoupon(faceInput: string, rateInput: string, frequencyInput: string): ParsedInteger {
+  const face = parseSettlementAmount(faceInput), rate = parseAnnualRate(rateInput), frequency = parseCouponFrequency(frequencyInput);
+  if (face.value === null) return face;
+  if (rate.value === null) return rate;
+  if (frequency.value === null) return frequency;
+  const numerator = BigInt(face.value) * BigInt(rate.value), denominator = 10_000n * BigInt(frequency.value);
+  if (numerator % denominator !== 0n || numerator / denominator === 0n) return { value: null, error: 'Nominal, annual rate and frequency must produce a positive exact coupon in 6-decimal settlement units. No rounding is applied.' };
+  return { value: (numerator / denominator).toString(), error: null };
+}
+export function settlementInput(minor: string): string {
+  const amount = BigInt(minor), whole = amount / 1_000_000n, fraction = (amount % 1_000_000n).toString().padStart(6, '0').replace(/0+$/, '');
+  return `${whole}${fraction ? `.${fraction}` : ''}`;
+}
+/** Only an explicit calculate action may replace user-entered coupon amounts. */
+export function fillAnnualCoupons(draft: IssueDraft): { draft: IssueDraft | null; error: string | null } {
+  const calculated = calculateAnnualCoupon(draft.faceValue, draft.annualRate ?? '', draft.couponFrequency ?? '');
+  if (calculated.value === null) return { draft: null, error: calculated.error };
+  return { draft: { ...draft, coupons: draft.coupons.map(coupon => ({ ...coupon, amount: settlementInput(calculated.value!) })) }, error: null };
+}
 
 export function utf8Error(value: string, label = 'Issue name', maximum = ISSUE_NAME_MAX_BYTES): string | null {
   const trimmed = value.trim();
@@ -63,18 +101,25 @@ export function localDateInput(seconds: number, timeZone?: string): string {
   return `${value.getFullYear()}-${pad(value.getMonth() + 1)}-${pad(value.getDate())}T${pad(value.getHours())}:${pad(value.getMinutes())}:${pad(value.getSeconds())}`;
 }
 
-export function validateIssueDraft(draft: IssueDraft, nowSeconds: number, timeZone?: string, instants: DraftInstants = {}): { errors: Record<string, string>; params: IssueParams | null; unitReserveMinor?: string } {
+export function validateIssueDraft(draft: IssueDraft, nowSeconds: number, timeZone?: string, instants: DraftInstants = {}, options: IssueValidationOptions = {}): { errors: Record<string, string>; params: IssueParams | null; unitReserveMinor?: string } {
   const secondsFor = (key: string, value: string) => timeZone ? resolveDraftSeconds(value, timeZone, instants[key]) : localDateSeconds(value);
   const errors: Record<string, string> = {};
   const name = utf8Error(draft.name); if (name) errors.name = name;
   const mint = addressError(draft.settlementMint); if (mint) errors.settlementMint = mint;
   if (!/^\d+$/.test(draft.seriesId) || BigInt(draft.seriesId) > U64_MAX) errors.seriesId = 'Issue identifier is invalid. Start a new issue form.';
   const face = parseSettlementAmount(draft.faceValue); if (face.error) errors.faceValue = face.error;
+  const paged = options.version === 2, annual = paged && draft.couponMode === 'annual-rate';
+  const maxCoupons = paged ? MAX_PAGED_CREATION_COUPONS : MAX_COUPONS;
+  const rate = annual ? parseAnnualRate(draft.annualRate ?? '') : null, frequency = annual ? parseCouponFrequency(draft.couponFrequency ?? '') : null;
+  if (rate?.error) errors.annualRate = rate.error;
+  if (frequency?.error) errors.couponFrequency = frequency.error;
+  const calculated = annual ? calculateAnnualCoupon(draft.faceValue, draft.annualRate ?? '', draft.couponFrequency ?? '') : null;
+  if (annual && face.value !== null && rate?.value !== null && frequency?.value !== null && calculated?.error) errors.annualRate = calculated.error;
   const maturity = secondsFor('maturityLocal', draft.maturityLocal);
   if (!Number.isSafeInteger(nowSeconds) || nowSeconds <= 0) errors.schedule = 'Chain time is unavailable. Refresh the connection before creating an issue.';
   if (maturity == null) errors.maturityLocal = 'Choose a valid maturity date and time.';
   else if (maturity <= nowSeconds) errors.maturityLocal = 'Maturity must be in the future.';
-  if (draft.coupons.length < 1 || draft.coupons.length > MAX_COUPONS) errors.schedule = `Add between 1 and ${MAX_COUPONS} fixed coupons.`;
+  if (draft.coupons.length < 1 || draft.coupons.length > maxCoupons) errors.schedule = `Add between 1 and ${maxCoupons} fixed coupons.`;
   let priorRecord = nowSeconds, priorPayment = nowSeconds, unitReserve = face.value == null ? 0n : BigInt(face.value);
   const coupons: { recordTs: string; paymentTs: string; unitAmount: string }[] = [];
   draft.coupons.forEach((coupon, index) => {
@@ -85,9 +130,10 @@ export function validateIssueDraft(draft: IssueDraft, nowSeconds: number, timeZo
     else if (record <= priorRecord) errors[`${prefix}.recordLocal`] = index === 0 ? 'First record date must be in the future. Allow time to register, issue, fund and activate.' : 'Record date must be later than the previous coupon record date.';
     if (payment == null) errors[`${prefix}.paymentLocal`] = 'Choose a valid payment date and time.';
     else if (record != null && payment < record) errors[`${prefix}.paymentLocal`] = 'Payment cannot precede this coupon record date.';
-    else if (payment < priorPayment) errors[`${prefix}.paymentLocal`] = 'Payment cannot precede the previous coupon payment.';
+    else if (paged ? payment <= priorPayment : payment < priorPayment) errors[`${prefix}.paymentLocal`] = paged ? 'Payment must be later than the previous coupon payment.' : 'Payment cannot precede the previous coupon payment.';
     else if (maturity != null && payment > maturity) errors[`${prefix}.paymentLocal`] = 'Payment must be on or before maturity.';
     if (amount.error) errors[`${prefix}.amount`] = amount.error;
+    else if (calculated?.value != null && amount.value !== calculated.value) errors[`${prefix}.amount`] = 'Coupon must equal nominal × annual rate ÷ payments per year. Use Calculate coupon amounts or choose fixed amounts.';
     if (record != null) priorRecord = record;
     if (payment != null) priorPayment = payment;
     if (amount.value != null) unitReserve += BigInt(amount.value);
@@ -95,7 +141,12 @@ export function validateIssueDraft(draft: IssueDraft, nowSeconds: number, timeZo
   });
   if (unitReserve > U64_MAX) errors.schedule = 'Nominal plus all coupons per bond exceeds the on-chain integer limit. Reduce the amounts.';
   if (Object.keys(errors).length || face.value == null || maturity == null) return { errors, params: null };
-  return { errors, params: { seriesId: draft.seriesId, name: draft.name.trim(), settlementMint: draft.settlementMint.trim(), faceValueMinor: face.value, maturityTs: String(maturity), coupons: JSON.stringify(coupons) }, unitReserveMinor: unitReserve.toString() };
+  return { errors, params: { seriesId: draft.seriesId, name: draft.name.trim(), settlementMint: draft.settlementMint.trim(), faceValueMinor: face.value, maturityTs: String(maturity), coupons: JSON.stringify(coupons), ...(paged ? { couponCount: String(coupons.length) } : {}), ...(annual && rate?.value && frequency?.value ? { rateBps: rate.value, couponFrequency: frequency.value } : {}) }, unitReserveMinor: unitReserve.toString() };
+}
+
+export function issueCreationRequest(draft: IssueDraft, nowSeconds: number, timeZone?: string, instants: DraftInstants = {}): { action: 'initialize_issue' | 'initialize_issue_v2'; params: IssueParams } | null {
+  const paged = draft.protocol === 'paged', validation = validateIssueDraft(draft, nowSeconds, timeZone, instants, { version: paged ? 2 : 1 });
+  return validation.params ? { action: paged ? 'initialize_issue_v2' : 'initialize_issue', params: validation.params } : null;
 }
 
 function unsigned(value?: string | null): bigint | null {

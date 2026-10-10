@@ -1,5 +1,9 @@
 //! Real compiled SBF execution with classic SPL CPI in LiteSVM.
 //! Sysvar time travel is test-only; the program has no clock bypass.
+mod paged_v2 {
+    use super::*;
+    include!("runtime_v2.rs");
+}
 use anchor_lang::{
     prelude::Pubkey,
     solana_program::{program_option::COption, program_pack::Pack},
@@ -348,9 +352,12 @@ impl Fixture {
         )
     }
     fn begin_ix(&self) -> Instruction {
+        self.begin_ix_by(pk(&self.issuer))
+    }
+    fn begin_ix_by(&self, executor: Pubkey) -> Instruction {
         let mut instruction = ix(
             bondtrace::accounts::BeginRedemption {
-                issuer: pk(&self.issuer),
+                executor,
                 bond: self.bond,
                 bond_mint: self.mint,
             },
@@ -443,6 +450,25 @@ impl Fixture {
     fn run(&mut self, instruction: Instruction, actor: Actor) -> TransactionResult {
         self.run_batch(vec![instruction], actor)
     }
+    /// This path deliberately excludes the issuer from both the signature set
+    /// and the compiled account keys, including the transaction fee payer.
+    fn run_without_issuer(&mut self, instruction: Instruction, actor: Actor) -> TransactionResult {
+        self.svm.expire_blockhash();
+        let caller: &dyn Signer = match actor {
+            Actor::Holder(i) => &self.holders[i],
+            Actor::Outsider => &self.outsider,
+            Actor::Issuer => panic!("issuerless test requires a different caller"),
+        };
+        let tx = Transaction::new_signed_with_payer(
+            &[instruction],
+            Some(&caller.pubkey()),
+            &[caller],
+            self.svm.latest_blockhash(),
+        );
+        assert_eq!(tx.signatures.len(), 1, "only the caller signs");
+        assert!(!tx.message.account_keys.contains(&self.issuer.pubkey()), "issuer account is absent");
+        self.svm.send_transaction(tx)
+    }
     fn run_batch(&mut self, instructions: Vec<Instruction>, actor: Actor) -> TransactionResult {
         self.svm.expire_blockhash();
         let actor: &dyn Signer = match actor {
@@ -484,6 +510,83 @@ impl Fixture {
         );
         bincode::serialize(&tx).unwrap().len()
     }
+}
+
+#[test]
+fn permissionless_redemption_requires_maturity_complete_records_and_canonical_snapshot() {
+    let mut f = Fixture::new(2);
+    f.run(f.issue_ix(0, 6, false), Actor::Issuer).unwrap();
+    f.run(f.issue_ix(1, 4, false), Actor::Issuer).unwrap();
+    f.fund(10_500_000_000);
+    f.run(f.seal_ix(), Actor::Issuer).unwrap();
+
+    let preserved_keys = [f.bond, f.mint, f.vault, f.holdings[0], f.holdings[1]];
+    let assert_rejected = |instruction, name: &str, f: &mut Fixture| {
+        let before: Vec<_> = preserved_keys.iter().map(|key| f.svm.get_account(&ad(*key))).collect();
+        let failure = f.run_without_issuer(instruction, Actor::Holder(0)).unwrap_err();
+        assert!(failure.meta.logs.iter().any(|line| line.contains(name)), "expected {name}: {:?}", failure.meta.logs);
+        for (key, account) in preserved_keys.iter().zip(before) {
+            assert_eq!(f.svm.get_account(&ad(*key)), account, "failed opening must preserve {key}");
+        }
+    };
+    let caller = pk(&f.holders[0]);
+    assert_rejected(f.begin_ix_by(caller), "TooEarly", &mut f);
+    f.now(400);
+    assert_rejected(f.begin_ix_by(caller), "PendingCoupon", &mut f);
+    f.run(f.capture_ix(0), Actor::Issuer).unwrap();
+
+    let mut missing = f.begin_ix_by(caller);
+    missing.accounts.pop();
+    assert_rejected(missing, "IncompleteSnapshot", &mut f);
+    let mut reordered = f.begin_ix_by(caller);
+    reordered.accounts.swap(3, 4);
+    assert_rejected(reordered, "InvalidHolderAccount", &mut f);
+    let mut foreign_mint = f.begin_ix_by(caller);
+    foreign_mint.accounts[2].pubkey = ad(f.settlement);
+    assert_rejected(foreign_mint, "ConstraintHasOne", &mut f);
+    // A program-owned Bond clone with the correct discriminator and contents
+    // still cannot substitute for its canonical issue PDA.
+    let foreign_bond = pk(&Keypair::new());
+    f.svm.set_account(ad(foreign_bond), f.svm.get_account(&ad(f.bond)).unwrap()).unwrap();
+    let mut substituted_bond = f.begin_ix_by(caller);
+    substituted_bond.accounts[1].pubkey = ad(foreign_bond);
+    assert_rejected(substituted_bond, "ConstraintSeeds", &mut f);
+
+    let mint_before = f.svm.get_account(&ad(f.mint)).unwrap();
+    let mut inconsistent_mint = mint_before.clone();
+    let mut mint_data = token::spl_token::state::Mint::unpack(&inconsistent_mint.data).unwrap();
+    mint_data.supply += 1;
+    token::spl_token::state::Mint::pack(mint_data, &mut inconsistent_mint.data).unwrap();
+    f.svm.set_account(ad(f.mint), inconsistent_mint).unwrap();
+    assert_rejected(f.begin_ix_by(caller), "SupplyMismatch", &mut f);
+    f.svm.set_account(ad(f.mint), mint_before).unwrap();
+
+    let opened = f.run_without_issuer(f.begin_ix_by(caller), Actor::Holder(0)).unwrap();
+    let bond: Bond = f.decode(f.bond);
+    assert_eq!(bond.state, bondtrace::REDEEMING);
+    assert_eq!(bond.redemption_units, vec![6, 4]);
+    assert_eq!(bond.principal_claimed_mask, 0);
+    assert_rejected(f.begin_ix_by(caller), "InvalidPhase", &mut f);
+    f.run_without_issuer(f.redeem_ix(0), Actor::Holder(0)).unwrap();
+    f.run_without_issuer(f.redeem_ix(1), Actor::Holder(1)).unwrap();
+    assert_eq!(f.supply(), 0);
+    assert_eq!(f.decode::<Bond>(f.bond).state, REDEEMED);
+    assert_eq!(f.balance(f.vault), 500_000_000, "historic coupons remain funded");
+    println!("PROVEN permissionless_redemption issuer_absent=true holder_signatures=1 openedCU={} supply0 principal10000000000 old_coupon_reserve500000000", opened.compute_units_consumed);
+}
+
+#[test]
+fn unregistered_executor_can_open_redemption_without_issuer_or_holder_signature() {
+    let mut f = Fixture::new(1);
+    f.run(f.issue_ix(0, 1, false), Actor::Issuer).unwrap();
+    f.fund(1_050_000_000);
+    f.run(f.seal_ix(), Actor::Issuer).unwrap();
+    f.now(200);
+    f.run(f.capture_ix(0), Actor::Issuer).unwrap();
+    f.now(400);
+    f.run_without_issuer(f.begin_ix_by(pk(&f.outsider)), Actor::Outsider).unwrap();
+    assert_eq!(f.decode::<Bond>(f.bond).redemption_units, vec![1]);
+    assert_eq!(f.balance(f.destinations[0]), 0, "opening alone cannot redirect principal");
 }
 
 #[test]

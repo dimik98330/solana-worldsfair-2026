@@ -6,14 +6,40 @@ use anchor_spl::{
 
 pub mod contexts;
 pub mod state;
+pub mod v2_contexts;
+pub mod v2_state;
+mod v2;
 pub use contexts::*;
 pub use state::*;
+pub use v2_contexts::*;
+pub use v2_state::*;
 
 declare_id!("B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8");
 
 #[program]
 pub mod bondtrace {
     use super::*;
+
+    pub fn initialize_issue_v2(ctx: Context<InitializeIssueV2>, series_id: u64, name: String,
+        face_value: u64, maturity_ts: i64, coupon_count: u32, rate_bps: u16, frequency: u8) -> Result<()> {
+        v2::initialize(ctx, series_id, name, face_value, maturity_ts, coupon_count, rate_bps, frequency)
+    }
+    pub fn append_schedule_v2(ctx: Context<AppendScheduleV2>, page_index: u32, coupons: Vec<CouponTerms>) -> Result<()> { v2::append_schedule(ctx, page_index, coupons) }
+    pub fn create_registry_page_v2(ctx: Context<CreateRegistryPageV2>, page_index: u32) -> Result<()> { v2::create_registry_page(ctx, page_index) }
+    pub fn register_holder_v2(ctx: Context<RegisterHolderV2>, index: u32) -> Result<()> { v2::register_holder(ctx, index) }
+    pub fn issue_units_v2(ctx: Context<IssueUnitsV2>, amount: u64) -> Result<()> { v2::issue_units(ctx, amount) }
+    pub fn fund_vault_v2(ctx: Context<FundVaultV2>, amount: u64) -> Result<()> { v2::fund_vault(ctx, amount) }
+    pub fn seal_issue_v2(ctx: Context<SealIssueV2>) -> Result<()> { v2::seal_issue(ctx) }
+    pub fn transfer_units_v2(ctx: Context<TransferUnitsV2>, amount: u64) -> Result<()> { v2::transfer_units(ctx, amount) }
+    pub fn begin_coupon_v2(ctx: Context<BeginCouponV2>, index: u32) -> Result<()> { v2::begin_coupon(ctx, index) }
+    pub fn begin_redemption_v2(ctx: Context<BeginRedemptionV2>) -> Result<()> { v2::begin_redemption(ctx) }
+    pub fn create_proposal_v2(ctx: Context<CreateProposalV2>, proposal_id: u32, title: String, closes_at: i64) -> Result<()> { v2::create_proposal(ctx, proposal_id, title, closes_at) }
+    pub fn capture_action_page_v2(ctx: Context<CaptureActionPageV2>, page_index: u32) -> Result<()> { v2::capture_page(ctx, page_index) }
+    pub fn finalize_action_v2(ctx: Context<FinalizeActionV2>) -> Result<()> { v2::finalize_action(ctx) }
+    pub fn claim_coupon_v2(ctx: Context<PayCouponV2>) -> Result<()> { v2::pay_coupon(ctx, true) }
+    pub fn settle_coupon_v2(ctx: Context<PayCouponV2>) -> Result<()> { v2::pay_coupon(ctx, false) }
+    pub fn redeem_principal_v2(ctx: Context<RedeemPrincipalV2>) -> Result<()> { v2::redeem_principal(ctx) }
+    pub fn cast_vote_v2(ctx: Context<CastVoteV2>, support: bool) -> Result<()> { v2::cast_vote(ctx, support) }
 
     pub fn initialize_issue(
         ctx: Context<InitializeIssue>,
@@ -409,7 +435,7 @@ pub mod bondtrace {
         receipt(
             ctx.accounts.bond.key(),
             4,
-            ctx.accounts.issuer.key(),
+            ctx.accounts.executor.key(),
             0,
             ctx.accounts.bond.total_issued,
             payment_amount(ctx.accounts.bond.face_value, ctx.accounts.bond.total_issued)?,

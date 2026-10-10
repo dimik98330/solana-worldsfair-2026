@@ -1,4 +1,4 @@
-import type { ChainState, PreparedAction, TransactionResult, ActionName, DemoRole } from './types';
+import type { ChainState, PreparedAction, TransactionResult, ActionName, ActionNameV2, DemoRole } from './types';
 export class ApiError extends Error {
   constructor(message: string, public code: string, public retryable: boolean, public uncertain = false) { super(message); }
 }
@@ -27,8 +27,8 @@ export const api = {
     return state;
   },
   bootstrap: (reset = false, operationId?: string) => request<TransactionResult>('/api/demo/bootstrap', { reset, operationId }),
-  demoAction: (action: ActionName, role: DemoRole, params: Record<string, string>, operationId: string) => request<TransactionResult>('/api/demo/action', { action, role, params, operationId }),
-  prepare: (action: ActionName, walletAddress: string, params: Record<string, string>) => request<PreparedAction>('/api/actions/prepare', { action, walletAddress, params }),
+  demoAction: (action: ActionName|ActionNameV2, role: DemoRole, params: Record<string, string>, operationId: string) => request<TransactionResult>('/api/demo/action', { action, role, params, operationId }),
+  prepare: (action: ActionName|ActionNameV2, walletAddress: string, params: Record<string, string>) => request<PreparedAction>('/api/actions/prepare', { action, walletAddress, params }),
   submit: (signedTransactionBase64: string) => request<TransactionResult>('/api/transactions/submit', { signedTransactionBase64 }),
   status: (signature: string) => request<TransactionResult>(`/api/transactions/${encodeURIComponent(signature)}`),
   operation: (operationId: string) => request<TransactionResult>(`/api/operations/${encodeURIComponent(operationId)}`),

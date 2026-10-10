@@ -56,3 +56,27 @@ test('a known instant survives a selected-zone DST fold while a newly edited amb
   assert.deepEqual(validateIssueDraft(restored.draft, 1_790_000_000, restored.timeZone, restored.instants).params,
     validateIssueDraft(initial.draft, 1_790_000_000, initial.timeZone, initial.instants).params);
 });
+test('version1 drafts migrate to explicit legacy fixed mode without losing exact fields or pending recovery', () => {
+  const saved = { ...draft, pendingCreation: { seriesId: draft.draft.seriesId, issuer: 'public-wallet' } };
+  const restored = parseIssuerDraft(JSON.stringify(saved))!;
+  assert.equal(restored.version, 2);
+  assert.equal(restored.draft.protocol, 'legacy'); assert.equal(restored.draft.couponMode, 'fixed');
+  for (const [key, value] of Object.entries(saved.draft)) assert.deepEqual(restored.draft[key as keyof typeof restored.draft], value);
+  assert.deepEqual(restored.pendingCreation, saved.pendingCreation);
+  assert.equal(restored.step, saved.step);
+  assert.deepEqual(parseIssuerDraft(JSON.stringify(restored)), restored, 'migrated save survives another reload');
+});
+test('version2 drafts preserve9–16 coupons across reload and timezone changes, even while selecting legacy compatibility', () => {
+  for (const length of [9, 16]) {
+    const saved: IssuerDraftSnapshot = { ...draft, version: 2, draft: { ...draft.draft, protocol: 'paged', couponMode: 'annual-rate', annualRate: '10.25', couponFrequency: '2', coupons: Array.from({ length }, (_, index) => ({ ...draft.draft.coupons[0], key: `coupon${index}`, amount: '51.25' })) } };
+    const restored = parseIssuerDraft(JSON.stringify(saved))!;
+    assert.ok(restored); assert.equal(restored.draft.coupons.length, length);
+    assert.deepEqual(restored.draft, saved.draft);
+    const rebased = rebaseDraft(restored, 'UTC');
+    assert.equal(parseIssuerDraft(JSON.stringify(rebased))?.draft.coupons.length, length);
+    assert.equal(rebased.draft.annualRate, '10.25');
+    assert.equal(parseIssuerDraft(JSON.stringify({ ...restored, draft: { ...restored.draft, protocol: 'legacy' } }))?.draft.coupons.length, length, 'mode choice never silently truncates draft rows');
+  }
+  const oversized = { ...draft, version: 2, draft: { ...draft.draft, protocol: 'paged', couponMode: 'fixed', annualRate: '10', couponFrequency: '2', coupons: Array.from({ length: 17 }, (_, index) => ({ ...draft.draft.coupons[0], key: String(index) })) } };
+  assert.equal(parseIssuerDraft(JSON.stringify(oversized)), null);
+});

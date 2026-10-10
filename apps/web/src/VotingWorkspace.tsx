@@ -72,6 +72,7 @@ function ProposalRecord({ proposal, activeWallet, canAct, disabledReason, langua
   const hasRights = accountStatus === 'eligible';
   const voted = Boolean(activeWallet && proposal.votedWallets.includes(activeWallet));
   const closed = proposal.status === 'closed';
+  const capturing = proposal.status === 'capturing';
   const eligibleTotal = add(proposal.eligibleWeights.map(item => item.units));
   const remainingWeight = remainingVotingWeight(proposal);
   const uniqueVoters = new Set(proposal.votedWallets).size;
@@ -85,7 +86,7 @@ function ProposalRecord({ proposal, activeWallet, canAct, disabledReason, langua
       : disabledReason || (ru ? 'Голосование сейчас недоступно. Обновите данные и проверьте текущую операцию.' : 'Voting is unavailable. Refresh the data and check the current operation.');
 
   function cast(choice: 'yes' | 'no') {
-    if (!canAct || !hasRights || voted || closed || snapshot || !connected) return;
+    if (!canAct || !hasRights || voted || closed || capturing || snapshot || !connected) return;
     onAction({
       action: 'cast_vote',
       params: { proposalId: proposal.id, choice },
@@ -102,7 +103,7 @@ function ProposalRecord({ proposal, activeWallet, canAct, disabledReason, langua
     <header className="vote-event-heading">
       <div className="vote-event-identity">
         <h2 translate="no">{proposal.title}</h2>
-        <div className="vote-event-meta"><span>{ru ? 'Предложение' : 'Proposal'} <span className="vote-number">{units(proposal.id)}</span></span><span className={`vote-status ${closed ? 'closed' : 'open'}`}>{closed ? <LockKeyhole size={20} aria-hidden="true" /> : <Vote size={20} aria-hidden="true" />}{closed ? (ru ? 'Голосование завершено' : 'Voting closed') : (ru ? 'Приём голосов открыт' : 'Voting open')}</span></div>
+        <div className="vote-event-meta"><span>{ru ? 'Предложение' : 'Proposal'} <span className="vote-number">{units(proposal.id)}</span></span><span className={`vote-status ${closed ? 'closed' : 'open'}`}>{closed || capturing ? <LockKeyhole size={20} aria-hidden="true" /> : <Vote size={20} aria-hidden="true" />}{capturing ? (ru ? 'Фиксируются права' : 'Capturing voting rights') : closed ? (ru ? 'Голосование завершено' : 'Voting closed') : (ru ? 'Приём голосов открыт' : 'Voting open')}</span></div>
       </div>
       <Button className="vote-details-trigger" onClick={() => setDetailsOpen(true)} aria-haspopup="dialog"><FileSearch size={22} aria-hidden="true" />{ru ? 'Проверить данные' : 'Inspect details'}</Button>
     </header>
@@ -131,7 +132,8 @@ function ProposalRecord({ proposal, activeWallet, canAct, disabledReason, langua
       </div>
 
       <aside className="vote-ballot" aria-label={ru ? 'Действие голосования' : 'Ballot action'}>
-        {closed ? <><h3><LockKeyhole size={22} aria-hidden="true" />{ru ? 'Приём голосов завершён' : 'Ballot closed'}</h3><p>{ru ? 'Новые голоса не принимаются. Поданные голоса сохранены в записях операций.' : 'New ballots are no longer accepted. Recorded ballots are available in the operation receipts.'}</p>{receiptButton}</>
+        {capturing ? <><h3><LockKeyhole size={22} aria-hidden="true" />{ru ? 'Фиксируются права' : 'Capturing voting rights'}</h3><p role="status">{ru ? 'До завершения всех страниц снимка голосование недоступно. Продолжите фиксацию в операциях выпуска.' : 'Voting becomes available after every snapshot page is finalized. Continue capture in issue operations.'}</p>{refreshButton}</>
+          : closed ? <><h3><LockKeyhole size={22} aria-hidden="true" />{ru ? 'Приём голосов завершён' : 'Ballot closed'}</h3><p>{ru ? 'Новые голоса не принимаются. Поданные голоса сохранены в записях операций.' : 'New ballots are no longer accepted. Recorded ballots are available in the operation receipts.'}</p>{receiptButton}</>
           : snapshot || !connected ? <><h3>{snapshot ? (ru ? 'Архивное голосование' : 'Archived proposal') : (ru ? 'Данные сети недоступны' : 'Network data unavailable')}</h3><p role="status">{unavailableMessage}</p>{snapshot ? receiptButton : refreshButton}</>
           : !activeWallet ? <><h3><UserRound size={22} aria-hidden="true" />{ru ? 'Выберите аккаунт подписи' : 'Choose a signing account'}</h3><p>{ru ? 'Право голоса проверяется для аккаунта подписи, отдельно от просматриваемого портфеля.' : 'Voting rights are checked for the signing account, separately from the portfolio you are viewing.'}</p>{connectButton}</>
           : voted ? <><h3><Vote size={22} aria-hidden="true" />{ru ? 'Ваш голос уже учтён' : 'Your ballot is recorded'}</h3><p>{ru ? 'Повторно проголосовать или изменить выбор нельзя.' : 'You cannot vote again or replace your choice.'}</p>{receiptButton}</>

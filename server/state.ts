@@ -1,4 +1,5 @@
 import {TOKEN_PROGRAM_ADDRESS} from '@solana-program/token';
+import {address as validateAddress} from '@solana/kit';
 import {PROGRAM_ID, decodeBond} from '../packages/client/src/program.ts';
 import {entitlement, hasClaim} from '../packages/client/src/domain.ts';
 import {account, AppError, chainClock} from './rpc.ts';
@@ -10,6 +11,7 @@ import {accountBytes, readChainView, validateBondIdentity, type Bond} from './ch
 import {decimalAmount, isoTimestamp, reconcile} from './reconciliation.ts';
 import {buildServicing} from './servicing.ts';
 import {normalizeRateDescriptor,verifyRateAmounts} from './rate-terms.ts';
+import {isBondV2,readV2State} from './v2.ts';
 
 // Individual reads remain available to transaction builders; /state uses the complete coherent graph.
 export async function programAccount(key: string) {
@@ -52,6 +54,10 @@ export async function getState(selected?: string) {
   const key = selected ?? f?.bond ?? catalog[0]?.bond;
   const result: any = {network, rpcUrl, programId: PROGRAM_ID, connected: true, instrument: null, holders: [], coupons: [], redemption: null, proposals: [], activity: activities(), instruments: catalog.map(item => ({address: item.bond, name: item.name, issuer: item.roles.issuer, source: item.source})), demo: {available: demoEnabled, ready: false, accelerated: true, roleWallets: f?.roles ?? {}}};
   if (!key) { const clock = await chainClock(); result.serverTime = isoTimestamp(clock.timestamp); return result; }
+  try{validateAddress(key);}catch{throw new AppError('INVALID_ADDRESS','Select a complete Solana instrument address');}
+  const root=await programAccount(key);
+  if(!root)throw new AppError('INSTRUMENT_NOT_FOUND','The selected instrument account is absent',404);
+  if(root&&isBondV2(root.bytes))return readV2State(key);
   const view = await readChainView(key, {proposalIds: () => readCatalog(key)?.proposalIds ?? []});
   const {bond, address: bondAddress, clock} = view, meta = metadata(key, bond), reconciliation = reconcile(view);
   result.slot = String(view.contextSlot);

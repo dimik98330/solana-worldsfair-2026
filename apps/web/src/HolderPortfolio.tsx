@@ -48,7 +48,7 @@ export function HolderPortfolio({ state, activeWallet, viewedWallet, onSelect, u
     const row = state.redemption.entitlements.find(item => item.wallet === selected);
     rows.push({ selection: { ...(row ?? { wallet: selected, units: '0', amountMinor: '0', claimed: false }), kind: 'principal', snapshotAddress: state.redemption.snapshotAddress, recordAt: instrument.maturityAt, paymentAt: instrument.maturityAt, unitAmountMinor: instrument.faceValueMinor }, title: tr('Principal repayment', 'Возврат номинала'), eligible: Boolean(row) });
   }
-  const transferAvailable = signing && Boolean(holding) && (integer(holding?.units) ?? 0n) > 0n && instrument.status === 'active';
+  const transferAvailable = signing && Boolean(holding) && (integer(holding?.units) ?? 0n) > 0n && instrument.status === 'active' && state.servicing?.transfer.allowed !== false;
 
   return <div className="holder-portfolio-workspace">
     <section className="portfolio-account" aria-label={tr('Selected holder', 'Выбранный держатель')}>

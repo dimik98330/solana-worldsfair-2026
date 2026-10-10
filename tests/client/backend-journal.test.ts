@@ -47,20 +47,20 @@ function namespace(label: string) {
   const directory = path.join(base, label + '-' + crypto.randomUUID());
   fs.mkdirSync(directory, {recursive: true}); return directory;
 }
-function worker(body: string, directory: string) {
+function worker(body: string, directory: string, diagnosticPhase?: string) {
   return new Promise<{code: number | null; stdout: string; stderr: string}>((resolve, reject) => {
     const child = spawn(process.execPath, ['--import', 'tsx', '--input-type=module', '--eval', prelude + body], {
       cwd: process.cwd(), env: {...process.env, BONDTRACE_NETWORK: 'localnet', SOLANA_RPC_URL: 'http://127.0.0.1:8899', BONDTRACE_DATA_DIR: directory}, windowsHide: true,
     });
-    let stdout = '', stderr = '';
-    child.stdout.on('data', value => { stdout += String(value); }); child.stderr.on('data', value => { stderr += String(value); });
+    let stdout = '', stderr = '', progress = '';
+    child.stdout.on('data', value => { stdout += String(value);if(diagnosticPhase)progress=stdout.match(/projection-stage:[a-zA-Z0-9_-]+/g)?.at(-1)??progress; }); child.stderr.on('data', value => { stderr += String(value); });
     child.once('error', reject);
-    const timer = setTimeout(() => { child.kill(); reject(new Error('Isolated backend-journal worker timed out')); }, 45_000);
+    const timer = setTimeout(() => { child.kill(); reject(new Error('Isolated backend-journal worker timed out'+(diagnosticPhase?' ('+diagnosticPhase+(progress?'; '+progress:'')+')':''))); }, 45_000);
     child.once('close', code => { clearTimeout(timer); resolve({code, stdout, stderr}); });
   });
 }
-async function success(body: string, directory: string) {
-  const result = await worker(body, directory); assert.equal(result.code, 0, result.stderr); return result;
+async function success(body: string, directory: string, diagnosticPhase?: string) {
+  const result = await worker(body, directory, diagnosticPhase); assert.equal(result.code, 0, result.stderr); return result;
 }
 function signature(id: number) { const bytes = Buffer.alloc(64, 17); bytes.writeUInt32LE(id, 60); return getBase58Decoder().decode(bytes); }
 const hash = (file: string) => createHash('sha256').update(fs.readFileSync(file)).digest('hex');
@@ -75,6 +75,20 @@ const record={seriesId:'77',bond:bondAddress,name:name.toString(),settlementMint
 const originalMock=globalThis.fetch;
 globalThis.fetch=async(input,init)=>{const req=JSON.parse(String(init?.body));if(req.method==='getAccountInfo'&&req.params[0]===bondAddress){return Response.json({jsonrpc:'2.0',id:req.id,result:{context:{slot:600},value:{owner:program.PROGRAM_ID,executable:false,data:[bondBytes.toString('base64'),'base64']}}});}return originalMock(input,init);};
 `;
+const retainedProjectionIntent = `
+const retainProjection=(id,signature,action,params,metadata)=>{
+  operations.beginOperation(id,action,'issuer',params);
+  operations.updateOperation(id,{wallet:issuer,bond:bondAddress,signature,status:'confirmed',chainStatus:'confirmed',projectionStatus:'pending',metadata});
+  journal.saveReceipt({signature,operationId:id,action,wallet:issuer,bond:bondAddress,network:'localnet',genesisHash:genesis,chainStatus:'confirmed',projectionStatus:'pending',submittedAt:'2026-10-08T00:00:00.000Z',slot:700,observedAt:'2026-10-08T00:00:00.000Z',verification:'live-rpc',finality:{schemaVersion:1,signature,status:'confirmed',source:'live-rpc',slot:700,contextSlot:701,observedAt:'2026-10-08T00:00:00.000Z',genesisHash:genesis}});
+};
+`;
+async function waitForMarker(directory: string, name: string) {
+  const deadline = Date.now() + 30_000;
+  while (!fs.existsSync(path.join(directory, name))) {
+    if (Date.now() >= deadline) throw new Error('Projection test coordination marker timed out');
+    await new Promise(resolve => setTimeout(resolve, 10));
+  }
+}
 
 test('legacy arrays migrate once, preserve bytes and retain more than150 signed and projection-pending records through restart', async () => {
   const directory = namespace('legacy-retention'), createdAt = new Date().toISOString();
@@ -207,25 +221,87 @@ test('relay observes durable exact bytes, signature, lifetime and operation befo
   await success(`mode='absent';const result=await operations.operationStatus('relay-durable_01');assert.equal(result.status,'confirmed');assert.equal(result.verification,'recorded-confirmation');assert.equal(result.projectionStatus,'complete');assert.equal(sends,0);storage.closeStorage();`, directory);
 });
 
-test('concurrent catalog projections from four processes preserve every holder label and proposal identifier in the same database', async () => {
+test('concurrent catalog projections from four processes preserve every holder label and proposal identifier in the same database', async (t) => {
   const directory = namespace('concurrent-projections');
-  await success(projectionFixture + `saveFixture(record);saveCatalog(record);storage.closeStorage();`, directory);
+  const intents = Array.from({length: 16}, (_, position) => ({position, voteId: 'concurrent-vote_' + position, voteSignature: signature(9000 + position * 2), holderId: 'concurrent-holder_' + position, holderSignature: signature(9001 + position * 2)}));
+  await success(projectionFixture + retainedProjectionIntent + `
+    saveFixture(record);saveCatalog(record);
+    for(const item of ${JSON.stringify(intents)}){retainProjection(item.voteId,item.voteSignature,'create_vote',{proposalId:String(item.position)});retainProjection(item.holderId,item.holderSignature,'register_holder',{holderWallet:holderWallets[item.position]},{holderWallet:holderWallets[item.position],label:'Holder '+item.position});}
+    storage.closeStorage();
+  `, directory, 'projection-setup-32');
   const startAt = Date.now() + 2_500;
   const runs = await Promise.all(Array.from({length: 4}, (_, index) => worker(projectionFixture + `
-    const {DatabaseSync}=await import('node:sqlite');const originalPrepare=DatabaseSync.prototype.prepare;const sleep=new Int32Array(new SharedArrayBuffer(4));
+    const {DatabaseSync}=await import('node:sqlite');const originalPrepare=DatabaseSync.prototype.prepare,originalExec=DatabaseSync.prototype.exec;const sleep=new Int32Array(new SharedArrayBuffer(4));let nativeBusy=0,deferred=0;
+    DatabaseSync.prototype.exec=function(sql){try{return Reflect.apply(originalExec,this,[sql]);}catch(error){if(error.code==='ERR_SQLITE_ERROR'&&error.errcode===5)nativeBusy++;throw error;}};
     // Expand the old read/merge/write race window. In the fixed code the entire
     // critical catalog read/merge/write holds BEGIN IMMEDIATE across this delay.
     DatabaseSync.prototype.prepare=function(sql){const statement=Reflect.apply(originalPrepare,this,[sql]);if(sql==='SELECT body FROM documents WHERE key = ?'){const get=statement.get;statement.get=function(...args){const row=Reflect.apply(get,this,args);if(args[0]==='catalog/'+bondAddress+'.json')Atomics.wait(sleep,0,0,15);return row;};}return statement;};
     const wait=${startAt}-Date.now();if(wait>0)Atomics.wait(sleep,0,0,wait);
-    for(let j=0;j<4;j++){const position=${index}*4+j;await applyConfirmedEffect({action:'create_vote',wallet:issuer,bond:bondAddress,params:{proposalId:String(position)}});await finalizeAdminEffect({action:'register_holder',wallet:issuer,bond:bondAddress,params:{holderWallet:holderWallets[position]},metadata:{holderWallet:holderWallets[position],label:'Holder '+position}});}
-    assert.equal(sends,0);storage.closeStorage();
-  `, directory)));
-  for (const result of runs) assert.equal(result.code, 0, result.stderr);
+    const intents=${JSON.stringify(intents)},completed=new Set();let blocked=false,attempted=0;
+    projectionPass:for(let j=0;j<4;j++){const item=intents[${index}*4+j];for(const [id,signature] of [[item.voteId,item.voteSignature],[item.holderId,item.holderSignature]]){
+      attempted++;
+      process.stdout.write('projection-stage:'+id+String.fromCharCode(10));const beforeBusy=nativeBusy;
+      try{const result=await operations.operationStatus(id);assert.equal(result.signature,signature);assert.equal(result.projectionStatus,'complete');completed.add(id);}
+      catch(error){const typedBusy=error instanceof storage.StorageError&&error.code==='STORAGE_BUSY'&&error.cause?.code==='ERR_SQLITE_ERROR'&&error.cause?.errcode===5,unknownBusy=error instanceof rpc.AppError&&error.code==='UNKNOWN_STATUS'&&nativeBusy>beforeBusy;assert.ok(typedBusy||unknownBusy,'Only a retained confirmed projection with a native busy cause may await recovery: '+JSON.stringify({name:error.name,code:error.code,sqliteCode:error.errcode,sqliteMessage:error.errstr,frames:String(error.stack).match(/server[\\/][a-z-]+\\.ts:\\d+:\\d+/g)}));deferred++;blocked=true;break projectionPass;}
+    }}
+    if(blocked)for(const item of intents.slice(${index}*4,${index}*4+4))for(const [id,signature] of [[item.voteId,item.voteSignature],[item.holderId,item.holderSignature]])if(!completed.has(id)){const retained=operations.findOperation(id);assert.equal(retained.signature,signature);assert.equal(retained.chainStatus,'confirmed');assert.equal(retained.projectionStatus,'pending');assert.equal(journal.receipt(signature).chainStatus,'confirmed');assert.equal(journal.receipt(signature).projectionStatus,'pending');}
+    assert.equal(sends,0);process.stdout.write(JSON.stringify({deferred,nativeBusy,blocked,attempted,pending:8-completed.size})+String.fromCharCode(10));storage.closeStorage();
+  `, directory, 'projection-writer-'+index)));
+  for (const result of runs) {assert.equal(result.code, 0, result.stderr);t.diagnostic(result.stdout.trim().split(/\r?\n/).filter(line=>line.startsWith('{')).join(' '));}
+  const recoveryIntents = intents.flatMap(item => [{id: item.voteId, signature: item.voteSignature}, {id: item.holderId, signature: item.holderSignature}]);
+  assert.equal(recoveryIntents.length, 32);
+  assert.equal(new Set(recoveryIntents.map(item => item.id)).size, 32);
+  assert.equal(new Set(recoveryIntents.map(item => item.signature)).size, 32);
+  // Each passive recovery request retains its original ID/signature. Bound the
+  // work per fresh process rather than expanding the existing 45s watchdog.
+  for (let start = 0; start < recoveryIntents.length; start += 4) {
+    const chunk = recoveryIntents.slice(start, start + 4);
+    assert.equal(chunk.length, 4);
+    await success(projectionFixture + `
+      for(const {id,signature} of ${JSON.stringify(chunk)}){process.stdout.write('projection-stage:'+id+String.fromCharCode(10));const result=await operations.operationStatus(id);assert.equal(result.signature,signature);assert.equal(result.chainStatus,'confirmed');assert.equal(result.projectionStatus,'complete');const operation=operations.findOperation(id),receipt=journal.receipt(signature);assert.equal(operation.signature,signature);assert.equal(operation.chainStatus,'confirmed');assert.equal(operation.projectionStatus,'complete');assert.equal(receipt.signature,signature);assert.equal(receipt.chainStatus,'confirmed');assert.equal(receipt.projectionStatus,'complete');}
+      assert.equal(sends,0);storage.closeStorage();
+    `, directory, 'projection-fresh-drain-chunk-'+(start/4)+'-4');
+  }
   await success(projectionFixture + `
+    const {DatabaseSync}=await import('node:sqlite'),originalExec=DatabaseSync.prototype.exec;let writerBegins=0;DatabaseSync.prototype.exec=function(sql){if(sql==='BEGIN IMMEDIATE')writerBegins++;return Reflect.apply(originalExec,this,[sql]);};
+    for(const {id,signature} of ${JSON.stringify(recoveryIntents)}){const operation=operations.findOperation(id),receipt=journal.receipt(signature);assert.equal(operation.signature,signature);assert.equal(operation.chainStatus,'confirmed');assert.equal(operation.projectionStatus,'complete');assert.equal(receipt.signature,signature);assert.equal(receipt.chainStatus,'confirmed');assert.equal(receipt.projectionStatus,'complete');}
     const value=readCatalog(bondAddress);assert.equal(Object.keys(value.holderLabels).length,16);for(let i=0;i<16;i++)assert.equal(value.holderLabels[holderWallets[i]],'Holder '+i);
     assert.deepEqual(value.proposalIds.map(Number).sort((a,b)=>a-b),Array.from({length:16},(_,i)=>i));assert.deepEqual(fixture().proposalIds.map(Number).sort((a,b)=>a-b),Array.from({length:16},(_,i)=>i));
-    assert.deepEqual(storage.verifyStorageIntegrity(),['ok']);assert.equal(sends,0);storage.closeStorage();
+    assert.deepEqual(storage.verifyStorageIntegrity(),['ok']);assert.equal(writerBegins,0,'Final stored-state verification must not reserve a writer');assert.deepEqual(requests,[],'Final stored-state verification must not perform RPC');assert.equal(sends,0);storage.closeStorage();
+  `, directory, 'projection-readonly-verify-32');
+});
+
+test('real SQLite lock timeout retains a confirmed projection and a fresh process recovers its same ID without relay', async (t) => {
+  const directory = namespace('projection-lock-recovery'), id = 'locked-projection_01', sig = signature(9500);
+  await success(projectionFixture + retainedProjectionIntent + `saveFixture(record);saveCatalog(record);retainProjection(${JSON.stringify(id)},${JSON.stringify(sig)},'register_holder',{holderWallet:holderWallets[0]},{holderWallet:holderWallets[0],label:'Recovered holder'});assert.equal(storage.storageDiagnostics().busyTimeoutMs,5000);storage.closeStorage();`, directory);
+  const recovery = worker(projectionFixture + `
+    const {DatabaseSync}=await import('node:sqlite'),originalExec=DatabaseSync.prototype.exec;let observedBusy=false,elapsed=0;
+    DatabaseSync.prototype.exec=function(sql){const start=performance.now();try{return Reflect.apply(originalExec,this,[sql]);}catch(error){if(sql==='BEGIN IMMEDIATE'&&error.code==='ERR_SQLITE_ERROR'&&error.errcode===5){observedBusy=true;elapsed=performance.now()-start;fs.writeFileSync(file('projection-busy.marker'),'SQLITE_BUSY');}throw error;}};
+    const priorMock=globalThis.fetch;let gated=false;
+    globalThis.fetch=async(input,init)=>{const request=JSON.parse(String(init?.body));if(!gated&&request.method==='getAccountInfo'&&request.params[0]===bondAddress){gated=true;fs.writeFileSync(file('projection-ready.marker'),'ready');const deadline=Date.now()+30000;while(!fs.existsSync(file('projection-held.marker'))){if(Date.now()>deadline)throw new Error('Projection lock holder did not become ready');await new Promise(resolve=>setTimeout(resolve,10));}}return priorMock(input,init);};
+    await assert.rejects(()=>operations.operationStatus(${JSON.stringify(id)}),code('UNKNOWN_STATUS'));assert.ok(observedBusy);assert.ok(elapsed>=4500,'The real configured SQLite busy timeout must expire');const retained=operations.findOperation(${JSON.stringify(id)});assert.equal(retained.signature,${JSON.stringify(sig)});assert.equal(retained.chainStatus,'confirmed');assert.equal(retained.projectionStatus,'pending');assert.equal(journal.receipt(${JSON.stringify(sig)}).projectionStatus,'pending');assert.equal(sends,0);process.stdout.write(JSON.stringify({observedBusy,elapsed})+'\\n');storage.closeStorage();
   `, directory);
+  // Attach a rejection handler while coordinating, retaining the original failure below.
+  void recovery.catch(() => {});
+  await waitForMarker(directory, 'projection-ready.marker');
+  const holder = worker(`
+    assert.equal(storage.storageDiagnostics().busyTimeoutMs,5000);const sleep=new Int32Array(new SharedArrayBuffer(4));
+    storage.transactionSync(()=>{fs.writeFileSync(file('projection-held.marker'),'held');const deadline=Date.now()+20000;while(!fs.existsSync(file('projection-busy.marker'))){if(Date.now()>deadline)throw new Error('Expected SQLite busy timeout did not occur');Atomics.wait(sleep,0,0,25);}});storage.closeStorage();
+  `, directory);
+  const [failed, released] = await Promise.all([recovery, holder]);
+  assert.equal(failed.code, 0, failed.stderr);assert.equal(released.code, 0, released.stderr);
+  t.diagnostic(failed.stdout.trim());
+  await success(projectionFixture + `const result=await operations.operationStatus(${JSON.stringify(id)});assert.equal(result.signature,${JSON.stringify(sig)});assert.equal(result.projectionStatus,'complete');assert.equal(operations.findOperation(${JSON.stringify(id)}).signature,${JSON.stringify(sig)});assert.equal(journal.receipt(${JSON.stringify(sig)}).projectionStatus,'complete');assert.equal(readCatalog(bondAddress).holderLabels[holderWallets[0]],'Recovered holder');assert.deepEqual(storage.verifyStorageIntegrity(),['ok']);assert.equal(sends,0);storage.closeStorage();`, directory);
+});
+
+test('completed journal migration re-reads its marker without writer locks and detects a changed marker', async () => {
+  await success(`
+    journal.migrateJournal();const marker=file('journal-migration.json');assert.ok(storage.readJson(marker,null));
+    const {DatabaseSync}=await import('node:sqlite'),originalExec=DatabaseSync.prototype.exec;let begins=0;
+    DatabaseSync.prototype.exec=function(sql){if(sql==='BEGIN IMMEDIATE')begins++;return Reflect.apply(originalExec,this,[sql]);};
+    journal.journalValues('operations');journal.receipts();journal.receipt(${JSON.stringify(signature(9600))});assert.equal(begins,0,'Fresh persisted migration marker reads must not reserve a writer');
+    storage.writeJson(marker,false);begins=0;journal.journalValues('operations');assert.ok(begins>0,'An altered marker must be observed and rechecked inside an atomic migration');assert.equal(storage.readJson(marker,null).schemaVersion,1);assert.deepEqual(storage.verifyStorageIntegrity(),['ok']);assert.equal(sends,0);storage.closeStorage();
+  `, namespace('journal-marker-fresh-read'));
 });
 
 test('malformed status or RPC envelope cannot persist confirmation or complete a catalog projection', async () => {

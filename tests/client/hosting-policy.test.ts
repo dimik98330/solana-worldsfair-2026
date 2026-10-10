@@ -28,7 +28,7 @@ test('hosted basic authentication refuses missing, wrong and noncanonical input'
  assert.equal(JSON.stringify(policy).includes(credentials.password),false);
 });
 test('operator HTTP auth protects only metadata and readiness, preserving ordinary public wallet routes',()=>{
- for(const route of ['/api/metadata','/api/metadata/backup','/api/metadata/future-operation','/api/runtime/readiness'])assert.equal(requiresOperatorAuthorization(route),true,route);
+ for(const route of ['/api/metadata','/api/metadata/backup','/api/metadata/future-operation','/api/runtime/readiness','/api/integrations/capabilities','/api/integrations/registry/import','/api/integrations/settlement/plan','/api/integrations/settlement/reconcile','/api/integrations/audit/recovery-id'])assert.equal(requiresOperatorAuthorization(route),true,route);
  for(const route of ['/','/assets/entry.js','/healthz','/api/health','/api/state','/api/program','/api/actions/prepare','/api/transactions/submit','/api/demo/bootstrap','/api/metadatabase/backup'])assert.equal(requiresOperatorAuthorization(route),false,route);
  const policy=readHostingPolicy(valid,root);assert.equal(hostingAuthorized(policy,undefined),false,'Mandatory operator credentials remain enforced');
 });

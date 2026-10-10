@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
   "loader": "BPFLoaderUpgradeable",
-  "programLen": 541456,
-  "sha256": "761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd",
-  "releaseId": "financial-terms-lifecycle-v3"
+  "programLen": 959536,
+  "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+  "releaseId": "paged-corporate-actions-v4"
 }

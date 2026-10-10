@@ -24,9 +24,10 @@ export function PaymentTable({ rows, holders, activeWallet, onDetails, onHolder 
   const [status, setStatus] = useState('all');
   const holderByWallet = new Map(holders.map(holder => [holder.wallet, holder]));
   const needle = query.trim().toLocaleLowerCase(language);
+  const noEntitlement = (row: Entitlement) => row.units === '0' || row.amountMinor === '0';
   const visibleRows = rows.filter(row => {
     const name = holderByWallet.get(row.wallet)?.label || '';
-    return (status === 'all' || (status === 'paid' ? row.claimed : !row.claimed))
+    return (status === 'all' || (status === 'paid' ? row.claimed : !row.claimed && !noEntitlement(row)))
       && (!needle || `${name} ${row.wallet}`.toLocaleLowerCase(language).includes(needle));
   });
   const hasActions = Boolean(onDetails || onHolder);
@@ -46,7 +47,7 @@ export function PaymentTable({ rows, holders, activeWallet, onDetails, onHolder 
           <td><div className="holder-cell"><span className="payment-holder-icon"><UserRound size={20} aria-hidden="true" /></span><div><div className="payment-holder-name">{onHolder ? <WorkspaceLink view="portfolio" holder={row.wallet} className="holder-name-link" onNavigate={() => onHolder(row.wallet)} title={tr('Open holder portfolio', 'Открыть портфель держателя')}>{name}</WorkspaceLink> : <strong>{name}</strong>}{row.wallet === activeWallet ? <span className="you-label">{tr('You', 'Вы')}</span> : null}</div><Address value={row.wallet} /></div></div></td>
           <td className="numeric number" data-label={tr('Recorded bonds', 'На дату фиксации')}><span className="payment-cell-figure">{units(row.units)}</span></td>
           <td className="numeric" data-label={tr('Payment', 'Выплата')}><span className="payment-cell-figure"><Money value={row.amountMinor} /></span></td>
-          <td><Badge tone={row.claimed ? 'success' : 'neutral'}>{row.claimed ? tr('Paid', 'Выплачено') : tr('Unclaimed', 'Не получено')}</Badge></td>
+          <td><Badge tone={row.claimed ? 'success' : 'neutral'}>{noEntitlement(row) ? tr('No entitlement', 'Нет начисления') : row.claimed ? tr('Paid', 'Выплачено') : tr('Unclaimed', 'Не получено')}</Badge></td>
           {hasActions ? <td className="table-row-action">{onDetails ? <Button variant="ghost" onClick={() => onDetails(row)} aria-label={`${tr('Payment details for', 'Детали выплаты:')} ${name}`}><FileSearch size={18} aria-hidden="true" />{tr('Details', 'Детали')}</Button> : <Button variant="ghost" onClick={() => onHolder?.(row.wallet)}>{tr('Portfolio', 'Портфель')}<ArrowRight size={18} aria-hidden="true" /></Button>}</td> : null}
         </tr>;
       })}</tbody></table>

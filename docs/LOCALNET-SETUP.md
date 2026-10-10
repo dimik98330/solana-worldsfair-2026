@@ -2,6 +2,54 @@
 
 [English README](../README.md) · [Русский README](../README.ru.md)
 
+## Current paged v4 launcher / Текущий постраничный лаунчер v4
+
+After prerequisites and `npm run setup:judge`, use `npm run demo:paged:lifecycle`. It builds the matching v4 image and starts API3200/RPC8999. For33 initial holders plus one later receiver and9coupons:
+
+```powershell
+pwsh -NoProfile -File scripts/lifecycle-demo.ps1 -Paged -Scale33 -LateCoupon -RpcPort 8999 -ApiPort 3200
+```
+
+The output retains a recovery ID, immutable plan and public evidence directory. Resume with the same flags and `-OperationId <saved-id>`; do not replace unresolved signed steps. New IDs create new issues. Generated keys, data and ledgers remain ignored/preserved. See the [paged contract](34-PAGED-SERVICING.md).
+
+После подготовки `npm run demo:paged:lifecycle` собирает соответствующую v4-программу и запускает API3200/RPC8999. Команда выше проверяет33 исходных держателя, одного нового получателя и9купонов. Для продолжения сохраните ID/данные и используйте те же флаги с `-OperationId <saved-id>`; новый ID означает другой выпуск.
+
+### Native Linux x64
+
+The Windows launcher uses WSL; Solana itself can run natively on Linux. Use an isolated clone on a native Linux filesystem, Node22.14.0 and the pinned toolchain. This is the documented manual path; it is not a claim of a fresh cold install on another computer.
+
+```bash
+npm ci --ignore-scripts
+BONDTRACE_JUDGE_SETUP=true bash scripts/setup-isolated-toolchain.sh
+export PATH="$HOME/.cargo/bin:$HOME/.local/bondtrace-tools/solana-release/bin:$HOME/.local/bondtrace-tools:$PATH"
+bash scripts/build-program.sh
+node scripts/write-program-release.mjs --check
+npm run build
+# Dedicated terminal, unused port and new preserved ledger; do not add --reset:
+solana-test-validator --ledger .local/paged-native-ledger --rpc-port 8899 \
+  --bind-address 127.0.0.1 --bpf-program \
+  B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8 target/deploy/bondtrace.so
+```
+
+In an API terminal and a separate demo terminal, set the same explicit environment:
+
+```bash
+export BONDTRACE_NETWORK=localnet BONDTRACE_DEPLOYMENT=local
+export BONDTRACE_STORAGE_BACKEND=sqlite BONDTRACE_ENABLE_DEMO=true
+export SOLANA_RPC_URL=http://127.0.0.1:8899
+export BONDTRACE_DATA_DIR="$PWD/.local/paged-demo/native/data"
+# API terminal:
+PORT=3200 npm start
+# Demo terminal, after API/validator are ready:
+npm run demo:paged -- --late-coupon --operation-id native_paged_demo_01
+```
+
+Keep the same environment, ID and flags on resume. Visit `http://127.0.0.1:3200`. Never adopt an unrelated occupied port or delete an uncertain journal/ledger. Native Linux removes the Windows/WSL bridge, not the need for a real validator/program and exact release checks.
+
+## Legacy launcher reference / Старый лаунчер
+
+The following default3160/8959 instructions describe the retained legacy lifecycle. The current paged path above has separate IDs/ports and does not reuse an old financial run.
+
 Detailed Windows/WSL instructions. The primary README is the current judge entry; historical interface captures below are not current chain proof.
 
 ## Run the actual localnet lifecycle
@@ -54,7 +102,7 @@ npm run build
 npm run runtime:start
 ```
 
-The launcher verifies deployed program bytes, preserves the recorded ledger/genesis and refuses unrelated occupied ports. On a fresh runtime, use the application's explicit test setup; existing issues remain available. The issuer form creates fixed coupon schedules; annual-rate creation and the whole-event coordinator are API/lifecycle capabilities. Normal wallet mode prepares an unsigned reviewed message for external signing; generated demo signing is labelled separately.
+The launcher verifies deployed program bytes, preserves the recorded ledger/genesis and refuses unrelated occupied ports. On a fresh runtime, use explicit test setup; existing issues remain available. Current v4 issuer creation supports annual rate/frequency and explicit fixed schedules; the retained legacy coordinator remains a separate API capability. Normal wallet mode prepares an exact reviewed message; generated signing is labelled separately.
 
 Local public metadata and test keys are under ignored `.local/`; native ledgers stay in the selected WSL distribution. No owner keys or old fixtures are needed for source reproduction. [.env.example](../.env.example) documents legacy development defaults; no `.env` is required by the isolated lifecycle command. `npm run dev` uses the legacy development ports, rather than the isolated endpoints above.
 

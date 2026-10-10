@@ -1,5 +1,6 @@
-param([ValidateRange(1024,65000)][int]$RpcPort=8959,[ValidateRange(1024,65000)][int]$ApiPort=3160,[switch]$SkipBuild)
+param([ValidateRange(1024,65000)][int]$RpcPort=8959,[ValidateRange(1024,65000)][int]$ApiPort=3160,[switch]$SkipBuild,[switch]$Paged,[switch]$Scale33,[switch]$LateCoupon,[ValidatePattern('^[A-Za-z0-9_-]{8,80}$')][string]$OperationId)
 $ErrorActionPreference='Stop'
+if(-not $Paged -and ($Scale33 -or $LateCoupon -or $PSBoundParameters.ContainsKey('OperationId'))){throw 'Scale33, LateCoupon and OperationId require -Paged'}
 $projectRoot=(Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 Push-Location $projectRoot
 try {
@@ -8,6 +9,10 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Program build failed'}
     & npm run build
     if($LASTEXITCODE -ne 0){throw 'Application build failed'}
+  }
+  if($Paged){
+    $pagedRelease=Get-Content -LiteralPath (Join-Path $projectRoot 'programs/bondtrace/release.json') -Raw | ConvertFrom-Json
+    if($pagedRelease.releaseId -ne 'paged-corporate-actions-v4' -or $pagedRelease.sha256 -notmatch '^[a-f0-9]{64}$'){throw 'Paged lifecycle requires the current reviewed paged-corporate-actions-v4 release before runtime startup'}
   }
   # This launcher checks release bytes and refuses unrelated occupied ports.
   & node scripts/run-runtime.mjs -RpcPort $RpcPort -ApiPort $ApiPort -NativeLedger -RestartApi
@@ -19,6 +24,22 @@ try {
   $env:BONDTRACE_DATA_DIR=$runtime.dataDirectory
   $env:BONDTRACE_NETWORK='localnet'
   $env:BONDTRACE_ENABLE_DEMO='true'
+  if($Paged){
+    $planArguments=@('--data-directory',[string]$runtime.dataDirectory,'--rpc-url',[string]$runtime.rpcUrl)
+    if($Scale33){$planArguments+='--scale33'}
+    if($LateCoupon){$planArguments+='--late-coupon'}
+    if($PSBoundParameters.ContainsKey('OperationId')){$planArguments+=@('--operation-id',$OperationId)}
+    $planOutput=& node --import tsx scripts/paged-demo-launcher.ts @planArguments
+    if($LASTEXITCODE -ne 0){throw 'Paged lifecycle plan rejected; preserve the existing ID, flags and signatures'}
+    $launch=$planOutput | ConvertFrom-Json
+    Write-Output ('Paged recovery ID: '+$launch.plan.operationId)
+    Write-Output ('Immutable launcher plan: '+$launch.planFile)
+    $pagedArguments=@($launch.args)
+    & node --import tsx scripts/paged-demo.ts @pagedArguments
+    if($LASTEXITCODE -ne 0){throw ('Paged lifecycle stopped. Resume only the same operation ID and flags; retain all signatures: '+$launch.plan.operationId)}
+    Write-Output ('Paged public evidence: '+(Join-Path $runtime.dataDirectory 'paged-demo-public'))
+    Write-Output ('Built application: '+$runtime.apiOrigin)
+  }else{
   $bootstrapFile=Join-Path $runtime.dataDirectory 'lifecycle-bootstrap-id.json'
   if(Test-Path -LiteralPath $bootstrapFile){$bootstrap=Get-Content -LiteralPath $bootstrapFile -Raw | ConvertFrom-Json}else{
     New-Item -ItemType Directory -Force -Path $runtime.dataDirectory | Out-Null
@@ -34,4 +55,5 @@ try {
   if($LASTEXITCODE -ne 0){throw 'Lifecycle stopped. Preserve the printed signatures and runtime data; financial requests are not automatically repeated.'}
   Write-Output ('Verified evidence: '+(Join-Path $projectRoot $env:BONDTRACE_EXECUTION_EVIDENCE))
   Write-Output ('Built application: '+$runtime.apiOrigin)
+  }
 } finally {Pop-Location}

@@ -2,134 +2,148 @@
 
 **English** · [Русский](README.ru.md)
 
-Corporate actions for tokenized bonds on **Solana**: identify eligible holders, fix their rights, calculate entitlements, settle payments and retain verifiable outcomes. Built for the **Superteam Kazakhstan × KASE** corporate-actions track.
+Corporate actions for tokenized bonds on **Solana**: identify holders → fix record-date rights → calculate entitlements → settle and retire bonds → retain verifiable outcomes. Built for **Superteam Kazakhstan × KASE**.
 
-## Open the working application
+**[Open devnet application](https://bondtrace-devnet.onrender.com/)** · **[Completed issue](https://bondtrace-devnet.onrender.com/?view=payments&instrument=2KWpyE9mQWS6VTviCJFi1b4Zh55rti9xeDS6yk37sU7Y)** · **[Explorer](https://explorer.solana.com/address/2KWpyE9mQWS6VTviCJFi1b4Zh55rti9xeDS6yk37sU7Y?cluster=devnet)** · **[Technical overview](TECHNICAL.md)**
 
-**[Live devnet application](https://bondtrace-devnet.onrender.com/)** · **[Completed issue](https://bondtrace-devnet.onrender.com/?view=payments&instrument=2KWpyE9mQWS6VTviCJFi1b4Zh55rti9xeDS6yk37sU7Y)** · **[On-chain instrument](https://explorer.solana.com/address/2KWpyE9mQWS6VTviCJFi1b4Zh55rti9xeDS6yk37sU7Y?cluster=devnet)**
+## What you can verify
 
-No installation or site password is needed to inspect holders, payments, voting and receipts. The public app reads actual devnet accounts; each completed on-chain operation has a transaction signature. Connecting a wallet does not grant the issuer's or another holder's rights.
+The hosted application reads real devnet accounts and transaction receipts. It runs on Render Free with durable Neon PostgreSQL. Ordinary inspection needs no site password. Assets and settlement balances are **test SPL tokens without fiat value**. Free hosting may sleep; unavailable reads disable actions and preserve recovery identifiers.
 
-The service runs on **Render Free + Neon PostgreSQL**, with a hash-verified Solana program. Assets are test SPL tokens with no fiat value. The free services can sleep or hit RPC quotas; unavailable reads disable actions rather than invent a successful payment.
+| Version | Verification scope |
+|---|---|
+| Public devnet | Recorded v3 program, SHA `761b993d…077bdfd`: completed lifecycle, 26 finalized transactions, restart and backup. [Deployment record](docs/33-HOSTED-DEPLOYMENT.md). |
+| Current v4 source | Additive paged accounts, permissionless maturity servicing, post-activation receivers and signed integration adapters. SBF SHA `ee2bb0f7…8f1ee12`; local verification is separate below. |
+| Ordinary Phantom | Connection observed; sign-only transport and exact-message verification implemented and tested. A successful human Phantom transaction is **not yet confirmed**. |
+| External institutions | Signed registry/settlement adapter and shadow reconciliation implemented. No KASE, bank, custodian or customer integration/endorsement is claimed. |
 
-![Actual devnet coupon payments](docs/evidence/hosted-devnet-payments-20261009.png)
+The v4 server requires its matching program image. Do not connect it to the older public program and bypass the hash check. Publishing source does not upgrade a Solana program. The wallet-only source fix is merged; hosted deployment must be checked separately.
 
-*Recorded public application after the verified lifecycle/restart on 9 October 2026: 900 test settlement units paid. The screenshot shows a connected wallet; human-wallet signing has its own verification scope below.*
+![Recorded devnet coupon payments](docs/evidence/hosted-devnet-payments-20261009.png)
 
-## What is implemented
+*Actual public application captured 9 October 2026. Historical v3 evidence; a connected wallet is not proof of a successful wallet-signed transaction.*
 
-| KASE requirement | Working implementation | Evidence / source |
+## Functionality
+
+| KASE requirement | Current implementation | Source |
 |---|---|---|
-| Test tokenized instrument | Classic SPL bond mint, whole bond units, nominal, maturity and coupon dates; immutable annual rate/frequency through `FinancialTerms` | [Program](programs/bondtrace/src/lib.rs), [release](programs/bondtrace/release.json) |
-| Holder registry | Issuer registers up to 16 wallets and issues to canonical bond token accounts | `register_holder`, `issue_units` |
-| Record date | A due uncaptured record blocks transfers; capture fixes units permanently; later transfers/burns preserve the fixed coupon rights | `capture_coupon`, `Coupon.units` |
-| Entitlements | Checked integer arithmetic, exact amounts and reconciliation | [Client math](packages/client/src/domain.ts), [technical guide](TECHNICAL.md) |
-| Coupon payment | SPL transfer to the fixed beneficiary; holder claim or executor settlement; shared claim mask prevents duplicate payment | `claim_coupon`, `settle_coupon`; batches up to four recipients |
-| Principal redemption | Maturity snapshot, principal transfer and bond burn in one atomic transaction; duplicate redemption rejected | `begin_redemption`, `redeem_principal` |
-| Additional action | Snapshot-weighted bondholder voting; one ballot per holder | `create_vote`, `cast_vote`, Proposal/Ballot accounts |
-| On-chain outcome | Program accounts, signatures, finality observations and retained execution proofs | [26-transaction hosted proof](docs/evidence/hosted-devnet-20261009.json), [API](docs/15-API-CONTRACT.md) |
+| Test instrument | Classic SPL bond mint; whole units; immutable nominal, annual rate, frequency, maturity and explicit coupon dates | [BondV2 and pages](programs/bondtrace/src/v2_state.rs) |
+| Holder registry | Canonical holder PDAs/ATAs; append-only pages of 8. Issuer can add zero-balance receivers after activation between record locks | [Program](programs/bondtrace/src/v2.rs) |
+| Record date | Due records block transfers; sequential capture/finalization fixes the eligible registry prefix and quantities | `begin_coupon_v2`, `capture_action_page_v2`, `finalize_action_v2` |
+| Entitlements | Checked integers; exact annual-rate validation; no floating point or silent subunit rounding | [Math](packages/client/src/domain.ts), [v4 contract](docs/34-PAGED-SERVICING.md) |
+| Coupon payment | SPL transfer to the recorded beneficiary; holder claim or permissionless settlement; one shared paid bit | `claim_coupon_v2`, `settle_coupon_v2` |
+| Redemption | Any fee payer can open due maturity capture; each holder atomically receives principal and burns their bonds | `begin_redemption_v2`, `redeem_principal_v2` |
+| Additional action | Snapshot-weighted voting; one ballot per holder | `create_proposal_v2`, `cast_vote_v2` |
+| On-chain outcome | Action/snapshot/ballot accounts, totals and masks; signatures, observed finality and retained proofs | [API](docs/15-API-CONTRACT.md), [devnet proof](docs/evidence/hosted-devnet-20261009.json) |
 
-For a regular-rate issue:
+An absent issuer cannot veto v4 coupon capture or maturity opening. Preceding coupon records must be finalized; any fee payer can do that. Principal retirement needs the corresponding holder's signature. Executors cannot redirect beneficiaries.
 
 ```text
-perBondCouponMinor = faceValueMinor × rateBps / (10,000 × couponFrequency)
-holderCouponMinor  = recordDateUnits × perBondCouponMinor
+perBondCouponMinor = faceValueMinor × rateBps / (10,000 × frequency)
+holderCouponMinor  = fixedRecordUnits × perBondCouponMinor
 principalMinor     = maturityUnits × faceValueMinor
 
-10 bonds × 1,000 × 10% ÷ 2 = 500 coupon
-10 bonds × 1,000 = 10,000 principal
+10 × 1,000 × 10% ÷ 2 = 500 coupon
+10 × 1,000           = 10,000 principal
 ```
 
-Bond decimals are **0**, settlement decimals **6**. JSON money uses integer strings and client calculations use BigInt. Rate creation rejects terms that cannot produce an exact base-unit coupon; it does not silently round a promise. Payment dates are explicit; no day-count convention is inferred.
+Bond decimals are **0**, settlement decimals **6**. TypeScript uses BigInt; JSON amounts are integer strings; Rust uses checked integers. A fractional base unit is rejected. Frequency is the annual divisor; dates do not invent a day-count convention.
 
-## Verified results
-
-| Check | Recorded outcome |
-|---|---|
-| Actual hosted devnet lifecycle | **26 distinct finalized transactions**: 22 corporate operations + 4 setup transactions |
-| Cash and retirement | **900 coupons / 18,000 principal / 18 bonds burned**; remaining obligations, mint supply and vault balance all **0** |
-| Record-date independence | Transfer changed current balances **10/5/3 → 10/4/4**; fixed coupon/voting weights stayed **10/5/3** |
-| Required example and voting | First holder received **500 coupon + 10,000 principal**; ballot **13 yes / 5 no** |
-| Negative cases | Unauthorized issuer, insufficient reserve, early capture, duplicate coupon and duplicate principal rejected |
-| Hosted restart | Same **22 operation IDs and 26 signatures/proofs**, fixed rights, terms and financial totals recovered using GET only |
-| Backup | Downloaded **204,800-byte** metadata database passed hash/integrity checks; no live restore claimed |
-| Application/UI tests | **288 Node passed, 0 failed, 10 optional PostgreSQL skipped; 52 UI passed** |
-| Separate program/database cohorts | **3 Rust unit + 16 SBF/SPL runtime cases, including 64 sequences**; **43 PostgreSQL tests, 0 skipped**, at their documented historical cutoffs |
-
-Full signatures, source hashes, transaction proofs, failed attempts and recovery observations: [hosted evidence](docs/evidence/hosted-devnet-20261009.json), [deployment record](docs/33-HOSTED-DEPLOYMENT.md), [historical verification cohorts](docs/VERIFICATION-HISTORY.md). Counts from separate runs are not added together or presented as one fresh test.
-
-## Reproduce real transactions locally
-
-Clone with a GitHub account that has access to this private repository:
+## Quick local start: actual Solana transactions
 
 ```powershell
 git clone https://github.com/dimik98330/solana-worldsfair-2026.git
 cd solana-worldsfair-2026
 npm ci --ignore-scripts
 npm run setup:judge
-npm run demo:lifecycle
+npm run demo:paged:lifecycle
 ```
 
-The verified full launcher uses **Windows x64, PowerShell 7, Node 22.14.0 and Ubuntu 24.04 x64 in WSL2**. Install those prerequisites first. `setup:judge` checks/downloads the pinned toolchain; **on a prepared machine, `npm run demo:lifecycle` is the one-command demonstration**. [Detailed setup, alternate distributions/ports and recovery](docs/LOCALNET-SETUP.md).
+Prerequisites for this launcher: **Windows x64, PowerShell 7, Node 22.14.0, WSL2 with Ubuntu 24.04 x64**. `setup:judge` checks/downloads pinned Rust 1.91.0, Agave 3.1.10 and Anchor 1.1.2. First installation/build takes longer than a warm run. [Setup, native Linux, alternate distributions and recovery](docs/LOCALNET-SETUP.md).
 
-The command builds the program/app, starts an isolated Solana validator, issues/distributes bonds, records rights, pays coupons, votes, redeems/burns and prints actual signatures and a unique evidence path. It waits for real chain deadlines. Local test signers and assets are generated; no owner key is needed.
+On a prepared machine, **`npm run demo:paged:lifecycle` is the one command**: build → isolated validator/API → test mint/issue → distribute 10/5/3 → record rights and voting → add a receiver/transfer → coupons → principal/burn → late claim of an old coupon → results/signatures. Votes occur before maturity; their results remain afterward. It uses actual chain time and generated local test signers, without your key.
 
-Default local endpoints: app/API **[127.0.0.1:3160](http://127.0.0.1:3160)** and RPC **8959**. Preserve IDs on interruption. Bootstrap resumes its saved ID; a new financial-demo invocation creates a new issue. **Do not rerun a financial driver to replace an unresolved signed payment.** Recover its existing operation/signature first.
+Paged launcher: **app/API `http://127.0.0.1:3200`, RPC `http://127.0.0.1:8999`**. Legacy `npm run demo:lifecycle`: 3160/8959. Different reviewed releases get separate native ledgers and ignored metadata namespaces. Unrelated occupied ports and mismatched images are rejected.
 
-WSL is needed for this Windows Solana build/runtime launcher, not for visiting the hosted app or running the hosted Node service. Native macOS/ARM and a cold install on another physical machine are not independently verified.
+Larger scenario from the prepared checkout:
 
-## Backend architecture
+```powershell
+pwsh -NoProfile -File scripts/lifecycle-demo.ps1 -Paged -Scale33 -LateCoupon -RpcPort 8999 -ApiPort 3200
+```
+
+It requests **33 initial holders, a 34th receiver and 9 coupons** with fixed retained batches. It prints a recovery ID, immutable launcher plan, origin and public evidence directory. This is a test scenario, not a production throughput benchmark.
+
+On interruption preserve data, IDs, dates and signatures. Resume with **the same flags and `-OperationId <printed-id>`**. Existing signatures are reconciled first. Unknown outcomes stop dispatch; do not delete the journal or create replacement payments. A new ID means a new test issue.
+
+WSL is used for Solana compilation/local validator on Windows. Browsing the public app or running hosted Node does not require WSL. Native macOS/ARM and a cold install on another physical machine are not independently verified.
+
+## Manual application use
+
+1. Inspect the public issue: holders, coupon/principal records, voting and receipts. Open a receipt's Explorer link to verify its signature.
+2. Connect an installed wallet such as Phantom. Connection grants no issuer/other-holder authority. Devnet test SOL pays fees; mainnet is unsupported.
+3. In a matching local v4 runtime, create an annual-rate/frequency or fixed-calendar issue. Supply dates, settlement mint and terms; review and sign. Registration, issuance and full funding precede activation.
+4. Any account can pay due capture fees. Large snapshots advance page by page in the operations panel. Holders claim coupons or sign their own principal burn/payment; executors settle coupons only to fixed beneficiaries.
+
+The automated demo uses generated signers. Ordinary Phantom signing remains an acceptance gap until a successful transaction is retained. Sign-only relays through the same journal; no silent wallet-broadcast fallback follows a failed prompt.
+
+## Architecture and backend
 
 ```mermaid
 flowchart LR
-  UI[React console] --> API[Node API: validate, prepare, simulate]
-  API --> Wallet[External wallet or explicit test signer]
-  Wallet --> Relay[Exact message and signature validation]
-  Relay --> Journal[SQLite locally / PostgreSQL hosted: commit intent before send]
-  Relay --> RPC[Solana RPC]
-  RPC --> Program[Anchor program + SPL transfers/burns]
-  Program --> Accounts[Terms, registry, snapshots, ballots]
-  Accounts --> Read[Coherent confirmed reads + reconciliation]
+  UI[React workspace / CLI] --> API[Validate, prepare, simulate]
+  API --> Sign[Wallet / explicit test signer]
+  Sign --> Relay[Exact message + Ed25519 signatures]
+  Relay --> DB[Commit intent, wire, lifetime and ID]
+  DB --> RPC[Solana RPC: initial relay]
+  RPC --> Program[Anchor + SPL transfers/burns]
+  Program --> State[Terms, paged registry, snapshots, masks, ballots]
+  State --> Read[Batched reads, revision fence, reconciliation]
   Read --> UI
-  RPC --> Proof[Signature-bound finality and retained proof]
+  RPC --> Proof[Signature, slot, finality, execution proof]
   Proof --> UI
 ```
 
-Solana is authoritative for financial effects. The off-chain journal supports discovery, exact-message relay and recovery. Signed bytes, signature and lifetime are committed before send. PostgreSQL requires an acknowledged COMMIT and fences replaced writers; an uncertain commit blocks new relay. GET recovery does not send. Explicit rebroadcast can use only the same retained bytes under genesis/release/expiry checks. Unknown outcomes never authorize another payment signature.
+- **Solana** is authoritative for financial effects. The API validates canonical accounts and reconciles exact supply/liabilities; contradictory observations fail closed.
+- **Local SQLite**: transactional journal, DELETE/EXTRA, verified rollback, interprocess locking, filesystem guards and restart recovery. `STORAGE_BUSY` preserves uncertainty rather than inventing confirmation.
+- **Hosted PostgreSQL**: acknowledged COMMIT, verified TLS and writer-generation fencing. Uncertain commit blocks new signing/relay; no fallback to an empty local database.
+- **Recovery**: GET never sends. Confirmed-chain/pending-projection resumes with its original ID. Explicit rebroadcast accepts only retained bytes under release/genesis/expiry checks.
+- **Adapters**: Ed25519 registry attestations, immutable exact-amount instructions, per-holder outboxes, signed acknowledgements, replay/conflict checks and audit export. Disabled by default; shadow acknowledgements never flip on-chain paid bits or authorize bank dispatch.
 
-The whole-event coordinator pins its manifest/child IDs and bounds each resume. Principal remains holder-signed. Business settlement, individual transaction finality and parent aggregate provenance are distinct; no aggregate signature is invented.
+Contracts: [v4 servicing](docs/34-PAGED-SERVICING.md), [API](docs/15-API-CONTRACT.md), [integration](docs/integrations/PILOT-CONTRACT.md), [pilot runbook](docs/integrations/PILOT-RUNBOOK.md), [hosting](docs/31-HOSTING.md).
 
-## Run tests
+## Verification
+
+| Cohort | Observed outcome |
+|---|---|
+| Public v3 devnet, 9 October | **26 finalized transactions**; coupons **900**, principal **18,000**, **18 burned**; obligations/supply/vault **0** |
+| Public record date | Current 10/5/3 → 10/4/4; fixed rights 10/5/3. First holder **500 + 10,000**; vote **13/5** |
+| Public restart/backup | Same 22 business IDs/26 signatures recovered by GET; 204,800-byte portable database integrity checked |
+| Current v4 program | SBF build, **3 unit + 20 SBF/SPL runtime tests** passed, including 64 sequences and 33→34 holders/9 coupons |
+| Current storage | Real-process cold-open contention, namespace/symlink guards, bulk reads and same-ID projection recovery checked separately; complete-run scope is versioned |
+| Adapter on actual local v4 chain | Entitlement **500,000,000** base units; signed shadow/replay survived API restart; financial graph unchanged; no bank dispatch |
+| Historical database | **43 PostgreSQL tests** with TLS fixture passed at their cutoff; this is not a fresh current-source CI result |
+
+[Verification history](docs/VERIFICATION-HISTORY.md) · [CI scope](docs/integrations/CI-VERIFICATION.md). A YAML workflow is not a green remote run. Counts from separate cohorts are not added together. Failed attempts retain their original scope.
 
 ```powershell
+npm run typecheck
 npm test
 npm run test:ui
 npm run build
 npm run test:program
-node scripts/write-program-release.mjs --check
+npm run test:integration-verifier
+# Disposable PostgreSQL fixture only; wrapper rejects application databases:
+npm run test:postgres
 ```
 
-`npm test` runs client/API/storage regressions; optional database cases skip without a configured isolated PostgreSQL fixture. Program tests execute the compiled SBF with SPL. [Linux CI](.github/workflows/backend-verify.yml) is manually triggered; remote CI execution is not claimed. `npm run verify:source` runs a separate isolated source/lifecycle reproduction and creates new test transactions.
+Coverage includes 500/10,000, remainder/overflow, immutable snapshots, post-record transfers, zero balances, authority/date/reserve failures, double coupon/principal/ballot, partial capture/restart, frozen vaults, page boundaries, old coupons after burn, conflicting IDs and database crash/commit uncertainty. Tests: [tests](tests), [UI helpers](apps/web/src).
 
-## Hosting, wallets and scope
+## Limits and pilot path
 
-[Hosting guide EN/RU](docs/31-HOSTING.md) covers free Render native Node + Neon, exact origin, verified TLS, one API writer, disabled automatic demo signing and operator-authenticated backup/readiness. No private issuer/holder/deployment keys belong on the service. Free hosting has availability/size limits; preserve an off-host backup.
+V4 replaces whole-issue **16-holder / 8-coupon** arrays with 8-entry pages and u32 counts. Verified scale is bounded: full API graphs allow **4,096 account observations**; browser creation allows **16 coupons per transaction**, with larger declared schedules initialized/appended through explicit API or CLI calls; that workflow has no browser append control. History discovery has disclosed limits. [Exact bounds](docs/34-PAGED-SERVICING.md#explicit-limits--явные-границы).
 
-Wallet Standard requires the selected chain, transaction version and `solana:signTransaction`. Phantom discovery/connection/simulation were observed; the owner-reported approval then returned `Unexpected error` before API submission. **The investigation is complete, but successful Phantom signing is not verified**: [exact result](docs/evidence/hosted-wallet-check-20261009.json). The required Solana actions were independently executed with external cryptographic test signers. No sign-and-send bypass was added.
+Classic SPL bond accounts remain frozen outside controlled transfers for record-date enforcement. Ordinary SPL/DEX transfers are unsupported. Whole bonds, full prefunding, explicit calendar dates, upgrade authority, settlement-mint freeze authority and RPC/history availability remain assumptions. Voting does not automatically amend legal terms.
 
-Implemented: the eight on-chain requirements, durable backend, exact reconciliation and EN/RU console. Simulated: test settlement currency, generated test identities and accelerated schedules. No bank, KASE API, legal securities register or custody/KYC integration is claimed. Limits: 16 holders, 8 coupons, 4 recipients per atomic batch, finite 32-proposal discovery window, whole bonds, full prefunding, issuer-opened redemption, no surplus withdrawal and reliance on RPC/history/settlement-token authority.
+The adapter is a concrete pilot boundary. External acceptance needs a named registry/custodian, trusted keys/mappings, bank sandbox, signed reconciliation acceptance and legal/operational owners. No interviews, partnerships, demand, regulatory approval or official judging score are invented.
 
-The owner records the final video and controls judge repository access, registration and final submission. Technical evidence does not establish organizer acceptance or eligibility.
-
-## Documentation and source
-
-| Entry | Purpose |
-|---|---|
-| [Judge guide](docs/JURY-GUIDE.md) | Inspection order, evidence and submission boundaries |
-| [TECHNICAL.md](TECHNICAL.md) | Record-date logic, formulas, settlement, authority and recovery |
-| [API contract](docs/15-API-CONTRACT.md) | Requests, exact strings and same-ID recovery |
-| [Hosting](docs/31-HOSTING.md) / [deployment](docs/33-HOSTED-DEPLOYMENT.md) | Configuration and actual public execution/restart |
-| [Verification history](docs/VERIFICATION-HISTORY.md) | Separate historical source/test cohorts |
-| [Current readiness](docs/release/PROJECT-READINESS-20261009.md) | ProofPilot coach review of the project and README; not an official score |
-
-Source: `programs/bondtrace` — Anchor/SBF; `packages/client` — instruction builders/BigInt; `server` — API/journal/recovery/proofs; `apps/web` — React console; `tests` — regressions; `scripts` — setup/verification/demo. No keys, database copies, runtime output, dependencies or raw recording intermediates belong in Git. Historical proofs/media are retained with their original scope.
+Private keys, .env, databases, signed intents and browser/auth state stay ignored. Keep independent metadata backups. Registration, final contest submission and demo-video upload remain owner actions.

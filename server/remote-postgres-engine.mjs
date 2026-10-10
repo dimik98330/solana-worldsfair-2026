@@ -8,7 +8,9 @@ export const maxDocumentBytes = 8 * 1024 * 1024;
 export const defaultMaxSnapshotBytes = 32 * 1024 * 1024;
 
 const roots = new Set(['fixture.json', 'activity.json', 'prepared.json', 'operations.json', 'lifetimes.json', 'journal-migration.json', 'chain-identity.json', 'runtime-readiness.json']);
-const publicKeys = [/^catalog\/[1-9A-HJ-NP-Za-km-z]{32,44}\.json$/, /^prepared\/[a-f0-9]{64}\.json$/, /^operations\/[A-Za-z0-9_-]{8,100}\.json$/, /^receipts\/[1-9A-HJ-NP-Za-km-z]{60,100}\.json$/];
+const publicKeys = [/^catalog\/[1-9A-HJ-NP-Za-km-z]{32,44}\.json$/, /^prepared\/[a-f0-9]{64}\.json$/, /^operations\/[A-Za-z0-9_-]{8,100}\.json$/, /^receipts\/[1-9A-HJ-NP-Za-km-z]{60,100}\.json$/,
+  /^integration-registry\/[a-f0-9]{64}\.json$/, /^integration-outbox\/[a-f0-9]{64}\.json$/,
+  /^integration-plan\/[A-Za-z0-9_-]{8,100}\.json$/, /^integration-ack\/[a-f0-9]{64}\.json$/];
 const tableSql = {
   documents: 'CREATE TABLE bondtrace_metadata.documents (namespace TEXT NOT NULL, key TEXT NOT NULL, body TEXT NOT NULL, updated_at TEXT NOT NULL, PRIMARY KEY(namespace, key))',
   storage_meta: 'CREATE TABLE bondtrace_metadata.storage_meta (namespace TEXT NOT NULL, key TEXT NOT NULL, value TEXT NOT NULL, PRIMARY KEY(namespace, key))',

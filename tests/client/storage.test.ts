@@ -40,10 +40,9 @@ after(() => storage.closeStorage());
 function hash(filename: string) { return createHash('sha256').update(fs.readFileSync(filename)).digest('hex'); }
 function isStorageCode(code: string) { return (error: unknown) => error instanceof storage.StorageError && error.code === code; }
 const storageUrl = pathToFileURL(path.resolve('server/storage.ts')).href;
-function worker(source: string, dataDirectory = directory) {
+function isolatedProcess(source: string, dataDirectory = directory) {
   return new Promise<{code: number | null; stdout: string; stderr: string}>((resolve, reject) => {
-    const prelude = `import fs from 'node:fs'; import path from 'node:path'; import {DatabaseSync} from 'node:sqlite'; import * as storage from ${JSON.stringify(storageUrl)}; const directory = process.env.BONDTRACE_DATA_DIR; const file = name => path.join(directory, name);\n`;
-    const child = spawn(process.execPath, ['--import', 'tsx', '--input-type=module', '--eval', prelude + source], {cwd: process.cwd(), env: {...process.env, BONDTRACE_DATA_DIR: dataDirectory}, windowsHide: true});
+    const child = spawn(process.execPath, ['--import', 'tsx', '--input-type=module', '--eval', source], {cwd: process.cwd(), env: {...process.env, BONDTRACE_DATA_DIR: dataDirectory}, windowsHide: true});
     let stdout = '', stderr = '';
     child.stdout.on('data', chunk => { stdout += String(chunk); });
     child.stderr.on('data', chunk => { stderr += String(chunk); });
@@ -51,6 +50,10 @@ function worker(source: string, dataDirectory = directory) {
     const timer = setTimeout(() => { child.kill(); reject(new Error('Isolated storage worker timed out')); }, 30_000);
     child.once('close', code => { clearTimeout(timer); resolve({code, stdout, stderr}); });
   });
+}
+function worker(source: string, dataDirectory = directory) {
+  const prelude = `import fs from 'node:fs'; import path from 'node:path'; import {DatabaseSync} from 'node:sqlite'; import * as storage from ${JSON.stringify(storageUrl)}; const directory = process.env.BONDTRACE_DATA_DIR; const file = name => path.join(directory, name);\n`;
+  return isolatedProcess(prelude + source, dataDirectory);
 }
 async function success(source: string, dataDirectory = directory) {
   const result = await worker(source, dataDirectory);
@@ -130,7 +133,13 @@ test('signature, lifetime, operation and activity writes commit or roll back tog
   assert.deepEqual(documents.map(key => storage.readJson(file(key), null)), before);
   const restarted = await success(`console.log(JSON.stringify(['prepared.json','operations.json','lifetimes.json','activity.json'].map(key => storage.readJson(file(key), null)))); storage.closeStorage();`);
   assert.deepEqual(JSON.parse(restarted.stdout), before);
-  assert.match(restarted.stderr, /ExperimentalWarning.*SQLite/i, 'The runtime experimental warning must remain visible');
+  // Warning emission belongs to this Node runtime, not the persistence contract.
+  // If a bare import emits it, our storage worker must leave it visible too.
+  const runtime = await isolatedProcess(`import 'node:sqlite';`);
+  assert.equal(runtime.code, 0, runtime.stderr);
+  if (/ExperimentalWarning.*SQLite/i.test(runtime.stderr)) {
+    assert.match(restarted.stderr, /ExperimentalWarning.*SQLite/i, 'Storage must not suppress a warning emitted by this runtime');
+  }
 });
 
 test('nested savepoints isolate failed inner work and an outer failure undoes released inner writes', () => {

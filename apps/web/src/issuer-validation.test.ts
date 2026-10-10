@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import { strict as assert } from 'node:assert';
-import { addressError, issuanceError, issueReserve, localDateInput, localDateSeconds, parseBondCount, parseSettlementAmount, U64_MAX, utf8Error, validateIssueDraft, type IssueDraft } from './issuer-validation';
+import { addressError, calculateAnnualCoupon, fillAnnualCoupons, issuanceError, issueCreationRequest, issueReserve, localDateInput, localDateSeconds, newIssueDraft, parseAnnualRate, parseBondCount, parseCouponFrequency, parseSettlementAmount, U64_MAX, utf8Error, validateIssueDraft, type IssueDraft } from './issuer-validation';
 import type { ChainState } from './types';
 
 const mint = '11111111111111111111111111111111';
@@ -82,4 +82,67 @@ test('placement guards both aggregate supply and reserve multiplication overflow
   assert.match(issuanceError('1', U64_MAX.toString(), '1')!, /supply/);
   assert.match(issuanceError('2', '0', U64_MAX.toString())!, /reserve/);
   assert.match(issuanceError('1', 'bad')!, /unavailable/);
+});
+test('annual percent input produces exact basis points without floats or rounding', () => {
+  for (const [input, bps] of [['10', '1000'], ['10.25', '1025'], ['0.01', '1'], ['100.00', '10000'], ['0001.10', '110']]) assert.equal(parseAnnualRate(input).value, bps);
+  for (const input of ['', '0', '100.01', '101', '0.001', '1.234', '1e1', '10,25', '-1', '.5', '10.']) assert.ok(parseAnnualRate(input).error, input);
+  assert.equal(parseCouponFrequency('02').value, '2');
+  for (const input of ['0', '13', '2.0', '1e1', '']) assert.ok(parseCouponFrequency(input).error);
+});
+test('new creation defaults to paged annual10%/frequency2 without inventing coupon amounts or dates', () => {
+  const created = newIssueDraft('123', mint, 'stable-key');
+  assert.equal(created.protocol, 'paged'); assert.equal(created.couponMode, 'annual-rate');
+  assert.equal(created.annualRate, '10'); assert.equal(created.couponFrequency, '2');
+  assert.deepEqual(created.coupons, [{ key: 'stable-key', recordLocal: '', paymentLocal: '', amount: '' }]);
+  assert.equal(issueCreationRequest(created, now), null);
+});
+test('annual coupon calculation gives nominal1000/rate10/frequency2 =50 exactly and rejects fractional base units', () => {
+  assert.equal(calculateAnnualCoupon('1000', '10', '2').value, '50000000');
+  assert.equal(calculateAnnualCoupon('1000', '10.25', '2').value, '51250000');
+  assert.equal(calculateAnnualCoupon('18446744073709.551615', '100', '1').value, U64_MAX.toString());
+  assert.match(calculateAnnualCoupon('1000.000001', '10', '2').error!, /No rounding/);
+  assert.match(calculateAnnualCoupon('0.000001', '0.01', '12').error!, /positive exact/);
+});
+test('explicit annual fill preserves entered dates and never mutates the current draft', () => {
+  const input = { ...draft(), protocol: 'paged' as const, couponMode: 'annual-rate' as const, faceValue: '1000', annualRate: '10', couponFrequency: '2' };
+  const original = structuredClone(input), result = fillAnnualCoupons(input);
+  assert.ok(result.draft); assert.deepEqual(input, original);
+  assert.deepEqual(result.draft.coupons.map(c => c.amount), ['50', '50']);
+  assert.deepEqual(result.draft.coupons.map(c => [c.recordLocal, c.paymentLocal]), original.coupons.map(c => [c.recordLocal, c.paymentLocal]));
+  input.faceValue = '1000.000001';
+  assert.equal(fillAnnualCoupons(input).draft, null);
+});
+test('paged creation accepts9–16 coupons with complete exact payload while legacy/default validation keeps8', () => {
+  for (const length of [9, 16]) {
+    const input = { ...draft(), protocol: 'paged' as const, couponMode: 'annual-rate' as const, faceValue: '1000', annualRate: '10', couponFrequency: '2', coupons: Array.from({ length }, (_, index) => ({ key: `c${index}`, recordLocal: localDateInput(now + 10 + index * 10), paymentLocal: localDateInput(now + 15 + index * 10), amount: '50' })) };
+    assert.equal(validateIssueDraft(input, now).params, null, 'legacy defaults remain bounded at8');
+    const result = validateIssueDraft(input, now, undefined, {}, { version: 2 });
+    assert.deepEqual(result.errors, {}); assert.equal(result.params?.couponCount, String(length));
+    const creation = issueCreationRequest(input, now);
+    assert.equal(creation?.action, 'initialize_issue_v2');
+    assert.equal(creation?.params.rateBps, '1000'); assert.equal(creation?.params.couponFrequency, '2');
+    const rows = JSON.parse(creation!.params.coupons);
+    assert.equal(rows.length, length); assert.equal(rows.at(-1).unitAmount, '50000000');
+    input.coupons.at(-1)!.amount = '51';
+    assert.match(validateIssueDraft(input, now, undefined, {}, { version: 2 }).errors[`coupon.c${length - 1}.amount`], /must equal/);
+    assert.equal(issueCreationRequest(input, now), null, 'last row is validated too');
+  }
+});
+test('fixed paged schedules omit rate descriptors, preserve irregular exact amounts, and explicit legacy stays legacy', () => {
+  const input = { ...draft(), protocol: 'paged' as const, couponMode: 'fixed' as const, annualRate: '10', couponFrequency: '2' };
+  const paged = issueCreationRequest(input, now)!;
+  assert.equal(paged.action, 'initialize_issue_v2'); assert.equal(paged.params.couponCount, '2');
+  assert.equal(paged.params.rateBps, undefined); assert.equal(paged.params.couponFrequency, undefined);
+  assert.deepEqual(JSON.parse(paged.params.coupons).map((c: { unitAmount: string }) => c.unitAmount), ['50000001', '20000000']);
+  const legacy = issueCreationRequest({ ...input, protocol: 'legacy' }, now)!;
+  assert.equal(legacy.action, 'initialize_issue'); assert.equal(legacy.params.couponCount, undefined);
+  assert.equal(legacy.params.coupons, paged.params.coupons);
+});
+test('paged convenience cap17 and equal payment timestamps reject without weakening legacy schedule behavior', () => {
+  const input = { ...draft(), protocol: 'paged' as const, couponMode: 'fixed' as const };
+  input.coupons[0].paymentLocal = input.coupons[1].paymentLocal;
+  assert.ok(validateIssueDraft(input, now).params, 'legacy permits the original equal-payment rule');
+  assert.match(validateIssueDraft(input, now, undefined, {}, { version: 2 }).errors['coupon.b.paymentLocal'], /later than/);
+  input.coupons = Array.from({ length: 17 }, (_, index) => ({ key: `c${index}`, recordLocal: localDateInput(now + 10 + index * 10), paymentLocal: localDateInput(now + 15 + index * 10), amount: '1' }));
+  assert.match(validateIssueDraft(input, now, undefined, {}, { version: 2 }).errors.schedule, /16/);
 });

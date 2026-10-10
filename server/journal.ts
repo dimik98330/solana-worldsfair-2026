@@ -1,6 +1,6 @@
 import path from 'node:path';
 import {localDir,network} from './config.ts';
-import {readJson,writeJson,listDocuments,transactionSync} from './storage.ts';
+import {readJson,writeJson,readDocuments,transactionSync} from './storage.ts';
 
 export type FinalityLevel='processed'|'confirmed'|'finalized';
 /** A timestamped RPC observation, separate from the servicing/business result. */
@@ -41,9 +41,15 @@ function receiptPath(signature:string){if(!signaturePattern.test(signature))thro
 let migrating=false;
 /** Public legacy documents are archived; new records are individually addressable. */
 export function migrateJournal(){
-  if(migrating)return;migrating=true;
+  if(migrating)return;
+  // Re-read the persisted marker through the normal namespace/JSON guards.
+  // Completed migrations need no writer lock on every receipt/status read.
+  // There is deliberately no cached marker or TTL across calls.
+  const marker=path.join(localDir,'journal-migration.json');if(readJson(marker,null))return;
+  migrating=true;
   try{transactionSync(()=>{
-    const marker=path.join(localDir,'journal-migration.json');if(readJson(marker,null))return;
+    // Another process may have completed the atomic import after the first read.
+    if(readJson(marker,null))return;
     for(const [group,pattern]of [['prepared',/^[a-f0-9]{64}$/],['operations',/^[a-zA-Z0-9_-]{8,100}$/]] as const){
       const values=readJson<Record<string,unknown>[]>(path.join(localDir,group+'.json'),[]);
       if(!Array.isArray(values))throw new Error('Legacy journal must contain an array');
@@ -62,8 +68,8 @@ export function migrateJournal(){
 export function receipt(signature:string):ReceiptRecord|null{migrateJournal();return readJson<ReceiptRecord|null>(receiptPath(signature),null);}
 export function saveReceipt(value:ReceiptRecord){migrateJournal();writeJson(receiptPath(value.signature),value);}
 export function updateReceipt(signature:string,change:Partial<ReceiptRecord>){return transactionSync(()=>{const prior=receipt(signature);if(!prior)return null;const next={...prior,...change,signature:prior.signature};saveReceipt(next);return next;});}
-export function receipts(){migrateJournal();return listDocuments('receipts').map(file=>readJson<ReceiptRecord|null>(file,null)).filter((value):value is ReceiptRecord=>Boolean(value));}
+export function receipts(){migrateJournal();return readDocuments<ReceiptRecord|null>('receipts').filter((value):value is ReceiptRecord=>Boolean(value));}
 export function journalPath(group:'prepared'|'operations',id:string){const pattern=group==='prepared'?/^[a-f0-9]{64}$/:/^[a-zA-Z0-9_-]{8,100}$/;if(!pattern.test(id))throw new Error('Invalid journal identifier');return path.join(localDir,group,id+'.json');}
 export function journalRead<T>(group:'prepared'|'operations',id:string){migrateJournal();return readJson<T|null>(journalPath(group,id),null);}
 export function journalWrite<T>(group:'prepared'|'operations',id:string,value:T){migrateJournal();writeJson(journalPath(group,id),value);}
-export function journalValues<T>(group:'prepared'|'operations'){migrateJournal();return listDocuments(group).map(file=>readJson<T|null>(file,null)).filter((value):value is T=>value!==null);}
+export function journalValues<T>(group:'prepared'|'operations'){migrateJournal();return readDocuments<T|null>(group).filter((value):value is T=>value!==null);}

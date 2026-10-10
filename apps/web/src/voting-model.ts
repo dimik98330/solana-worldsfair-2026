@@ -1,10 +1,11 @@
 import { add, integer, subtract } from './format';
 import type { Proposal } from './types';
 
-export type VotingAccountStatus = 'closed' | 'not_selected' | 'voted' | 'ineligible' | 'eligible' | 'unknown';
+export type VotingAccountStatus = 'capturing' | 'closed' | 'not_selected' | 'voted' | 'ineligible' | 'eligible' | 'unknown';
 
 /** Viewing an account never grants it ballot authority. */
 export function votingAccountStatus(proposal: Proposal, activeWallet?: string): VotingAccountStatus {
+  if (proposal.status === 'capturing') return 'capturing';
   if (proposal.status === 'closed') return 'closed';
   if (!activeWallet) return 'not_selected';
   if (proposal.votedWallets.includes(activeWallet)) return 'voted';

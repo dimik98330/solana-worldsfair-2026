@@ -171,6 +171,18 @@ pub enum BondError {
     AlreadyVoted,
     #[msg("Draft changes must finish before the first coupon record date")]
     RecordDatePassed,
+    #[msg("Expected the canonical page and the next sequential page index")]
+    InvalidPage,
+    #[msg("A paged snapshot is in progress; transfers and registry changes are locked")]
+    SnapshotLocked,
+    #[msg("Append the complete immutable coupon schedule before continuing")]
+    ScheduleIncomplete,
+    #[msg("Finalize every snapshot page before claiming or voting")]
+    SnapshotNotFinalized,
+    #[msg("The action kind does not support this operation")]
+    InvalidActionKind,
+    #[msg("Expected the next append-only registry position")]
+    InvalidHolderIndex,
 }
 
 impl Bond {
