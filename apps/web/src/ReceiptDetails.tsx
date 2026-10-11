@@ -6,7 +6,7 @@ import { units } from './format';
 import { useUiLanguage } from './ui-language';
 import { useDisplayPreferences } from './display-preferences';
 import { timeZoneLabel } from './time-zone';
-import { matchesPayment, paymentReceipts, type PaymentSelection, type PublicTransaction } from './receipt-match';
+import { matchesPayment, paymentReceipts, receiptKinds, retainedPaymentTransaction, type PaymentSelection, type PublicTransaction } from './receipt-match';
 import type { Activity, ChainState } from './types';
 import { DisplayDate } from './DisplayDate';
 import './voting-workspace.css';
@@ -15,9 +15,20 @@ export const receiptLabels:Record<string,[string,string]> = {
   initialize_issue:['Issue created','Выпуск создан'],initialize:['Issue created','Выпуск создан'],register_and_issue:['Bonds allocated','Облигации размещены'],issue_units:['Bonds allocated','Облигации размещены'],register_holder:['Holder registered','Держатель зарегистрирован'],
   fund_and_seal:['Reserve funded & issue activated','Резерв пополнен, выпуск активирован'],fund_vault:['Reserve funded','Резерв пополнен'],seal_issue:['Issue activated','Выпуск активирован'],capture_coupon:['Coupon rights recorded','Права на купон зафиксированы'],claim_coupon:['Coupon paid','Купон выплачен'],settle_coupon:['Coupon paid','Купон выплачен'],begin_redemption:['Redemption rights recorded','Права на погашение зафиксированы'],redeem_principal:['Principal repaid & bonds retired','Номинал возвращён, облигации погашены'],create_vote:['Voting opened','Голосование открыто'],cast_vote:['Ballot recorded','Голос учтён'],transfer_bonds:['Bonds transferred','Облигации переданы'],test_settlement_funding:['Test tokens supplied','Тестовые токены получены'],bootstrap:['Example prepared','Пример подготовлен'],
 };
+receiptLabels.initialize_issue_v2=receiptLabels.initialize_issue;
+receiptLabels.register_holder_v2=receiptLabels.register_holder;
+receiptLabels.issue_units_v2=receiptLabels.issue_units;
+receiptLabels.fund_vault_v2=receiptLabels.fund_vault;
+receiptLabels.seal_issue_v2=receiptLabels.seal_issue;
+receiptLabels.claim_coupon_v2=receiptLabels.claim_coupon;
+receiptLabels.settle_coupon_v2=receiptLabels.settle_coupon;
+receiptLabels.redeem_principal_v2=receiptLabels.redeem_principal;
+receiptLabels.create_proposal_v2=receiptLabels.create_vote;
+receiptLabels.cast_vote_v2=receiptLabels.cast_vote;
+receiptLabels.transfer_units_v2=receiptLabels.transfer_bonds;
 export function ReceiptList({state,filter,onInspect}:{state:ChainState;filter?:'coupon'|'principal'|'voting';onInspect?:(item:Activity)=>void}) {
   const {language}=useUiLanguage();
-  const kinds=filter==='coupon'?['capture_coupon','claim_coupon','settle_coupon']:filter==='principal'?['begin_redemption','redeem_principal']:filter==='voting'?['create_vote','cast_vote']:undefined;
+  const kinds=filter?receiptKinds[filter]:undefined;
   const items=[...state.activity].filter(item=>!kinds||kinds.includes(item.kind)).sort((a,b)=>Date.parse(b.time)-Date.parse(a.time));
   return <ol className="semantic-receipts ecc-receipts">{items.length?items.map((item,index)=><li key={`${item.signature}-${index}`}>
     <ReceiptText size={20} aria-hidden="true"/><div className="receipt-copy"><strong>{translate(language,receiptLabels[item.kind]?.[0]??item.kind.replaceAll('_',' '),receiptLabels[item.kind]?.[1])}</strong><DisplayDate value={item.time}/>
@@ -31,9 +42,7 @@ async function readTransaction(state:ChainState,receipt:Activity,signal:AbortSig
   if (state.readOnlySnapshot) return null;
   try {
     const response=await fetch(`/api/transactions/${encodeURIComponent(receipt.signature)}/proof`,{signal,cache:'no-store'});
-    if(response.ok){const data=await response.json(),entry=data.executionProof,p=entry?.proof;
-      if(entry?.matchesStoredReceipt&&p?.signature===receipt.signature&&p.commitment==='confirmed'&&Array.isArray(p.accountKeys))return {slot:p.slot,blockTime:p.blockTime,meta:{err:null,preTokenBalances:p.preTokenBalances,postTokenBalances:p.postTokenBalances},transaction:{signatures:[p.signature],message:{accountKeys:p.accountKeys}}};
-    }
+    if(response.ok){const data=await response.json();const transaction=retainedPaymentTransaction(data.executionProof,receipt.signature);if(transaction)return transaction;}
   } catch { if(signal.aborted)return null; }
   try {
     const url=new URL(state.rpcUrl);

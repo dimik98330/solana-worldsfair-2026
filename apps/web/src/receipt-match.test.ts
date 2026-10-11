@@ -20,3 +20,23 @@ test('read-only holder selection never grants signer authority',()=>{
   assert.equal(maySignForHolder('holder','holder',false),false);
   assert.equal(maySignForHolder('holder','holder',true),true);
 });
+
+test('v4 coupon/principal receipts retain exact matching and reject cross-action or ambiguous attribution',()=>{
+  for(const kind of ['claim_coupon_v2','settle_coupon_v2'])assert.equal(matchesPayment(tx,{...receipt,kind},selection,'settlement'),true);
+  assert.equal(matchesPayment(tx,{...receipt,kind:'redeem_principal_v2'},{...selection,kind:'principal'},'settlement'),true);
+  assert.equal(matchesPayment(tx,{...receipt,kind:'redeem_principal_v2'},selection,'settlement'),false);
+  assert.equal(matchesPayment(tx,{...receipt,kind:'settle_coupon_v2'},{...selection,snapshotAddress:'other-action'},'settlement'),false);
+  assert.equal(matchesPayment(tx,{...receipt,kind:'settle_coupon_v2'},{...selection,wallet:'other-holder'},'settlement'),false);
+  assert.equal(matchesPayment(tx,{...receipt,kind:'settle_coupon_v2'},{...selection,amountMinor:'500000001'},'settlement'),false);
+  assert.equal(matchesPayment(tx,{...receipt,kind:'settle_coupon_v3'},selection,'settlement'),false);
+});
+
+test('retained v4 candidates and category filters include supported variants only',async()=>{
+  const {paymentReceipts,receiptKinds}=await import('./receipt-match');
+  const activity=[{...receipt,kind:'claim_coupon_v2'},{...receipt,kind:'settle_coupon_v2',status:'finalized'},{...receipt,kind:'redeem_principal_v2'},{...receipt,kind:'claim_coupon_v2',status:'pending'}];
+  assert.deepEqual(paymentReceipts(activity,selection).map(r=>r.kind),['claim_coupon_v2','settle_coupon_v2']);
+  assert.deepEqual(paymentReceipts(activity,{...selection,kind:'principal'}).map(r=>r.kind),['redeem_principal_v2']);
+  assert.ok(receiptKinds.principal.includes('redeem_principal_v2'));
+  assert.ok(receiptKinds.voting.includes('cast_vote_v2'));
+  assert.equal(receiptKinds.coupon.includes('redeem_principal_v2'),false);
+});
