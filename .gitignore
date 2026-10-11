@@ -76,3 +76,9 @@ docs/release/JURY-BILINGUAL-REVIEW.md
 /docs/evidence/ui/vote-transition-013.jpg
 /docs/evidence/ui/vote-transition-014.jpg
 /docs/evidence/ui/vote-transition-015.jpg
+
+# Current demo: publish final deliverables only; retain capture intermediates locally.
+/artifacts/demo/release-20261011/*
+!/artifacts/demo/release-20261011/bondtrace-v4-localnet.mp4
+!/artifacts/demo/release-20261011/captions.en.vtt
+!/artifacts/demo/release-20261011/provenance.json

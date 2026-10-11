@@ -11,7 +11,7 @@ The form was inspected7October at [KASE listing](https://superteam.fun/earn/list
 | Architecture | [TECHNICAL](../TECHNICAL.md), [protocol](34-PAGED-SERVICING.md), [API](15-API-CONTRACT.md) |
 | Reproduction | [English](../README.md) / [Russian](../README.ru.md), [setup](LOCALNET-SETUP.md) |
 | Evidence | [Verification history](VERIFICATION-HISTORY.md), source-bound CI and JSON receipts |
-| Video | [Recorded media scope](13-DEMO.md); final owner-selected accessible URL pending |
+| Video | [Current 98-second v4 localnet walkthrough](../artifacts/demo/release-20261011/bondtrace-v4-localnet.mp4), [scope/provenance](13-DEMO.md); final platform acceptance and owner submission remain separate |
 | Main registration/project/profile | Unverified; use actual URLs only |
 | Binding consent / final send | Owner action; accepted submission ID unverified |
 

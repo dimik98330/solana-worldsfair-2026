@@ -1,0 +1,102 @@
+{
+  "schema": "bondtrace.ui-demo.v1",
+  "capturedAt": "2026-10-11T16:55:05.129Z",
+  "completedAt": "2026-10-11T16:56:42.848Z",
+  "sourceCommit": "1322f3bb1a72f6829417aee38135c4447f2e4144",
+  "frontendAsset": {
+    "file": "apps/web/dist/assets/index-1nJS-TX2.js",
+    "sha256": "72e2c9c94fbba0dbfefd42def7cf8f58ebdeada5dc1f40fbf937cd93948d7f03"
+  },
+  "scope": "Current v4 frontend reading recorded completed localnet results through a GET/HEAD-only local proxy. Synthetic test SPL assets and generated test signers. Actual browser navigation, not reenacted financial execution.",
+  "origin": "http://127.0.0.1:4230",
+  "apiOrigin": "http://127.0.0.1:3220",
+  "video": {
+    "duration": 98.208333,
+    "width": 1440,
+    "height": 900,
+    "currentTime": 1.2003,
+    "paused": false,
+    "readyState": 4,
+    "error": null,
+    "codec": "H.264 / yuv420p",
+    "frameRate": 24,
+    "audio": false,
+    "burnedEnglishCaptions": true,
+    "permanentScopeCaption": true
+  },
+  "files": [
+    {
+      "file": "bondtrace-v4-localnet.mp4",
+      "bytes": 1314625,
+      "sha256": "1d3b01b3751d2538a0844cfecadb44370f70e9165503686e38e7fc935543c6e9"
+    },
+    {
+      "file": "captions.en.vtt",
+      "bytes": 1255,
+      "sha256": "8dfba432ba64618385c177092b8325b68e40132fff5ed8e5099385a67d034425"
+    }
+  ],
+  "recording": {
+    "method": "Playwright Chromium native page video",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "steps": 11,
+    "requests": 21,
+    "nonReadRequests": 0,
+    "blockedWrites": 0,
+    "originCount": 1,
+    "editing": "Encoded real continuous recording to MP4, trimmed redundant tail after98.2seconds; added opaque scope/caption overlay so native dialogs cannot obscure it. No financial UI values were edited."
+  },
+  "verified": {
+    "rehearsalSteps": 11,
+    "afterReceiptFix": true,
+    "exactCouponMatch": true,
+    "exactPrincipalMatch": true,
+    "fullFfmpegDecode": "passed; empty error log",
+    "browserPlayback": "passed; readyState4/currentTime advanced/no error",
+    "reviewedFrames": [
+      "original rights10/5/3/0",
+      "principal10000 exact-match dialog",
+      "caption overlay decoded from final MP4"
+    ]
+  },
+  "observedResults": {
+    "primaryCouponUnits": "500",
+    "primaryPrincipalUnits": "10000",
+    "coupon1RecordedUnits": [
+      "10",
+      "5",
+      "3",
+      "0"
+    ],
+    "coupon2RecordedUnits": [
+      "10",
+      "4",
+      "3",
+      "1"
+    ],
+    "voteFor": "13",
+    "voteAgainst": "5",
+    "retiredBonds": "18"
+  },
+  "excludedClaims": [
+    "No new financial transaction was signed or relayed in this recording",
+    "Not proof of ordinary human-wallet signing",
+    "Not proof of public v4 deployment or current public availability",
+    "Not institutional integration or final contest submission"
+  ],
+  "skills": [
+    "ECC ui-demo: discover/rehearse/record",
+    "playwright-interactive: owned persistent browser context",
+    "ProofPilot coach: exact evidence scope"
+  ],
+  "publicationFiles": [
+    "artifacts/demo/release-20261011/bondtrace-v4-localnet.mp4",
+    "artifacts/demo/release-20261011/captions.en.vtt",
+    "artifacts/demo/release-20261011/provenance.json"
+  ],
+  "intermediates": "Raw WebM, rehearsal JSON, screenshots, recorder module, local HTML player and encoding logs are retained locally but excluded from publication.",
+  "captionPackaging": "Only trailing blank line normalized before publication; cue text/timing and burned video unchanged."
+}
