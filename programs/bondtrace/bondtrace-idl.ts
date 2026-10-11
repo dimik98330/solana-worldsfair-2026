@@ -3337,10 +3337,7 @@ export type Bondtrace = {
       "accounts": [
         {
           "name": "issuer",
-          "signer": true,
-          "relations": [
-            "bond"
-          ]
+          "signer": true
         },
         {
           "name": "bond",

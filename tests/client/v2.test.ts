@@ -166,3 +166,47 @@ test('33rd holder registration atomically creates a missing page or reuses a val
   for(const corrupted of [raw(pageBytes,TOKEN_PROGRAM_ADDRESS),raw(Buffer.concat([Buffer.alloc(8),pageBytes.subarray(8)])),raw(Buffer.concat([pageBytes.subarray(0,44),Buffer.from([pageBytes[44]^1]),pageBytes.subarray(45)])),raw(padded('RegistryPageV2',305,[pk(b.bondAddress),u32(4),Buffer.from([await bump('registry_v2',[pk(b.bondAddress),u32(4)])]),u32(1),pk(w)]))]){b.accounts.set(page,corrupted);await assert.rejects(makeV2Action(request,issuer,options()));}
   b.accounts.set(page,raw(pageBytes));const normal=mock(b).readRpc;await assert.rejects(makeV2Action(request,issuer,{proposalIds:()=>[],readRpc:async(method,params)=>method==='getAccountInfo'&&params[0]===page?{context:{slot:50},value:b.accounts.get(page)}:normal(method,params)}),/context/);
 });
+test('draft activation changes signer at exact record date using confirmed chain time and preserves the seal wire',async()=>{
+  const b=await bank(2,1),outsider=key(110),request={action:'seal_issue_v2',bondAddress:b.bondAddress,params:{}};
+  const options=()=>({readRpc:mock(b).readRpc,proposalIds:()=>[]});
+  b.bond.state=0;b.write();b.clock(199n);
+  const early=await readV2State(b.bondAddress,options()),earlySeal=early.servicing.actions.find(a=>a.action==='seal_issue_v2')!;
+  assert.equal(earlySeal.status,'ready');assert.deepEqual(earlySeal.signer,{kind:'issuer',wallet:issuer});assert.equal(earlySeal.request.walletAddress,issuer);
+  await assert.rejects(makeV2Action(request,outsider,options()),/registered issuer/);
+  const issuerBuilt=await makeV2Action(request,issuer,options());
+  const originalNow=Date.now;Date.now=()=>0;
+  try {for(const timestamp of [200n,2000n,3000n]){
+    b.clock(timestamp);
+    const state=await readV2State(b.bondAddress,options()),seal=state.servicing.actions.find(a=>a.action==='seal_issue_v2')!;
+    assert.equal(seal.status,'ready');assert.deepEqual(seal.signer,{kind:'any-fee-payer',wallet:null});assert.equal(Object.hasOwn(seal.request,'walletAddress'),false);
+    const built=await makeV2Action(request,outsider,options()),ix=built.instructions[0];
+    assert.equal(built.summary.signer,outsider);assert.deepEqual(ix.data,issuerBuilt.instructions[0].data);
+    assert.deepEqual(ix.accounts!.map(a=>a.role),issuerBuilt.instructions[0].accounts!.map(a=>a.role));
+    assert.deepEqual(ix.accounts!.map(a=>String(a.address)),[outsider,b.bondAddress,b.bond.bondMint,b.bond.vault]);
+  }}finally{Date.now=originalNow;}
+});
+test('late activation refuses missing current reserve, unsafe vault and non-draft state without inventing historical prefunding',async()=>{
+  const b=await bank(2,1),outsider=key(110),request={action:'seal_issue_v2',bondAddress:b.bondAddress,params:{}};
+  const options=()=>({readRpc:mock(b).readRpc,proposalIds:()=>[]});
+  b.bond.state=0;b.write();b.clock(200n);b.reserve(2099n);
+  const state=await readV2State(b.bondAddress,options());assert.equal(state.servicing.actions.find(a=>a.action==='seal_issue_v2')!.status,'blocked');
+  await assert.rejects(makeV2Action(request,outsider,options()),/current spendable reserve/);
+  b.reserve(2100n);await makeV2Action(request,outsider,options());
+  b.accounts.set(b.bond.vault,token(settlement,b.bondAddress,2100n,2));
+  await assert.rejects(makeV2Action(request,outsider,options()),/vault cannot transfer/);
+  b.reserve(2100n);b.bond.state=1;b.write();
+  await assert.rejects(makeV2Action(request,outsider,options()),/Only a draft/);
+  const empty=await bank(0,1);empty.bond.state=0;empty.write();empty.clock(200n);
+  await assert.rejects(makeV2Action({action:'seal_issue_v2',bondAddress:empty.bondAddress,params:{}},outsider,{readRpc:mock(empty).readRpc,proposalIds:()=>[]}),/positive units/);
+});
+test('principal review and servicing expose exact snapshot burn units with preserved historical coupon rights',async()=>{
+  const b=await bank(2,1);b.bond.state=2;b.bond.nextCouponIndex=1;b.bond.nextRecordTs=b.bond.maturityTs;b.write();b.clock(2000n);
+  const options=()=>({readRpc:mock(b).readRpc,proposalIds:()=>[]});
+  await addAction(b,1,0);await addAction(b,2,0);
+  const built=await makeV2Action({action:'redeem_principal_v2',bondAddress:b.bondAddress,params:{}},b.wallets[0],options());
+  const retirement={units:'1',bondMint:b.bond.bondMint,method:'burn',atomicWithSettlement:true,historicalCouponRightsPreserved:true};
+  assert.deepEqual(built.summary.retirement,retirement);assert.deepEqual(built.metadata?.retirement,retirement);assert.equal(built.summary.amountMinor,'1000');assert.equal(built.summary.token,settlement);
+  const state=await readV2State(b.bondAddress,options()),principal=state.servicing.actions.find(a=>a.action==='redeem_principal_v2'&&a.signer.wallet===b.wallets[0])!;
+  assert.equal(principal.units,'1');assert.equal(principal.amountMinor,'1000');assert.equal(state.coupons[0].claimableMinor,'100');
+  await assert.rejects(makeV2Action({action:'redeem_principal_v2',bondAddress:b.bondAddress,params:{units:'999'}},b.wallets[0],options()),/Unsupported/);
+});

@@ -72,3 +72,37 @@ test('RPC refuses an oversized streamed response and cancels before collecting t
     assert.equal(cancelled,true); assert.equal(pulls,2);
   } finally { globalThis.fetch=oldFetch; }
 });
+
+test('recovery and confirmed progress require explicit distinct opt-ins and do not turn read-only into staging',async()=>{
+  const f=fixture();
+  await transport(async(calls,output)=>{
+    assert.equal(await programBufferCli([...f.args,'--retry-expired-writes','--confirmed-progress']),0);
+    const plan=JSON.parse(String(output[0]));
+    assert.equal(plan.mode,'read-only'); assert.equal(plan.signerFilesRead,false);
+    assert.equal(plan.retryExpiredWrites,true); assert.equal(plan.confirmedProgress,true);
+    assert.deepEqual(calls,['getGenesisHash','getAccountInfo','getMinimumBalanceForRentExemption','getBalance']);
+    await assert.rejects(programBufferCli([...f.args,'--retry-expired-writes','--retry-expired-writes']),/DUPLICATE_POLICY/);
+    await assert.rejects(programBufferCli([...f.args,'--confirmed-progress','--confirmed-progress']),/DUPLICATE_POLICY/);
+  });
+  assert.equal(fs.existsSync(path.resolve('.local/program-buffer',f.id)),false);
+});
+
+test('devnet RPC pace is explicit and bounded at500ms while default1250 and single-flight behavior remain',async()=>{
+  for(const pace of [499,0,-1,NaN,Infinity,500.5,60001])
+    assert.throws(()=>bufferHttpRpc('https://api.devnet.solana.com/','devnet',pace),/INVALID_BUFFER_RPC_PACE/);
+  assert.doesNotThrow(()=>bufferHttpRpc('https://api.devnet.solana.com/','devnet'));
+  assert.doesNotThrow(()=>bufferHttpRpc('https://api.devnet.solana.com/','devnet',500));
+  const previous=globalThis.fetch; let calls=0,finish:()=>void=()=>{};
+  globalThis.fetch=async(_input,options)=>{
+    calls++; const body=JSON.parse(String(options?.body));
+    await new Promise<void>(resolve=>{finish=resolve;});
+    return new Response(JSON.stringify({jsonrpc:'2.0',id:body.id,result:'ok'}));
+  };
+  try{
+    const rpc=bufferHttpRpc('https://api.devnet.solana.com/','devnet',500);
+    const first=rpc.request('getGenesisHash',[],new AbortController().signal);
+    await new Promise(resolve=>setTimeout(resolve,1));
+    await assert.rejects(rpc.request('getGenesisHash',[],new AbortController().signal),/CONCURRENT_BUFFER_RPC_REFUSED/);
+    assert.equal(calls,1);finish();await first;
+  }finally{globalThis.fetch=previous;}
+});

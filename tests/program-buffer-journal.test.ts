@@ -31,6 +31,25 @@ test('signed wire and original lifetime survive a fresh journal connection witho
   assert.deepEqual(journal.load(), {intent, signed: [event], observations: [{eventId: event.id, signature: event.signature, status: 'unknown'}]});
   journal.close();
 });
+
+test('linked retry appends alongside immutable original wire, history and fee exposure across SQLite reopen', () => {
+  const {intent,directory}=fixture();
+  const original={...signed(intent),id:'write:0'};
+  const retry={...original,id:'write:0:retry1',retryOf:original.id,signature:'synthetic-retry-signature',
+    blockhash:'synthetic-fresh-blockhash',lastValidBlockHeight:'200',wireBase64:'Ag==',
+    recovery:{expiredAtHeight:'101',checkedAtSlot:'55'}};
+  let journal=new SqliteBufferJournal(workspace,directory,intent);
+  journal.acquire();journal.initialize(intent);journal.appendSigned(original);
+  journal.recordObservation({eventId:original.id,signature:original.signature,status:'expired-unresolved'});
+  journal.appendSigned(retry);journal.close();
+  journal=new SqliteBufferJournal(workspace,directory,intent);journal.acquire();
+  const state=journal.load()!;
+  assert.deepEqual(state.signed,[original,retry]);
+  assert.equal(state.signed.reduce((sum,event)=>sum+BigInt(event.feeLamports),0n),10000n);
+  assert.equal(state.observations[0].status,'expired-unresolved');
+  assert.throws(()=>journal.appendSigned(retry));
+  assert.deepEqual(journal.load()!.signed,[original,retry]);journal.close();
+});
 test('OS writer lock rejects another live writer and allows it after known close', () => {
   const {intent, directory} = fixture();
   const first = new SqliteBufferJournal(workspace, directory, intent), second = new SqliteBufferJournal(workspace, directory, intent);

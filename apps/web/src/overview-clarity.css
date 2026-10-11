@@ -1,0 +1,88 @@
+/* Each financial object owns its amount, reconciliation, date and action. */
+.clear-overview { display:grid; gap:28px; min-width:0; }
+.clear-overview-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; }
+.clear-overview-heading > div { min-width:0; }
+.clear-overview-heading p { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:10px; color:var(--muted); font-size:16px; }
+.clear-overview-heading > .button { flex-shrink:0; }
+.clear-section-heading { margin-bottom:18px; }
+.clear-section-heading h2 { font-size:21px; }
+.clear-section-heading p { margin-top:6px; color:var(--muted); font-size:15px; }
+.clear-payment-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.clear-payment-card { padding:28px; min-width:0; background:var(--panel); border:1px solid var(--border); border-radius:12px; }
+.clear-payment-card > header { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+.clear-payment-card > header > svg { color:var(--link); }
+.clear-payment-card h3 { font-size:22px; font-weight:650; }
+.clear-payment-card > header p { color:var(--muted); font-size:15px; margin-top:3px; }
+.clear-payment-card > header > .badge { align-self:flex-start; margin-top:2px; }
+.clear-payment-total { display:grid; gap:8px; margin-top:26px; }
+.clear-payment-total > span:first-child { color:var(--muted); font-size:15px; }
+.clear-payment-total > .money { font-size:36px; font-weight:650; line-height:1.3; white-space:normal; overflow-wrap:anywhere; }
+.clear-payment-total .currency { font-size:16px; margin-left:6px; }
+.clear-payment-breakdown { display:grid; gap:10px; max-width:520px; margin:18px 0 0; }
+.clear-payment-breakdown > div { display:flex; align-items:baseline; justify-content:space-between; gap:20px; }
+.clear-payment-breakdown dt { color:var(--muted); font-size:16px; }
+.clear-payment-breakdown dd { margin:0; font-size:19px; }
+.clear-payment-context { display:grid; grid-template-columns:minmax(0,250px) minmax(0,180px); gap:24px; max-width:520px; padding-top:20px; margin:22px 0 0; border-top:1px solid var(--border); }
+.clear-payment-context dt { color:var(--muted); font-size:15px; }
+.clear-payment-context dd { margin:6px 0 0; font-size:17px; }
+.clear-payment-context .display-date { display:flex; flex-direction:column; gap:3px; }
+.clear-payment-context .display-time { font-size:15px; }
+.clear-payment-card > footer { margin-top:24px; }
+.clear-no-record { color:var(--muted); margin-top:24px; max-width:48ch; }
+.clear-payment-zone { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:14px; font-size:14px; color:var(--muted); }
+.clear-secondary-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; align-items:start; }
+.clear-vote-panel,.clear-activity-panel { padding:24px 28px; min-width:0; border:1px solid var(--border); border-radius:12px; }
+.clear-vote-panel > header,.clear-activity-panel > header { display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
+.clear-vote-panel > header svg,.clear-activity-panel > header svg { color:var(--muted); }
+.clear-secondary-grid h2 { font-size:19px; }
+.clear-vote-panel h3 { font-size:18px; line-height:1.5; margin-top:18px; max-width:55ch; }
+.clear-vote-values { display:grid; grid-template-columns:repeat(3,minmax(0,180px)); gap:20px; margin:22px 0; }
+.clear-vote-values dt { color:var(--muted); font-size:15px; }
+.clear-vote-values dd { margin:6px 0 0; font-size:23px; }
+.clear-secondary-grid > section > .button { margin-top:10px; padding-left:0; }
+.clear-activity-panel ul { list-style:none; padding:0; margin:12px 0 0; }
+.clear-activity-panel li { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px 20px; padding:14px 0; border-bottom:1px solid var(--border); }
+.clear-activity-panel li > div { display:grid; gap:4px; }
+.clear-activity-panel strong { font-size:16px; }
+.clear-activity-panel .display-date { display:flex; flex-wrap:wrap; gap:8px; font-size:14px; color:var(--muted); }
+.clear-activity-panel .display-time { font-size:14px; }
+.clear-issue-details { border-top:1px solid var(--border); }
+.clear-issue-details > div { padding:10px 0 22px; }
+.clear-lifecycle { display:flex; flex-wrap:wrap; gap:12px 24px; list-style:none; margin:0 0 24px; padding:0; }
+.clear-lifecycle li { display:flex; align-items:center; gap:8px; color:var(--muted); font-size:15px; }
+.clear-lifecycle li > span { display:grid; place-items:center; width:26px; height:26px; border:1px solid var(--border); border-radius:6px; }
+.clear-issue-facts { display:grid; grid-template-columns:repeat(3,minmax(0,340px)); gap:24px; margin:0 0 24px; }
+.clear-issue-facts dt { color:var(--muted); font-size:15px; }
+.clear-issue-facts dd { margin:6px 0 0; font-size:17px; }
+@media(min-width:1800px) {
+ .clear-payment-card { display:grid; grid-template-columns:minmax(220px,380px) minmax(220px,1fr); column-gap:36px; align-content:start; }
+ .clear-payment-card > header { grid-column:1/-1; }
+ .clear-payment-total { grid-column:1; grid-row:2; }
+ .clear-payment-breakdown { grid-column:2; grid-row:2; margin-top:30px; align-content:center; max-width:360px; }
+ .clear-payment-context,.clear-payment-card > footer,.clear-no-record { grid-column:1/-1; }
+}
+@media(max-width:1100px) {
+ .clear-payment-grid,.clear-secondary-grid { grid-template-columns:minmax(0,1fr); }
+ .clear-payment-card { padding:24px; }
+ .clear-issue-facts { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:600px) {
+ .clear-overview { gap:24px; }
+ .clear-overview-heading { flex-wrap:wrap; gap:14px; }
+ .clear-overview-heading p { font-size:15px; }
+ .clear-section-heading h2 { font-size:20px; }
+ .clear-payment-grid,.clear-secondary-grid { gap:18px; }
+ .clear-payment-card { padding:20px; }
+ .clear-payment-card h3 { font-size:20px; }
+ .clear-payment-card > header > .badge { margin-left:34px; }
+ .clear-payment-total { margin-top:22px; }
+ .clear-payment-total > .money { font-size:32px; }
+ .clear-payment-context { grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; }
+ .clear-payment-context dt,.clear-payment-card > header p { font-size:14px; }
+ .clear-payment-context dd { font-size:15px; }
+ .clear-payment-card > footer > .button { width:100%; justify-content:space-between; }
+ .clear-vote-panel,.clear-activity-panel { padding:20px; }
+ .clear-vote-values { gap:14px; }
+ .clear-vote-values dt { font-size:14px; }
+ .clear-issue-facts { grid-template-columns:minmax(0,1fr); }
+}

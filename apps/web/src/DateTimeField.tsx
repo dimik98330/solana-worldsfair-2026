@@ -1,9 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Clock3, X } from 'lucide-react';
 import { DayPicker, type ChevronProps, type Matcher } from 'react-day-picker';
-import { enGB, ru } from 'react-day-picker/locale';
+import { enGB, kk, ru } from 'react-day-picker/locale';
+import { uiLocale, type UiLanguage } from './i18n';
 import { localDateTimeOutOfBounds, normalizeTimeSegment, readLocalDateTime, writeLocalDateTime } from './date-time-value';
-import { getDisplayTimeZone, timeZoneLabel, wallTimeIssue, zonedInput } from './time-zone';
+import { getDisplayTimeZone, kazakhCalendarMonthLabel, kazakhDateLabel, timeZoneLabel, wallTimeIssue, zonedInput } from './time-zone';
 import 'react-day-picker/style.css';
 import './date-time-field.css';
 
@@ -15,7 +16,7 @@ export interface DateTimeFieldProps {
   error?: string;
   hint?: string;
   disabled?: boolean;
-  language?: 'ru' | 'en';
+  language?: UiLanguage;
   timeZone?: string;
   /** Optional limits in the displayed zone; schedule validation remains the parent's authority. */
   min?: string;
@@ -45,6 +46,17 @@ const copy = {
     minimum: 'Выберите дату и время не раньше', maximum: 'Выберите дату и время не позже',
     unavailable: 'Календарь не открылся. Попробуйте открыть его снова.', calendar: 'Календарь',
   },
+  kk: {
+    choose: 'Күн мен уақытты таңдау', edit: 'Күн мен уақытты өзгерту', close: 'Күнтізбені жабу',
+    date: 'Күн', time: 'Уақыт · 24 сағат', hour: 'Сағат', minute: 'Минут',
+    cancel: 'Бас тарту', apply: 'Күнді сақтау', empty: 'Күнді таңдаңыз', selected: 'Таңдалды',
+    invalidHour: 'Сағатты 00 мен 23 аралығында енгізіңіз.', invalidMinute: 'Минутты 00 мен 59 аралығында енгізіңіз.',
+    instruction: 'Күндер арасында жылжу үшін көрсеткі пернелерін пайдаланыңыз. Enter күнді таңдайды.',
+    invalid: 'Сағат ауысқанда бұл уақыт болмайды. Басқа уақытты таңдаңыз.',
+    ambiguous: 'Сағат ауысқанда бұл уақыт екі рет болады. Басқа уақытты таңдаңыз.', zone: 'Уақыт белдеуі',
+    minimum: 'Күн мен уақытты мынадан ерте емес таңдаңыз:', maximum: 'Күн мен уақытты мынадан кеш емес таңдаңыз:',
+    unavailable: 'Күнтізбе ашылмады. Қайта ашып көріңіз.', calendar: 'Күнтізбе',
+  },
 } as const;
 
 function CalendarChevron({ orientation, className, style }: ChevronProps) {
@@ -52,11 +64,11 @@ function CalendarChevron({ orientation, className, style }: ChevronProps) {
   return <Icon size={18} strokeWidth={1.75} className={className} style={style} aria-hidden="true" />;
 }
 
-function formatValue(value: string, language: 'ru' | 'en', timeZone: string): { date: string; time: string } | null {
+function formatValue(value: string, language: UiLanguage, timeZone: string): { date: string; time: string } | null {
   const parts = readLocalDateTime(value, timeZone, true);
   if (!parts) return null;
   return {
-    date: new Intl.DateTimeFormat(language === 'ru' ? 'ru-RU' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(parts.date),
+    date: language === 'kk' ? kazakhDateLabel(parts.date.getFullYear(), parts.date.getMonth() + 1, parts.date.getDate()) : new Intl.DateTimeFormat(uiLocale(language), { day: 'numeric', month: 'short', year: 'numeric' }).format(parts.date),
     time: `${parts.hour}:${parts.minute}${parts.seconds || ':00'}`,
   };
 }
@@ -167,8 +179,8 @@ export function DateTimeField({ id, label, value, onChange, error, hint, disable
         <DayPicker className="date-time-calendar" mode="single" required selected={selected} onSelect={date => { setSelected(date); setAttempted(false); }}
           month={month} onMonthChange={setMonth} startMonth={startMonth} endMonth={endMonth}
           captionLayout="dropdown" navLayout="after" fixedWeeks showOutsideDays autoFocus
-          locale={language === 'ru' ? ru : enGB} weekStartsOn={1} disabled={disabledDays}
-          role="application" aria-label={`${text.calendar}, ${new Intl.DateTimeFormat(language === 'ru' ? 'ru-RU' : 'en-GB', { month: 'long', year: 'numeric' }).format(month)}`}
+          locale={language === 'ru' ? ru : language === 'kk' ? kk : enGB} weekStartsOn={1} disabled={disabledDays}
+          role="application" aria-label={`${text.calendar}, ${language === 'kk' ? kazakhCalendarMonthLabel(month) : new Intl.DateTimeFormat(uiLocale(language), { month: 'long', year: 'numeric' }).format(month)}`}
           components={{ Chevron: CalendarChevron }} />
         <fieldset className="date-time-controls"><legend><Clock3 size={17} strokeWidth={1.75} aria-hidden="true" />{text.time}</legend>
           <div className="date-time-time-row">

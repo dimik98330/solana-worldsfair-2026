@@ -1,7 +1,9 @@
+import { translate } from './i18n';
 import { useId, type ReactNode } from 'react';
 import { ArrowDownLeft, ArrowRight, Banknote, CalendarDays, ChevronDown, Landmark, ReceiptText, Wallet } from 'lucide-react';
-import { Badge, Button, Money } from './components';
-import { date, integer, subtract } from './format';
+import { Badge, Button, Empty, Money } from './components';
+import { date, integer, subtract, units } from './format';
+import { pendingCaptureProgress } from './paged-actions';
 import type { ChainState, Coupon } from './types';
 import { useUiLanguage } from './ui-language';
 import { useDisplayPreferences } from './display-preferences';
@@ -19,13 +21,14 @@ export interface PaymentsWorkspaceProps {
   fundReason: string;
   onClaims: () => void;
   onReceipts: () => void;
+  onContinueCapture?: () => void;
   scopeSelector?: ReactNode;
   children: ReactNode;
 }
 
-function PaymentDate({value, language}: {value?: string; language: 'en' | 'ru'}) {
+function PaymentDate({value, language}: {value?: string; language: 'en' | 'ru' | 'kk'}) {
   const {timeZone}=useDisplayPreferences();
-  if (!value || Number.isNaN(Date.parse(value))) return <span>{language==='ru'?'Дата не назначена':'Not scheduled'}</span>;
+  if (!value || Number.isNaN(Date.parse(value))) return <span>{translate(language, 'Not scheduled', 'Дата не назначена')}</span>;
   const parts=dateParts(value,timeZone,language);
   return <time dateTime={value} title={date(value,true,language)}>
     <span>{parts.date}</span>
@@ -36,16 +39,18 @@ function PaymentDate({value, language}: {value?: string; language: 'en' | 'ru'})
 /** Presentation only: the parent retains permissions, operation reviews and recovery. */
 export function PaymentsWorkspace({
   state, principal, coupon, tab, onTab, onFund, canFund, fundReason,
-  onClaims, onReceipts, scopeSelector, children,
+  onClaims, onReceipts, onContinueCapture, scopeSelector, children,
 }: PaymentsWorkspaceProps) {
-  const { language } = useUiLanguage();
+  const { language, tr } = useUiLanguage();
   const {timeZone}=useDisplayPreferences();
-  const tr = (en: string, ru: string) => language === 'ru' ? ru : en;
   const headingId = useId();
   const fundingReasonId = useId();
   const instrument = state.instrument;
   const selected = tab === 'coupon' ? coupon : state.redemption;
   const recorded = state.connected && selected?.snapshotAddress ? selected : undefined;
+  const capture = pendingCaptureProgress(state);
+  const captureName = capture?.actionKind === '1' ? `${tr('Coupon', 'Купон')} ${units(BigInt(capture.actionId!) + 1n)}` : capture?.actionKind === '2' ? tr('Principal', 'Номинал') : tr('Voting', 'Голосование');
+  const captureNotice = capture && onContinueCapture ? <Empty title={tr('Complete rights capture', 'Завершите фиксацию прав')} description={`${captureName} · ${tr('Pages captured:', 'Зафиксировано страниц:')} ${units(capture.capturedPages)} / ${units(capture.pageCount)}. ${tr('Rights become available after finalization.', 'Права станут доступны после завершения снимка.')}`} action={<Button onClick={onContinueCapture}>{tr('Continue capture', 'Продолжить фиксацию')}<ArrowRight size={16} aria-hidden="true" /></Button>} /> : null;
   const remaining = subtract(recorded?.totalMinor, recorded?.paidMinor);
   const unpaidCoupon = state.connected && coupon?.snapshotAddress
     ? subtract(coupon.totalMinor, coupon.paidMinor) : undefined;
@@ -63,10 +68,7 @@ export function PaymentsWorkspace({
           : tr('Unpaid rights remain', 'Есть неполученные выплаты');
 
   return <section className="payments-workspace" aria-labelledby={headingId}>
-    <header className="payments-heading">
-      <div><h1 id={headingId}>{tr('Payments', 'Выплаты')}</h1></div>
-      <Button variant="ghost" onClick={onReceipts}><ReceiptText size={20} aria-hidden="true" />{tr('History', 'История')}</Button>
-    </header>
+    <h1 id={headingId} className="sr-only">{tr('Payments', 'Выплаты')}</h1>
 
     <div className="payments-layout">
       <section className="payments-ledger" aria-label={tr('Payment registry', 'Реестр выплат')}>
@@ -75,7 +77,7 @@ export function PaymentsWorkspace({
             <button type="button" aria-pressed={tab === 'coupon'} onClick={() => onTab('coupon')}><Banknote size={18} aria-hidden="true" />{tr('Coupon', 'Купон')}</button>
             <button type="button" aria-pressed={tab === 'redemption'} onClick={() => onTab('redemption')}><Landmark size={18} aria-hidden="true" />{tr('Principal', 'Номинал')}</button>
           </div>
-          {tab === 'coupon' && scopeSelector ? <div className="payments-scope">{scopeSelector}</div> : null}
+          {tab === 'coupon' && scopeSelector ? <div className="payments-scope">{scopeSelector}</div> : null}<Button variant="ghost" onClick={onReceipts}><ReceiptText size={18} aria-hidden="true" />{tr('History', 'История')}</Button>
         </div>
 
         <div className="payments-selection">
@@ -94,11 +96,11 @@ export function PaymentsWorkspace({
           <div><dt>{tr('Paid', 'Выплачено')}</dt><dd><Money value={recorded?.paidMinor} /></dd></div>
           <div className="payments-remaining"><dt>{tr('Left to pay', 'Осталось')}</dt><dd><Money value={remaining} /></dd></div>
         </dl>
-        <div className="payments-records">{children}</div>
+        <div className="payments-records">{captureNotice}{recorded || !captureNotice ? children : null}</div>
       </section>
 
       <aside className="payments-inspector" aria-label={tr('Issue reserve and holder actions', 'Резерв выпуска и действия держателя')}>
-        {settled&&<section className="payments-complete"><h2><ReceiptText size={18} aria-hidden="true"/>{tr('Payments complete','Выплаты завершены')}</h2><p>{tr('Principal repaid. All recorded coupons paid.','Номинал возвращён. Все зафиксированные купоны выплачены.')}</p><Button onClick={onReceipts}>{tr('View receipts','Открыть подтверждения')}<ArrowRight size={16} aria-hidden="true"/></Button></section>}
+        {settled&&<section className="payments-complete"><h2><ReceiptText size={18} aria-hidden="true"/>{tr('Payments complete','Выплаты завершены')}</h2><p>{tr('No outstanding payments.','Непогашенных выплат нет.')}</p><Button onClick={onReceipts}>{tr('Activity log','История операций')}<ArrowRight size={16} aria-hidden="true"/></Button></section>}
         <details className="payments-reserve" open={!settled}>
           <summary><Landmark size={18} aria-hidden="true" />{tr('Issue reserve', 'Резерв выпуска')}<ChevronDown className="reserve-chevron" size={18} aria-hidden="true"/></summary>
           <p className="payments-unit">{tr('Settlement units', 'Расчётные единицы')}</p>
@@ -113,8 +115,8 @@ export function PaymentsWorkspace({
           {settled&&<p className="payments-help">{tr('Balances after redemption.','Остатки после погашения.')}</p>}
         </details>
         <section className="payments-holder-action">
-          <h2><Wallet size={18} aria-hidden="true" />{tr('Holder payments', 'Выплаты держателю')}</h2>
-          <Button onClick={onClaims}>{tr('Holder portfolio', 'Портфель держателя')}<ArrowRight size={16} aria-hidden="true" /></Button>
+          <h2><Wallet size={18} aria-hidden="true" />{tr('Your payments', 'Мои выплаты')}</h2>
+          <Button onClick={onClaims}>{tr('Open portfolio', 'Перейти в портфель')}<ArrowRight size={16} aria-hidden="true" /></Button>
         </section>
       </aside>
     </div>

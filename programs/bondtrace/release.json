@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
   "loader": "BPFLoaderUpgradeable",
-  "programLen": 959536,
-  "sha256": "ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12",
+  "programLen": 960296,
+  "sha256": "257a89b28a427863b4ed8adf26eaaed868f15d8d7a290970200f9cc81a33106c",
   "releaseId": "paged-corporate-actions-v4"
 }

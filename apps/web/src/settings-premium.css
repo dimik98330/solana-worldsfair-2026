@@ -1,0 +1,92 @@
+/* Compact, native display preferences. Financial timestamps are unchanged. */
+.interface-settings.settings-premium {
+  --settings-inset: #10141d;
+  --settings-stroke: #46556b;
+  display: grid;
+  gap: 0;
+  min-width: 0;
+}
+.settings-premium .preference-section {
+  display: grid;
+  grid-template-columns: minmax(145px, .85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+.settings-premium .preference-section:first-child { padding-top: 0; }
+.settings-premium .preference-timezone { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.settings-premium .preference-heading { display: block; margin: 0; min-width: 0; }
+.interface-settings.settings-premium .preference-heading label {
+  color: var(--foreground);
+  font-size: 15px;
+  font-weight: 550;
+  line-height: 1.5;
+}
+.settings-premium .preference-heading p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.interface-settings.settings-premium select {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  padding: 8px 11px;
+  border: 1px solid var(--settings-stroke);
+  border-radius: 8px;
+  background: var(--settings-inset);
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  color-scheme: dark;
+  cursor: pointer;
+}
+.interface-settings.settings-premium select:hover { border-color: var(--muted); }
+.interface-settings.settings-premium select:focus-visible {
+  border-color: var(--link);
+  outline: 1px solid var(--link);
+  outline-offset: -1px;
+  box-shadow: none;
+}
+.settings-premium .preference-preview {
+  display: grid;
+  grid-template-columns: minmax(145px, .85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: 20px;
+  padding: 18px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.settings-premium .preference-preview-label { color: var(--muted); font-size: 14px; }
+.settings-premium .preference-preview-value { display: block; min-width: 0; }
+.settings-premium .preference-preview time {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 3px 10px;
+  margin: 0;
+  color: var(--foreground);
+  font-size: 15px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.settings-premium .preference-clock {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.settings-premium .preference-preview-value p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+@media (max-width: 560px) {
+  .settings-premium .preference-section { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 16px 0; }
+  .interface-settings.settings-premium select { min-height: 44px; font-size: 16px; }
+  .settings-premium .preference-preview { grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 16px; }
+}

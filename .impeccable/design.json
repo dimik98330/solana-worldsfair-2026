@@ -1,53 +1,23 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-09T07:02:19.030Z",
-  "title": "Design System: BondTrace — Settlement Workspace",
+  "generatedAt": "2026-10-11T16:16:04.417Z",
+  "title": "Design System: BondTrace — reference-led operating workspace",
   "extensions": {
     "colorMeta": {
       "primary": {
         "role": "primary",
         "displayName": "Command Blue",
-        "canonical": "#376cf4",
-        "tonalRamp": [
-          "oklch(15% 0.2121 264.47)",
-          "oklch(25% 0.2121 264.47)",
-          "oklch(35% 0.2121 264.47)",
-          "oklch(45% 0.2121 264.47)",
-          "oklch(55% 0.2121 264.47)",
-          "oklch(70% 0.2121 264.47)",
-          "oklch(85% 0.2121 264.47)",
-          "oklch(95% 0.2121 264.47)"
-        ]
+        "canonical": "#416ee8"
       },
       "primary-hover": {
         "role": "primary",
         "displayName": "Command Blue Deep",
-        "canonical": "#2c5edd",
-        "tonalRamp": [
-          "oklch(15% 0.2017 264.22)",
-          "oklch(25% 0.2017 264.22)",
-          "oklch(35% 0.2017 264.22)",
-          "oklch(45% 0.2017 264.22)",
-          "oklch(55% 0.2017 264.22)",
-          "oklch(70% 0.2017 264.22)",
-          "oklch(85% 0.2017 264.22)",
-          "oklch(95% 0.2017 264.22)"
-        ]
+        "canonical": "#315dce"
       },
       "primary-soft": {
         "role": "primary",
         "displayName": "Blue Recess",
-        "canonical": "#1d3053",
-        "tonalRamp": [
-          "oklch(15% 0.0679 261.70)",
-          "oklch(25% 0.0679 261.70)",
-          "oklch(35% 0.0679 261.70)",
-          "oklch(45% 0.0679 261.70)",
-          "oklch(55% 0.0679 261.70)",
-          "oklch(70% 0.0679 261.70)",
-          "oklch(85% 0.0679 261.70)",
-          "oklch(95% 0.0679 261.70)"
-        ]
+        "canonical": "#1e3053"
       },
       "primary-foreground": {
         "role": "primary",
@@ -67,167 +37,57 @@
       "link": {
         "role": "primary",
         "displayName": "Readable Blue",
-        "canonical": "#9fc0ff",
-        "tonalRamp": [
-          "oklch(15% 0.0967 262.98)",
-          "oklch(25% 0.0967 262.98)",
-          "oklch(35% 0.0967 262.98)",
-          "oklch(45% 0.0967 262.98)",
-          "oklch(55% 0.0967 262.98)",
-          "oklch(70% 0.0967 262.98)",
-          "oklch(85% 0.0967 262.98)",
-          "oklch(95% 0.0967 262.98)"
-        ]
+        "canonical": "#a9c4ff"
       },
       "background": {
         "role": "neutral",
         "displayName": "Navy Canvas",
-        "canonical": "#0f1520",
-        "tonalRamp": [
-          "oklch(15% 0.0242 262.22)",
-          "oklch(25% 0.0242 262.22)",
-          "oklch(35% 0.0242 262.22)",
-          "oklch(45% 0.0242 262.22)",
-          "oklch(55% 0.0242 262.22)",
-          "oklch(70% 0.0242 262.22)",
-          "oklch(85% 0.0242 262.22)",
-          "oklch(95% 0.0242 262.22)"
-        ]
+        "canonical": "#10141d"
       },
       "panel": {
         "role": "neutral",
         "displayName": "Working Record",
-        "canonical": "#161e2b",
-        "tonalRamp": [
-          "oklch(15% 0.0279 259.94)",
-          "oklch(25% 0.0279 259.94)",
-          "oklch(35% 0.0279 259.94)",
-          "oklch(45% 0.0279 259.94)",
-          "oklch(55% 0.0279 259.94)",
-          "oklch(70% 0.0279 259.94)",
-          "oklch(85% 0.0279 259.94)",
-          "oklch(95% 0.0279 259.94)"
-        ]
+        "canonical": "#151c28"
       },
       "panel-subtle": {
         "role": "neutral",
         "displayName": "Raised Record",
-        "canonical": "#1c2737",
-        "tonalRamp": [
-          "oklch(15% 0.0338 257.67)",
-          "oklch(25% 0.0338 257.67)",
-          "oklch(35% 0.0338 257.67)",
-          "oklch(45% 0.0338 257.67)",
-          "oklch(55% 0.0338 257.67)",
-          "oklch(70% 0.0338 257.67)",
-          "oklch(85% 0.0338 257.67)",
-          "oklch(95% 0.0338 257.67)"
-        ]
+        "canonical": "#1c2635"
       },
       "input": {
         "role": "neutral",
         "displayName": "Inset Navy",
-        "canonical": "#0d1420",
-        "tonalRamp": [
-          "oklch(15% 0.0268 260.88)",
-          "oklch(25% 0.0268 260.88)",
-          "oklch(35% 0.0268 260.88)",
-          "oklch(45% 0.0268 260.88)",
-          "oklch(55% 0.0268 260.88)",
-          "oklch(70% 0.0268 260.88)",
-          "oklch(85% 0.0268 260.88)",
-          "oklch(95% 0.0268 260.88)"
-        ]
+        "canonical": "#111822"
       },
       "foreground": {
         "role": "neutral",
         "displayName": "Clear Financial Text",
-        "canonical": "#eef2f8",
-        "tonalRamp": [
-          "oklch(15% 0.0091 258.34)",
-          "oklch(25% 0.0091 258.34)",
-          "oklch(35% 0.0091 258.34)",
-          "oklch(45% 0.0091 258.34)",
-          "oklch(55% 0.0091 258.34)",
-          "oklch(70% 0.0091 258.34)",
-          "oklch(85% 0.0091 258.34)",
-          "oklch(95% 0.0091 258.34)"
-        ]
+        "canonical": "#eef1f6"
       },
       "muted": {
         "role": "neutral",
         "displayName": "Quiet Slate",
-        "canonical": "#a6b3c6",
-        "tonalRamp": [
-          "oklch(15% 0.0309 257.78)",
-          "oklch(25% 0.0309 257.78)",
-          "oklch(35% 0.0309 257.78)",
-          "oklch(45% 0.0309 257.78)",
-          "oklch(55% 0.0309 257.78)",
-          "oklch(70% 0.0309 257.78)",
-          "oklch(85% 0.0309 257.78)",
-          "oklch(95% 0.0309 257.78)"
-        ]
+        "canonical": "#acb7c7"
       },
       "border": {
         "role": "neutral",
         "displayName": "Record Seam",
-        "canonical": "#2c3a4f",
-        "tonalRamp": [
-          "oklch(15% 0.0414 258.31)",
-          "oklch(25% 0.0414 258.31)",
-          "oklch(35% 0.0414 258.31)",
-          "oklch(45% 0.0414 258.31)",
-          "oklch(55% 0.0414 258.31)",
-          "oklch(70% 0.0414 258.31)",
-          "oklch(85% 0.0414 258.31)",
-          "oklch(95% 0.0414 258.31)"
-        ]
+        "canonical": "#2a3546"
       },
       "border-control": {
         "role": "neutral",
         "displayName": "Control Edge",
-        "canonical": "#61748e",
-        "tonalRamp": [
-          "oklch(15% 0.0466 256.31)",
-          "oklch(25% 0.0466 256.31)",
-          "oklch(35% 0.0466 256.31)",
-          "oklch(45% 0.0466 256.31)",
-          "oklch(55% 0.0466 256.31)",
-          "oklch(70% 0.0466 256.31)",
-          "oklch(85% 0.0466 256.31)",
-          "oklch(95% 0.0466 256.31)"
-        ]
+        "canonical": "#62758d"
       },
       "nav": {
         "role": "neutral",
         "displayName": "Deep Navigation",
-        "canonical": "#0a101a",
-        "tonalRamp": [
-          "oklch(15% 0.0230 260.39)",
-          "oklch(25% 0.0230 260.39)",
-          "oklch(35% 0.0230 260.39)",
-          "oklch(45% 0.0230 260.39)",
-          "oklch(55% 0.0230 260.39)",
-          "oklch(70% 0.0230 260.39)",
-          "oklch(85% 0.0230 260.39)",
-          "oklch(95% 0.0230 260.39)"
-        ]
+        "canonical": "#0c1018"
       },
       "nav-surface": {
         "role": "neutral",
         "displayName": "Navigation Hover",
-        "canonical": "#172231",
-        "tonalRamp": [
-          "oklch(15% 0.0327 256.31)",
-          "oklch(25% 0.0327 256.31)",
-          "oklch(35% 0.0327 256.31)",
-          "oklch(45% 0.0327 256.31)",
-          "oklch(55% 0.0327 256.31)",
-          "oklch(70% 0.0327 256.31)",
-          "oklch(85% 0.0327 256.31)",
-          "oklch(95% 0.0327 256.31)"
-        ]
+        "canonical": "#18212e"
       },
       "nav-text": {
         "role": "neutral",
@@ -247,47 +107,17 @@
       "nav-muted": {
         "role": "neutral",
         "displayName": "Navigation Silver",
-        "canonical": "#b2bdcb",
-        "tonalRamp": [
-          "oklch(15% 0.0233 254.42)",
-          "oklch(25% 0.0233 254.42)",
-          "oklch(35% 0.0233 254.42)",
-          "oklch(45% 0.0233 254.42)",
-          "oklch(55% 0.0233 254.42)",
-          "oklch(70% 0.0233 254.42)",
-          "oklch(85% 0.0233 254.42)",
-          "oklch(95% 0.0233 254.42)"
-        ]
+        "canonical": "#9ca9bb"
       },
       "nav-border": {
         "role": "neutral",
         "displayName": "Navigation Seam",
-        "canonical": "#233044",
-        "tonalRamp": [
-          "oklch(15% 0.0404 258.81)",
-          "oklch(25% 0.0404 258.81)",
-          "oklch(35% 0.0404 258.81)",
-          "oklch(45% 0.0404 258.81)",
-          "oklch(55% 0.0404 258.81)",
-          "oklch(70% 0.0404 258.81)",
-          "oklch(85% 0.0404 258.81)",
-          "oklch(95% 0.0404 258.81)"
-        ]
+        "canonical": "#252e3b"
       },
       "nav-active": {
         "role": "neutral",
         "displayName": "Selected Navigation",
-        "canonical": "#182b49",
-        "tonalRamp": [
-          "oklch(15% 0.0606 259.19)",
-          "oklch(25% 0.0606 259.19)",
-          "oklch(35% 0.0606 259.19)",
-          "oklch(45% 0.0606 259.19)",
-          "oklch(55% 0.0606 259.19)",
-          "oklch(70% 0.0606 259.19)",
-          "oklch(85% 0.0606 259.19)",
-          "oklch(95% 0.0606 259.19)"
-        ]
+        "canonical": "#202b3d"
       },
       "muted-on-primary": {
         "role": "primary",
@@ -322,32 +152,12 @@
       "success": {
         "role": "semantic",
         "displayName": "Paid Mint",
-        "canonical": "#9cd2be",
-        "tonalRamp": [
-          "oklch(15% 0.0627 169.91)",
-          "oklch(25% 0.0627 169.91)",
-          "oklch(35% 0.0627 169.91)",
-          "oklch(45% 0.0627 169.91)",
-          "oklch(55% 0.0627 169.91)",
-          "oklch(70% 0.0627 169.91)",
-          "oklch(85% 0.0627 169.91)",
-          "oklch(95% 0.0627 169.91)"
-        ]
+        "canonical": "#96d6ba"
       },
       "success-soft": {
         "role": "semantic",
         "displayName": "Paid Recess",
-        "canonical": "#253c37",
-        "tonalRamp": [
-          "oklch(15% 0.0303 179.18)",
-          "oklch(25% 0.0303 179.18)",
-          "oklch(35% 0.0303 179.18)",
-          "oklch(45% 0.0303 179.18)",
-          "oklch(55% 0.0303 179.18)",
-          "oklch(70% 0.0303 179.18)",
-          "oklch(85% 0.0303 179.18)",
-          "oklch(95% 0.0303 179.18)"
-        ]
+        "canonical": "#1b332d"
       },
       "warning": {
         "role": "semantic",
@@ -680,8 +490,8 @@
     }
   ],
   "narrative": {
-    "northStar": "Settlement Workspace",
-    "overview": "BondTrace is an operating issuer and holder application. Deep navy surfaces contain payment records, clear tabular figures and available actions. Inset fields distinguish editable data from the ledger; compact inspectors keep the selected financial object in view. The original open outlined BondTrace lettering is the visual signature.\n\nThe implemented world preserves the owner's dark navy direction, English/Russian switch, full desktop width, single field focus edge and existing exact financial/signing semantics. The product presentation is separate. Product commitments live in [PRODUCT.md](PRODUCT.md); the current replacement brief is [docs/frontend/ECC-REDESIGN.md](docs/frontend/ECC-REDESIGN.md). Earlier light-canvas and Settlement Ledger captures are historical.",
+    "northStar": "Task-first financial records with quiet contextual controls",
+    "overview": "Second11October revision after owner rejection. Payments first, explicit terms/positions views, compact preferences, native progressive details, bounded financial columns. DESIGN.md and premium.css are authoritative. Latest owner correction: overview separates coupon and principal into explicit financial objects, one primary amount per object and labeled reconciliation/date/action; implementation overview-clarity.css. Repeated visible page intro bands removed by owner11October; contextual actions remain with controls, semantic page headings sr-only. Three language UI kk/ru/en and city/GMT preference labels implemented11October; canonical behavior in i18n.ts/time-zone.ts/InterfaceSettings.tsx.",
     "keyCharacteristics": [
       "Deep navy canvas, darker navigation and contained tonal records.",
       "Saturated blue commands, light blue links and inset editable fields.",

@@ -6,7 +6,7 @@
 
 The authoritative financial component is an Anchor program on Solana. Bond tokens use classic SPL Token with decimals0; a mock SPL settlement mint uses decimals6. Test tokens simulate a cash rail, while entitlement, transfer, burn and one-time claim logic execute in the actual Solana runtime.
 
-Current additive release: `paged-corporate-actions-v4`,959536-byte SBF payload, SHA256 `ee2bb0f7eef91f04722b4b9f834d58d3bc4dc2fc3f76905dfc1d7521f8f1ee12`. Older layouts/instructions remain available. New issues use separate v2 discriminators/PDA seeds, without rewriting old registries or snapshots.
+Current additive release: `paged-corporate-actions-v4`,960296-byte SBF payload, SHA256 `257a89b28a427863b4ed8adf26eaaed868f15d8d7a290970200f9cc81a33106c`. Older layouts/instructions remain available. New issues use separate v2 discriminators/PDA seeds, without rewriting old registries or snapshots. Earlier959536B/SHA `ee2bb0f7…8f1ee12` verification remains historical evidence for its exact image.
 
 The public devnet program `B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8` still has the recorded v3 payload541456B/SHA `761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd`. Local v4 evidence does not establish its public upgrade. A matching-release check fails closed before financial preparation/relay.
 
@@ -61,6 +61,8 @@ sequenceDiagram
 Draft: append ordered future coupon terms, register holders, issue units, fund reserve. Activation requires complete schedule, positive supply, exact mint/holder supply consistency and sufficient full principal+coupon reserve in a spendable vault. An active issue cannot mint extra supply or change annual terms.
 
 After activation the issuer may append a zero-balance receiver between record locks. Existing indices/wallet identities never move. No receiver is granted a past entitlement: each action has already fixed its holder-count prefix. Transfers move current units through the program; total supply remains constant until principal burn.
+
+Before the first record date only the issuer may activate a fully configured issue. At that cutoff or later any fee payer may activate it when the complete schedule, positive registered supply, matching mint supply and currently spendable full reserve are verified. Issuance and initial registry changes still stop at the cutoff; late activation cannot change the frozen quantities. Due coupon snapshots must finish before maturity capture. The account does not prove when its reserve was funded: this rule verifies the reserve now. Instruction discriminator, account order and BondV2 layout are unchanged.
 
 Any fee payer can open a due coupon or maturity capture. Captures advance by exact next page and finalize only after full supply reconciliation. Coupon claims wait for finalization and payment time. Maturity requires all preceding coupon snapshots finalized, then fixes current quantities. Each holder's principal transfer and corresponding burn are atomic. Principal retirement and all-obligations-settled are distinct states.
 
@@ -138,7 +140,7 @@ The actual-chain verifier checks built HTTP assets, canonical deployed SBF, page
 
 `npm run demo:paged:lifecycle` is the Windows/WSL launcher; `-Scale33 -LateCoupon` requests the larger cohort. It retains fixed batch groups, plan hashes, dates, child IDs and signatures before relay. Coupon batches contain up to4 recipients; initial issuance groups contain up to3 within one registry page; principal is individual holder-signed. Unknown outcomes stop. Resume with the saved ID/flags/data, never replacement signatures.
 
-Program tests execute the compiled959536B SBF with real SPL CPIs in LiteSVM; some tests advance the test sysvar clock. The actual RPC demo waits for real chain time. These scopes are distinct. Offline wire measurements884/1004B and runtime measurements apply only to their recorded groups, not a throughput/SLA guarantee.
+The11October repair tests execute the compiled960296B SBF with real SPL CPIs in LiteSVM:3Rust unit and22runtime tests passed, including late activation at the cutoff and after maturity. Some tests advance the test sysvar clock. The actual RPC demo waits for real chain time. These scopes are distinct. Earlier20-runtime-test reports and offline wire measurements884/1004B apply only to their recorded image/groups, not a throughput/SLA guarantee.
 
 Public v3 proof:26 finalized transactions,900coupon/18000principal/18burned, supply/vault/obligations0, immutable10/5/3 despite current10/4/4, primary500/10000, vote13/5. Its actual Render restart and backup are historical evidence, preserved separately from v4.
 

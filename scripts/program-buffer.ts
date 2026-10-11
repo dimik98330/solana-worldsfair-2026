@@ -48,6 +48,9 @@ export interface SignedBufferEvent {
   lastValidBlockHeight: string;
   feeLamports: string;
   rentLamports: string;
+  /** One explicitly authorized replacement for an expired, absent BUFFER write only. */
+  retryOf?: string;
+  recovery?: {expiredAtHeight: string; checkedAtSlot: string};
 }
 export interface BufferObservation {
   eventId: string;
@@ -102,6 +105,8 @@ export interface BufferStageOptions {
   journal: BufferJournal;
   limits: BufferLimits;
   signal?: AbortSignal;
+  retryExpiredWrites?: boolean;
+  confirmedProgress?: boolean;
   onProgress?: (progress: {kind: 'signed' | 'observed' | 'skipped'; offset: number; signature?: string}) => void;
 }
 
@@ -203,6 +208,12 @@ function delay(ms: number, signal: AbortSignal): Promise<void> {
   });
 }
 
+const intentKeys = ['version','id','network','endpoint','expectedGenesis','bufferAddress','authorityAddress','imageSha256','imageLength','chunkSize'] as const;
+function sameIntent(a: BufferIntent, b: BufferIntent): boolean {
+  return Boolean(a && b && Object.keys(a).length === intentKeys.length && Object.keys(b).length === intentKeys.length
+    && intentKeys.every(key => Object.hasOwn(a,key) && Object.hasOwn(b,key) && a[key] === b[key]));
+}
+
 export async function runBufferStage(options: BufferStageOptions): Promise<BufferStageResult> {
   const {intent, rpc, journal, limits, authoritySigner, bufferSigner} = options;
   // Copy caller-owned bytes before any await; the reviewed hash cannot change during signing.
@@ -246,16 +257,16 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
     const load = (): BufferJournalState | null => synchronous(journal.load());
     const initial = load();
     if (initial) {
-      ensure(JSON.stringify(initial.intent) === JSON.stringify(intent), 'JOURNAL_INTENT_MISMATCH');
+      ensure(sameIntent(initial.intent, intent), 'JOURNAL_INTENT_MISMATCH');
       state = structuredClone(initial);
     } else {
       synchronous(journal.initialize(structuredClone(intent)));
       const initialized = load();
-      ensure(initialized && JSON.stringify(initialized.intent) === JSON.stringify(intent)
+      ensure(initialized && sameIntent(initialized.intent, intent)
         && initialized.signed.length === 0 && initialized.observations.length === 0, 'JOURNAL_INITIALIZATION_BARRIER');
       state = structuredClone(initialized);
     }
-    ensure(Array.isArray(state.signed) && state.signed.length <= Math.ceil(image.length / BUFFER_CHUNK_BYTES) + 1
+    ensure(Array.isArray(state.signed) && state.signed.length <= 2 * Math.ceil(image.length / BUFFER_CHUNK_BYTES) + 1
       && Array.isArray(state.observations), 'INVALID_JOURNAL');
     const ids = new Set<string>(), signatures = new Set<string>();
     for (const event of state.signed) {
@@ -264,7 +275,16 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
       ensure(event.kind === 'create' || event.kind === 'write', 'INVALID_EVENT_KIND');
       ensure(!ids.has(event.id) && !signatures.has(event.signature), 'DUPLICATE_JOURNAL_EVENT');
       ids.add(event.id); signatures.add(event.signature);
-      ensure(event.id === (event.kind === 'create' ? 'create' : `write:${event.offset}`), 'INVALID_EVENT_ID');
+      const baseId = event.kind === 'create' ? 'create' : `write:${event.offset}`;
+      ensure(event.id === (event.retryOf ? `${baseId}:retry1` : baseId), 'INVALID_EVENT_ID');
+      if (event.retryOf) {
+        const original = state.signed.find(item => item.id === event.retryOf);
+        ensure(event.kind === 'write' && event.retryOf === baseId && original && !original.retryOf
+          && original.kind === 'write' && original.offset === event.offset && original.length === event.length
+          && ids.has(original.id) && event.recovery
+          && exactBufferU64(event.recovery.expiredAtHeight, 'RECOVERY_HEIGHT') > BigInt(original.lastValidBlockHeight)
+          && exactBufferU64(event.recovery.checkedAtSlot, 'RECOVERY_SLOT') > 0n, 'INVALID_RETRY_LINK');
+      } else ensure(event.recovery === undefined, 'UNLINKED_RECOVERY_PROOF');
       integer(event.offset, 0, image.length - 1, 'EVENT_OFFSET');
       ensure(event.kind === 'create' ? event.offset === 0 && event.length === 0
         : event.offset % BUFFER_CHUNK_BYTES === 0 && event.length === Math.min(BUFFER_CHUNK_BYTES, image.length - event.offset), 'INVALID_EVENT_RANGE');
@@ -290,18 +310,20 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
       options.onProgress?.({kind: 'observed', offset: event.offset, signature: event.signature});
     };
     ensure(await request<string>('getGenesisHash') === intent.expectedGenesis, 'GENESIS_MISMATCH');
-    const snapshot = async (): Promise<Uint8Array | null> => {
+    let confirmedSlot = 0n;
+    const snapshot = async (commitment: 'finalized' | 'confirmed' = 'finalized'): Promise<Uint8Array | null> => {
+      const minimum = commitment === 'confirmed' ? (confirmedSlot > contextSlot ? confirmedSlot : contextSlot) : contextSlot;
       const response = await request<{context: {slot: unknown}; value: unknown}>('getAccountInfo', [intent.bufferAddress,
-        {encoding: 'base64', commitment: 'finalized', ...(contextSlot ? {minContextSlot: Number(contextSlot)} : {})}]);
+        {encoding: 'base64', commitment, ...(minimum ? {minContextSlot: Number(minimum)} : {})}]);
       const slot = exactBufferU64(response?.context?.slot, 'CONTEXT_SLOT');
-      ensure(slot >= contextSlot && slot <= BigInt(Number.MAX_SAFE_INTEGER), 'STALE_OR_UNSAFE_ACCOUNT_CONTEXT');
-      contextSlot = slot;
+      ensure(slot >= minimum && slot <= BigInt(Number.MAX_SAFE_INTEGER), 'STALE_OR_UNSAFE_ACCOUNT_CONTEXT');
+      if (commitment === 'finalized') contextSlot = slot; else confirmedSlot = slot;
       return response.value === null ? null : validateBufferAccount(response.value, intent);
     };
     let payload = await snapshot();
     const effect = (event: SignedBufferEvent): boolean => payload !== null && (event.kind === 'create'
       || same(payload.subarray(event.offset, event.offset + event.length), image.subarray(event.offset, event.offset + event.length)));
-    const recover = async (event: SignedBufferEvent, polls: number): Promise<boolean> => {
+    const recover = async (event: SignedBufferEvent, polls: number, progress = false): Promise<boolean> => {
       for (let index = 0; index < polls; index++) {
         const statuses = await request<{value: ({err: unknown; confirmationStatus: string; slot: unknown} | null)[]}>('getSignatureStatuses', [[event.signature], {searchTransactionHistory: true}]);
         ensure(Array.isArray(statuses?.value) && statuses.value.length === 1, 'INVALID_SIGNATURE_STATUS');
@@ -311,13 +333,17 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
           ensure(Object.hasOwn(status, 'err') && ['processed', 'confirmed', 'finalized'].includes(status.confirmationStatus), 'INVALID_SIGNATURE_STATUS');
           if (status.err !== null) { observe(event, 'failed'); fail('RETAINED_TRANSACTION_FAILED'); }
           signatureSlot = exactBufferU64(status.slot, 'STATUS_SLOT');
+          ensure(signatureSlot <= BigInt(Number.MAX_SAFE_INTEGER), 'UNSAFE_STATUS_SLOT');
           if (status.confirmationStatus === 'finalized' && signatureSlot > contextSlot) contextSlot = signatureSlot;
         }
-        payload = await snapshot();
+        const provisional = progress && options.confirmedProgress === true && event.kind === 'write'
+          && status?.confirmationStatus === 'confirmed';
+        if (provisional && signatureSlot! > confirmedSlot) confirmedSlot = signatureSlot!;
+        payload = await snapshot(provisional ? 'confirmed' : 'finalized');
         if (effect(event)) {
           // Only a status explicitly reporting finalized establishes transaction finality.
-          observe(event, status?.confirmationStatus === 'finalized' ? 'finalized' : 'effect-observed',
-            status?.confirmationStatus === 'finalized' ? signatureSlot : contextSlot);
+          observe(event, status?.confirmationStatus === 'finalized' ? 'finalized' : provisional ? 'confirmed' : 'effect-observed',
+            status?.confirmationStatus === 'finalized' || provisional ? signatureSlot : contextSlot);
           return true;
         }
         if (status?.confirmationStatus === 'finalized') fail('FINALIZED_EFFECT_MISMATCH');
@@ -328,20 +354,49 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
       }
       observe(event, 'unknown'); return false;
     };
+    // This exception is limited to deterministic writes of the SAME bytes into the SAME
+    // existing BUFFER. Never apply it to create, program upgrades, or financial actions.
+    const expiredWriteProof = async (event: SignedBufferEvent): Promise<SignedBufferEvent['recovery']> => {
+      ensure(options.retryExpiredWrites === true && event.kind === 'write' && !event.retryOf
+        && !state.signed.some(item => item.retryOf === event.id), 'EXPIRED_WRITE_RETRY_FORBIDDEN');
+      const height = exactBufferU64(await request('getBlockHeight', [{commitment: 'finalized'}]), 'BLOCK_HEIGHT');
+      ensure(height > BigInt(event.lastValidBlockHeight), 'RETRY_LIFETIME_NOT_EXPIRED');
+      const valid = await request<{context: {slot: unknown}; value: unknown}>('isBlockhashValid', [event.blockhash, {commitment: 'finalized'}]);
+      ensure(valid?.value === false, 'RETRY_BLOCKHASH_STILL_VALID');
+      const validitySlot = exactBufferU64(valid?.context?.slot, 'VALIDITY_SLOT');
+      ensure(validitySlot >= contextSlot && validitySlot <= BigInt(Number.MAX_SAFE_INTEGER), 'STALE_OR_UNSAFE_VALIDITY_SLOT');
+      if (validitySlot > contextSlot) contextSlot = validitySlot;
+      const status = await request<{value: unknown[]}>('getSignatureStatuses', [[event.signature], {searchTransactionHistory: true}]);
+      ensure(Array.isArray(status?.value) && status.value.length === 1 && status.value[0] === null, 'RETRY_SIGNATURE_NOT_ABSENT');
+      ensure(await request('getTransaction', [event.signature, {commitment: 'finalized', encoding: 'json', maxSupportedTransactionVersion: 1}]) === null,
+        'RETRY_TRANSACTION_NOT_ABSENT');
+      payload = await snapshot();
+      ensure(payload !== null && !effect(event), 'RETRY_EFFECT_NOT_ABSENT');
+      return {expiredAtHeight: height.toString(), checkedAtSlot: contextSlot.toString()};
+    };
+    const retries = new Map<number, SignedBufferEvent>();
     // Resolve every retained uncertain signature before considering any new signature.
     for (const event of state.signed) {
       const last = state.observations.filter(observation => observation.eventId === event.id).at(-1);
       ensure(last?.status !== 'failed', 'RETAINED_TRANSACTION_FAILED');
+      if (state.signed.some(item => item.retryOf === event.id)) continue;
       if (last?.status === 'finalized' || last?.status === 'effect-observed') {
         ensure(effect(event), 'RETAINED_EFFECT_MISMATCH');
-      } else if (!await recover(event, 1)) return result('stopped', 'RETAINED_SIGNATURE_UNRESOLVED');
+      } else if (!await recover(event, 1)) {
+        if (!options.retryExpiredWrites || event.kind !== 'write' || event.retryOf) return result('stopped', 'RETAINED_SIGNATURE_UNRESOLVED');
+        await expiredWriteProof(event);
+        retries.set(event.offset, event);
+      }
     }
     let sent = 0, lastStart = 0;
     const submit = async (kind: SignedBufferEvent['kind'], offset: number, rent: bigint): Promise<boolean> => {
       ensure(sent < maxTransactions, 'TRANSACTION_RUN_LIMIT');
       await delay(Math.max(0, pace - (Date.now() - lastStart)), runSignal);
+      const original = kind === 'write' ? retries.get(offset) : undefined;
+      const recovery = original ? await expiredWriteProof(original) : undefined;
       const latest = await request<{value: {blockhash: string; lastValidBlockHeight: unknown}}>('getLatestBlockhash', [{commitment: 'finalized'}]);
       const height = exactBufferU64(latest?.value?.lastValidBlockHeight, 'LAST_VALID_HEIGHT');
+      if (original) ensure(latest.value.blockhash !== original.blockhash && height > BigInt(recovery!.expiredAtHeight), 'RETRY_LIFETIME_NOT_FRESH');
       const draft = message(intent, image, kind, offset, authoritySigner,
         bufferSigner ?? createNoopSigner(address(intent.bufferAddress)), rent, latest.value.blockhash, height);
       const unsigned = compileTransaction(draft), unsignedWire = getTransactionEncoder().encode(unsigned);
@@ -361,7 +416,8 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
       const wire = getTransactionEncoder().encode(signed); ensure(wire.length <= 1232, 'WIRE_TOO_LARGE');
       for (const [signer, signature] of Object.entries(signed.signatures))
         ensure(signature && await verifySignature(await getPublicKeyFromAddress(address(signer)), signature, signed.messageBytes), 'INVALID_NEW_SIGNATURE');
-      const event: SignedBufferEvent = {id: kind === 'create' ? 'create' : `write:${offset}`, intentId: intent.id, kind, offset,
+      const event: SignedBufferEvent = {id: kind === 'create' ? 'create' : `write:${offset}${original ? ':retry1' : ''}`, intentId: intent.id, kind, offset,
+        ...(original ? {retryOf: original.id, recovery} : {}),
         length: kind === 'create' ? 0 : Math.min(BUFFER_CHUNK_BYTES, image.length - offset), imageSha256: intent.imageSha256,
         signature: String(getSignatureFromTransaction(signed)), wireBase64: Buffer.from(wire).toString('base64'),
         blockhash: latest.value.blockhash, lastValidBlockHeight: height.toString(), feeLamports: fee.toString(), rentLamports: rent.toString()};
@@ -369,7 +425,7 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
       // Durable signed-wire barrier precedes the very first send, even if that send never returns.
       synchronous(journal.appendSigned(structuredClone(event)));
       const durable = load();
-      ensure(durable && JSON.stringify(durable.intent) === JSON.stringify(intent)
+      ensure(durable && sameIntent(durable.intent, intent)
         && JSON.stringify(durable.signed) === JSON.stringify([...state.signed, event]), 'JOURNAL_SIGNED_BARRIER');
       state.signed.push(event); fees += fee; rentReserved += rent; sent++;
       options.onProgress?.({kind: 'signed', offset, signature: event.signature});
@@ -379,7 +435,7 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
           {encoding: 'base64', skipPreflight: false, preflightCommitment: 'finalized', maxRetries: 0}]) === event.signature, 'SEND_SIGNATURE_MISMATCH');
         observe(event, 'submitted');
       } catch (error) { observe(event, 'unknown'); fail(errorCode(error) === 'RPC_RATE_LIMITED' ? 'RPC_RATE_LIMITED' : errorCode(error) === 'RPC_FORBIDDEN' ? 'RPC_FORBIDDEN' : 'SEND_OUTCOME_UNKNOWN'); }
-      return await recover(event, maxPolls);
+      return await recover(event, maxPolls, true);
     };
     if (!payload) {
       ensure(!state.signed.length, 'BUFFER_MISSING_WITH_RETAINED_SIGNATURE');
@@ -393,12 +449,22 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
       if (payload && same(payload.subarray(offset, offset + length), image.subarray(offset, offset + length))) {
         completedChunks++; options.onProgress?.({kind: 'skipped', offset}); continue;
       }
-      ensure(!state.signed.some(event => event.id === `write:${offset}`), 'REPLACEMENT_SIGNATURE_FORBIDDEN');
+      ensure(!state.signed.some(event => event.id === `write:${offset}`) || retries.has(offset), 'REPLACEMENT_SIGNATURE_FORBIDDEN');
       if (!await submit('write', offset, 0n)) return result('stopped', 'WRITE_SIGNATURE_UNRESOLVED');
       completedChunks++;
     }
-    payload = await snapshot();
+    for (let poll = 0; ; poll++) {
+      payload = await snapshot();
+      if (payload && same(payload, image)) break;
+      if (!options.confirmedProgress || poll + 1 >= maxPolls) break;
+      await delay(pollInterval, runSignal);
+    }
     ensure(payload && same(payload, image) && bufferImageHash(payload) === intent.imageSha256, 'FINAL_BUFFER_HASH_MISMATCH');
+    // Full finalized byte identity resolves provisional effects, not transaction history.
+    for (const event of state.signed) {
+      const last = state.observations.filter(item => item.eventId === event.id).at(-1);
+      if (last?.status === 'confirmed') observe(event, 'effect-observed', contextSlot);
+    }
     return result('bufferReady');
   } catch (error) { return result('stopped', errorCode(error)); }
 }

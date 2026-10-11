@@ -105,7 +105,13 @@ pub fn fund_vault(ctx: Context<FundVaultV2>, amount: u64) -> Result<()> {
 pub fn seal_issue(ctx: Context<SealIssueV2>) -> Result<()> {
     let b = &mut ctx.accounts.bond;
     require!(b.state == DRAFT, BondError::InvalidPhase);
-    b.require_registry_window(Clock::get()?.unix_timestamp)?;
+    require!(b.schedule_appended == b.coupon_count, BondError::ScheduleIncomplete);
+    require!(b.active_kind == 0, BondError::SnapshotLocked);
+    // Draft issuance and registration still require now < first_record_ts.
+    // Their frozen quantities cannot change across a missed activation date.
+    // Late activation checks the spendable reserve NOW, not historical funding.
+    require!(ctx.accounts.issuer.key() == b.issuer || Clock::get()?.unix_timestamp >= b.first_record_ts,
+        BondError::UnauthorizedIssuer);
     require!(b.total_issued > 0 && b.holder_count > 0, BondError::InvalidTerms);
     require!(ctx.accounts.bond_mint.supply == b.total_issued, BondError::SupplyMismatch);
     require!(ctx.accounts.vault.state == token::spl_token::state::AccountState::Initialized, BondError::InvalidTerms);

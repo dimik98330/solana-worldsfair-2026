@@ -8,7 +8,7 @@ import {
   BUFFER_HEADER_BYTES, BUFFER_LOADER, DEVNET_GENESIS, bufferImageHash, bufferWriteInstruction,
   exactBufferU64, runBufferStage, validateBufferAccount, validateBufferEndpoint,
   type BufferIntent, type BufferJournal, type BufferJournalState, type BufferLimits,
-  type BufferObservation, type BufferRpc, type SignedBufferEvent,
+  type BufferObservation, type BufferRpc, type SignedBufferEvent, type BufferStageOptions,
 } from '../scripts/program-buffer.ts';
 
 // Synthetic RPC/account fixtures. Signatures and wire codecs are actual pinned Kit Ed25519.
@@ -54,11 +54,13 @@ async function fixture(size = 1805, existing = true) {
       case 'getGenesisHash': value = intent.expectedGenesis; break;
       case 'getAccountInfo': {
         const config = params[1] as {commitment: string; minContextSlot?: unknown};
-        assert.equal(config.commitment, 'finalized');
+        assert.ok(['finalized', 'confirmed'].includes(config.commitment));
         if (config.minContextSlot !== undefined) assert.equal(typeof config.minContextSlot, 'number', 'RPC context slot must be a JSON number');
         value = {context: {slot: 55n}, value: account()}; break;
       }
-      case 'getLatestBlockhash': value = {value: {blockhash: '11111111111111111111111111111111', lastValidBlockHeight: 100n}}; break;
+      case 'getLatestBlockhash': value = {value: {blockhash: (await generateKeyPairSigner()).address, lastValidBlockHeight: height + 90n}}; break;
+      case 'isBlockhashValid': value = {context: {slot: 55n}, value: false}; break;
+      case 'getTransaction': value = null; break;
       case 'getMinimumBalanceForRentExemption': value = rent; break;
       case 'getBalance': value = {value: 5_000_000_000n}; break;
       case 'getFeeForMessage': assert.ok(signatures === sends.length, 'live fee quote precedes new signature'); value = {value: fee}; break;
@@ -113,7 +115,7 @@ async function fixture(size = 1805, existing = true) {
   }};
   const limits: BufferLimits = {maxTotalFeeLamports: 100_000n, maxTransactionFeeLamports: 10_000n, maxRentLamports: 200_000n,
     paceMs: 0, pollIntervalMs: 0, maxPolls: 1, rpcTimeoutMs: 500};
-  const run = () => runBufferStage({image, intent, authoritySigner: signingAuthority, bufferSigner, rpc, journal, limits});
+  const run = (options: Pick<BufferStageOptions, 'retryExpiredWrites' | 'confirmedProgress'> = {}) => runBufferStage({image, intent, authoritySigner: signingAuthority, bufferSigner, rpc, journal, limits, ...options});
   return {image, intent, authority, signingAuthority, bufferSigner, rpc, journal, limits, calls, sends, run,
     get state() { return state!; }, get signatureCount() { return signatures; }, get rpcCount() { return count; },
     set sendMode(value: typeof sendMode) { sendMode = value; }, set historyMissing(value: boolean) { historyMissing = value; },
@@ -285,4 +287,152 @@ test('finalized transaction slot is retained independently from the later accoun
   const result = await h.run(); assert.equal(result.status, 'bufferReady', result.reason);
   assert.equal(result.finalizedBufferSlot, '55');
   assert.equal(result.observations.find(value => value.status === 'finalized')!.slot, '50');
+});
+
+test('persisted intent key ordering does not change identity at initialization or same-buffer resume', async () => {
+  const h = await fixture(5), load = h.journal.load.bind(h.journal);
+  h.journal.load = () => {
+    const state = load();
+    return state ? {...state, intent: Object.fromEntries(Object.entries(state.intent).reverse()) as unknown as BufferIntent} : null;
+  };
+  const first = await h.run();
+  assert.equal(first.status, 'bufferReady', first.reason);
+  const signed = h.signatureCount;
+  const resumed = await h.run();
+  assert.equal(resumed.status, 'bufferReady', resumed.reason);
+  assert.equal(h.signatureCount, signed, 'Same persisted intent never creates replacement signatures');
+});
+
+test('a changed intent value remains a conflict even when persisted fields are reordered', async () => {
+  const h = await fixture(5), load = h.journal.load.bind(h.journal);
+  h.journal.load = () => {
+    const state = load();
+    return state ? {...state, intent: {...Object.fromEntries(Object.entries(state.intent).reverse()), imageSha256:'b'.repeat(64)} as BufferIntent} : null;
+  };
+  const result = await h.run();
+  assert.equal(result.status, 'stopped');
+  assert.equal(h.signatureCount, 0);
+  assert.equal(h.sends.length, 0);
+});
+
+test('explicit expired write retry appends one linked wire, preserves original and counts both fees on resume', async () => {
+  const h = await fixture(900); h.sendMode = 'unknown-no-effect';
+  assert.equal((await h.run()).reason, 'SEND_OUTCOME_UNKNOWN');
+  const original = structuredClone(h.state.signed[0]); h.height = 101n;
+  const result = await h.run({retryExpiredWrites: true});
+  assert.equal(result.status, 'bufferReady', result.reason);
+  assert.equal(result.feesReservedLamports, '10000');
+  assert.deepEqual(h.state.signed[0], original);
+  const retry = h.state.signed[1];
+  assert.equal(retry.id, 'write:0:retry1'); assert.equal(retry.retryOf, original.id);
+  assert.notEqual(retry.signature, original.signature); assert.notEqual(retry.blockhash, original.blockhash);
+  assert.deepEqual(retry.recovery, {expiredAtHeight: '101', checkedAtSlot: '55'});
+  assert.equal((await h.run()).status, 'bufferReady'); assert.equal(h.signatureCount, 2);
+});
+
+test('retry requires actual expiry and null history, invalid blockhash, correct finalized buffer and a fresh lifetime', async () => {
+  for (const failure of ['expiry', 'valid', 'status', 'transaction', 'authority', 'fresh', '429']) {
+    const h = await fixture(900); h.sendMode = 'unknown-no-effect'; await h.run();
+    const original = structuredClone(h.state.signed[0]); h.height = failure === 'expiry' ? 100n : 101n;
+    const request = h.rpc.request.bind(h.rpc);
+    h.rpc.request = async <T>(method: string, params: readonly unknown[], signal: AbortSignal) => {
+      if (failure === 'valid' && method === 'isBlockhashValid') return {context: {slot: 55n}, value: true} as T;
+      if (failure === 'status' && method === 'getSignatureStatuses') return {value: [{err: null, slot: 55n, confirmationStatus: 'confirmed'}]} as T;
+      if (failure === 'transaction' && method === 'getTransaction') return {slot: 55n, meta: {err: null}} as T;
+      if (failure === 'fresh' && method === 'getLatestBlockhash') return {value: {blockhash: original.blockhash, lastValidBlockHeight: 100n}} as T;
+      if (failure === '429' && method === 'getTransaction') throw Object.assign(new Error('limited'), {status: 429});
+      const result = await request<T>(method, params, signal);
+      if (failure === 'authority' && method === 'getAccountInfo') (result as {value: {owner: string}}).value.owner = h.authority.address;
+      return result;
+    };
+    const result = await h.run({retryExpiredWrites: true});
+    assert.equal(result.status, 'stopped', failure); assert.equal(h.signatureCount, 1, failure);
+    assert.deepEqual(h.state.signed[0], original); assert.equal(h.sends.length, 1);
+  }
+});
+
+test('a lost retry never gets a third signature and create never uses the write exception', async () => {
+  const h = await fixture(900); h.sendMode = 'unknown-no-effect'; await h.run(); h.height = 101n;
+  h.sendMode = 'unknown-no-effect'; assert.equal((await h.run({retryExpiredWrites: true})).reason, 'SEND_OUTCOME_UNKNOWN');
+  h.height = 300n;
+  assert.equal((await h.run({retryExpiredWrites: true})).reason, 'RETAINED_SIGNATURE_UNRESOLVED');
+  assert.equal(h.signatureCount, 2); assert.equal(h.state.signed.length, 2);
+  const create = await fixture(900, false); create.sendMode = 'unknown-no-effect'; await create.run(); create.height = 101n;
+  assert.equal((await create.run({retryExpiredWrites: true})).reason, 'RETAINED_SIGNATURE_UNRESOLVED');
+  assert.equal(create.signatureCount, 1);
+});
+
+test('retry cannot evade cumulative cap or durable barrier', async () => {
+  for (const failure of ['budget', 'barrier']) {
+    const h = await fixture(900); h.sendMode = 'unknown-no-effect'; await h.run(); h.height = 101n;
+    if (failure === 'budget') h.limits.maxTotalFeeLamports = 5000n; else h.failBarrier = true;
+    const result = await h.run({retryExpiredWrites: true});
+    assert.equal(result.status, 'stopped'); assert.equal(h.sends.length, 1);
+    assert.equal(h.state.signed.length, 1);
+  }
+});
+
+test('tampered retry links or expiry proof refuse before network sends', async () => {
+  for (const failure of ['link', 'expiry', 'range']) {
+    const h = await fixture(900); h.sendMode = 'unknown-no-effect'; await h.run(); h.height = 101n;
+    assert.equal((await h.run({retryExpiredWrites: true})).status, 'bufferReady');
+    const retry = h.state.signed[1];
+    if (failure === 'link') retry.retryOf = 'create';
+    if (failure === 'expiry') retry.recovery!.expiredAtHeight = '100';
+    if (failure === 'range') retry.offset = 1;
+    assert.equal((await h.run({retryExpiredWrites: true})).status, 'stopped'); assert.equal(h.signatureCount, 2);
+  }
+});
+
+test('confirmed progress records no premature finality and READY waits for full finalized byte identity', async () => {
+  const h = await fixture(1805); let finalizedReady = false, finalPolls = 0;
+  const request = h.rpc.request.bind(h.rpc);
+  h.rpc.request = async <T>(method: string, params: readonly unknown[], signal: AbortSignal) => {
+    const result = await request<T>(method, params, signal);
+    if (method === 'getSignatureStatuses') {
+      const status = (result as {value: {confirmationStatus: string}[]}).value[0];
+      if (status) status.confirmationStatus = 'confirmed';
+    }
+    if (method === 'getAccountInfo') {
+      const commitment = (params[1] as {commitment: string}).commitment;
+      if (commitment === 'confirmed') (result as {context: {slot: bigint}}).context.slot = 100n;
+      if (commitment === 'finalized' && h.sends.length > 0 && !finalizedReady) {
+        if (h.sends.length === 3 && ++finalPolls >= 2) finalizedReady = true;
+        else {
+          const response = result as {value: {data: [string, string]}};
+          const bytes = Buffer.from(response.value.data[0], 'base64'); bytes.fill(0, BUFFER_HEADER_BYTES);
+          response.value.data[0] = bytes.toString('base64');
+        }
+      }
+    }
+    return result;
+  };
+  h.limits.maxPolls = 3;
+  const result = await h.run({confirmedProgress: true});
+  assert.equal(result.status, 'bufferReady', result.reason); assert.equal(finalPolls, 2);
+  assert.equal(result.finalizedBufferSlot, '55', 'confirmed context100 must not become finalized55');
+  assert.equal(result.observations.filter(o => o.status === 'confirmed').length, 3);
+  assert.equal(result.observations.filter(o => o.status === 'effect-observed').length, 3);
+  assert.equal(result.observations.filter(o => o.status === 'finalized').length, 0);
+});
+
+test('confirmed progress cannot return READY or send more after an absent finalized effect on resume', async () => {
+  const h = await fixture(1805); const request = h.rpc.request.bind(h.rpc);
+  h.rpc.request = async <T>(method: string, params: readonly unknown[], signal: AbortSignal) => {
+    const result = await request<T>(method, params, signal);
+    if (method === 'getSignatureStatuses') {
+      const status = (result as {value: {confirmationStatus: string}[]}).value[0];
+      if (status) status.confirmationStatus = 'confirmed';
+    }
+    if (method === 'getAccountInfo' && (params[1] as {commitment: string}).commitment === 'finalized') {
+      const response = result as {value: {data: [string, string]}};
+      const bytes = Buffer.from(response.value.data[0], 'base64'); bytes.fill(0, BUFFER_HEADER_BYTES);
+      response.value.data[0] = bytes.toString('base64');
+    }
+    return result;
+  };
+  assert.equal((await h.run({confirmedProgress: true})).reason, 'FINAL_BUFFER_HASH_MISMATCH');
+  assert.equal(h.signatureCount, 3);
+  assert.equal((await h.run({confirmedProgress: true})).reason, 'RETAINED_SIGNATURE_UNRESOLVED');
+  assert.equal(h.signatureCount, 3);
 });

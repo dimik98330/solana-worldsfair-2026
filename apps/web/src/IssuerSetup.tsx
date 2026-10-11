@@ -1,5 +1,6 @@
+import { translate } from './i18n';
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
-import { AlertCircle, ArrowLeft, ArrowRight, Banknote, CalendarDays, ChevronDown, Clock3, FilePlus2, LockKeyhole, Plus, ShieldCheck, Trash2, UsersRound, WalletCards } from 'lucide-react';
+import { AlertCircle, ArrowLeft, ArrowRight, Banknote, CalendarDays, ChevronDown, Clock3, FilePlus2, Landmark, LockKeyhole, Plus, ReceiptText, ShieldCheck, Trash2, UsersRound, WalletCards } from 'lucide-react';
 import { Address, Badge, Button, Money, Panel } from './components';
 import { DateTimeField } from './DateTimeField';
 import { date, integer, units } from './format';
@@ -9,6 +10,7 @@ import { dateParts, timeZoneLabel } from './time-zone';
 import { addressError, fillAnnualCoupons, issuanceError, issueCreationRequest, issueReserve, localDateInput, MAX_COUPONS, MAX_PAGED_CREATION_COUPONS, MAX_HOLDERS, newIssueDraft, parseBondCount, parseSettlementAmount, utf8Error, validateIssueDraft, type CouponDraft, type IssueDraft } from './issuer-validation';
 import type { ChainState } from './types';
 import './issuer.css';
+import './issuer-premium.css';
 
 export interface IssuerIntent {
   action: 'initialize_issue' | 'initialize_issue_v2' | 'register_holder' | 'issue_units' | 'seal_issue' | 'fund_vault';
@@ -24,10 +26,10 @@ export interface IssuerSetupProps {
   busy: boolean;
   onAction: (request: IssuerIntent) => void;
   onChooseIssue?: (bond: string) => void;
-  language?: 'ru' | 'en';
+  language?: 'ru' | 'en' | 'kk';
   startNew?: boolean;
   onCreationChange?: (creating: boolean) => void;
-  onViewPayments?: () => void;
+  onViewPayments?: (selection?: { kind: 'coupon' | 'principal'; couponId?: string }) => void;
   onViewReceipts?: () => void;
 }
 
@@ -51,7 +53,7 @@ function ChecklistRow({ index, complete, label, detail }: { index: number; compl
 }
 
 export function IssuerSetup({ state, walletAddress, canAct, busy, onAction, language = 'en', startNew = false, onCreationChange, onViewPayments, onViewReceipts }: IssuerSetupProps) {
-  const tr = (en: string, ru: string) => language === 'ru' ? ru : en;
+  const tr = (en: string, ru: string) => translate(language, en, ru);
   const instrument = state.instrument;
   const id = useId();
   const [holderWallet, setHolderWallet] = useState('');
@@ -62,6 +64,7 @@ export function IssuerSetup({ state, walletAddress, canAct, busy, onAction, lang
   const [issuanceTried, setIssuanceTried] = useState(false);
   const [countTouched, setCountTouched] = useState(false);
   const [internalNewOpen, setInternalNewOpen] = useState(startNew || !instrument);
+  const [deskView, setDeskView] = useState<'payments' | 'terms'>('payments');
   const newOpen = onCreationChange ? startNew || !instrument : internalNewOpen;
   function setNewOpen(open: boolean) { setInternalNewOpen(open); onCreationChange?.(open); }
   const { timeZone } = useDisplayPreferences();
@@ -139,33 +142,42 @@ export function IssuerSetup({ state, walletAddress, canAct, busy, onAction, lang
     { label: tr('Activate', 'Активация'), detail: draft ? tr('Close placement', 'Завершите размещение') : tr('Issue activated', 'Выпуск активирован'), complete: !draft },
   ];
   const currentPhase = phases.findIndex(phase => !phase.complete);
+  const lifecycle = instrument ? [
+    { label: tr('Terms', 'Условия'), done: true },
+    { label: tr('Placement', 'Размещение'), done: !draft || (state.holders.length > 0 && supplyPositive) },
+    { label: tr('Reserve', 'Резерв'), done: !draft || reserveReady },
+    { label: tr('Active', 'Активен'), done: instrument.status !== 'draft' },
+    { label: tr('Redeemed', 'Погашен'), done: instrument.status === 'redeemed' },
+  ] : [];
+  const currentStage = lifecycle.findIndex(stage => !stage.done);
   const outstandingCoupons = state.coupons.filter(coupon => coupon.snapshotAddress && coupon.entitlements.some(entitlement => !entitlement.claimed));
-  const recordedCoupons = state.coupons.filter(coupon => coupon.snapshotAddress);
   const paidCouponAmounts = state.coupons.map(coupon => integer(coupon.paidMinor));
   const couponsPaidMinor = paidCouponAmounts.some(value => value == null) ? undefined : paidCouponAmounts.reduce<bigint>((sum, value) => sum + value!, 0n).toString();
   const issuerStateDescription = draft ? tr('Manage placement and payment reserve.', 'Управляйте размещением и резервом выплат.')
     : instrument?.status === 'active' ? tr('Placement is closed. Service the payment schedule.', 'Размещение закрыто. Выполняйте расписание выплат.')
     : instrument?.status === 'redeeming' ? tr('Principal repayment is available to recorded holders.', 'Держателям зафиксированных прав доступно погашение.')
     : outstandingCoupons.length ? tr('Principal is repaid. Recorded coupon rights remain.', 'Номинал погашен. Сохранены невыплаченные купонные права.')
-    : tr('Principal and all recorded coupons are paid.', 'Номинал и все зафиксированные купоны выплачены.');
+    : tr('Issue repaid', 'Выпуск погашен');
   const firstRecordDate = instrument ? dateParts(instrument.recordAt, timeZone, language) : null;
 
   return <div className="issuer-desk">
-    <div className="page-heading">
-      <div><h1>{newOpen ? tr('New issue', 'Новый выпуск') : tr('Issuer desk', 'Кабинет эмитента')}</h1>{!newOpen && <p>{issuerStateDescription}</p>}</div>
+    <div className="issuer-command-row">
+      {newOpen ? <h1>{tr('New issue', 'Новый выпуск')}</h1> : <h1 className="sr-only">{tr('Issuer desk', 'Кабинет эмитента')}</h1>}
       {instrument && (newOpen ? <Button disabled={busy} onClick={() => setNewOpen(false)}><ArrowLeft size={16} aria-hidden="true" />{tr('Back to current issue', 'К текущему выпуску')}</Button> : <Button onClick={() => { setNewOpen(true); window.requestAnimationFrame(() => document.getElementById(`${id}-create-form`)?.querySelector<HTMLInputElement>('input')?.focus()); }}><Plus size={16} aria-hidden="true" />{tr('New issue', 'Новый выпуск')}</Button>)}
     </div>
-    <div className="issuer-management" hidden={newOpen}>
-    {instrument && <section className="issuer-current" aria-label={tr('Selected issue', 'Выбранный выпуск')}>
-      <div className="issuer-current-title"><div><h2>{instrument.name}</h2>{draft && <p>{tr('Complete placement before the first record date.', 'Завершите размещение до первого среза держателей.')}</p>}</div><Badge tone={draft ? 'warning' : instrument.status === 'active' ? 'blue' : 'success'}>{draft ? tr('Draft', 'Черновик') : instrument.status === 'active' ? tr('Active', 'Активен') : instrument.status === 'redeeming' ? tr('Redemption open', 'Погашение открыто') : tr('Redeemed', 'Погашен')}</Badge></div>
+    <div className={`issuer-management${!draft ? ' issuer-management-servicing' : ''}`} hidden={newOpen}>
+    {!draft && instrument && <div className="issuer-view-switch" role="group" aria-label={tr('Issuer view', 'Раздел выпуска')}><button type="button" aria-pressed={deskView === 'payments'} onClick={() => setDeskView('payments')}>{tr('Payments', 'Выплаты')}</button><button type="button" aria-pressed={deskView === 'terms'} onClick={() => setDeskView('terms')}>{tr('Issue terms', 'Условия выпуска')}</button></div>}
+    {instrument && <section className="issuer-current" hidden={!draft && deskView !== 'terms'} aria-label={tr('Selected issue', 'Выбранный выпуск')}>
+      <div className="issuer-current-title"><span className="issuer-identity-icon"><Landmark size={22} aria-hidden="true" /></span><div><h2>{draft ? instrument.name : tr('Issue terms', 'Условия выпуска')}</h2>{draft && <p>{tr('Complete placement before the first record date.', 'Завершите размещение до первого среза держателей.')}</p>}</div>{draft && <Badge tone="warning">{tr('Draft', 'Черновик')}</Badge>}</div>
       <dl className="issuer-current-facts">
         <div><dt>{tr('Issue address', 'Адрес выпуска')}</dt><dd><Address value={instrument.address} /></dd></div>
         <div><dt>{tr('Issuer authority', 'Кошелёк эмитента')}</dt><dd><Address value={instrument.issuer} /></dd></div>
         <div><dt>{tr('Bonds placed', 'Облигаций размещено')}</dt><dd className="number">{units(instrument.issuedSupply)}</dd></div>
         <div><dt>{tr('First record date', 'Первый срез держателей')}</dt><dd className="issuer-date"><span>{firstRecordDate?.date}</span><span>{firstRecordDate?.time}</span></dd></div>
+        {!draft && <><div><dt>{tr('Principal per bond', 'Номинал на облигацию')}</dt><dd><Money value={instrument.faceValueMinor} /></dd></div><div><dt>{tr('Bonds redeemed', 'Облигаций погашено')}</dt><dd className="number">{units(instrument.redeemedSupply)}</dd></div></>}
       </dl>
       <p className="issuer-date-zone">{tr('Times in', 'Время в поясе')} {timeZoneLabel(timeZone, language)}</p>
-      {draft && <ol className="issuer-phase-rail" aria-label={tr('Issue setup progress', 'Готовность выпуска')}>{phases.map((phase, index) => <li className={`${phase.complete ? 'complete' : ''} ${index === currentPhase ? 'current' : ''}`} key={phase.label} aria-current={index === currentPhase ? 'step' : undefined}><span className="issuer-phase-marker">{index + 1}</span><div><strong>{phase.label}</strong><span>{phase.detail}</span></div></li>)}</ol>}
+      {draft ? <ol className="issuer-phase-rail" aria-label={tr('Issue setup progress', 'Готовность выпуска')}>{phases.map((phase, index) => <li className={`${phase.complete ? 'complete' : ''} ${index === currentPhase ? 'current' : ''}`} key={phase.label} aria-current={index === currentPhase ? 'step' : undefined}><span className="issuer-phase-marker">{index + 1}</span><div><strong>{phase.label}</strong><span>{phase.detail}</span></div></li>)}</ol> : <ol className="issuer-lifecycle" aria-label={tr('Issue lifecycle', 'Жизненный цикл выпуска')}>{lifecycle.map((stage, index) => <li key={stage.label} className={`${stage.done ? 'complete' : ''} ${index === currentStage ? 'current' : ''}`} aria-current={index === currentStage ? 'step' : undefined}><span className="issuer-stage-dot" aria-hidden="true">{index + 1}</span><span>{stage.label}</span></li>)}</ol>}
     </section>}
     {draft && instrument ? <>
       {connectedHint && <Notice warning><p>{connectedHint}</p></Notice>}
@@ -185,7 +197,7 @@ export function IssuerSetup({ state, walletAddress, canAct, busy, onAction, lang
                     <TextField id={`${id}-holder-wallet`} label={tr('Solana wallet', 'Кошелёк Solana')} value={holderWallet} onChange={event => { setHolderWallet(event.target.value); setRegistrationTouched(previous => ({ ...previous, wallet: false })); }} onBlur={() => setRegistrationTouched(previous => ({ ...previous, wallet: true }))} error={registrationTouched.wallet ? localizedIssuerError(walletProblem, language) : undefined} hint={tr('Paste the complete wallet address.', 'Вставьте полный адрес кошелька.')} autoCapitalize="none" />
                     <TextField id={`${id}-holder-label`} label={tr('Holder label', 'Имя держателя')} value={holderLabel} onChange={event => { setHolderLabel(event.target.value); setRegistrationTouched(previous => ({ ...previous, label: false })); }} onBlur={() => setRegistrationTouched(previous => ({ ...previous, label: true }))} error={registrationTouched.label ? localizedIssuerError(labelProblem, language) : undefined} hint={tr('Internal label; it does not verify identity.', 'Внутреннее имя. Оно не подтверждает личность.')} />
                   </fieldset>
-                  <div className="issuer-form-action"><Button type="submit" disabled={!canAdmin || registeredFull} busy={busy}>{tr('Review registration', 'Проверить регистрацию')}<ArrowRight size={16} aria-hidden="true" /></Button>{registrationHint && <p className="issuer-action-reason">{registrationHint}</p>}</div>
+                  <div className="issuer-form-action"><Button type="submit" disabled={!canAdmin || registeredFull} busy={busy}>{tr('Register holder', 'Зарегистрировать')}<ArrowRight size={16} aria-hidden="true" /></Button>{registrationHint && <p className="issuer-action-reason">{registrationHint}</p>}</div>
                 </form>
               </div>
               <form ref={issuanceForm} className="issuer-form issuer-issue-form" noValidate onSubmit={issue}>
@@ -193,7 +205,7 @@ export function IssuerSetup({ state, walletAddress, canAct, busy, onAction, lang
                   <div className="issuer-field"><label htmlFor={`${id}-target`}>{tr('Registered holder', 'Зарегистрированный держатель')}<span className="issuer-required" aria-hidden="true">*</span></label><select id={`${id}-target`} required value={selectedHolder} disabled={!state.holders.length || busy} onChange={event => setSelectedHolder(event.target.value)} aria-invalid={issuanceTried && Boolean(holderProblem) || undefined} aria-describedby={issuanceTried && holderProblem ? `${id}-target-error` : undefined}><option value="">{tr('Choose a holder', 'Выберите держателя')}</option>{state.holders.map(holder => <option value={holder.wallet} key={holder.wallet}>{holder.label} · {holder.wallet}</option>)}</select>{issuanceTried && holderProblem && <p id={`${id}-target-error`} className="issuer-field-error">{localizedIssuerError(holderProblem, language)}</p>}</div>
                   <TextField id={`${id}-bond-count`} label={tr('Number of bonds', 'Количество облигаций')} inputMode="numeric" value={bondCount} onChange={event => { setBondCount(event.target.value); setCountTouched(false); }} onBlur={() => setCountTouched(true)} error={countTouched ? localizedIssuerError(countProblem, language) : undefined} hint={tr('Whole bonds only. Placement increases the required reserve.', 'Только целые облигации. Размещение увеличивает необходимый резерв.')} />
                 </fieldset>
-                <Button type="submit" variant="primary" disabled={!canAdmin || !state.holders.length} busy={busy}>{tr('Review placement', 'Проверить размещение')}<ArrowRight size={16} aria-hidden="true" /></Button>
+                <Button type="submit" variant="primary" disabled={!canAdmin || !state.holders.length} busy={busy}>{tr('Place bonds', 'Разместить')}<ArrowRight size={16} aria-hidden="true" /></Button>
                 {placementHint && <p className="issuer-action-reason">{placementHint}</p>}
               </form>
             </div>
@@ -212,7 +224,7 @@ export function IssuerSetup({ state, walletAddress, canAct, busy, onAction, lang
               {reserve.error && <p className="issuer-field-error" role="alert">{localizedIssuerError(reserve.error, language)}</p>}
               {remainingBalance != null && <p className="issuer-balance-hint">{tr('Available to issuer:', 'Доступно эмитенту:')} <Money value={remainingBalance} /></p>}
               {!funderEnough && <p className="issuer-field-error">{tr('The issuer’s settlement account cannot cover the gap.', 'На расчётном счёте эмитента не хватает средств.')}</p>}
-              <Button disabled={!canAdmin || !supplyPositive || !reserve.gapMinor || reserve.gapMinor === '0' || Boolean(reserve.error) || !funderEnough} busy={busy} onClick={() => { if (!canAdmin || !reserve.gapMinor || reserve.gapMinor === '0') return; onAction({ action: 'fund_vault', params: { amountMinor: reserve.gapMinor }, title: 'Fund required reserve', explanation: 'Transfer exactly the current funding gap from the issuer’s settlement account to this issue’s vault. There is no issuer withdrawal instruction. The transaction is simulated before signing.', amountMinor: reserve.gapMinor }); }}><Banknote size={16} aria-hidden="true" />{tr('Review funding', 'Проверить пополнение')}</Button>
+              <Button disabled={!canAdmin || !supplyPositive || !reserve.gapMinor || reserve.gapMinor === '0' || Boolean(reserve.error) || !funderEnough} busy={busy} onClick={() => { if (!canAdmin || !reserve.gapMinor || reserve.gapMinor === '0') return; onAction({ action: 'fund_vault', params: { amountMinor: reserve.gapMinor }, title: 'Fund required reserve', explanation: 'Transfer exactly the current funding gap from the issuer’s settlement account to this issue’s vault. There is no issuer withdrawal instruction. The transaction is simulated before signing.', amountMinor: reserve.gapMinor }); }}><Banknote size={16} aria-hidden="true" />{tr('Fund reserve', 'Пополнить резерв')}</Button>
               {fundingHint && <p className="issuer-action-reason">{fundingHint}</p>}
               <p className="issuer-field-hint">{tr('Transfers only the gap. More bonds require a larger reserve.', 'Переводится только недостающая сумма. Дополнительные облигации увеличивают резерв.')}</p>
             </div>
@@ -227,22 +239,32 @@ export function IssuerSetup({ state, walletAddress, canAct, busy, onAction, lang
                 <ChecklistRow index={5} complete={beforeCutoff} label={tr('Before first record date', 'До первого среза')} detail={date(instrument.recordAt, true, language)} />
               </ul>
               <div className="issuer-seal-warning"><LockKeyhole size={16} aria-hidden="true" /><p>{pagedIssue ? tr('Activation permanently closes placement. Zero-balance receivers can be registered later when transfers are available.', 'Активация навсегда завершает размещение. Получателей с нулевым балансом можно регистрировать позже, когда разрешены переводы.') : tr('Activation permanently closes registration and placement.', 'Активация навсегда завершает регистрацию и размещение.')}</p></div>
-              <Button variant="primary" disabled={!canAdmin || !reserveReady || !state.holders.length || Boolean(reserve.error)} busy={busy} onClick={() => { if (!canAdmin || !reserveReady) return; onAction({ action: 'seal_issue', params: {}, title: 'Activate and seal issue', explanation: pagedIssue ? 'Seal this draft and close additional issuance. Principal and every coupon are prefunded. New zero-balance receivers may be registered later while transfers are available; past snapshot rights remain unchanged.' : 'Seal this draft and begin its corporate-action lifecycle. This permanently closes holder registration and additional issuance. Principal and every fixed coupon are prefunded; the program rechecks supply and reserves.', amountMinor: reserve.requiredMinor }); }}>{tr('Review activation', 'Проверить активацию')}<ArrowRight size={16} aria-hidden="true" /></Button>
+              <Button variant="primary" disabled={!canAdmin || !reserveReady || !state.holders.length || Boolean(reserve.error)} busy={busy} onClick={() => { if (!canAdmin || !reserveReady) return; onAction({ action: 'seal_issue', params: {}, title: 'Activate and seal issue', explanation: pagedIssue ? 'Seal this draft and close additional issuance. Principal and every coupon are prefunded. New zero-balance receivers may be registered later while transfers are available; past snapshot rights remain unchanged.' : 'Seal this draft and begin its corporate-action lifecycle. This permanently closes holder registration and additional issuance. Principal and every fixed coupon are prefunded; the program rechecks supply and reserves.', amountMinor: reserve.requiredMinor }); }}>{tr('Activate issue', 'Активировать')}<ArrowRight size={16} aria-hidden="true" /></Button>
               {activationHint && <p className="issuer-action-reason">{activationHint}</p>}
             </div>
           </Panel>
         </aside>
       </div>
-    </> : instrument && <section className="issuer-servicing" aria-label={tr('Servicing results', 'Результаты обслуживания')}>
-      <dl className="issuer-servicing-results"><div><dt>{tr('Coupon payments', 'Купонные выплаты')}</dt><dd><Money value={couponsPaidMinor} /></dd><p>{!recordedCoupons.length ? tr('Holder rights have not been recorded yet', 'Права держателей ещё не зафиксированы') : outstandingCoupons.length ? tr('Recorded claims remain unpaid', 'Есть невыплаченные зафиксированные права') : tr('All recorded claims are paid', 'Все зафиксированные права оплачены')}</p></div><div><dt>{tr('Principal repaid', 'Номинал погашен')}</dt><dd><Money value={state.redemption?.paidMinor} /></dd><p>{units(instrument.redeemedSupply)} {tr('bonds redeemed', 'облигаций погашено')}</p></div></dl>
-      <div className="issuer-servicing-actions">{onViewPayments && <Button onClick={onViewPayments}>{tr('View payments', 'Посмотреть выплаты')}<ArrowRight size={16} aria-hidden="true" /></Button>}{onViewReceipts && <Button variant="ghost" onClick={onViewReceipts}>{tr('View history', 'Посмотреть историю')}<ArrowRight size={16} aria-hidden="true" /></Button>}</div>
+    </> : instrument && <section className="issuer-servicing" hidden={deskView !== 'payments'} aria-label={tr('Paid amounts', 'Выплаченные суммы')}>
+      <dl className="issuer-servicing-results"><div><dt>{tr('Coupons paid', 'Купоны выплачены')}</dt><dd><Money value={couponsPaidMinor} /></dd></div><div><dt>{tr('Principal repaid', 'Номинал возвращён')}</dt><dd><Money value={state.redemption?.paidMinor} /></dd></div></dl>
+      <div className="issuer-servicing-actions"><span>{tr('Settlement units', 'Расчётные единицы')}</span>{onViewReceipts && <Button variant="ghost" onClick={onViewReceipts}><ReceiptText size={17} aria-hidden="true" />{tr('Operation history', 'История операций')}</Button>}</div>
+    </section>}
+    {!draft && instrument && <section className="issuer-payment-register" hidden={deskView !== 'payments'} aria-label={tr('Issue payment schedule', 'Расписание выплат по выпуску')}>
+      <div className="issuer-register-heading"><h2>{tr('Payment schedule', 'Расписание выплат')}</h2><span>{timeZoneLabel(timeZone, language)}</span></div>
+      <div className="issuer-register-labels" aria-hidden="true"><span>{tr('Payment', 'Выплата')}</span><span>{tr('Payment date', 'Дата выплаты')}</span><span>{tr('Paid', 'Выплачено')}</span><span /></div>
+      <ul>{state.coupons.map(coupon => {
+        const paymentDate = dateParts(coupon.paymentAt, timeZone, language);
+        const couponId = integer(coupon.id);
+        const couponLabel = couponId == null ? coupon.id : (couponId + 1n).toString();
+        return <li key={coupon.id}><div className="issuer-register-payment"><ReceiptText size={18} aria-hidden="true" /><strong>{tr('Coupon', 'Купон')} {couponLabel}</strong></div><div className="issuer-date"><span>{paymentDate.date}</span><span>{paymentDate.time}</span></div><div className="issuer-register-amount"><span>{tr('Paid', 'Выплачено')}</span><Money value={coupon.paidMinor} /></div><div className="issuer-register-action">{onViewPayments && <Button variant="ghost" aria-label={tr('Coupon recipients','Получатели купона') + ' ' + couponLabel} onClick={() => onViewPayments({ kind: 'coupon', couponId: coupon.id })}>{tr('Recipients', 'Получатели')}<ArrowRight size={16} aria-hidden="true" /></Button>}</div></li>;
+      })}<li className="issuer-register-principal"><div className="issuer-register-payment"><Landmark size={18} aria-hidden="true" /><strong>{tr('Principal repayment', 'Возврат номинала')}</strong></div><div className="issuer-date"><span>{dateParts(instrument.maturityAt, timeZone, language).date}</span><span>{dateParts(instrument.maturityAt, timeZone, language).time}</span></div><div className="issuer-register-amount"><span>{tr('Paid', 'Выплачено')}</span><Money value={state.redemption?.paidMinor} /></div><div className="issuer-register-action">{onViewPayments && <Button variant="ghost" aria-label={tr('Principal repayment recipients', 'Получатели возврата номинала')} onClick={() => onViewPayments({ kind: 'principal' })}>{tr('Recipients', 'Получатели')}<ArrowRight size={16} aria-hidden="true" /></Button>}</div></li></ul>
     </section>}
     </div>
     <div id={`${id}-create-form`} hidden={!newOpen}><NewIssueForm key={issuerDraftKey(state.network, walletAddress)} state={state} walletAddress={walletAddress} canAct={canAct} busy={busy} nowSeconds={nowSeconds} onAction={onAction} language={language} /></div>
   </div>;
 }
 function NewIssueForm({ state, walletAddress, canAct, busy, nowSeconds, onAction, language = 'en' }: Omit<IssuerSetupProps, 'onChooseIssue'> & { nowSeconds: number }) {
-  const tr = (en: string, ru: string) => language === 'ru' ? ru : en;
+  const tr = (en: string, ru: string) => translate(language, en, ru);
   const id = useId();
   const { timeZone } = useDisplayPreferences();
   const storageKey = issuerDraftKey(state.network, walletAddress);
@@ -439,7 +461,7 @@ function NewIssueForm({ state, walletAddress, canAct, busy, nowSeconds, onAction
   </form>;
 }
 
-function localizedIssuerError(message: string | undefined | null, language: 'ru' | 'en'): string | undefined {
+function localizedIssuerError(message: string | undefined | null, language: 'ru' | 'en' | 'kk'): string | undefined {
   if (!message) return undefined;
   if (language === 'en') return message;
   const errors: Record<string, string> = {
@@ -480,12 +502,12 @@ function localizedIssuerError(message: string | undefined | null, language: 'ru'
     'The reserve exceeds the on-chain integer limit. Do not fund this issue.': 'Резерв превышает допустимый предел. Не пополняйте этот выпуск.',
     'Reserve totals disagree. Refresh chain state before continuing.': 'Суммы резерва не совпадают. Обновите данные сети перед продолжением.',
   };
-  if (errors[message]) return errors[message];
-  if (message.startsWith('Issue name uses ')) return 'Название превышает 64 UTF-8 байта. Сократите его.';
-  if (message.startsWith('Issue name cannot contain ')) return 'Название должно быть одной строкой без управляющих символов.';
-  if (message.startsWith('Holder label uses ')) return 'Имя держателя превышает 64 UTF-8 байта. Сократите его.';
-  if (message.startsWith('Holder label cannot contain ')) return 'Имя должно быть одной строкой без управляющих символов.';
-  if (message.startsWith('Amount exceeds ')) return 'Сумма превышает допустимый предел.';
-  if (message.startsWith('Add between ')) return message.includes('16') ? 'Добавьте от 1 до 16 купонов для одной проверки создания.' : 'Добавьте от 1 до 8 купонов.';
+  if (errors[message]) return translate(language, message, errors[message]);
+  if (message.startsWith('Issue name uses ')) return translate(language,"Issue name exceeds 64 UTF-8 bytes. Shorten it.","Название превышает 64 UTF-8 байта. Сократите его.");
+  if (message.startsWith('Issue name cannot contain ')) return translate(language,"Issue name must be one line without control characters.","Название должно быть одной строкой без управляющих символов.");
+  if (message.startsWith('Holder label uses ')) return translate(language,"Holder label exceeds 64 UTF-8 bytes. Shorten it.","Имя держателя превышает 64 UTF-8 байта. Сократите его.");
+  if (message.startsWith('Holder label cannot contain ')) return translate(language,"Holder label must be one line without control characters.","Имя должно быть одной строкой без управляющих символов.");
+  if (message.startsWith('Amount exceeds ')) return translate(language,"Amount exceeds the supported limit.","Сумма превышает допустимый предел.");
+  if (message.startsWith('Add between ')) return message.includes('16') ? translate(language,"Add between 1 and 16 coupons for one creation review.","Добавьте от 1 до 16 купонов для одной проверки создания.") : translate(language,"Add between 1 and 8 coupons.","Добавьте от 1 до 8 купонов.");
   return message;
 }

@@ -1,5 +1,5 @@
 import { isAddress } from '@solana/kit';
-import type { ActionName, ActionNameV2, ActionRequest, ChainState, ServicingActionV2 } from './types';
+import type { ActionName, ActionNameV2, ActionRequest, ChainState, PagedCapture, ServicingActionV2 } from './types';
 
 const pagedNames: Partial<Record<ActionName, ActionNameV2>> = {
   capture_coupon: 'begin_coupon_v2', claim_coupon: 'claim_coupon_v2',
@@ -44,6 +44,33 @@ function counter(value: string | undefined): boolean {
   return typeof value === 'string' && /^\d{1,10}$/.test(value) && BigInt(value) <= 4294967295n;
 }
 
+export function pendingCaptureProgress(state: ChainState): PagedCapture | null {
+  const capture = state.servicing?.capture;
+  if (!state.connected || state.readOnlySnapshot || !servicingMatches(state) || !capture || capture.finalized !== false || !['1', '2', '3'].includes(capture.actionKind || '') || !counter(capture.actionId) || (capture.actionKind === '2' && capture.actionId !== '0')) return null;
+  return [capture.capturedPages, capture.pageCount, capture.holderCount].every(n => Number.isSafeInteger(n) && n >= 0)
+    && capture.pageCount > 0 && capture.capturedPages <= capture.pageCount ? capture : null;
+}
+
+function canonicalUint(value: string | undefined): bigint | null {
+  if (typeof value !== 'string' || !/^(0|[1-9]\d{0,19})$/.test(value)) return null;
+  const n = BigInt(value);
+  return n <= 18446744073709551615n ? n : null;
+}
+
+/** The ready DTO and exact chain clock govern authority; local wall time never does. */
+function canSealPagedIssue(state: ChainState, activeWallet: string, item: ServicingActionV2): boolean {
+  const issue = state.instrument!, clock = canonicalUint(state.servicing?.chainTimestamp);
+  const recordMs = Date.parse(issue.recordAt);
+  const required = canonicalUint(issue.requiredReserveMinor), vault = canonicalUint(issue.vaultBalanceMinor), supply = canonicalUint(issue.issuedSupply);
+  if (issue.status !== 'draft' || clock == null || clock <= 0n || !Number.isSafeInteger(recordMs) || recordMs <= 0 || recordMs % 1000 !== 0 || new Date(recordMs).toISOString() !== issue.recordAt
+    || !Number.isSafeInteger(issue.couponCount) || (issue.couponCount ?? 0) <= 0 || issue.scheduleAppended !== issue.couponCount
+    || !Number.isSafeInteger(issue.holderCount) || (issue.holderCount ?? 0) <= 0
+    || supply == null || supply <= 0n || required == null || required <= 0n || vault == null || vault < required) return false;
+  return clock >= BigInt(recordMs) / 1000n
+    ? item.signer.kind === 'any-fee-payer' && item.signer.wallet === null
+    : item.signer.kind === 'issuer' && item.signer.wallet === issue.issuer && activeWallet === issue.issuer;
+}
+
 /** At most one ready begin/capture/finalize step and one issuer activation, from API DTOs. */
 export function nextPagedOperations(state: ChainState, activeWallet: string | undefined, usable: boolean): ServicingActionV2[] {
   if (!actionable(state, activeWallet, usable) || !Array.isArray(state.servicing!.actions)) return [];
@@ -62,7 +89,7 @@ export function nextPagedOperations(state: ChainState, activeWallet: string | un
       return state.instrument!.status === 'active' && item.signer.kind === 'any-fee-payer' && !item.signer.wallet
         && (item.action === 'begin_coupon_v2' ? counter(request.params.couponId) && Object.keys(request.params).every(key => key === 'couponId') : Object.keys(request.params).length === 0);
     }
-    return item.action === 'seal_issue_v2' && Object.keys(request.params).length === 0 && state.instrument!.status === 'draft' && item.signer.kind === 'issuer' && item.signer.wallet === state.instrument!.issuer && activeWallet === state.instrument!.issuer;
+    return item.action === 'seal_issue_v2' && Object.keys(request.params).length === 0 && canSealPagedIssue(state, activeWallet!, item);
   });
   const snapshot = eligible.find(item => item.action === 'capture_action_page_v2') ?? eligible.find(item => item.action === 'finalize_action_v2') ?? eligible.find(item => item.action === 'begin_coupon_v2') ?? eligible.find(item => item.action === 'begin_redemption_v2');
   const seal = eligible.find(item => item.action === 'seal_issue_v2');

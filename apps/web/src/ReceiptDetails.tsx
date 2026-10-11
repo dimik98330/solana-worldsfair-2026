@@ -1,3 +1,4 @@
+import { translate } from './i18n';
 import { useEffect, useState } from 'react';
 import { ArrowRight, Info, ReceiptText } from 'lucide-react';
 import { Address, Badge, Button, Money, ProofLink } from './components';
@@ -19,10 +20,10 @@ export function ReceiptList({state,filter,onInspect}:{state:ChainState;filter?:'
   const kinds=filter==='coupon'?['capture_coupon','claim_coupon','settle_coupon']:filter==='principal'?['begin_redemption','redeem_principal']:filter==='voting'?['create_vote','cast_vote']:undefined;
   const items=[...state.activity].filter(item=>!kinds||kinds.includes(item.kind)).sort((a,b)=>Date.parse(b.time)-Date.parse(a.time));
   return <ol className="semantic-receipts ecc-receipts">{items.length?items.map((item,index)=><li key={`${item.signature}-${index}`}>
-    <ReceiptText size={20} aria-hidden="true"/><div className="receipt-copy"><strong>{receiptLabels[item.kind]?.[language==='ru'?1:0]??item.kind.replaceAll('_',' ')}</strong><DisplayDate value={item.time}/>
-    <details><summary>{language==='ru'?'Транзакция и подтверждение':'Transaction & confirmation'}</summary><Address value={item.signature} full/>{item.slot!=null&&<p>{language==='ru'?'Блок':'Slot'} <span className="number">{units(item.slot)}</span></p>}<p>{item.verification==='live-rpc'?(language==='ru'?'Подтверждение проверено в текущей сети.':'Confirmation checked in the current network.'):(language==='ru'?'Сохранённая запись подтверждения; доступность истории сети может отличаться.':'Retained confirmation record; network history availability may differ.')}</p>{state.network==='devnet'&&<ProofLink url={item.explorerUrl} label={language==='ru'?'Открыть в Explorer':'Open in Explorer'}/>}</details>
-    </div><div className="receipt-side"><Badge tone={['confirmed','finalized'].includes(item.status)?'success':'neutral'}>{['confirmed','finalized'].includes(item.status)?(language==='ru'?'Подтверждено':'Confirmed'):item.status}</Badge>{onInspect&&<Button variant="ghost" onClick={()=>onInspect(item)}>{language==='ru'?'Открыть':'View'}<ArrowRight size={16} aria-hidden="true"/></Button>}</div>
-  </li>):<li className="receipt-list-empty"><ReceiptText size={22} aria-hidden="true"/><p>{language==='ru'?'Для этого действия пока нет сохранённых подтверждений.':'No retained receipts for this action yet.'}</p></li>}</ol>;
+    <ReceiptText size={20} aria-hidden="true"/><div className="receipt-copy"><strong>{translate(language,receiptLabels[item.kind]?.[0]??item.kind.replaceAll('_',' '),receiptLabels[item.kind]?.[1])}</strong><DisplayDate value={item.time}/>
+    <details><summary>{translate(language, 'Transaction & confirmation', 'Транзакция и подтверждение')}</summary><Address value={item.signature} full/>{item.slot!=null&&<p>{translate(language, 'Slot', 'Блок')} <span className="number">{units(item.slot)}</span></p>}<p>{item.verification==='live-rpc'?(translate(language, 'Confirmation checked in the current network.', 'Подтверждение проверено в текущей сети.')):(translate(language, 'Retained confirmation record; network history availability may differ.', 'Сохранённая запись подтверждения; доступность истории сети может отличаться.'))}</p>{state.network==='devnet'&&<ProofLink url={item.explorerUrl} label={translate(language, 'Open in Explorer', 'Открыть в Explorer')}/>}</details>
+    </div><div className="receipt-side"><Badge tone={['confirmed','finalized'].includes(item.status)?'success':'neutral'}>{['confirmed','finalized'].includes(item.status)?(translate(language, 'Confirmed', 'Подтверждено')):item.status}</Badge>{onInspect&&<Button variant="ghost" onClick={()=>onInspect(item)}>{translate(language, 'View', 'Открыть')}<ArrowRight size={16} aria-hidden="true"/></Button>}</div>
+  </li>):<li className="receipt-list-empty"><ReceiptText size={22} aria-hidden="true"/><p>{translate(language, 'No retained receipts for this action yet.', 'Для этого действия пока нет сохранённых подтверждений.')}</p></li>}</ol>;
 }
 
 /** Read-only evidence enrichment. Missing transaction history never changes an entitlement status. */
@@ -43,8 +44,7 @@ async function readTransaction(state:ChainState,receipt:Activity,signal:AbortSig
   } catch { return null; }
 }
 export function ReceiptDetails({state,selection,onPortfolio,onAllReceipts}:{state:ChainState;selection:PaymentSelection;onPortfolio:()=>void;onAllReceipts:()=>void}) {
-  const {language}=useUiLanguage(),{timeZone}=useDisplayPreferences();
-  const tr=(en:string,ru:string)=>language==='ru'?ru:en;
+  const {language,tr}=useUiLanguage(),{timeZone}=useDisplayPreferences();
   const [evidence,setEvidence]=useState<{loading:boolean;receipt?:Activity;transaction?:PublicTransaction}>({loading:selection.claimed});
   const holder=state.holders.find(item=>item.wallet===selection.wallet);
   useEffect(()=>{

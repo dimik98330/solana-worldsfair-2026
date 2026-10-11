@@ -101,10 +101,11 @@ pub struct FundVaultV2<'info> {
 
 #[derive(Accounts)]
 pub struct SealIssueV2<'info> {
+    // Keep the existing wire account name/order. This is the activation actor;
+    // issuer authorization before the record date is checked in the handler.
     pub issuer: Signer<'info>,
     #[account(mut, seeds = [b"bond_v2", bond.issuer.as_ref(), &bond.series_id.to_le_bytes()],
-        bump = bond.bump, has_one = issuer @ BondError::UnauthorizedIssuer,
-        has_one = bond_mint, has_one = vault)]
+        bump = bond.bump, has_one = bond_mint, has_one = vault)]
     pub bond: Box<Account<'info, BondV2>>,
     pub bond_mint: Account<'info, Mint>,
     #[account(seeds = [b"vault_v2", bond.key().as_ref()], bump, token::authority = bond,

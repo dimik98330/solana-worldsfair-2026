@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { PagedOperations } from './PagedOperations';
-import { canRegisterPagedHolder, nextPagedOperations, pagedRegistrationError, pagedRegistrationRequest, resolvePagedAction } from './paged-actions';
+import { canRegisterPagedHolder, nextPagedOperations, pagedRegistrationError, pagedRegistrationRequest, pendingCaptureProgress, resolvePagedAction } from './paged-actions';
 import type { ActionName, ActionNameV2, ActionRequest, ChainState, ServicingActionV2 } from './types';
 
 const issuer = '11111111111111111111111111111111';
@@ -14,7 +14,7 @@ function state(): ChainState {
   return {
     connected: true, network: 'localnet', rpcUrl: 'http://127.0.0.1:8899', programId: bond,
     serverTime: '2030-01-01T00:00:00.000Z', schemaVersion: 2,
-    instrument: { address: bond, issuer, name: 'Paged test', symbol: 'TEST', bondMint: bond, settlementMint: receiver, faceValueMinor: '1000000', rateBps: 0, couponFrequency: 0, status: 'active', issuedSupply: '18', redeemedSupply: '0', recordAt: '2030-01-01T01:00:00.000Z', paymentAt: '2030-01-01T02:00:00.000Z', maturityAt: '2030-01-02T00:00:17.000Z', vaultBalanceMinor: '19000000', version: 2, holderCount: 18, couponCount: 10, scheduleAppended: 10 },
+    instrument: { address: bond, issuer, name: 'Paged test', symbol: 'TEST', bondMint: bond, settlementMint: receiver, faceValueMinor: '1000000', rateBps: 0, couponFrequency: 0, status: 'active', issuedSupply: '18', redeemedSupply: '0', recordAt: '2030-01-01T01:00:00.000Z', paymentAt: '2030-01-01T02:00:00.000Z', maturityAt: '2030-01-02T00:00:17.000Z', vaultBalanceMinor: '19000000', requiredReserveMinor: '19000000', version: 2, holderCount: 18, couponCount: 10, scheduleAppended: 10 },
     holders: [{ wallet: issuer, label: 'Issuer', units: '18' }], coupons: [], redemption: null, proposals: [], activity: [],
     demo: { available: false, ready: false, accelerated: false, roleWallets: {} },
     servicing: { schemaVersion: 2, instrumentAddress: bond, contextSlot: '9', chainTimestamp: '1893456000', status: 'active', fullySettled: false, couponOutstandingMinor: '1000000', principalOutstandingMinor: '18000000', transfer: { allowed: true, reason: null }, execution: { automatic: false, endpoint: '/api/actions/prepare', requiresWalletSignature: true, requiresFreshSimulation: true, finalCouponAndPrincipal: 'separate-claims-historical-coupon-rights-survive-burn' }, actions: [] },
@@ -91,6 +91,63 @@ test('seal comes from the ready issuer DTO and is unavailable to another signing
   assert.deepEqual(nextPagedOperations(s, receiver, true), []);
   seal.status = 'blocked';
   assert.deepEqual(nextPagedOperations(s, issuer, true), []);
+});
+test('late funded seal accepts only ready any-fee-payer authority at the exact chain cutoff', () => {
+  const s = state(), late = step('seal_issue_v2', {}, 'any-fee-payer');
+  s.instrument!.status = 'draft'; s.servicing!.actions = [late];
+  const recordSeconds = String(Date.parse(s.instrument!.recordAt) / 1000);
+  s.servicing!.chainTimestamp = String(BigInt(recordSeconds) - 1n);
+  assert.deepEqual(nextPagedOperations(s, receiver, true), []);
+  s.servicing!.chainTimestamp = recordSeconds;
+  assert.deepEqual(nextPagedOperations(s, receiver, true), [late]);
+  assert.deepEqual(nextPagedOperations(s, issuer, true), [late]);
+  s.servicing!.actions = [step('seal_issue_v2', {}, 'issuer')];
+  assert.deepEqual(nextPagedOperations(s, issuer, true), [], 'stale early-issuer DTO cannot override late authority');
+  s.servicing!.actions = [late]; late.signer.wallet = issuer;
+  assert.deepEqual(nextPagedOperations(s, receiver, true), []);
+});
+test('late activation rejects uncertain clock, missing schedule or reserve and operation locks', () => {
+  const mutations: ((s: ChainState) => void)[] = [
+    s => { s.servicing!.chainTimestamp = '01893459600'; }, s => { s.servicing!.chainTimestamp = '-1'; }, s => { s.servicing!.chainTimestamp = '18446744073709551616'; },
+    s => { s.instrument!.recordAt = '2030-01-01'; }, s => { s.instrument!.recordAt = '2030-01-01T01:00:00.001Z'; },
+    s => { s.instrument!.scheduleAppended = 9; }, s => { s.instrument!.couponCount = 0; }, s => { s.instrument!.couponCount = -1; s.instrument!.scheduleAppended = -1; },
+    s => { s.instrument!.holderCount = 0; }, s => { s.instrument!.issuedSupply = '0'; },
+    s => { s.instrument!.requiredReserveMinor = undefined; }, s => { s.instrument!.requiredReserveMinor = '0'; },
+    s => { s.instrument!.vaultBalanceMinor = '18999999'; }, s => { s.instrument!.vaultBalanceMinor = 'unknown'; },
+  ];
+  for (const mutate of mutations) {
+    const s = state(); s.instrument!.status = 'draft'; s.servicing!.chainTimestamp = '1893459600'; s.servicing!.actions = [step('seal_issue_v2', {}, 'any-fee-payer')]; mutate(s);
+    assert.deepEqual(nextPagedOperations(s, receiver, true), []);
+  }
+  const s = state(); s.instrument!.status = 'draft'; s.servicing!.chainTimestamp = '1893459600'; s.servicing!.actions = [step('seal_issue_v2', {}, 'any-fee-payer')];
+  assert.deepEqual(nextPagedOperations(s, receiver, false), []);
+});
+test('rendered late activation tells a nonissuer fee payer about activation and subsequent capture', () => {
+  const s = state(); s.instrument!.status = 'draft'; s.servicing!.chainTimestamp = '1893459600'; s.servicing!.actions = [step('seal_issue_v2', {}, 'any-fee-payer')];
+  const html = renderToStaticMarkup(createElement(PagedOperations, { state: s, activeWallet: receiver, usable: true, onQueue() {} }));
+  assert.match(html, /Any fee payer can activate this fully reserved draft, then complete rights capture/);
+  assert.match(html, /Activate issue/);
+  assert.doesNotMatch(html, /No snapshot page is ready/);
+});
+test('capture progress preserves partial and all-pages-awaiting-finalize but rejects misleading counts', () => {
+  const s = state();
+  s.servicing!.capture = { actionKind: '1', actionId: '8', finalized: false, capturedPages: 2, pageCount: 5, holderCount: 34 };
+  assert.equal(pendingCaptureProgress(s)?.capturedPages, 2);
+  s.servicing!.capture.capturedPages = 5;
+  assert.equal(pendingCaptureProgress(s)?.capturedPages, 5, 'all pages is not yet finalized rights');
+  for (const change of [() => { s.servicing!.capture!.finalized = true; }, () => { s.servicing!.capture!.capturedPages = 6; }, () => { s.servicing!.capture!.pageCount = NaN; }, () => { s.servicing!.capture!.actionKind = '4'; }]) {
+    s.servicing!.capture = { actionKind: '1', actionId: '8', finalized: false, capturedPages: 2, pageCount: 5, holderCount: 34 }; change();
+    assert.equal(pendingCaptureProgress(s), null);
+  }
+  s.servicing!.instrumentAddress = issuer;
+  assert.equal(pendingCaptureProgress(s), null);
+  s.servicing!.instrumentAddress = bond;
+  s.servicing!.capture = { actionKind: '2', actionId: '1', finalized: false, capturedPages: 2, pageCount: 5, holderCount: 34 };
+  assert.equal(pendingCaptureProgress(s), null);
+  s.servicing!.capture.actionId = '0'; s.connected = false;
+  assert.equal(pendingCaptureProgress(s), null);
+  s.connected = true; s.readOnlySnapshot = { capturedAt: s.serverTime, source: 'fixture' };
+  assert.equal(pendingCaptureProgress(s), null);
 });
 test('unready, malformed and mismatched requests fail closed', () => {
   const s = state();

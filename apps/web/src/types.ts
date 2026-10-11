@@ -52,6 +52,7 @@ export interface ChainState {
 }
 export interface ActionRequest { action: ActionName | ActionNameV2 | 'bootstrap'; params: Record<string, string>; title: string; explanation: string; amountMinor?: string; reset?: boolean }
 export interface ActionSummary {
+  retirement?: { units: string; bondMint: string; method: 'burn'; atomicWithSettlement: true; historicalCouponRightsPreserved: true };
   network: string; action: string; signer: string; instrumentAddress?: string; issueTerms?: {name:string;faceValueMinor:string;maturityTs:string;coupons?:{recordTs:string;paymentTs:string;unitAmount:string}[];couponCount?:string|number}; amountMinor?: string; token?: string;
   recipients?: string[]; tokenDecimals?: 0 | 6; feeMinor?: string; feeLamports?: string; simulation?: { success: boolean; message?: string };
 }

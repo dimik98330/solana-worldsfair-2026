@@ -1,7 +1,9 @@
 /* Payment records are one inset ledger; reserve mechanics form its inspector. */
 .payments-workspace { min-width: 0; }
 .payments-workspace svg, .payment-register svg { stroke-width: 1.75; }
-.payments-heading { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-6); }
+.payments-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-6); }
+.payments-heading > div { min-width: 0; }
+.payments-heading > div > p { margin: var(--space-1) 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
 .payments-heading h1 { margin: 0; font-size: 32px; line-height: 1.3; font-weight: 700; letter-spacing: -.03em; }
 .payments-heading > .button { flex-shrink: 0; }
 .payments-layout { display: grid; grid-template-columns: minmax(0, 1fr) 304px; gap: var(--space-6); align-items: start; }

@@ -56,7 +56,7 @@ export function shortAddress(value?: string, chars = 5): string {
   if (!value) return 'Not available';
   return value.length <= chars * 2 + 3 ? value : `${value.slice(0, chars)}…${value.slice(-chars)}`;
 }
-export function date(value?: string, withTime = false, language:'ru'|'en'='en', zone = getDisplayTimeZone()): string {
+export function date(value?: string, withTime = false, language:'ru'|'en' | 'kk'='en', zone = getDisplayTimeZone()): string {
   const parts = dateParts(value, zone, language);
   return withTime && parts.time ? `${parts.date}, ${parts.time}` : parts.date;
 }

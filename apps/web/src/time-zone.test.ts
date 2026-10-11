@@ -4,7 +4,8 @@ import { spawnSync } from 'node:child_process';
 import {
   TIME_ZONE_STORAGE_KEY, browserTimeZone, dateParts, getDisplayTimeZone,
   isTimeZone, readTimeZonePreference, setStoredTimeZonePreference,
-  timeZoneLabel, wallTimeIssue, zonedInput, zonedSeconds,
+  gmtOffsetLabel, timeZoneLabel, timeZoneOffsetMinutes, timeZoneOptionGroups,
+  timeZoneOptionLabel, wallTimeIssue, zonedInput, zonedSeconds,
 } from './time-zone';
 
 const instant = Math.floor(Date.parse('2026-10-08T23:14:37Z') / 1000);
@@ -78,6 +79,39 @@ test('auto follows the browser zone regardless of which locale is selected', () 
     assert.equal(resolved, zone);
     assert.equal(wall, zonedInput(instant, zone));
   }
+});
+
+test('city choices use localized names and actual seasonal GMT offsets', () => {
+  const winter = new Date('2026-01-15T12:00:37Z');
+  const summer = new Date('2026-07-15T12:00:37Z');
+  assert.equal(timeZoneOptionLabel('Europe/London', 'ru', winter), 'Лондон · GMT+0');
+  assert.equal(timeZoneOptionLabel('Europe/London', 'ru', summer), 'Лондон · GMT+1');
+  assert.equal(timeZoneOptionLabel('America/New_York', 'en', winter), 'New York · GMT−5');
+  assert.equal(timeZoneOptionLabel('America/New_York', 'en', summer), 'New York · GMT−4');
+  assert.equal(timeZoneOptionLabel('Asia/Almaty', 'kk', summer), 'Алматы · GMT+5');
+  assert.equal(timeZoneOptionLabel('Asia/Qyzylorda', 'kk', summer), 'Қызылорда · GMT+5');
+  assert.equal(timeZoneOptionLabel('UTC', 'kk', summer), 'GMT+0');
+  assert.equal(timeZoneOffsetMinutes('Asia/Kathmandu', summer), 345);
+  assert.equal(timeZoneOptionLabel('Asia/Kathmandu', 'en', summer), 'Kathmandu · GMT+5:45');
+  assert.equal(timeZoneOptionLabel('Australia/Adelaide', 'ru', summer), 'Аделаида · GMT+9:30');
+  assert.equal(gmtOffsetLabel(-210), 'GMT−3:30');
+});
+
+test('offset groups preserve each valid IANA identity and order by actual offset', () => {
+  const zones = ['Asia/Kathmandu', 'Asia/Almaty', 'UTC', 'Europe/London', 'America/New_York', 'UTC', 'Not/AZone'];
+  const groups = timeZoneOptionGroups(zones, 'kk', new Date('2026-07-15T12:00:37Z'));
+  assert.deepEqual(groups.map(group => group.label), ['GMT−4', 'GMT+0', 'GMT+1', 'GMT+5', 'GMT+5:45']);
+  assert.deepEqual(groups.flatMap(group => group.options.map(option => option.zone)), ['America/New_York', 'UTC', 'Europe/London', 'Asia/Almaty', 'Asia/Kathmandu']);
+});
+
+test('Kazakh display localizes dates without changing exact seconds', () => {
+  const value = '2026-10-08T23:14:37Z';
+  const localized = dateParts(value, 'Asia/Qyzylorda', 'kk');
+  assert.equal(localized.date, '9 қазан 2026 ж.');
+  assert.equal(localized.time, '04:14:37');
+  assert.deepEqual(dateParts(value, 'UTC', 'kk'), { date: '8 қазан 2026 ж.', time: '23:14:37' });
+  assert.deepEqual(dateParts('2026-01-01T00:01:37Z', 'America/New_York', 'kk'), { date: '31 желтоқсан 2025 ж.', time: '19:01:37' });
+  assert.equal(dateParts(undefined, 'UTC', 'kk').date, 'Күні белгіленбеген');
 });
 
 test('explicit preference persists, auto restores browser detection, invalid stored values are ignored', () => {

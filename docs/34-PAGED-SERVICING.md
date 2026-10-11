@@ -132,3 +132,7 @@ npm run demo:paged -- --scale33 --late-coupon --operation-id judge_paged_v4_01
 ```
 
 `npm run demo:integration` demonstrates actual loopback HTTP counterparties with a **synthetic chain fixture**. `npm run verify:integration -- --help` describes the separate verifier for an actual built product origin and direct localnet RPC. Its authority descriptor stays ignored and is never a submitted artifact. Neither command proves a bank/KASE partnership or ordinary Phantom signing.
+
+## 11 October source correction — late activation
+
+Before the first record date, activation requires the issuer. At or after the cutoff, any fee payer may activate a fully configured draft with positive reconciled supply and the full currently spendable reserve. Initial registration/issuance remain closed after the cutoff; frozen draft balances preserve capture quantities. This is current-funding validation, not proof of historical prefunding. The compiled960296-byte release is identified in TECHNICAL.md; earlier evidence keeps its original image identity.

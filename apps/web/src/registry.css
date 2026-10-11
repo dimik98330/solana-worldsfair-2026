@@ -1,0 +1,119 @@
+/* Holder register: identity, exact positions and recorded rights. */
+.registry-view { display: grid; gap: var(--space-6); min-width: 0; }
+.registry-view svg { stroke-width: 1.75; }
+.registry-view .section-summary { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4) var(--space-6); margin: 0; }
+.registry-view .section-summary > div { min-width: 0; }
+.registry-view .section-summary h2 { font-size: 22px; font-weight: 650; letter-spacing: -.02em; }
+.registry-view .section-summary h2 span { color: var(--muted); font-weight: 400; font-size: 17px; }
+.registry-view .section-summary p { margin-top: var(--space-2); color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 72ch; }
+.registry-view .registry-capture { display: grid; justify-items: end; gap: var(--space-2); flex-shrink: 0; }
+.registry-view .registry-capture small { color: var(--muted); font-size: 14px; text-align: right; max-width: 40ch; }
+
+.registry-view > .panel { overflow: clip; }
+.registry-view .registry-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--border); background: var(--nav); }
+.registry-view .registry-search { display: flex; align-items: center; gap: var(--space-2); width: min(360px, 100%); padding: 0 var(--space-3); background: var(--input); border: 1px solid var(--border-control); border-radius: var(--radius-control); color: var(--muted); }
+.registry-view .registry-search:focus-within { border-color: var(--link); }
+.registry-view .registry-search input { flex: 1; min-width: 0; min-height: 44px; border: 0; background: transparent; color: var(--foreground); font-size: 16px; }
+.registry-view .registry-search input:focus, .registry-view .registry-search input:focus-visible { outline: none; }
+.registry-view .registry-toolbar > span { color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.registry-view .positions-table { width: 100%; table-layout: fixed; border-collapse: collapse; white-space: normal; }
+.registry-view .positions-table th { padding: var(--space-3) var(--space-4); background: var(--nav); color: var(--muted); font-size: 15px; font-weight: 500; text-align: left; border: 0; border-bottom: 1px solid var(--border); vertical-align: bottom; }
+.registry-view .positions-table th:first-child, .registry-view .positions-table td:first-child { padding-left: var(--space-6); }
+.registry-view .positions-table th:last-child, .registry-view .positions-table td:last-child { padding-right: var(--space-6); text-align: right; }
+.registry-view .positions-table th.numeric, .registry-view .positions-table td.numeric { text-align: right; }
+.registry-view .positions-table th:nth-child(1) { width: 34%; }
+.registry-view .positions-table th:nth-child(2) { width: 26%; }
+.registry-view .positions-table th:nth-child(3) { width: 15%; }
+.registry-view .positions-table th:nth-child(4) { width: 25%; }
+.registry-view .positions-table td { padding: var(--space-4); border: 0; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.registry-view .positions-table tbody tr:last-child td { border-bottom: 0; }
+.registry-view .positions-table tbody tr:hover { background: var(--panel-subtle); }
+.registry-view .positions-table td.numeric { font-family: var(--font-ui); font-size: 18px; font-weight: 650; font-variant-numeric: tabular-nums lining-nums; }
+.registry-view .positions-table td.numeric .money { font-family: var(--font-ui); font-weight: 650; white-space: nowrap; }
+.registry-view .positions-table .holder-cell { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+.registry-view .positions-table .holder-number { display: grid; place-items: center; width: 34px; height: 34px; flex-shrink: 0; border: 1px solid var(--border); border-radius: 50%; background: transparent; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.registry-view .positions-table .holder-name-link { font-size: 18px; font-weight: 600; overflow-wrap: anywhere; }
+.registry-view .positions-table .address { font-size: 14px; }
+.registry-view .positions-table td:last-child .button { min-height: 44px; }
+
+.registry-view .snapshot-disclosure { border-top: 1px solid var(--border); padding: var(--space-4) var(--space-6); }
+.registry-view .snapshot-disclosure summary { min-height: 44px; display: flex; align-items: center; color: var(--muted); font-size: 15px; cursor: pointer; }
+.registry-view .snapshot-disclosure summary:hover { color: var(--foreground); }
+.registry-view .snapshot-disclosure dl { display: grid; gap: var(--space-3); margin: var(--space-3) 0 0; }
+.registry-view .snapshot-disclosure dl > div { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+.registry-view .snapshot-disclosure dt { color: var(--muted); font-size: 14px; }
+.registry-view .snapshot-disclosure dd { margin: 0; }
+
+@media (max-width: 900px) {
+  .registry-view .section-summary .registry-capture { justify-items: start; }
+  .registry-view .positions-table, .registry-view .positions-table tbody { display: block; width: 100%; }
+  .registry-view .positions-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .registry-view .positions-table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2) var(--space-3); padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--border); }
+  .registry-view .positions-table td { display: block; padding: 0; border: 0; width: auto !important; }
+  .registry-view .positions-table td:first-child { grid-column: 1 / -1; padding-left: 0; }
+  .registry-view .positions-table td:nth-child(2) { grid-column: 1 / -1; }
+  .registry-view .positions-table td.numeric { text-align: left; }
+  .registry-view .positions-table td[data-label]::before { content: attr(data-label); display: block; margin-bottom: var(--space-1); color: var(--muted); font-size: 14px; font-weight: 500; }
+  .registry-view .positions-table td:last-child { grid-column: 1 / -1; padding-right: 0; text-align: left; }
+  .registry-view .positions-table td:last-child .button { width: 100%; justify-content: space-between; }
+  .registry-view .registry-toolbar { padding: var(--space-4) var(--space-5); }
+  .registry-view .snapshot-disclosure { padding: var(--space-4) var(--space-5); }
+}
+
+/* Premium register: identity and address form one record, with stable amount tracks. */
+.app-shell .registry-view { gap: 24px; }
+.app-shell .registry-view .section-summary { align-items: center; }
+.app-shell .registry-view .section-summary h2 { font-size: 20px; }
+.app-shell .registry-view .section-summary h2 span { font-size: 15px; margin-left: 8px; }
+.app-shell .registry-view .section-summary p { font-size: 15px; margin-top: 6px; }
+.app-shell .registry-view > .panel { margin: 0; }
+.app-shell .registry-view .registry-toolbar { background: var(--panel); padding: 18px 24px; }
+.app-shell .registry-view .registry-search { width: min(400px,100%); border-color: var(--border-control); }
+.app-shell .registry-view .positions-table { min-width: 0; table-layout: fixed; }
+.app-shell .registry-view .positions-table th { background: var(--input); padding: 14px 24px; font-size: 14px; }
+.app-shell .registry-view .positions-table th:nth-child(1) { width: 40%; }
+.app-shell .registry-view .positions-table th:nth-child(2) { width: 16%; }
+.app-shell .registry-view .positions-table th:nth-child(3) { width: 19%; }
+.app-shell .registry-view .positions-table th:nth-child(4) { width: 25%; }
+.app-shell .registry-view .positions-table td { padding: 14px 24px; }
+.app-shell .registry-view .holder-number { background: var(--panel-subtle); color: var(--link); width: 40px; height: 40px; border-radius: 10px; border: 0; }
+.registry-holder-identity { min-width: 0; display: grid; gap: 2px; }
+.app-shell .registry-view .holder-name-link { text-decoration: none; color: var(--foreground); font-size: 17px; }
+.app-shell .registry-view .holder-name-link:hover { color: var(--link); text-decoration: underline; }
+.registry-holder-identity .address { font-size: 13px; }
+.app-shell .registry-view .positions-table td:last-child .button { font-size: 14px; padding-inline: 10px; white-space: normal; text-align: left; }
+.registry-record-choice { display: flex; align-items: center; gap: 24px; }
+.registry-record-choice select { padding: 8px 12px; min-height: 44px; border: 1px solid var(--border-control); color: var(--foreground); max-width: 100%; font-size: 15px; }
+.registry-record-choice .display-date { font-size: 14px; }
+@media(min-width:2000px) {
+ .app-shell .registry-view { grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: start; gap: 24px; }
+ .app-shell .registry-view .section-summary { grid-column: 1/-1; }
+ .app-shell .registry-view .registry-current { grid-column: 1; }
+ .app-shell .registry-view .registry-rights { grid-column: 2; }
+ .app-shell .registry-view .registry-rights .panel-heading { min-height: 83px; }
+ .app-shell .registry-view .positions-table th, .app-shell .registry-view .positions-table td { padding-inline: 20px; }
+}
+@media(max-width:1100px) and (min-width:761px) {
+ .app-shell .registry-view .positions-table th, .app-shell .registry-view .positions-table td { padding-inline: 14px; }
+ .app-shell .registry-view .positions-table th:nth-child(1) { width: 37%; }
+ .app-shell .registry-view .positions-table th:nth-child(2) { width: 17%; }
+ .app-shell .registry-view .positions-table th:nth-child(3) { width: 18%; }
+ .app-shell .registry-view .positions-table th:nth-child(4) { width: 28%; }
+}
+@media(max-width:900px) {
+ .app-shell .registry-view { gap: 18px; }
+ .app-shell .registry-view .positions-table tr { grid-template-columns: minmax(0,1fr) minmax(0,1fr); padding: 18px; gap: 12px 20px; }
+ .app-shell .registry-view .positions-table td { padding: 0; }
+ .app-shell .registry-view .positions-table td:first-child { grid-column: 1/-1; }
+ .app-shell .registry-view .positions-table td:nth-child(2) { grid-column: 1; }
+ .app-shell .registry-view .positions-table td:nth-child(3) { grid-column: 2; }
+ .app-shell .registry-view .positions-table td:last-child { grid-column: 1/-1; }
+ .app-shell .registry-view .positions-table td:last-child .button { min-height: 44px; padding: 8px 0; }
+ .app-shell .registry-view .registry-toolbar { padding: 16px 18px; }
+ .app-shell .registry-view .section-summary h2 span { display: inline-block; margin-left: 0; }
+ .app-shell .registry-view .section-summary p { display: none; }
+ .registry-record-choice { width: 100%; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+ .registry-record-choice .display-date { text-align: left; }
+ .app-shell .registry-rights .panel-heading { flex-wrap: wrap; gap: 16px; }
+}

@@ -1,3 +1,4 @@
+import { translate } from './i18n';
 import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { ArrowRight, Settings2, UsersRound, Wallet } from 'lucide-react';
 import { Button } from './components';
@@ -40,28 +41,28 @@ export function AccountPicker({ open, holders, selectedHolder, onHolder, onSetti
   return <>
     <div className="account-picker" data-has-holders={holders.length > 0}>
       {holders.length > 0 && <section className="account-holder-section" aria-labelledby={holderHeading}>
-        <div className="account-area-heading"><UsersRound size={22} aria-hidden="true" /><h3 id={holderHeading}>{ru ? 'Портфели держателей' : 'Holder portfolios'}</h3></div>
-        <p className="account-area-description">{ru ? 'Просмотр позиций и выплат без права подписи.' : 'Inspect positions and payments without signing rights.'}</p>
-        <div ref={holderList} className="account-holder-list" role="group" aria-label={ru ? 'Держатели выпуска' : 'Issue holders'}>
+        <div className="account-area-heading"><UsersRound size={22} aria-hidden="true" /><h3 id={holderHeading}>{translate(language, 'Holder portfolios', 'Портфели держателей')}</h3></div>
+        <p className="account-area-description">{translate(language, 'Inspect positions and payments without signing rights.', 'Просмотр позиций и выплат без права подписи.')}</p>
+        <div ref={holderList} className="account-holder-list" role="group" aria-label={translate(language, 'Issue holders', 'Держатели выпуска')}>
           {holders.map(holder => {
             const selected = holder.wallet === selectedHolder;
-            return <button ref={selected ? selectedOption : undefined} type="button" className="account-holder-option" key={holder.wallet} aria-current={selected ? 'true' : undefined} aria-label={`${ru ? 'Открыть портфель:' : 'View portfolio:'} ${holder.label || shortAddress(holder.wallet)}`} onClick={() => onHolder(holder.wallet)}>
+            return <button ref={selected ? selectedOption : undefined} type="button" className="account-holder-option" key={holder.wallet} aria-current={selected ? 'true' : undefined} aria-label={`${translate(language, 'View portfolio:', 'Открыть портфель:')} ${holder.label || shortAddress(holder.wallet)}`} onClick={() => onHolder(holder.wallet)}>
               <span className="account-holder-avatar"><UsersRound size={19} aria-hidden="true" /></span>
               <span className="account-holder-identity"><strong>{holder.label || shortAddress(holder.wallet)}</strong><span className="account-holder-address" title={holder.wallet}>{shortAddress(holder.wallet, 5)}</span></span>
-              <span className="account-holder-action">{selected ? (ru ? 'Выбран' : 'Selected') : (ru ? 'Открыть' : 'View')}<ArrowRight size={17} aria-hidden="true" /></span>
+              <span className="account-holder-action">{selected ? (translate(language, 'Selected', 'Выбран')) : (translate(language, 'View', 'Открыть'))}<ArrowRight size={17} aria-hidden="true" /></span>
             </button>;
           })}
         </div>
       </section>}
       <section className="account-wallet-section" aria-labelledby={walletHeading}>
-        <div className="account-area-heading"><Wallet size={22} aria-hidden="true" /><h3 id={walletHeading}>{ru ? 'Ваш кошелёк' : 'Your wallet'}</h3></div>
-        <p className="account-area-description">{ru ? 'Каждую операцию подтверждайте в своём кошельке.' : 'Approve each operation in your wallet.'}</p>
+        <div className="account-area-heading"><Wallet size={22} aria-hidden="true" /><h3 id={walletHeading}>{translate(language, 'Your wallet', 'Ваш кошелёк')}</h3></div>
+        <p className="account-area-description">{translate(language, 'Approve each operation in your wallet.', 'Каждую операцию подтверждайте в своём кошельке.')}</p>
         <div className="account-wallet-content">{children}</div>
       </section>
     </div>
     <footer className="account-dialog-footer">
-      <Button onClick={onSettings}><Settings2 size={19} aria-hidden="true" /><span>{ru ? 'Настройки интерфейса' : 'Interface settings'}</span></Button>
-      <Button onClick={onClose}>{ru ? 'Закрыть' : 'Close'}</Button>
+      <Button onClick={onSettings}><Settings2 size={19} aria-hidden="true" /><span>{translate(language, 'Interface settings', 'Настройки интерфейса')}</span></Button>
+      <Button onClick={onClose}>{translate(language, 'Close', 'Закрыть')}</Button>
     </footer>
   </>;
 }

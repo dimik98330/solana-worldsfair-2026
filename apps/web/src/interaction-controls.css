@@ -1,8 +1,12 @@
 /* The visual grammar distinguishes commands, navigation and read-only facts. */
-.app-shell .button { font-size: 16px; font-weight: 650; line-height: 1.45; }
-.app-shell .button.ghost { padding: 9px 16px; border: 1px solid var(--border-control); background: var(--input); color: var(--foreground); }
-.app-shell .button.ghost:hover:not(:disabled) { background: var(--panel-subtle); border-color: var(--link); color: var(--foreground); }
+.app-shell .button { font-size: 16px; font-weight: 650; line-height: 1.4; min-height: 48px; border-radius: var(--radius-control); }
+.app-shell .button.primary { box-shadow: inset 0 0 0 1px color-mix(in srgb, #ffffff 10%, transparent); }
+.app-shell .button.secondary { background: var(--panel-subtle); border-color: var(--border-control); color: var(--foreground); }
+.app-shell .button.secondary:hover:not(:disabled) { background: var(--nav-surface); border-color: var(--link); color: var(--foreground); }
+.app-shell .button.ghost { padding: 10px 14px; border: 1px solid transparent; background: transparent; color: var(--link); font-weight: 600; }
+.app-shell .button.ghost:hover:not(:disabled) { background: var(--primary-soft); border-color: transparent; color: var(--link); }
 .app-shell .button svg, .app-shell .icon-button svg { stroke-width: 2; }
+.app-shell .main-content { padding-block: var(--space-10) var(--space-16); }
 .app-shell .holder-name-link, .app-shell .text-link { color: var(--link); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: color-mix(in srgb, var(--link) 65%, transparent); }
 .app-shell .holder-name-link:hover, .app-shell .text-link:hover { text-decoration-color: var(--link); }
 .app-shell .positions-table .holder-name-link { display: flex; align-items: center; min-height: 40px; }
@@ -11,7 +15,9 @@
 .app-shell .address .copy { width: 40px; height: 40px; min-width: 40px; min-height: 40px; border: 1px solid var(--border-control); border-radius: 6px; background: var(--input); color: var(--foreground); }
 .app-shell .address .copy:hover { border-color: var(--link); background: var(--panel-subtle); }
 .app-shell .address .copy svg { width: 18px; height: 18px; }
-.app-shell .sidebar .nav-item { font-size: 17px; gap: 12px; }
+.app-shell .sidebar .nav-item { font-size: 16px; gap: 10px; }
+.app-shell .sidebar .nav-item > span { white-space: nowrap; min-width: 0; flex: 1; }
+.app-shell .sidebar .nav-item .nav-arrow { flex-shrink: 0; margin-left: var(--space-2); }
 .app-shell .sidebar .nav-item > svg:first-child { width: 21px; height: 21px; stroke-width: 2; }
 .app-shell .sidebar .nav-item:not(.active) > svg:first-child { color: var(--nav-text); }
 .app-shell .sidebar .nav-item.active { color: var(--foreground); }

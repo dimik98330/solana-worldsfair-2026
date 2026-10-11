@@ -23,8 +23,7 @@ function TextField({ id, label, hint, error, ...props }: InputHTMLAttributes<HTM
 }
 
 export function PagedOperations({ state, activeWallet, usable, onQueue }: PagedOperationsProps) {
-  const { language } = useUiLanguage();
-  const tr = (en: string, ru: string) => language === 'ru' ? ru : en;
+  const { language, tr } = useUiLanguage();
   const formId = useId(), formRef = useRef<HTMLFormElement>(null);
   const [openFor, setOpenFor] = useState<string | null>(null);
   const [holderWallet, setHolderWallet] = useState(''), [label, setLabel] = useState('');
@@ -49,11 +48,11 @@ export function PagedOperations({ state, activeWallet, usable, onQueue }: PagedO
   };
   function operationLabel(item: ServicingActionV2): string {
     if (item.action === 'seal_issue_v2') return tr('Activate issue', 'Активировать выпуск');
-    if (item.action === 'begin_coupon_v2') return tr(`Open coupon snapshot · ID ${item.request!.params.couponId}`, `Открыть фиксацию купона · ID ${item.request!.params.couponId}`);
+    if (item.action === 'begin_coupon_v2') return tr('Open coupon snapshot','Открыть фиксацию купона') + ' · ID ' + item.request!.params.couponId;
     if (item.action === 'begin_redemption_v2') return tr('Open maturity snapshot', 'Открыть фиксацию погашения');
     if (item.action === 'finalize_action_v2') return tr('Finalize snapshot', 'Завершить фиксацию');
     const pageIndex = item.request?.params.pageIndex;
-    return /^\d+$/.test(pageIndex || '') ? tr(`Capture page ${BigInt(pageIndex!) + 1n}`, `Зафиксировать страницу ${BigInt(pageIndex!) + 1n}`) : tr('Capture next page', 'Зафиксировать следующую страницу');
+    return /^\d+$/.test(pageIndex || '') ? tr('Capture page','Зафиксировать страницу') + ' ' + (BigInt(pageIndex!) + 1n) : tr('Capture next page', 'Зафиксировать следующую страницу');
   }
   function queueStep(item: ServicingActionV2) {
     // Eligibility is re-read from current props; normal App review/simulation remains required.
@@ -65,7 +64,9 @@ export function PagedOperations({ state, activeWallet, usable, onQueue }: PagedO
       explanation: ready.action === 'finalize_action_v2'
         ? tr('Finalize the captured holder pages. This transaction creates the snapshot rights.', 'Завершить фиксацию страниц держателей. Эта операция создаёт права по снимку.')
         : ready.action === 'seal_issue_v2'
-          ? tr('Activate the fully reserved issue with its complete coupon schedule.', 'Активировать полностью обеспеченный выпуск с полным расписанием купонов.')
+            ? ready.signer.kind === 'any-fee-payer'
+              ? tr('Activate this fully reserved draft after its first record date. Any fee payer may review this operation; the program rechecks the complete schedule and current reserve. Then complete the due rights capture.', 'Активировать полностью обеспеченный черновик после первого среза. Любой аккаунт может оплатить комиссию; программа перепроверит полное расписание и текущий резерв. Затем завершите наступившую фиксацию прав.')
+              : tr('Activate the fully reserved issue with its complete coupon schedule.', 'Активировать полностью обеспеченный выпуск с полным расписанием купонов.')
           : ready.action === 'begin_coupon_v2' || ready.action === 'begin_redemption_v2'
             ? tr('Open the selected paged snapshot. Rights are created only after every page is captured and the snapshot is finalized.', 'Открыть выбранный постраничный снимок. Права появятся после фиксации всех страниц и завершения снимка.')
           : tr('Capture only the next holder page. Rights remain unavailable until all pages are captured and the snapshot is finalized.', 'Зафиксировать только следующую страницу держателей. Права появятся после фиксации всех страниц и завершения снимка.'),
@@ -100,6 +101,7 @@ export function PagedOperations({ state, activeWallet, usable, onQueue }: PagedO
           {validCaptureCounts && <div><dt>{tr('Pages captured', 'Зафиксировано страниц')}</dt><dd className="number">{units(capture.capturedPages)} / {units(capture.pageCount)}</dd></div>}
         </dl>
         {capture && <p role="status">{capture.finalized ? tr('Snapshot finalized.', 'Фиксация снимка завершена.') : tr('Capture in progress. Rights are created after finalization.', 'Фиксация продолжается. Права появятся после её завершения.')}</p>}
+        {operations.some(item => item.action === 'seal_issue_v2' && item.signer.kind === 'any-fee-payer') && <p role="status">{tr('The first record date has arrived. Any fee payer can activate this fully reserved draft, then complete rights capture.', 'Наступил первый срез. Любой аккаунт может оплатить активацию полностью обеспеченного черновика, затем завершить фиксацию прав.')}</p>}
         {operations.length ? <div className="dialog-actions">{operations.map(item => <Button key={item.id} variant="primary" onClick={() => queueStep(item)}>{item.action === 'seal_issue_v2' ? <LockKeyhole size={18} aria-hidden="true" /> : <Layers3 size={18} aria-hidden="true" />}{operationLabel(item)}<ArrowRight size={16} aria-hidden="true" /></Button>)}</div> : <p>{unavailable}</p>}
       </div>
     </Panel>

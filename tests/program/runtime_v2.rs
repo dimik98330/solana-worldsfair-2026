@@ -73,7 +73,10 @@ impl Fixture {
             bondtrace::instruction::FundVaultV2 { amount }),Actor::Issuer).unwrap();
     }
     fn v2_seal_ix(&self)->Instruction {
-        ix(bondtrace::accounts::SealIssueV2 { issuer:pk(&self.issuer),bond:self.bond,bond_mint:self.mint,vault:self.vault },bondtrace::instruction::SealIssueV2 {})
+        self.v2_seal_by(pk(&self.issuer))
+    }
+    fn v2_seal_by(&self, actor:Pubkey)->Instruction {
+        ix(bondtrace::accounts::SealIssueV2 { issuer:actor,bond:self.bond,bond_mint:self.mint,vault:self.vault },bondtrace::instruction::SealIssueV2 {})
     }
     fn v2_transfer_ix(&self,source:usize,dest:usize,amount:u64)->Instruction {
         ix(bondtrace::accounts::TransferUnitsV2 { holder:pk(&self.holders[source]),bond:self.bond,bond_mint:self.mint,
@@ -311,4 +314,106 @@ fn paged_v2_rejects_rate_mismatch_foreign_accounts_and_incomplete_schedule() {
     f.run(f.v2_schedule_ix(0,terms),Actor::Issuer).unwrap();
     assert_eq!(f.decode::<BondV2>(f.bond).schedule_appended,8);
     v2_reject(f.v2_seal_ix(),Actor::Issuer,Some("ScheduleIncomplete"),&mut f);
+    f.now(1000);
+    v2_reject(f.v2_seal_by(pk(&f.outsider)),Actor::Outsider,Some("ScheduleIncomplete"),&mut f);
+}
+
+#[test]
+fn paged_v2_late_activation_exact_cutoff_preserves_issuance_deadline_and_seal_abi() {
+    let mut f=Fixture::new_v2(2,1);
+    f.run(f.v2_issue_ix(0,2),Actor::Issuer).unwrap();
+    f.v2_fund(2_000_000_000); // Intentionally short until after the cutoff.
+    let newcomer=f.v2_add_wallet();
+    let late=f.v2_seal_by(pk(&f.outsider));
+    assert_eq!(late.data,vec![114,143,195,133,148,190,62,213]);
+    assert_eq!(late.accounts.len(),4);
+    assert_eq!(late.accounts.iter().map(|a|(a.pubkey,a.is_signer,a.is_writable)).collect::<Vec<_>>(),
+        vec![(ad(pk(&f.outsider)),true,false),(ad(f.bond),false,true),(ad(f.mint),false,false),(ad(f.vault),false,false)]);
+    assert_eq!(8+<BondV2 as anchor_lang::Space>::INIT_SPACE,319);
+    f.now(199);
+    v2_reject(late.clone(),Actor::Outsider,Some("UnauthorizedIssuer"),&mut f);
+    f.now(200); // Exactly the first record date, without issuer in the message.
+    v2_reject(f.v2_issue_ix(0,1),Actor::Issuer,Some("RecordDatePassed"),&mut f);
+    v2_reject(f.v2_register_ix(newcomer),Actor::Issuer,Some("RecordDatePassed"),&mut f);
+    v2_reject(late.clone(),Actor::Outsider,Some("InsufficientReserve"),&mut f);
+    f.v2_fund(100_000_000); // Funding NOW is allowed; no pre-record funding claim.
+    let original=f.svm.get_account(&ad(f.vault)).unwrap();
+    for variant in 0..3 {
+        let mut unsafe_vault=original.clone();
+        let mut value=token::spl_token::state::Account::unpack(&unsafe_vault.data).unwrap();
+        if variant==0 {value.state=token::spl_token::state::AccountState::Frozen;}
+        else if variant==1 {value.delegate=COption::Some(pk(&f.outsider));value.delegated_amount=1;}
+        else {value.close_authority=COption::Some(pk(&f.outsider));}
+        token::spl_token::state::Account::pack(value,&mut unsafe_vault.data).unwrap();
+        f.svm.set_account(ad(f.vault),unsafe_vault).unwrap();
+        v2_reject(late.clone(),Actor::Outsider,Some(if variant==0 {"InvalidTerms"} else {"UnsafeTokenAuthority"}),&mut f);
+    }
+    f.svm.set_account(ad(f.vault),original).unwrap();
+    let mut foreign=late.clone();foreign.accounts[2].pubkey=ad(f.settlement);
+    v2_reject(foreign,Actor::Outsider,Some("ConstraintHasOne"),&mut f);
+    let mut foreign=late.clone();foreign.accounts[3].pubkey=ad(f.source);
+    v2_reject(foreign,Actor::Outsider,Some("ConstraintHasOne"),&mut f);
+    let before:BondV2=f.decode(f.bond);
+    f.run_without_issuer(late.clone(),Actor::Outsider).unwrap();
+    let after:BondV2=f.decode(f.bond);
+    assert_eq!((after.state,after.issuer,after.total_issued,after.holder_count,after.revision),
+        (ACTIVE,pk(&f.issuer),2,2,before.revision+1));
+    v2_reject(late,Actor::Outsider,Some("InvalidPhase"),&mut f);
+    v2_reject(f.v2_transfer_ix(0,1,1),Actor::Holder(0),Some("RecordDateLocked"),&mut f);
+    f.run_without_issuer(f.v2_begin_coupon_ix(0),Actor::Outsider).unwrap();
+    f.v2_complete(V2_COUPON,0);
+    assert_eq!(f.decode::<SnapshotPageV2>(f.v2_snapshot(V2_COUPON,0,0)).units,vec![2,0]);
+    f.now(210);
+    f.run(f.v2_register_ix(newcomer),Actor::Issuer).unwrap();
+    v2_reject(f.v2_pay_ix(newcomer,0,true),Actor::Outsider,Some("NoEntitlement"),&mut f);
+    f.run_without_issuer(f.v2_pay_ix(0,0,true),Actor::Outsider).unwrap();
+    v2_reject(f.v2_pay_ix(0,0,false),Actor::Holder(0),Some("AlreadyClaimed"),&mut f);
+    assert_eq!(f.balance(f.destinations[0]),100_000_000);
+}
+
+#[test]
+fn paged_v2_late_activation_after_maturity_recovers_original_rights_without_issuer() {
+    let mut empty=Fixture::new_v2(1,1);
+    empty.now(1000);
+    v2_reject(empty.v2_seal_by(pk(&empty.outsider)),Actor::Outsider,Some("InvalidTerms"),&mut empty);
+
+    let mut f=Fixture::new_v2(2,2);
+    f.run(f.v2_issue_ix(0,5),Actor::Issuer).unwrap();
+    f.run(f.v2_issue_ix(1,1),Actor::Issuer).unwrap();
+    f.v2_fund(6_600_000_000);
+    f.now(1001);
+    f.run_without_issuer(f.v2_seal_by(pk(&f.outsider)),Actor::Outsider).unwrap();
+    v2_reject(f.v2_begin_principal_ix(),Actor::Outsider,Some("PendingCoupon"),&mut f);
+    for id in 0..2 {
+        f.run_without_issuer(f.v2_begin_coupon_ix(id),Actor::Outsider).unwrap();
+        f.v2_complete(V2_COUPON,id);
+        assert_eq!(f.decode::<SnapshotPageV2>(f.v2_snapshot(V2_COUPON,id,0)).units,vec![5,1]);
+    }
+    f.run_without_issuer(f.v2_begin_principal_ix(),Actor::Outsider).unwrap();
+    f.v2_complete(V2_PRINCIPAL,0);
+    // Late activation still reaches the existing atomic burn/payment path.
+    let original=f.svm.get_account(&ad(f.vault)).unwrap();let mut frozen=original.clone();
+    let mut value=token::spl_token::state::Account::unpack(&frozen.data).unwrap();
+    value.state=token::spl_token::state::AccountState::Frozen;
+    token::spl_token::state::Account::pack(value,&mut frozen.data).unwrap();
+    f.svm.set_account(ad(f.vault),frozen).unwrap();
+    let before=v2_graph(&f);
+    let failed=f.run_without_issuer(f.v2_redeem_ix(0),Actor::Holder(0)).unwrap_err();
+    assert!(failed.meta.logs.iter().any(|line|line.contains("Instruction: Burn")));
+    assert!(failed.meta.logs.iter().any(|line|line.contains("Instruction: TransferChecked")));
+    assert_eq!(v2_graph(&f),before);
+    f.svm.set_account(ad(f.vault),original).unwrap();
+    f.run_without_issuer(f.v2_redeem_ix(0),Actor::Holder(0)).unwrap();
+    v2_reject(f.v2_redeem_ix(0),Actor::Holder(0),Some("AlreadyClaimed"),&mut f);
+    f.run_without_issuer(f.v2_redeem_ix(1),Actor::Holder(1)).unwrap();
+    assert_eq!(f.decode::<BondV2>(f.bond).state,REDEEMED);
+    assert_eq!(f.supply(),0);
+    assert_eq!(f.balance(f.vault),600_000_000,"principal retirement does not erase unpaid coupons");
+    for id in 0..2 {for holder in 0..2 {
+        f.run_without_issuer(f.v2_pay_ix(holder,id,true),Actor::Outsider).unwrap();
+        v2_reject(f.v2_pay_ix(holder,id,false),Actor::Holder(holder),Some("AlreadyClaimed"),&mut f);
+    }}
+    assert_eq!(f.balance(f.vault),0);
+    assert_eq!(f.balance(f.destinations[0]),5_500_000_000);
+    assert_eq!(f.balance(f.destinations[1]),1_100_000_000);
 }

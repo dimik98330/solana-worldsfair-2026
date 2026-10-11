@@ -11,14 +11,19 @@ const usage = ['BUFFER staging only: no upgrade, extend, close or mainnet. Defau
   '--authority=PUBKEY --buffer=PUBKEY --image=PATH --sha256=HASH --bytes=INTEGER',
   'To sign explicit buffer: --stage --authority-keypair=PATH [--buffer-keypair=PATH]',
   '--max-fees=LAMPORTS --max-tx-fee=LAMPORTS --max-rent=LAMPORTS',
-  'Optional: --max-transactions=N --max-run-ms=N --pace-ms=N',
+  'Optional: --max-transactions=N --max-run-ms=N --pace-ms=N --rpc-pace-ms=N (default1250, devnet minimum500)',
+  'Explicit opt-ins: --retry-expired-writes (one linked retry); --confirmed-progress (final hash remains finalized)',
   'Resume SAME id/network/image/authority/buffer. Preserve journal and explicit keys.'].join('\n');
 function args(argv: string[]) {
   const allowed = new Set(['network','rpc','genesis','id','authority','buffer','image','sha256','bytes',
-    'authority-keypair','buffer-keypair','max-fees','max-tx-fee','max-rent','max-transactions','max-run-ms','pace-ms']);
+    'authority-keypair','buffer-keypair','max-fees','max-tx-fee','max-rent','max-transactions','max-run-ms','pace-ms','rpc-pace-ms']);
   const values = new Map<string, string>(); let stage = false;
+  const policies = new Set<string>();
   for (const item of argv) {
     if (item === '--stage') { if (stage) throw Error('DUPLICATE_STAGE'); stage = true; continue; }
+    if (item === '--retry-expired-writes' || item === '--confirmed-progress') {
+      if (policies.has(item)) throw Error('DUPLICATE_POLICY'); policies.add(item); continue;
+    }
     const match = /^--([a-z][a-z0-9-]*)=(.+)$/.exec(item);
     if (!match || !allowed.has(match[1]) || values.has(match[1])) throw Error('INVALID_OR_DUPLICATE_ARGUMENT');
     values.set(match[1], match[2]);
@@ -29,7 +34,7 @@ function args(argv: string[]) {
     if (!text || !/^(0|[1-9][0-9]*)$/.test(text)) throw Error('INVALID_' + key.toUpperCase());
     const value = Number(text); if (!Number.isSafeInteger(value)) throw Error('UNSAFE_' + key.toUpperCase()); return value;
   };
-  return {values, stage, get, number};
+  return {values, stage, get, number, policies};
 }
 function safeFile(filename: string, maxBytes: number): Uint8Array {
   const file = path.resolve(filename);
@@ -64,15 +69,17 @@ function wait(ms: number, signal: AbortSignal) {
     signal.addEventListener('abort', abort, {once:true}); if (signal.aborted) abort();
   });
 }
-/** One request at a time, >=1250ms between EVERY devnet RPC start. No transport retries. */
-export function bufferHttpRpc(endpoint: string, network: BufferIntent['network']): BufferRpc {
+/** One request at a time; explicit devnet RPC pacing defaults1250ms, minimum500ms. No retries. */
+export function bufferHttpRpc(endpoint: string, network: BufferIntent['network'], rpcPaceMs = 1250): BufferRpc {
+  if (!Number.isSafeInteger(rpcPaceMs) || rpcPaceMs < (network === 'devnet' ? 500 : 0) || rpcPaceMs > 60_000)
+    throw Error('INVALID_BUFFER_RPC_PACE');
   let next = 0, lastStarted = 0, busy = false;
   return {endpoint, async request<T>(method: string, params: readonly unknown[], signal: AbortSignal): Promise<T> {
     if (busy) throw Error('CONCURRENT_BUFFER_RPC_REFUSED');
     busy = true;
     try {
       signal.throwIfAborted();
-      if (network === 'devnet') await wait(Math.max(0,1250 - (Date.now() - lastStarted)), signal);
+      if (network === 'devnet') await wait(Math.max(0,rpcPaceMs - (Date.now() - lastStarted)), signal);
       signal.throwIfAborted(); lastStarted = Date.now(); const id = ++next;
       const response = await fetch(endpoint, {method:'POST', headers:{'content-type':'application/json'},
         body:JSON.stringify({jsonrpc:'2.0',id,method,params}), redirect:'error', signal});
@@ -106,7 +113,7 @@ export function bufferHttpRpc(endpoint: string, network: BufferIntent['network']
 }
 export async function programBufferCli(argv: string[]): Promise<number> {
   if (argv.length === 1 && argv[0] === '--help') { console.log(usage); return 0; }
-  const {values,stage,get,number} = args(argv);
+  const {values,stage,get,number,policies} = args(argv);
   const image = safeFile(get('image'), 10 * 1024 * 1024), imageLength = number('bytes');
   const intent: BufferIntent = {version:1,id:get('id'),network:get('network') as BufferIntent['network'],
     endpoint:new URL(get('rpc')).href,expectedGenesis:get('genesis'),authorityAddress:address(get('authority')),
@@ -115,7 +122,7 @@ export async function programBufferCli(argv: string[]): Promise<number> {
     || image.length !== imageLength || !imageLength || bufferImageHash(image) !== intent.imageSha256
     || intent.bufferAddress === intent.authorityAddress) throw Error('BUFFER_IMAGE_OR_INTENT_INVALID');
   validateBufferEndpoint(intent);
-  const rpc = bufferHttpRpc(intent.endpoint,intent.network);
+  const rpc = bufferHttpRpc(intent.endpoint,intent.network,number('rpc-pace-ms',1250));
   const abort = new AbortController(), stop = () => abort.abort();
   process.once('SIGINT',stop); process.once('SIGTERM',stop);
   const request = <T>(method:string,params:readonly unknown[]) => rpc.request<T>(method,params,AbortSignal.any([abort.signal,AbortSignal.timeout(25000)]));
@@ -133,7 +140,8 @@ export async function programBufferCli(argv: string[]): Promise<number> {
     }
     console.log(JSON.stringify({mode:stage?'explicit-buffer-stage':'read-only',intent,existingBuffer:payload!==null,
       finalizedAccountSlot:String(account.context.slot),missingChunks,rentLamports:rent.toString(),payerLamports:balance.toString(),
-      programUpgrade:false,signerFilesRead:false}));
+      programUpgrade:false,signerFilesRead:false,retryExpiredWrites:policies.has('--retry-expired-writes'),
+      confirmedProgress:policies.has('--confirmed-progress')}));
     if (!stage) return 0;
     const maxFees=exactBufferU64(get('max-fees'),'MAX_FEES'),maxTxFee=exactBufferU64(get('max-tx-fee'),'MAX_TX_FEE'),maxRent=exactBufferU64(get('max-rent'),'MAX_RENT');
     if (maxFees===0n || maxTxFee===0n || maxRent < (payload ? 0n : rent)) throw Error('STAGE_BUDGET_INVALID');
@@ -144,6 +152,7 @@ export async function programBufferCli(argv: string[]): Promise<number> {
     const buffer=values.has('buffer-keypair')?await signer(get('buffer-keypair'),intent.bufferAddress):undefined;
     if (!payload && !buffer) throw Error('MISSING_EXPLICIT_NEW_BUFFER_SIGNER');
     const result=await runBufferStage({image,intent,authoritySigner:authority,bufferSigner:buffer,rpc,journal,signal:abort.signal,
+      retryExpiredWrites:policies.has('--retry-expired-writes'),confirmedProgress:policies.has('--confirmed-progress'),
       limits:{maxTotalFeeLamports:maxFees,maxTransactionFeeLamports:maxTxFee,maxRentLamports:maxRent,
         maxTransactions:number('max-transactions',2000),maxRunMs:number('max-run-ms',7200000),
         paceMs:number('pace-ms',2000),rpcTimeoutMs:25000,pollIntervalMs:1500,maxPolls:40},

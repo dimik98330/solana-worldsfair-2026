@@ -1,0 +1,197 @@
+/* Reference-led operating UI: quiet shell, contextual actions, readable records. */
+:root {
+ --background:#10141d;--panel:#151c28;--panel-subtle:#1c2635;--input:#111822;
+ --foreground:#eef1f6;--muted:#acb7c7;--border:#2a3546;--border-control:#62758d;
+ --primary:#416ee8;--primary-hover:#315dce;--primary-soft:#1e3053;--link:#a9c4ff;
+ --success:#96d6ba;--success-soft:#1b332d;--nav:#0c1018;--nav-surface:#18212e;
+ --nav-active:#202b3d;--nav-border:#252e3b;--nav-muted:#9ca9bb;
+ --radius-control:8px;--radius-panel:12px;--sidebar-width:232px;
+}
+.app-shell {background:var(--background);}
+.app-shell .sidebar {padding:28px 14px 20px;border-right-color:var(--nav-border);}
+.app-shell .brand {padding:0 12px;}
+.app-shell .sidebar .brand-lockup {width:176px;}
+.app-shell .sidebar nav {gap:3px;margin-top:32px;}
+.nav-section-label {font-size:13px;color:var(--nav-muted);font-weight:500;padding:20px 12px 10px;}
+.nav-section-label:first-child {padding-top:0;}
+.app-shell .sidebar .nav-item {min-height:46px;border:0;border-radius:8px;padding:10px 12px;color:var(--nav-muted);font-size:15px;font-weight:500;gap:11px;}
+.app-shell .sidebar .nav-item svg {width:18px;height:18px;stroke-width:1.7;}
+.app-shell .sidebar .nav-item.active {background:var(--nav-active);color:var(--foreground);font-weight:600;}
+.app-shell .sidebar .nav-item:hover {background:var(--nav-surface);color:var(--foreground);}
+.app-shell .nav-arrow {display:none;}
+.app-shell .sidebar-proof {font-size:14px;min-height:44px;padding:12px;text-decoration:none;border:0;color:var(--nav-muted);}
+.app-shell .sidebar-proof:hover {background:var(--nav-surface);color:var(--foreground);}
+.app-shell .unified-toolbar {min-height:70px;padding:12px 32px;background:var(--background);border-color:var(--border);gap:16px;}
+.app-shell .shell-issue {display:flex;align-items:center;flex-wrap:wrap;gap:6px 20px;min-width:0;}
+.app-shell .selected-issue-name {font-size:14px;font-weight:550;gap:10px;}
+.app-shell .selected-issue-name>svg {box-sizing:border-box;width:18px;height:18px;padding:0;border:0;color:var(--muted);background:none;}
+.app-shell .network-chip {min-height:36px;padding:6px 8px;border:0;background:none;font-size:13px;color:var(--muted);border-radius:6px;}
+.app-shell .network-chip:hover {background:var(--panel-subtle);}
+.network-dot {width:5px;height:5px;border-radius:50%;background:var(--muted);flex-shrink:0;}
+.network-dot.live {background:var(--success);}.network-dot.snapshot {background:var(--warning);}.network-dot.off {background:var(--error);}
+.app-shell .unified-toolbar .topbar-actions {gap:6px;}
+.app-shell .language-switch {padding:0;border:0;background:none;gap:0;}
+.app-shell .language-switch button {min-height:36px;width:36px;padding:4px;border-radius:6px;font-size:13px;color:var(--muted);}
+.app-shell .language-switch button[aria-pressed=true] {background:var(--panel-subtle);color:var(--foreground);}
+.app-shell .unified-toolbar .toolbar-command {min-height:36px;min-width:36px;width:36px;padding:0;border:0;background:none;color:var(--muted);}
+.app-shell .toolbar-command-label {display:none;}
+.app-shell .unified-toolbar .toolbar-command:hover {background:var(--panel-subtle);color:var(--foreground);}
+.app-shell .unified-toolbar .account-trigger {min-height:38px;background:var(--panel-subtle);border-color:transparent;padding:7px 12px;font-size:14px;border-radius:8px;}
+.app-shell .main-content {width:100%;max-width:none;padding:32px;}
+.app-shell h1 {font-size:30px;line-height:1.25;font-weight:650;letter-spacing:-.025em;}
+.app-shell h2 {letter-spacing:-.02em;}
+.app-shell .page-heading {align-items:center;gap:16px;margin-bottom:28px;}
+.app-shell .page-heading p,.app-shell .payments-heading p {font-size:15px;margin-top:7px;line-height:1.55;color:var(--muted);}
+.app-shell .button {min-height:40px;border-radius:8px;padding:8px 14px;font-size:15px;font-weight:550;gap:8px;box-shadow:none;line-height:1.45;}
+.app-shell .button svg,.app-shell .icon-button svg {width:18px;height:18px;stroke-width:1.7;}
+.app-shell .button.secondary {background:var(--panel-subtle);border:1px solid transparent;color:var(--foreground);}
+.app-shell .button.secondary:hover:not(:disabled) {background:#28364a;border-color:transparent;}
+.app-shell .button.primary {background:var(--primary);border:1px solid transparent;color:#fff;}
+.app-shell .button.primary:hover:not(:disabled) {background:var(--primary-hover);}
+.app-shell .button.ghost {border:1px solid transparent;background:transparent;color:var(--muted);}
+.app-shell .button.ghost:hover:not(:disabled) {background:var(--panel-subtle);color:var(--foreground);border-color:transparent;}
+.app-shell .button:disabled {opacity:.48;}
+.app-shell .button:active:not(:disabled) {transform:translateY(1px);}
+.app-shell .icon-button {border-radius:7px;background:transparent;}
+.app-shell .badge {border:0;border-radius:5px;font-family:var(--font-ui);font-size:13px;font-weight:500;text-transform:none;letter-spacing:0;padding:3px 7px;line-height:1.5;min-height:0;}
+.app-shell .badge.success {background:var(--success-soft);color:var(--success);}
+.app-shell .money,.app-shell .number,.app-shell .numeric {font-family:var(--font-ui);font-variant-numeric:tabular-nums lining-nums;letter-spacing:-.02em;}
+.app-shell .money {font-weight:600;}
+.app-shell .panel {border-color:var(--border);border-radius:12px;}
+.app-shell .panel-heading {padding:18px 20px;background:transparent;}
+.app-shell .panel-heading h2 {font-size:18px;text-transform:none;letter-spacing:-.015em;}
+.app-shell .panel-description {font-size:14px;}
+.app-shell .address {color:var(--muted);font-size:13px;}
+.app-shell .address .copy {height:32px;min-height:32px;width:32px;min-width:32px;padding:5px;background:transparent;border:0;border-radius:6px;}
+.app-shell .address .copy:hover {background:var(--panel-subtle);}
+.app-shell .address .copy svg {width:15px;height:15px;}
+.app-shell .holder-name-link {color:var(--foreground);text-decoration:none;font-weight:550;}
+.app-shell .holder-name-link:hover {text-decoration:underline;color:var(--link);}
+.app-shell .text-link {color:var(--link);text-decoration:none;}
+.app-shell .text-link:hover {text-decoration:underline;}
+.app-shell input,.app-shell select,.app-shell textarea {background-color:var(--input);border-radius:8px;font-size:16px;}
+.app-shell :is(input,select,textarea):focus-visible {outline:none;border-color:var(--link);box-shadow:inset 0 0 0 1px var(--link);}
+.app-shell .registry-search:focus-within,.app-shell .payment-search:focus-within {border-color:var(--link);box-shadow:inset 0 0 0 1px var(--link);}
+.app-shell .registry-search input:focus-visible,.app-shell .payment-search input:focus-visible {box-shadow:none;}
+.app-shell .display-date {font-family:var(--font-ui);font-variant-numeric:tabular-nums;font-size:15px;}
+.app-shell .display-time {color:var(--muted);font-size:14px;}
+.app-shell details>summary {background:transparent;border:0;border-radius:6px;min-height:42px;padding:10px 0;font-size:15px;font-weight:550;color:var(--muted);}
+.app-shell details>summary:hover {background:transparent;color:var(--foreground);}
+.app-shell .dialog {border:0;border-radius:14px;background:var(--panel);box-shadow:0 24px 80px #0008;overscroll-behavior:contain;}
+.app-shell .dialog-head {padding:22px 24px;align-items:center;background:transparent;}
+.app-shell .dialog-head h2 {font-size:21px;}
+.app-shell .dialog-head .icon-button {width:36px;height:36px;margin:0;min-width:36px;background:transparent;border:0;color:var(--muted);}
+.app-shell .dialog-head .icon-button:hover {background:var(--panel-subtle);color:var(--foreground);}
+.app-shell .dialog-body {padding:24px;}
+.app-shell .drawer {border-radius:14px 0 0 14px;}
+.app-shell .receipt-filter {display:flex;gap:4px;padding:0;background:transparent;border:0;}
+.app-shell .receipt-filter button {font-family:var(--font-ui);min-height:38px;border:0;border-radius:7px;font-size:14px;text-transform:none;letter-spacing:0;}
+.app-shell .receipt-filter button[aria-pressed=true] {background:var(--panel-subtle);}
+.app-shell .ecc-receipts>li {padding:18px 24px;}
+.app-shell .receipt-copy strong {font-size:16px;}
+.workspace-view-switch {display:flex;gap:24px;border-bottom:1px solid var(--border);width:100%;}
+.workspace-view-switch button {background:transparent;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:12px 0;min-height:46px;font-size:16px;font-weight:550;}
+.workspace-view-switch button[aria-pressed=true] {border-bottom-color:var(--link);color:var(--foreground);}
+.workspace-view-switch button:hover:not(:disabled) {color:var(--foreground);}
+.workspace-view-switch button:disabled {opacity:.45;}
+.app-shell .registry-view {display:flex;flex-direction:column;gap:22px;}
+.app-shell .registry-view>.panel {border:0;border-radius:0;background:transparent;overflow:visible;}
+.app-shell .registry-view .panel-heading {padding:0 0 18px;border:0;align-items:center;}
+.app-shell .registry-view .registry-toolbar {padding:0 0 18px;background:transparent;border:0;}
+.app-shell .registry-view .registry-search {width:min(340px,100%);}
+.app-shell .registry-view .positions-table th,.app-shell .entitlement-table th {padding:14px 20px;background:transparent;font-size:14px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--muted);}
+.app-shell .registry-view .positions-table td {padding:12px 20px;}
+.app-shell .registry-view .holder-number,.app-shell .payment-holder-icon {width:26px;height:26px;min-width:26px;flex-basis:26px;background:none;border:0;border-radius:0;color:var(--muted);}
+.app-shell .registry-view .holder-cell {gap:12px;}
+.app-shell .registry-view .holder-name-link {font-size:17px;min-height:28px;}
+.app-shell .registry-view .snapshot-disclosure {padding:14px 0;border-top:1px solid var(--border);}
+.app-shell .registry-view .section-summary h2 {font-size:18px;}
+.app-shell .registry-record-choice {gap:18px;}
+.app-shell .payment-register-toolbar {padding:16px 0;background:transparent;gap:16px;border-top:1px solid var(--border);}
+.app-shell .payment-register-count {font-size:14px;}
+.app-shell .payment-search,.app-shell .payment-status-filter {background:var(--input);border-radius:8px;}
+.app-shell .table-scroll {border-radius:0;}
+.app-shell .entitlement-table td {padding:16px 20px;}
+.app-shell .entitlement-table tbody tr {background:transparent;}
+.app-shell .entitlement-table tbody tr:hover {background:var(--panel);}
+.app-shell .entitlement-table .holder-name-link {font-size:17px;}
+.app-shell .table-row-action .button {font-size:14px;min-height:36px;padding:7px 10px;}
+.app-shell .payments-layout {grid-template-columns:minmax(0,1fr) 272px;gap:32px;}
+.app-shell .payments-ledger {background:transparent;border:0;border-radius:0;}
+.app-shell .payments-ledger-toolbar {background:transparent;border-radius:0;padding:0 0 18px;}
+.app-shell .payments-switch {border:0;background:none;padding:0;gap:20px;}
+.app-shell .payments-switch button {border:0;border-bottom:2px solid transparent;border-radius:0;background:none;padding:10px 0;min-height:44px;font-size:16px;}
+.app-shell .payments-switch button[aria-pressed=true] {background:none;color:var(--foreground);border-bottom-color:var(--link);}
+.app-shell .payments-selection {padding:22px 0;grid-template-columns:minmax(180px,.7fr) minmax(0,1fr);gap:24px;}
+.app-shell .payments-selection-title {gap:8px;}
+.app-shell .payments-selection-title h2 {font-size:22px;}
+.app-shell .payments-reconciliation {padding:20px 0;margin-bottom:8px;background:transparent;border-top:0;gap:28px;}
+.app-shell .payments-reconciliation dd {font-size:28px;}
+.app-shell .payments-inspector {border:0;border-left:1px solid var(--border);border-radius:0;background:transparent;padding:4px 0 0 24px;}
+.app-shell .payments-complete {padding-bottom:20px;}
+.app-shell .payments-complete h2,.app-shell .payments-holder-action h2 {font-size:16px;}
+.app-shell .payments-complete p {font-size:14px;}
+.app-shell .overview-payment-book,.app-shell .overview-voting-book,.app-shell .overview-terms,.app-shell .overview-receipts {background:transparent;border:0;border-radius:0;}
+.app-shell .overview-workbench {gap:32px;grid-template-columns:minmax(0,1fr) 300px;}
+.app-shell .overview-issue-inspector {padding-left:24px;border-left:1px solid var(--border);}
+.app-shell .overview-section-heading {background:transparent;padding:16px 0;}
+.app-shell .overview-payment-record {padding:24px 0;}
+.app-shell .overview-payment-values dd {font-size:30px;}
+.app-shell .overview-payment-values>div {border:0;}
+.app-shell .overview-payment-identity>svg {width:20px;color:var(--muted);}
+.app-shell .overview-payment-identity h3 {font-size:20px;}
+.app-shell .overview-payment-footer {padding-top:8px;}
+.app-shell .overview-timezone {background:none;border:0;padding:14px 0;}
+.app-shell .overview-voting-book {border-top:1px solid var(--border);padding:24px 0;}
+.app-shell .overview-terms {padding:16px 0;}
+.app-shell .overview-terms>header {margin:0 0 20px;padding:0;border:0;background:transparent;}
+.app-shell .overview-issue-facts {margin-block:20px;}
+.app-shell .overview-issue-facts dd {font-weight:550;}
+.app-shell .overview-issue-addresses {border:0;}
+.app-shell .overview-receipts li {padding:14px 0;}
+.app-shell .overview-receipts>.button {border:0;padding-left:0;}
+@media(min-width:1800px){.app-shell .main-content{padding:40px 48px}.app-shell .unified-toolbar{padding-inline:48px}.app-shell .payments-layout{grid-template-columns:minmax(0,1fr) 320px}.app-shell .overview-workbench{grid-template-columns:minmax(0,1fr) 360px}.app-shell .overview-payment-values{grid-template-columns:repeat(3,minmax(0,260px));gap:32px}}
+@media(max-width:1200px){.app-shell .payments-layout,.app-shell .overview-workbench{grid-template-columns:minmax(0,1fr)}.app-shell .payments-inspector,.app-shell .overview-issue-inspector{border-left:0;border-top:1px solid var(--border);padding:22px 0 0}.app-shell .overview-issue-inspector{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.app-shell .registry-view .positions-table td{padding:0}.app-shell .registry-view .positions-table tr{padding:18px 0;gap:12px 20px}.app-shell .registry-view .positions-table td:nth-child(2){grid-column:1}.app-shell .registry-view .positions-table td:nth-child(3){grid-column:2}.app-shell .registry-view .positions-table td.numeric{text-align:left}.app-shell .registry-view .positions-table td:last-child .button{padding-left:0}.app-shell .registry-view .positions-table td:first-child{grid-column:1/-1}}
+@media(max-width:800px){
+ .app-shell .sidebar{padding:14px 18px}.app-shell .sidebar .brand{padding:0}.app-shell .sidebar .brand-lockup{width:148px}.app-shell .sidebar nav{margin-top:16px}.nav-section-label{display:none}.app-shell .sidebar .nav-item{min-height:44px}
+ .app-shell .unified-toolbar{padding:8px 18px;min-height:96px;gap:4px}.app-shell .shell-issue{gap:6px}.app-shell .selected-issue-name{font-size:13px;min-width:0;flex:1}.app-shell .selected-issue-name>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.app-shell .network-chip{font-size:13px}.app-shell .language-switch button,.app-shell .unified-toolbar .toolbar-command{min-height:44px;width:38px;min-width:38px}.app-shell .unified-toolbar .account-trigger{min-height:44px;padding:8px 10px;font-size:14px}
+ .app-shell .main-content{padding:24px 18px}.app-shell h1{font-size:27px}.app-shell .button{min-height:44px}.app-shell .page-heading{margin-bottom:22px;gap:12px}.app-shell .page-heading p{font-size:15px}.app-shell .address .copy{height:40px;min-height:40px;width:40px;min-width:40px}.app-shell .dialog-head .icon-button{height:44px;width:44px;min-width:44px}.app-shell .dialog-head,.app-shell .dialog-body{padding:20px}.app-shell .dialog-head h2{font-size:20px}
+ .app-shell .registry-view{gap:18px}.app-shell .registry-record-choice{width:100%;justify-content:space-between;flex-wrap:wrap}.app-shell .registry-view .panel-heading{flex-wrap:wrap;gap:14px}.app-shell .registry-view .registry-toolbar{padding-bottom:16px}.app-shell .registry-search{width:100%}.app-shell .payment-register-toolbar{padding:14px 0}.app-shell .payments-selection{grid-template-columns:1fr;gap:16px;padding-block:18px}.app-shell .payments-selection-title{flex-direction:row;align-items:center;flex-wrap:wrap}.app-shell .payments-dates{gap:16px}.app-shell .payments-dates dt{font-size:14px}.app-shell .payments-dates dd{font-size:15px}.app-shell .payments-reconciliation{gap:12px;padding:14px 0}.app-shell .payments-reconciliation dd{font-size:25px}.app-shell .entitlement-table td{padding:0}.app-shell .entitlement-table tr{padding:18px 0}.app-shell .table-row-action .button{min-height:44px}
+}
+@media(max-width:600px){
+ .app-shell .page-heading:has(.page-history-action){display:grid;grid-template-columns:minmax(0,1fr) auto}.app-shell .page-heading:has(.page-history-action)>div{display:contents}.app-shell .page-heading h1{grid-column:1;grid-row:1}.app-shell .page-heading p{grid-column:1/-1;grid-row:2}.app-shell .page-heading .page-history-action{grid-column:2;grid-row:1;padding-inline:10px;min-width:44px;background:transparent;color:var(--muted)}.app-shell .page-history-action>svg{display:none}
+ .app-shell .page-heading:has(+ .premium-portfolio) p{display:none}.workspace-view-switch{gap:20px}.workspace-view-switch button{font-size:15px;white-space:normal;text-align:left}.app-shell .overview-issue-inspector{grid-template-columns:1fr}.app-shell .overview-payment-values{grid-template-columns:1fr;gap:0}.app-shell .overview-payment-values>div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:8px 0;border:0}.app-shell .overview-payment-values dd{margin:0;overflow:visible;font-size:25px}.app-shell .overview-payment-values dt{font-size:15px}.app-shell .overview-payment-footer{align-items:flex-start;flex-direction:column}.app-shell .overview-payment-identity{flex-wrap:wrap}.app-shell .overview-payment-identity>.badge{margin-left:32px}
+}
+@media(max-width:360px){.app-shell .main-content{padding:22px 12px}.app-shell .unified-toolbar{padding-inline:10px}.app-shell .unified-toolbar .topbar-actions{gap:3px}.app-shell .language-switch button{width:32px}.app-shell .unified-toolbar .account-trigger{font-size:13px}.app-shell .dialog{width:calc(100vw - 24px)}}
+@media(prefers-reduced-motion:no-preference){.app-shell .button,.app-shell .nav-item{transition:background-color 130ms ease,color 130ms ease,border-color 130ms ease}.app-shell .icon-button{transition:background-color 130ms ease}}
+.registry-record-date {display:grid;gap:4px;}
+.registry-record-date>span {font-size:13px;color:var(--muted);}
+.app-shell .registry-view .registry-record-choice {align-items:center;}
+/* Repair from rendered desktop/tablet inspection. */
+.app-shell .payments-inspector {display:flex;flex-direction:column;gap:24px;min-width:0;}
+.app-shell .payments-inspector>section,.app-shell .payments-inspector>details {width:100%;min-width:0;}
+.app-shell .payments-inspector h2 {display:flex;align-items:center;gap:8px;}
+.app-shell .overview-lifecycle li.complete .overview-stage-dot {background:var(--success-soft);color:var(--success);border-color:transparent;}
+@media(min-width:641px) and (max-width:900px){
+ .app-shell .entitlement-table td{padding:14px 12px;}
+ .app-shell .entitlement-table th{padding:12px;}
+ .app-shell .entitlement-table td:first-child{padding-left:0;}
+ .app-shell .entitlement-table .holder-cell{gap:8px;}
+}
+/* Owner removed repeated page title/intro bands; commands live with their work. */
+.registry-view-toolbar {display:flex;align-items:center;gap:16px;min-width:0;}
+.registry-view-toolbar .workspace-view-switch {flex:1;min-width:0;}
+.registry-view-toolbar>.button {flex-shrink:0;}
+.issuer-command-row {display:flex;justify-content:flex-end;align-items:center;gap:16px;}
+.issuer-command-row:has(h1:not(.sr-only)) {justify-content:space-between;flex-wrap:wrap;}
+.clear-section-heading {display:flex;align-items:flex-start;justify-content:space-between;gap:20px;}
+.clear-section-heading>.button {flex-shrink:0;}
+.app-shell .premium-portfolio .portfolio-holder-toolbar {padding-top:0;}
+@media(max-width:600px){
+ .registry-view-toolbar {flex-wrap:wrap;gap:4px;}
+ .registry-view-toolbar .workspace-view-switch {flex:1 1 100%;}
+ .registry-view-toolbar>.button {margin-left:auto;}
+ .clear-section-heading {flex-wrap:wrap;gap:14px;}
+ .app-shell .payments-ledger-toolbar>.button {margin-left:auto;}
+}
