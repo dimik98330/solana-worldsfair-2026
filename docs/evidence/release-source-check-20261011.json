@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-11T19:02:41.729Z",
+  "kind": "Lean publication and reviewed source fixes",
+  "baseRevision": "0e011760b2ac8d562936fa97e651057322c1a940",
+  "checks": {
+    "node": {
+      "tests": 422,
+      "passed": 412,
+      "failed": 0,
+      "skipped": 10,
+      "scope": "Full npm test; optional PostgreSQL fixtures skipped without explicit fixture configuration"
+    },
+    "ui": {
+      "tests": 110,
+      "passed": 110,
+      "failed": 0
+    },
+    "build": {
+      "passed": true,
+      "entryJsBytes": 593136,
+      "gzipApproxBytes": 169580,
+      "warning": "Entry chunk exceeds500kB; no warning suppressed"
+    },
+    "priorProgram": {
+      "unitPassed": 3,
+      "runtimePassed": 22,
+      "scope": "Previously rebuilt unchanged financial program, separate verification cohort"
+    }
+  },
+  "review": {
+    "mode": "ProofPilot coach with disjoint source review",
+    "openFindings": 0,
+    "repairs": [
+      {
+        "finding": "Published BUFFER pace argument used an invalid name",
+        "fix": "Corrected to --rpc-pace-ms=500"
+      }
+    ],
+    "bufferTargetedTests": 50,
+    "reproductionReportTargetedTests": 7,
+    "scope": "Independent code reviews bind the listed hashes. No official score, public deployment or human-wallet certificate."
+  },
+  "publication": {
+    "markdown": 37,
+    "filesBeforeThisEvidence": 687,
+    "relativeLinks": 235,
+    "brokenLinks": 0,
+    "changedTextSecretPatternHits": 0,
+    "archiveManifest": "publication-cleanup-20261011.json",
+    "physicalArchiveVerified": true,
+    "historyPreserved": true
+  },
+  "acceptedReadme": {
+    "englishSha256": "8d7cd1c26e28d19dee2d556a72a9b9556ed9f52dee89fe112ceb7256713df9e2",
+    "russianSha256": "e8590b7aaa453768318b9a8d640d8a2ccc35da86f8a8dffcfd16bdbaed7c8948",
+    "scope": "Unchanged previously accepted bilingual material; public v4 deployment remains pending"
+  },
+  "program": {
+    "programId": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+    "bytes": 960296,
+    "sha256": "257a89b28a427863b4ed8adf26eaaed868f15d8d7a290970200f9cc81a33106c"
+  },
+  "inputs": [
+    {
+      "file": "scripts/program-buffer.ts",
+      "sha256": "ee819263fc558bbf1b76b11367a8a2c6dc7c5c061a9e09753f9419dcfe0cda54"
+    },
+    {
+      "file": "scripts/program-buffer-cli.ts",
+      "sha256": "4e674c44f1d4798bb2feae3981f7b158fa0785e97bd9ba8914152c1d02e56380"
+    },
+    {
+      "file": "scripts/reproduce-source.mjs",
+      "sha256": "cc8f08e670858645be7c5b32f6fc40c46ff2fde4aa08d20bc18b61f3f4a97ee3"
+    },
+    {
+      "file": "scripts/build-research-report.mjs",
+      "sha256": "681231e7309d4672993bdf9ea2b7ba1bced80c0f23a1813c25c48559288732a5"
+    },
+    {
+      "file": "tests/program-buffer.test.ts",
+      "sha256": "bccec1609cc045d0ce9c413d3d99bac4dae7f0c66ebe6aa6ef9e289f4228b564"
+    },
+    {
+      "file": "tests/program-buffer-journal.test.ts",
+      "sha256": "2911384bcd893409b924c722f4b187fcc0c1bb86fda6b66de1a965e863c7b804"
+    },
+    {
+      "file": "tests/program-buffer-cli.test.ts",
+      "sha256": "7a7601e8d222a751cebbb9a90ccdacd1fe04106311a4318a2bd24acbcc020801"
+    },
+    {
+      "file": "tests/source-reproduction.test.ts",
+      "sha256": "8375679a38808cb1b0dbf23d2c5362a1be2c0d5e912f5502b85c6d58430aa469"
+    },
+    {
+      "file": "tests/report.test.ts",
+      "sha256": "cce3efd7c239a486dc83a7a9fa6d4738d1687f9dea613460b1f5591c80082760"
+    }
+  ],
+  "limits": [
+    "Public Render/program v4 rollout is still pending at this checkpoint",
+    "Ordinary human Phantom execution, eligibility and final organizer submission remain unverified",
+    "No original runtime ledgers, signers, databases, provider credentials or raw voice files are published"
+  ]
+}

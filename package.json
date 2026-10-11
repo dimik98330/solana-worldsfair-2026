@@ -21,7 +21,6 @@
     "localnet": "pwsh -NoProfile -File scripts/localnet.ps1",
     "demo:seed": "node --import tsx scripts/demo-seed.ts",
     "smoke": "node --import tsx scripts/full-smoke.ts",
-    "submission:preview": "node scripts/preview-submission.mjs",
     "verify:http": "node scripts/verify-http.mjs",
     "verify:hosted": "node scripts/verify-hosted.mjs",
     "smoke:issuer": "node --import tsx scripts/issuer-smoke.ts",

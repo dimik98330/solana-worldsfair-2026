@@ -203,9 +203,9 @@ components:
 
 ## Source and verification
 
-Final shared layer: apps/web/src/premium.css. Route-specific files: issuer-premium.css, portfolio-vote-premium.css, settings-premium.css, registry.css and judge-overview.css. Old terminal.css is not imported. Existing foundation files remain; no wholesale dependency migration.
+Final shared layer: apps/web/src/premium.css. Route-specific files: issuer-premium.css, portfolio-vote-premium.css, settings-premium.css, registry.css and judge-overview.css. The unused [terminal.css](https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/apps/web/src/terminal.css) is archived. Existing foundation files remain; no wholesale dependency migration.
 
-Sources and concrete decisions: docs/frontend/premium-reference.html. Mercury demo was rendered and inspected; Linear's official article and Ramp help documentation were read. Linear image loading failed and is not claimed as visual inspection. Evidence: .local/qa/reference-rebuild-20261011/. See docs/design-qa.md for checks and repairs. Owner acceptance is pending. Preview remains http://127.0.0.1:4180, read-only historical data.
+Sources and concrete decisions were collected in the local historical reference docs/frontend/premium-reference.html. Mercury demo was rendered and inspected; Linear's official article and Ramp help documentation were read. Linear image loading failed and is not claimed as visual inspection. Evidence: .local/qa/reference-rebuild-20261011/. See docs/design-qa.md for checks and repairs. Preview remains http://127.0.0.1:4180, read-only historical data; current network deployment is recorded separately.
 
 ## Latest owner correction — overview clarity,11October2026
 

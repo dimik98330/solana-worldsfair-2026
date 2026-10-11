@@ -1,0 +1,201 @@
+{
+  "at": "2026-10-11T18:54:07.2519782Z",
+  "historicalRevision": "56841f415bcf851b8096e57f1e8f3640c788c59a",
+  "action": "Archive superseded media, abandoned static submission page and unused concept/CSS/report files",
+  "files": [
+    {
+      "path": "artifacts/demo/README.md",
+      "bytes": 6844,
+      "sha256": "23ce46faad19a21f9bfe0f869906bced2388cf0a6903afcdf3b2ec658d779fd2",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/README.md"
+    },
+    {
+      "path": "artifacts/demo/bondtrace-product-demo.en.srt",
+      "bytes": 3693,
+      "sha256": "503d27cf4c4826141707ef17c1fb652cc8419e331a512fa7c2c0ea22cdaddeed",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/bondtrace-product-demo.en.srt"
+    },
+    {
+      "path": "artifacts/demo/bondtrace-product-demo.en.vtt",
+      "bytes": 3703,
+      "sha256": "22181fcd09664c97756fcfcd0d4ec946f0ef52958ddad9e1f9f158d9526e2fbd",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/bondtrace-product-demo.en.vtt"
+    },
+    {
+      "path": "artifacts/demo/bondtrace-product-demo.mp4",
+      "bytes": 8326931,
+      "sha256": "dea318affc6ab6c1286f2a2cf749ce8e4d6348491e32f75e3b6fd41c57b6440c",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/bondtrace-product-demo.mp4"
+    },
+    {
+      "path": "artifacts/demo/capture_clips.py",
+      "bytes": 3280,
+      "sha256": "f78f954411ac735c6734da31873348c9eb35c0a5b796b05b029af0085bd72119",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/capture_clips.py"
+    },
+    {
+      "path": "artifacts/demo/evidence/browser-cycle-localnet-2026-10-07.json",
+      "bytes": 11936,
+      "sha256": "b0072ca7eeb66171cdadc3f7c8fe81cff0df86498bb107c5f562e60a878bd9c7",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/evidence/browser-cycle-localnet-2026-10-07.json"
+    },
+    {
+      "path": "artifacts/demo/evidence/full-smoke-localnet-2026-10-07.json",
+      "bytes": 7940,
+      "sha256": "0c339d9c5b13f8f921fec764008a4be754c836871da79607109fd1a5adaff993",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/evidence/full-smoke-localnet-2026-10-07.json"
+    },
+    {
+      "path": "artifacts/demo/final-assets.json",
+      "bytes": 3288,
+      "sha256": "4e547727f5c60c5934ecd7fdbc4f121310511e6c30ac856d38eab4307ac132ba",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/final-assets.json"
+    },
+    {
+      "path": "artifacts/demo/frozen-inputs.json",
+      "bytes": 3020,
+      "sha256": "9d43be467322a4141e3e4b08529c0c38914e04cc00259905c95cdb31487f03da",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/frozen-inputs.json"
+    },
+    {
+      "path": "artifacts/demo/input-provenance.json",
+      "bytes": 8165,
+      "sha256": "9900764888fe2b64d13e3d1d2762a364323f3955d7b5b02b93b57f97196cfd79",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/input-provenance.json"
+    },
+    {
+      "path": "artifacts/demo/narrate.ps1",
+      "bytes": 1399,
+      "sha256": "69e950253855bbe2f6082d8354c6cdee4b7de5d7666e7b913b09c813b9056c69",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/narrate.ps1"
+    },
+    {
+      "path": "artifacts/demo/poster.png",
+      "bytes": 444624,
+      "sha256": "1f24f86f80e6ac62f60d0f51d4a1ec40a0bb5e68ee3c55415c2ec038053a5154",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/poster.png"
+    },
+    {
+      "path": "artifacts/demo/release-20261011/bondtrace-v4-localnet.mp4",
+      "bytes": 1314625,
+      "sha256": "1d3b01b3751d2538a0844cfecadb44370f70e9165503686e38e7fc935543c6e9",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/release-20261011/bondtrace-v4-localnet.mp4"
+    },
+    {
+      "path": "artifacts/demo/release-20261011/captions.en.vtt",
+      "bytes": 1255,
+      "sha256": "8dfba432ba64618385c177092b8325b68e40132fff5ed8e5099385a67d034425",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/release-20261011/captions.en.vtt"
+    },
+    {
+      "path": "artifacts/demo/release-20261011/provenance.json",
+      "bytes": 3468,
+      "sha256": "6f7b62fce9127c2e361de96cb4aa1949949881bab267bacfc9d4871de7db22a9",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/release-20261011/provenance.json"
+    },
+    {
+      "path": "artifacts/demo/render-validation.json",
+      "bytes": 5398,
+      "sha256": "c6123f2555ed8285e140e06f2adbc946d285129d643c45409155efdc1674ae3e",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/render-validation.json"
+    },
+    {
+      "path": "artifacts/demo/render_demo.py",
+      "bytes": 18895,
+      "sha256": "fa9da71e77079419c9422124c3328a9f050d8d786551ab058adb7c8de54b4ae2",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/render_demo.py"
+    },
+    {
+      "path": "artifacts/demo/scenes.draft.json",
+      "bytes": 8139,
+      "sha256": "cdd5ef46090d55dabf84ea87280692e04832e396680c166ddbcea5e8a02923d6",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/scenes.draft.json"
+    },
+    {
+      "path": "artifacts/demo/scenes.json",
+      "bytes": 11242,
+      "sha256": "2edcd4b6ccf5c38da3e7095902fed4e68ca5a776e12774011caec56ad12c37c6",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/demo/scenes.json"
+    },
+    {
+      "path": "artifacts/submission/judge-demo/index.html",
+      "bytes": 7100,
+      "sha256": "4d9df0a41e1dea36d8434a18890c3641f054f00a7a4b87ca261c2db457401d2e",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/submission/judge-demo/index.html"
+    },
+    {
+      "path": "artifacts/submission/judge-demo/judge.css",
+      "bytes": 6096,
+      "sha256": "898927b563785ce328c2dee4b87d84af6e95e7b407711c948d254d862b0ec467",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/submission/judge-demo/judge.css"
+    },
+    {
+      "path": "artifacts/submission/judge-demo/judge.js",
+      "bytes": 3651,
+      "sha256": "cbf105bded8bb07c9d5f86f34171406952989e4236ee5ef60ff80a195edc729d",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/submission/judge-demo/judge.js"
+    },
+    {
+      "path": "artifacts/submission/kase-fields.json",
+      "bytes": 9704,
+      "sha256": "a024985e891d1ceda13039f89532734b2692be942cf4a8b725351e19edd0d689",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/artifacts/submission/kase-fields.json"
+    },
+    {
+      "path": "index.html",
+      "bytes": 9788,
+      "sha256": "f276b4c8af11bd8e023da96af4794b300e54d244b3bb3f92c4f9b468cac17d5d",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/index.html"
+    },
+    {
+      "path": ".nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/.nojekyll"
+    },
+    {
+      "path": "scripts/preview-submission.mjs",
+      "bytes": 2365,
+      "sha256": "e7d97bab55fb16b0b3e00c12b93bb691b47c6f9a66e8d515944881b8b86bc348",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/scripts/preview-submission.mjs"
+    },
+    {
+      "path": "programs/bondtrace/tooling/program-review.html",
+      "bytes": 3780,
+      "sha256": "2726ae27ceb2658981e9ca37a2d3e234202e86bdf9f8c10f45f50f1b42fa6ca4",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/programs/bondtrace/tooling/program-review.html"
+    },
+    {
+      "path": "apps/web/src/terminal.css",
+      "bytes": 6742,
+      "sha256": "1b5387e49d8e5074a615ef42fed3d1807cf15376650fd97012cec0568c15c8ce",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/apps/web/src/terminal.css"
+    },
+    {
+      "path": "docs/evidence/ui/ecc-redesign-20261008/payment-direction-concept.png",
+      "bytes": 1432821,
+      "sha256": "38dca79e35277a4b5408343f8cae2e086c5ce86065649ce386de0e5ca36a17d9",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/docs/evidence/ui/ecc-redesign-20261008/payment-direction-concept.png"
+    },
+    {
+      "path": "docs/evidence/ui/ecc-redesign-20261008/payment-direction-concept.prompt.txt",
+      "bytes": 1920,
+      "sha256": "8c5b94894b2403e51aac1cdab21d025162eacb29f2176d4fe4e5157ad018c2d7",
+      "history": "https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/docs/evidence/ui/ecc-redesign-20261008/payment-direction-concept.prompt.txt"
+    }
+  ],
+  "count": 30,
+  "bytes": 11671812,
+  "preservedLocally": true,
+  "historyRewritten": false,
+  "originalWorkspaceUntouched": true,
+  "replacementVideo": {
+    "bytes": 9700894,
+    "sha256": "8c0bc976f496321a2617a15fdc14443341085265feb7695215c7131614088e03",
+    "publishedRevision": "0e01176",
+    "path": "artifacts/demo/one-take/bondtrace-demo.mp4",
+    "publicRawVerified": true,
+    "playbackReviewed": true
+  },
+  "scope": "Source-tree cleanup only; no chain receipts, original ledgers, keys, provider state or ordinary financial tests removed"
+}

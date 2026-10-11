@@ -50,6 +50,17 @@ test('linked retry appends alongside immutable original wire, history and fee ex
   assert.throws(()=>journal.appendSigned(retry));
   assert.deepEqual(journal.load()!.signed,[original,retry]);journal.close();
 });
+
+test('rebroadcast reservation survives SQLite reopen without replacing the signed wire or allocating another fee', () => {
+  const {intent,directory}=fixture(),event={...signed(intent),id:'write:0'};
+  const marker={eventId:event.id,signature:event.signature,status:'rebroadcast-attempt' as const,
+    slot:'55',blockHeight:'10',wireSha256:'synthetic-wire-digest'};
+  let journal=new SqliteBufferJournal(workspace,directory,intent);
+  journal.acquire();journal.initialize(intent);journal.appendSigned(event);journal.recordObservation(marker);journal.close();
+  journal=new SqliteBufferJournal(workspace,directory,intent);journal.acquire();
+  assert.deepEqual(journal.load(),{intent,signed:[event],observations:[marker]});
+  assert.equal(journal.load()!.signed.reduce((sum,e)=>sum+BigInt(e.feeLamports),0n),5000n);journal.close();
+});
 test('OS writer lock rejects another live writer and allows it after known close', () => {
   const {intent, directory} = fixture();
   const first = new SqliteBufferJournal(workspace, directory, intent), second = new SqliteBufferJournal(workspace, directory, intent);

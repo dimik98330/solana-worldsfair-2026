@@ -1,34 +1,33 @@
 # BondTrace — release checkpoint, 11 October 2026
 
-## Active task
+## Active stage
 
-Владелец разрешил проверку ProofPilot, уборку GitHub, обновление README и существующего сайта. Рабочая интеграция: `C:\Users\dmitrii\.codex\worktrees\bondtrace-release\solana`, ветка `codex/bondtrace-release`, основана на `origin/main` `83ea45b`. Исходный Root `C:\Users\dmitrii\Documents\solana` и backend worktree сохранены; Root нельзя публиковать целиком: он отстаёт и содержит уже удалённые исторические документы.
+Owner authorized ProofPilot review, lean GitHub publication, README and existing hosted-app update. Authoritative checkout: C:\Users\dmitrii\.codex\worktrees\bondtrace-release\solana, branch codex/bondtrace-release. Original C:\Users\dmitrii\Documents\solana and backend worktree are preserved. Root is behind and dirty; never publish it wholesale or reset its ledgers/signers.
 
-## Integrated source
+GitHub main0e01176 contains integrated frontend/backend, reviewed bilingual README and the owner-approved narrated demo. Render/program remain public v3 until the controlled v4 rollout below passes. Repository was already public; no visibility change was made. Authorized GitHub identity dimik98330 was verified using existing scoped GCM access; do not use the zi-radio connector for writes.
 
-- Latest Root Settlement Workspace, KK/RU/EN, timezone/calendar settings and responsive source merged with current backend safety fixes.
-- Origin full-wire Phantom v0 signing and exact returned-message/signature checks preserved; Root's older signing implementation was not copied.
-- Fully configured/reserved late draft activation by any fee payer; cutoff still freezes issuance/registry. Holder zero-entitlement controls suppressed; principal review states exact burn quantity/mint; pending snapshot routes to continuation.
-- Compiled SBF: 960296 bytes, SHA256 `257a89b28a427863b4ed8adf26eaaed868f15d8d7a290970200f9cc81a33106c`.
-- Existing published cleanup preserved:108 obsolete Markdown already absent. Only unused NextActionDesk/action-desk source and its isolated test removed. Working tests and historical proofs retained.
-- English/Russian README shortened around required scenarios, exact math, reproduction and verifiable evidence.
+## Implemented and checked
 
-## Checks in this integration
+Current Settlement Workspace supports KK/RU/EN, timezone/calendar settings and responsive layouts. Exact financial/signing/recovery semantics and origin full-wire Phantom validation are preserved. Backend fixes include safe late activation, explicit pending snapshot continuation, zero-entitlement controls and v2 receipt matching. Local SBF960296 bytes/SHA257a89b28a427863b4ed8adf26eaaed868f15d8d7a290970200f9cc81a33106c was rebuilt independently;3Rust unit/22SBF-SPL runtime checks passed. Existing source CI38157563642 succeeded.
 
-Actual local checks: build/typecheck;399Node passed/0failed/10optionalPGskips;107UI passed;3Rust unit +22SBF/SPLruntime passed. Program rebuilt to the expected hash. Node totals identify this run and do not include later separately checked RPC-pacing changes. Build warning:592.6kB JS/169.43kB gzip; no new production dependency.
+Owner-approved C:\Users\dmitrii\Downloads\BondTrace-demo-one-take.mp4 is published at artifacts/demo/one-take/bondtrace-demo.mp4:150.08s,1440x1000,H264/AAC,SHA8c0bc976f496321a2617a15fdc14443341085265feb7695215c7131614088e03. One continuous native browser take with37actual clicks and complete voice; all3752frame timestamps retained. Full decode/playback/independent continuity and audio review passed. Public raw bytes match. Scope: completed localnet test issue, no new financial operation/human wallet during recording. Original1.mp3, raw recording and private local transcription remain untouched/unpublished.
 
-Built UI against existing matching localnet API9009/3220, through read-only4230:30route×width checks at320/390/768/1440/2560 without horizontal overflow; actual screenshots inspected. This is localnet/GET-only evidence, not a public deployment or human-wallet signature. Private logs/screenshots: `.local/release-20261011`.
+Prior108-Markdown cleanup is retained.30additional superseded media/static/concept/CSS/report files are archived with verified bytes under ignored .local/lean-archive/20261011; immutable56841f4 history remains. Source, financial tests, frozen receipts and original workspaces remain. Source-reproduction locales and historical report-image comparison fixed;7focused checks passed independently. BUFFER identical-wire bounded rebroadcast reviewed;50focused checks passed independently. Full Node422total/412passed/0failed/10optionalPGskips, build/typecheck and110UIpassed. Independent final publication review has no open findings after correcting one pace-flag typo;235links/0broken/0credential-pattern hits. Exact source hashes/check scope: docs/evidence/release-source-check-20261011.json.
 
-ProofPilot coach plan→review→submission preparation; Solana-dev/security, ECC deployment guidance, Impeccable harden/craft-floor, frontend guidelines, React and persistent browser QA. Disjoint UI integration and BUFFER recovery implementation; fresh independent BUFFER review reproduced40/40 targeted tests with no substantiated material finding. Final README quality review and deployment verification remain pending.
+Build/web and110UI tests passed after cleanup. Current build warns about a593.13kB entry chunk (169.58kB gzip). No new production dependency. Prior actual browser30route/width checks at320/390/768/1440/2560 had no overflow; screenshots inspected. Browser/current-source acceptance does not establish a public chain rollout or ordinary human-wallet success.
 
-## Deployment work in progress
+## Deployment in progress
 
-GitHub identity verified live as `dimik98330`; repository1409138286 is already public. Render remains free, auto-deploy off, previous source `e658553`. Public program still v3 at preflight; do not deploy mismatched service or alter its release guard.
+Existing devnet buffer CxKhsyd9Uc8xb2Thm7Tu2dahBWGGeAZr5drw9GDp82HB, operation v4_257a89_upgrade_20261011, is uploading through its ORIGINAL exclusive SQLite journal in C:\Users\dmitrii\.codex\worktrees\kase-servicing-v4\solana. Preserve every original signed wire, ID and observation. Opt-ins are write-only: one guarded expired retry, provisional confirmed progress, one identical-wire rebroadcast while lifetime remains valid. Final ready requires finalized full-image hash. Existing buffer rent is reused; fee cap7500000lamports, no new buffer.
 
-Existing devnet buffer `CxKhsyd9Uc8xb2Thm7Tu2dahBWGGeAZr5drw9GDp82HB`, operation `v4_257a89_upgrade_20261011`, is resumed using its ORIGINAL exclusive SQLite journal in backend worktree. Old expired write is preserved; explicit BUFFER-only retry appends a linked attempt after finalized expiry/history/account checks. Full readiness requires finalized exact bytes/hash. Test-only fee cap7500000lamports; no new buffer or rent requested. Program upgrade is a separate later verified action.
+Next: complete and release upload lock; fresh finalized preflight; temporarily suspend Render/drain old relay; controlled extend/upgrade with original authority and exact retained-wire journal; verify finalized hash; manually deploy matching reviewed Git commit into existing Render Free/Neon namespace; verify hosted assets/storage and preserved completed v3 issue; execute reviewed small public v4 lifecycle; update README with actual outcomes. Do not bypass program identity guards or deploy mismatched source.
 
-Next: finish same-buffer upload, verify exact finalized image, controlled devnet program upgrade, deploy matching reviewed commit on existing Render/Neon namespace, verify existing completed issue and new frontend/public readiness. Keep all retained IDs/wires/receipts. README/deployment records must reflect actual outcome, not intent.
+Upgrade preparation/backups/review and public-v4 offline plan are under ignored .local/release-20261011. Temporary provider.env copy is private and must be removed after verification; no credential rotation. Service srv-db4g7oqd0e5s73espfqg, auto-deploy off. Current public sourcee658553/program761b993d403ae03a84e94475404299b0d4e798a6ea2d17ae44e003148077bdfd is historical v3, not v4.
 
-## Stopping gate
+## Skills and stopping gate
 
-No mainnet, real assets, paid service, new binding consent, messages to people or final contest submission. Ordinary Phantom execution, registration, final video URL and accepted submission are not established by source tests. No history rewrite or force-push. Preserve Root/other worktrees, original ledgers, databases and ignored keys. Historical checkpoint: [83ea45b](https://github.com/dimik98330/solana-worldsfair-2026/blob/83ea45b693aa450b9921ce617237b0596c75081d/docs/00-STATE.md).
+ProofPilot coach plan→review→submission preparation; actually installed Solana-dev/security/RPC and stoic execution review; ECC deployment/ui-demo/living-docs-governance; Impeccable/front-end/React/persistent browser guidance. Agents read AGENTS and suitable installed skills, own disjoint files; lead owns Git/dependencies/config/runtime decisions. No reinstall/global permission change. Independent README review found no remaining mapped issue within its frozen scope; it is not an official score or new-runtime certificate.
+
+No mainnet, real assets, paid services, new legal consent, messages to people, visibility change, history rewrite or final organizer submission. Eligibility/accepted submission and ordinary human Phantom execution remain unverified. Preserve historical failures/receipts. Current runtime completion must be proven before claiming full deployment.
+
+[Previous checkpoint](https://github.com/dimik98330/solana-worldsfair-2026/blob/0e01176/docs/00-STATE.md) preserves earlier integration and media review history.

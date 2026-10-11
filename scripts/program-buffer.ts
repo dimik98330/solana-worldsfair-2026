@@ -55,8 +55,11 @@ export interface SignedBufferEvent {
 export interface BufferObservation {
   eventId: string;
   signature: string;
-  status: 'submitted' | 'unknown' | 'confirmed' | 'finalized' | 'effect-observed' | 'failed' | 'expired-unresolved';
+  status: 'submitted' | 'unknown' | 'confirmed' | 'finalized' | 'effect-observed' | 'failed' | 'expired-unresolved' | 'rebroadcast-attempt';
   slot?: string;
+  /** Only on the durable, one-per-signature rebroadcast reservation. */
+  blockHeight?: string;
+  wireSha256?: string;
 }
 export interface BufferJournalState {
   intent: BufferIntent;
@@ -107,6 +110,7 @@ export interface BufferStageOptions {
   signal?: AbortSignal;
   retryExpiredWrites?: boolean;
   confirmedProgress?: boolean;
+  rebroadcastRetainedWrites?: boolean;
   onProgress?: (progress: {kind: 'signed' | 'observed' | 'skipped'; offset: number; signature?: string}) => void;
 }
 
@@ -302,8 +306,19 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
         ensure(signature && await verifySignature(await getPublicKeyFromAddress(address(signer)), signature, tx.messageBytes), 'INVALID_RETAINED_SIGNATURE');
     }
     ensure(fees <= limits.maxTotalFeeLamports && rentReserved <= limits.maxRentLamports, 'CUMULATIVE_BUDGET_EXCEEDED');
-    for (const observation of state.observations) ensure(ids.has(observation.eventId)
-      && state.signed.find(event => event.id === observation.eventId)!.signature === observation.signature, 'INVALID_OBSERVATION_IDENTITY');
+    const rebroadcasts = new Set<string>();
+    for (const observation of state.observations) {
+      const event = state.signed.find(event => event.id === observation.eventId);
+      ensure(event && ids.has(observation.eventId) && event.signature === observation.signature, 'INVALID_OBSERVATION_IDENTITY');
+      if (observation.status === 'rebroadcast-attempt') {
+        ensure(event.kind === 'write' && !rebroadcasts.has(event.signature)
+          && observation.wireSha256 === bufferImageHash(canonicalBase64(event.wireBase64))
+          && observation.blockHeight !== undefined && observation.slot !== undefined
+          && exactBufferU64(observation.blockHeight, 'REBROADCAST_HEIGHT') + 5n < BigInt(event.lastValidBlockHeight)
+          && exactBufferU64(observation.slot, 'REBROADCAST_SLOT') <= BigInt(Number.MAX_SAFE_INTEGER), 'INVALID_REBROADCAST_MARKER');
+        rebroadcasts.add(event.signature);
+      }
+    }
     const observe = (event: SignedBufferEvent, status: BufferObservation['status'], slot?: bigint) => {
       const observation: BufferObservation = {eventId: event.id, signature: event.signature, status, ...(slot === undefined ? {} : {slot: slot.toString()})};
       synchronous(journal.recordObservation(observation)); state.observations.push(observation);
@@ -323,7 +338,53 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
     let payload = await snapshot();
     const effect = (event: SignedBufferEvent): boolean => payload !== null && (event.kind === 'create'
       || same(payload.subarray(event.offset, event.offset + event.length), image.subarray(event.offset, event.offset + event.length)));
+    const rebroadcast = async (event: SignedBufferEvent): Promise<boolean> => {
+      if (options.rebroadcastRetainedWrites !== true || event.kind !== 'write' || rebroadcasts.has(event.signature)) return false;
+      // Fresh checks after pacing. An observed processed/confirmed result is never rebroadcast.
+      await delay(pace, runSignal);
+      const statuses = await request<{value: ({err: unknown; confirmationStatus: string} | null)[]}>('getSignatureStatuses',
+        [[event.signature], {searchTransactionHistory: true}]);
+      ensure(Array.isArray(statuses?.value) && statuses.value.length === 1, 'INVALID_SIGNATURE_STATUS');
+      const status = statuses.value[0];
+      if (status !== null) {
+        ensure(Object.hasOwn(status, 'err') && ['processed','confirmed','finalized'].includes(status.confirmationStatus), 'INVALID_SIGNATURE_STATUS');
+        if (status.err !== null) { observe(event, 'failed'); fail('RETAINED_TRANSACTION_FAILED'); }
+        return false;
+      }
+      // Check a newer confirmed buffer as well as the finalized snapshots in recover().
+      // Seeing the exact effect here prevents a relay but does not establish finalized readiness.
+      payload = await snapshot('confirmed');
+      ensure(payload !== null, 'BUFFER_MISSING_WITH_RETAINED_SIGNATURE');
+      if (effect(event)) return false;
+      const valid = await request<{context: {slot: unknown}; value: unknown}>('isBlockhashValid',
+        [event.blockhash, {commitment: 'confirmed', minContextSlot: Number(confirmedSlot)}]);
+      const slot = exactBufferU64(valid?.context?.slot, 'REBROADCAST_VALIDITY_SLOT');
+      ensure(slot >= confirmedSlot && slot <= BigInt(Number.MAX_SAFE_INTEGER) && typeof valid.value === 'boolean', 'INVALID_REBROADCAST_VALIDITY');
+      if (!valid.value) return false;
+      const height = exactBufferU64(await request('getBlockHeight', [{commitment: 'confirmed', minContextSlot: Number(slot)}]), 'REBROADCAST_HEIGHT');
+      if (height + 5n >= BigInt(event.lastValidBlockHeight)) return false;
+      const marker: BufferObservation = {eventId: event.id, signature: event.signature, status: 'rebroadcast-attempt',
+        slot: slot.toString(), blockHeight: height.toString(), wireSha256: bufferImageHash(canonicalBase64(event.wireBase64))};
+      // Reserve BEFORE relay. A crash after this barrier consumes the one permitted retry.
+      synchronous(journal.recordObservation(marker));
+      const durable = load();
+      ensure(durable && sameIntent(durable.intent, intent) && JSON.stringify(durable.signed) === JSON.stringify(state.signed)
+        && JSON.stringify(durable.observations) === JSON.stringify([...state.observations, marker]), 'JOURNAL_REBROADCAST_BARRIER');
+      state.observations.push(marker); rebroadcasts.add(event.signature);
+      options.onProgress?.({kind: 'observed', offset: event.offset, signature: event.signature});
+      runSignal.throwIfAborted();
+      try {
+        ensure(await request<string>('sendTransaction', [event.wireBase64,
+          {encoding: 'base64', skipPreflight: false, preflightCommitment: 'finalized', maxRetries: 0}]) === event.signature, 'SEND_SIGNATURE_MISMATCH');
+        observe(event, 'submitted');
+      } catch (error) {
+        observe(event, 'unknown');
+        fail(errorCode(error) === 'RPC_RATE_LIMITED' ? 'RPC_RATE_LIMITED' : errorCode(error) === 'RPC_FORBIDDEN' ? 'RPC_FORBIDDEN' : 'REBROADCAST_OUTCOME_UNKNOWN');
+      }
+      return true;
+    };
     const recover = async (event: SignedBufferEvent, polls: number, progress = false): Promise<boolean> => {
+      let missingPolls = 0, rebroadcastChecked = false;
       for (let index = 0; index < polls; index++) {
         const statuses = await request<{value: ({err: unknown; confirmationStatus: string; slot: unknown} | null)[]}>('getSignatureStatuses', [[event.signature], {searchTransactionHistory: true}]);
         ensure(Array.isArray(statuses?.value) && statuses.value.length === 1, 'INVALID_SIGNATURE_STATUS');
@@ -350,6 +411,10 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
         if (status?.confirmationStatus === 'confirmed') observe(event, 'confirmed', exactBufferU64(status.slot, 'STATUS_SLOT'));
         const height = exactBufferU64(await request('getBlockHeight', [{commitment: 'finalized'}]), 'BLOCK_HEIGHT');
         if (height > BigInt(event.lastValidBlockHeight)) { observe(event, 'expired-unresolved'); return false; }
+        missingPolls = status === null ? missingPolls + 1 : 0;
+        if (!rebroadcastChecked && missingPolls >= 2 && options.rebroadcastRetainedWrites === true) {
+          rebroadcastChecked = true; await rebroadcast(event);
+        }
         if (index + 1 < polls) await delay(pollInterval, runSignal);
       }
       observe(event, 'unknown'); return false;
@@ -382,7 +447,7 @@ export async function runBufferStage(options: BufferStageOptions): Promise<Buffe
       if (state.signed.some(item => item.retryOf === event.id)) continue;
       if (last?.status === 'finalized' || last?.status === 'effect-observed') {
         ensure(effect(event), 'RETAINED_EFFECT_MISMATCH');
-      } else if (!await recover(event, 1)) {
+      } else if (!await recover(event, options.rebroadcastRetainedWrites === true && event.kind === 'write' ? maxPolls : 1)) {
         if (!options.retryExpiredWrites || event.kind !== 'write' || event.retryOf) return result('stopped', 'RETAINED_SIGNATURE_UNRESOLVED');
         await expiredWriteProof(event);
         retries.set(event.offset, event);

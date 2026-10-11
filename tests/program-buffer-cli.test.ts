@@ -76,13 +76,15 @@ test('RPC refuses an oversized streamed response and cancels before collecting t
 test('recovery and confirmed progress require explicit distinct opt-ins and do not turn read-only into staging',async()=>{
   const f=fixture();
   await transport(async(calls,output)=>{
-    assert.equal(await programBufferCli([...f.args,'--retry-expired-writes','--confirmed-progress']),0);
+    assert.equal(await programBufferCli([...f.args,'--retry-expired-writes','--confirmed-progress','--rebroadcast-retained-writes']),0);
     const plan=JSON.parse(String(output[0]));
     assert.equal(plan.mode,'read-only'); assert.equal(plan.signerFilesRead,false);
     assert.equal(plan.retryExpiredWrites,true); assert.equal(plan.confirmedProgress,true);
+    assert.equal(plan.rebroadcastRetainedWrites,true);
     assert.deepEqual(calls,['getGenesisHash','getAccountInfo','getMinimumBalanceForRentExemption','getBalance']);
     await assert.rejects(programBufferCli([...f.args,'--retry-expired-writes','--retry-expired-writes']),/DUPLICATE_POLICY/);
     await assert.rejects(programBufferCli([...f.args,'--confirmed-progress','--confirmed-progress']),/DUPLICATE_POLICY/);
+    await assert.rejects(programBufferCli([...f.args,'--rebroadcast-retained-writes','--rebroadcast-retained-writes']),/DUPLICATE_POLICY/);
   });
   assert.equal(fs.existsSync(path.resolve('.local/program-buffer',f.id)),false);
 });

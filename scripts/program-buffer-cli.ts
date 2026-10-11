@@ -13,6 +13,7 @@ const usage = ['BUFFER staging only: no upgrade, extend, close or mainnet. Defau
   '--max-fees=LAMPORTS --max-tx-fee=LAMPORTS --max-rent=LAMPORTS',
   'Optional: --max-transactions=N --max-run-ms=N --pace-ms=N --rpc-pace-ms=N (default1250, devnet minimum500)',
   'Explicit opt-ins: --retry-expired-writes (one linked retry); --confirmed-progress (final hash remains finalized)',
+  '--rebroadcast-retained-writes reserves at most one identical-wire relay per write signature while its original lifetime is valid',
   'Resume SAME id/network/image/authority/buffer. Preserve journal and explicit keys.'].join('\n');
 function args(argv: string[]) {
   const allowed = new Set(['network','rpc','genesis','id','authority','buffer','image','sha256','bytes',
@@ -21,7 +22,7 @@ function args(argv: string[]) {
   const policies = new Set<string>();
   for (const item of argv) {
     if (item === '--stage') { if (stage) throw Error('DUPLICATE_STAGE'); stage = true; continue; }
-    if (item === '--retry-expired-writes' || item === '--confirmed-progress') {
+    if (item === '--retry-expired-writes' || item === '--confirmed-progress' || item === '--rebroadcast-retained-writes') {
       if (policies.has(item)) throw Error('DUPLICATE_POLICY'); policies.add(item); continue;
     }
     const match = /^--([a-z][a-z0-9-]*)=(.+)$/.exec(item);
@@ -141,7 +142,7 @@ export async function programBufferCli(argv: string[]): Promise<number> {
     console.log(JSON.stringify({mode:stage?'explicit-buffer-stage':'read-only',intent,existingBuffer:payload!==null,
       finalizedAccountSlot:String(account.context.slot),missingChunks,rentLamports:rent.toString(),payerLamports:balance.toString(),
       programUpgrade:false,signerFilesRead:false,retryExpiredWrites:policies.has('--retry-expired-writes'),
-      confirmedProgress:policies.has('--confirmed-progress')}));
+      confirmedProgress:policies.has('--confirmed-progress'),rebroadcastRetainedWrites:policies.has('--rebroadcast-retained-writes')}));
     if (!stage) return 0;
     const maxFees=exactBufferU64(get('max-fees'),'MAX_FEES'),maxTxFee=exactBufferU64(get('max-tx-fee'),'MAX_TX_FEE'),maxRent=exactBufferU64(get('max-rent'),'MAX_RENT');
     if (maxFees===0n || maxTxFee===0n || maxRent < (payload ? 0n : rent)) throw Error('STAGE_BUDGET_INVALID');
@@ -153,6 +154,7 @@ export async function programBufferCli(argv: string[]): Promise<number> {
     if (!payload && !buffer) throw Error('MISSING_EXPLICIT_NEW_BUFFER_SIGNER');
     const result=await runBufferStage({image,intent,authoritySigner:authority,bufferSigner:buffer,rpc,journal,signal:abort.signal,
       retryExpiredWrites:policies.has('--retry-expired-writes'),confirmedProgress:policies.has('--confirmed-progress'),
+      rebroadcastRetainedWrites:policies.has('--rebroadcast-retained-writes'),
       limits:{maxTotalFeeLamports:maxFees,maxTransactionFeeLamports:maxTxFee,maxRentLamports:maxRent,
         maxTransactions:number('max-transactions',2000),maxRunMs:number('max-run-ms',7200000),
         paceMs:number('pace-ms',2000),rpcTimeoutMs:25000,pollIntervalMs:1500,maxPolls:40},

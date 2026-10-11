@@ -39,3 +39,7 @@ Cleanup published as5678433fcc0ae4ebbee1bedc03b6af0dce6ee63a. Actual [CI38019153
 ## 11 October 2026 — release integration
 
 Preserved the previous108-document cleanup. Removed only the unreferenced NextActionDesk.tsx, action-desk.ts and its dedicated unused-helper test. Other tests, source contracts, historical media and transaction proofs remain. The Root archive under.local was not published. README EN/RU now has a compact scenario/evidence/reproduction path; detailed historical checks remain linked.
+
+The owner-approved [continuous narrated demo](../artifacts/demo/one-take/bondtrace-demo.mp4) replaces the two older presentation packages. Public raw bytes match the reviewed local MP4 SHA-256. **30 superseded files / 11,671,812 bytes** were then archived: old media and its pipelines, an abandoned static submission page, an unused program HTML report, unused terminal CSS and two generated concept files. Physical originals were verified and preserved locally; immutable [56841f4 history](https://github.com/dimik98330/solana-worldsfair-2026/tree/56841f415bcf851b8096e57f1e8f3640c788c59a) remains. [Exact paths and hashes](evidence/publication-cleanup-20261011.json).
+
+The active React entry remains apps/web/index.html. Source reproduction now includes the six imported language catalogs and excludes the abandoned root landing page. The report generator checks historical receipts against their historical program image and labels the current release separately. Financial tests, frozen transaction evidence, original ledgers and signers remain intact.

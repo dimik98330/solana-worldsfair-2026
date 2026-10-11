@@ -14,7 +14,7 @@ function fixture() {
   // ledger evidence. Actual published evidence is checked by npm run report.
   const sha256 = 'e'.repeat(64), hash = (value: string) => createHash('sha256').update(value).digest('hex');
   const cohort = (count: number, couponPaid: string, principalPaid: string) => ({
-    passed: true, plan: {name: 'Synthetic report fixture', release: {sha256}},
+    passed: true, plan: {name: 'Synthetic report fixture', release: {sha256, programId: 'synthetic-program'}},
     initialHolders: count === 37 ? 3 : 33, finalHolders: count === 37 ? 4 : 34,
     couponCount: count === 37 ? 2 : 9, lateCouponAfterBurn: true,
     primary: {couponMinor: '500000000', principalMinor: '10000000000'},
@@ -28,7 +28,7 @@ function fixture() {
   const files: Record<string, string> = {
     'programs/bondtrace/release.json': JSON.stringify({releaseId: 'paged-corporate-actions-v4', sha256, programLen: 959536}),
     'docs/evidence/servicing-v4-verification-20261010.json': JSON.stringify({
-      program: {artifact: {sha256}}, generalGithubCI: {sourceCommit: 'synthetic-test-only',
+      program: {programId: 'synthetic-program', artifact: {sha256, bytes: 959536}}, generalGithubCI: {sourceCommit: 'synthetic-test-only',
         node: {passed: 352, skipped: 10}, ui: {passed: 90}, rustUnit: {passed: 3}, compiledSbfRuntime: {passed: 20}},
       scopedPostgresqlCI: {passed: 40, skipped: 3},
     }),
@@ -51,17 +51,47 @@ function fixture() {
 function run(root: string) {
   return spawnSync(process.execPath, [script], {cwd: root, encoding: 'utf8', windowsHide: true, timeout: 15000});
 }
-test('report command renders verified current cohorts and discloses offline, wallet and history limits', () => {
+test('report command renders verified historical cohorts and discloses offline, wallet and history limits', () => {
   const root = fixture(), result = run(root);
   assert.equal(result.status, 0, result.stderr);
   const output = JSON.parse(result.stdout), html = fs.readFileSync(output.file, 'utf8');
   assert.ok(output.file.startsWith(path.join(root, '.local', 'reports') + path.sep));
   for (const text of ['1,800', '18,000', '21,600', '48,000', '37/37', '75 older statuses unavailable',
-    'offline evidence report', 'Phantom signing is unverified', 'Public devnet still']) assert.ok(html.includes(text), text);
+    'offline evidence report', 'Phantom signing is unverified', 'do not establish the current public program version']) assert.ok(html.includes(text), text);
   assert.ok(!html.includes('product has not been selected'));
   const manifest = JSON.parse(fs.readFileSync(output.file.replace(/\.html$/, '.json'), 'utf8'));
   assert.equal(manifest.sources.length, 7);
   assert.equal(manifest.reportSha256, createHash('sha256').update(html).digest('hex'));
+});
+
+test('a newer checkout release is displayed separately without relabelling historical evidence', () => {
+  const root = fixture(), file = path.join(root, 'programs/bondtrace/release.json');
+  const release = JSON.parse(fs.readFileSync(file, 'utf8'));
+  release.sha256 = 'a'.repeat(64); release.programLen = 960296;
+  fs.writeFileSync(file, JSON.stringify(release));
+  const result = run(root);
+  assert.equal(result.status, 0, result.stderr);
+  const output = JSON.parse(result.stdout), html = fs.readFileSync(output.file, 'utf8');
+  assert.ok(html.includes(`Historical cohort SBF: <code>${'e'.repeat(64)}</code>, 959536 bytes`));
+  assert.ok(html.includes(`Current checkout SBF manifest: <code>${'a'.repeat(64)}</code>, 960296 bytes`));
+  assert.ok(html.includes('The historical runs and CI above do not verify this current checkout image.'));
+  const manifest = JSON.parse(fs.readFileSync(output.file.replace(/\.html$/, '.json'), 'utf8'));
+  assert.equal(manifest.historicalProgram.sha256, 'e'.repeat(64));
+  assert.equal(manifest.currentCheckoutProgram.sha256, 'a'.repeat(64));
+});
+
+test('a cohort with a different historical image is rejected even if its byte digest is updated', () => {
+  const root = fixture(), file = path.join(root, reportFile);
+  const report = JSON.parse(fs.readFileSync(file, 'utf8'));
+  report.plan.release.sha256 = 'b'.repeat(64);
+  const changed = JSON.stringify(report); fs.writeFileSync(file, changed);
+  const checkPath = path.join(root, checkFile), check = JSON.parse(fs.readFileSync(checkPath, 'utf8'));
+  check.publicReportSha256 = createHash('sha256').update(changed).digest('hex');
+  fs.writeFileSync(checkPath, JSON.stringify(check));
+  const result = run(root);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /Historical cohort program image differs/);
+  assert.equal(fs.existsSync(path.join(root, '.local', 'reports')), false);
 });
 test('changed transaction evidence is rejected before any report output is created', () => {
   const root = fixture();

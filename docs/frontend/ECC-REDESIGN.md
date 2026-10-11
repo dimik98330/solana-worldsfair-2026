@@ -28,7 +28,7 @@ Agent ownership: workspace_redesign owns overview/payment files; issuer_redesign
 
 ## Visual concept
 
-`docs/evidence/ui/ecc-redesign-20261008/payment-direction-concept.png` is an ImageGen concept study, not the shipped application or financial evidence. Generated dates, receipt reference, ex-date, download control and any mismatched sample data are illustrative and are not implemented. Real implementation retains exact current schema and supplied archived data. Its prompt is saved beside it. The operating app ships code-native original SVG branding and Lucide, with no decorative raster background.
+The archived [ImageGen concept study](https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/docs/evidence/ui/ecc-redesign-20261008/payment-direction-concept.png) is illustrative, not the shipped application or financial evidence. Generated dates, receipt reference, ex-date, download control and any mismatched sample data are not implemented. Real implementation retains exact current schema and supplied archived data. Its [original prompt](https://github.com/dimik98330/solana-worldsfair-2026/blob/56841f415bcf851b8096e57f1e8f3640c788c59a/docs/evidence/ui/ecc-redesign-20261008/payment-direction-concept.prompt.txt) is preserved. The operating app ships code-native original SVG branding and Lucide, with no decorative raster background.
 
 ## Result
 

@@ -22,7 +22,7 @@ async function fixture(size = 1805, existing = true) {
     imageSha256: bufferImageHash(image), imageLength: image.length, chunkSize: 900};
   let state: BufferJournalState | null = null;
   let accountBytes: Uint8Array | null = existing ? new Uint8Array(size) : null;
-  let count = 0, signatures = 0, sendMode: 'unknown-no-effect' | 'unknown-with-effect' | '429' | '403' | undefined;
+  let count = 0, signatures = 0, sendMode: 'unknown-no-effect' | 'unknown-with-effect' | 'accepted-no-effect' | '429' | '403' | undefined;
   let observedComplete = 0, corruptFinal = false, height = 10n, historyMissing = false, failBarrier = false;
   let fee: unknown = 5000n, rent: unknown = 100000n, rpcHang = false;
   const calls: {method: string; params: readonly unknown[]}[] = [], sends: SignedBufferEvent[] = [];
@@ -63,9 +63,9 @@ async function fixture(size = 1805, existing = true) {
       case 'getTransaction': value = null; break;
       case 'getMinimumBalanceForRentExemption': value = rent; break;
       case 'getBalance': value = {value: 5_000_000_000n}; break;
-      case 'getFeeForMessage': assert.ok(signatures === sends.length, 'live fee quote precedes new signature'); value = {value: fee}; break;
+      case 'getFeeForMessage': assert.ok(signatures === new Set(sends.map(e => e.signature)).size, 'live fee quote precedes new signature'); value = {value: fee}; break;
       case 'simulateTransaction': {
-        assert.ok(signatures === sends.length, 'simulation precedes new signature');
+        assert.ok(signatures === new Set(sends.map(e => e.signature)).size, 'simulation precedes new signature');
         assert.equal((params[1] as {sigVerify: boolean}).sigVerify, false);
         value = {value: {err: null, unitsConsumed: 2370n}}; break;
       }
@@ -93,6 +93,7 @@ async function fixture(size = 1805, existing = true) {
         sends.push(event);
         const fault = sendMode; sendMode = undefined;
         if (fault === 'unknown-no-effect' || fault === '429' || fault === '403') throw new Error(fault === '429' ? 'HTTP 429' : fault === '403' ? 'HTTP 403' : 'synthetic lost acknowledgement');
+        if (fault === 'accepted-no-effect') { value = signature; break; }
         if (event.kind === 'create') {
           assert.equal(loaderData.readUInt32LE(0), 0); accountBytes = new Uint8Array(size);
         } else {
@@ -115,7 +116,7 @@ async function fixture(size = 1805, existing = true) {
   }};
   const limits: BufferLimits = {maxTotalFeeLamports: 100_000n, maxTransactionFeeLamports: 10_000n, maxRentLamports: 200_000n,
     paceMs: 0, pollIntervalMs: 0, maxPolls: 1, rpcTimeoutMs: 500};
-  const run = (options: Pick<BufferStageOptions, 'retryExpiredWrites' | 'confirmedProgress'> = {}) => runBufferStage({image, intent, authoritySigner: signingAuthority, bufferSigner, rpc, journal, limits, ...options});
+  const run = (options: Pick<BufferStageOptions, 'retryExpiredWrites' | 'confirmedProgress' | 'rebroadcastRetainedWrites'> = {}) => runBufferStage({image, intent, authoritySigner: signingAuthority, bufferSigner, rpc, journal, limits, ...options});
   return {image, intent, authority, signingAuthority, bufferSigner, rpc, journal, limits, calls, sends, run,
     get state() { return state!; }, get signatureCount() { return signatures; }, get rpcCount() { return count; },
     set sendMode(value: typeof sendMode) { sendMode = value; }, set historyMissing(value: boolean) { historyMissing = value; },
@@ -435,4 +436,111 @@ test('confirmed progress cannot return READY or send more after an absent finali
   assert.equal(h.signatureCount, 3);
   assert.equal((await h.run({confirmedProgress: true})).reason, 'RETAINED_SIGNATURE_UNRESOLVED');
   assert.equal(h.signatureCount, 3);
+});
+
+async function liveRebroadcastFixture(size = 900, existing = true) {
+  const h = await fixture(size, existing), request = h.rpc.request.bind(h.rpc);
+  h.limits.maxPolls = 4;
+  h.rpc.request = async <T>(method: string, params: readonly unknown[], signal: AbortSignal) => method === 'isBlockhashValid'
+    ? {context: {slot: 55n}, value: true} as T : request<T>(method, params, signal);
+  return h;
+}
+
+test('explicit live rebroadcast relays identical write wire once without another signer, event, fee, or weakened final hash', async () => {
+  const h = await liveRebroadcastFixture(); h.sendMode = 'accepted-no-effect'; h.limits.maxTotalFeeLamports = 5000n;
+  const result = await h.run({rebroadcastRetainedWrites: true});
+  assert.equal(result.status, 'bufferReady', result.reason); assert.equal(result.feesReservedLamports, '5000');
+  assert.equal(h.signatureCount, 1); assert.equal(h.state.signed.length, 1); assert.equal(h.sends.length, 2);
+  assert.deepEqual(h.sends[0], h.sends[1]);
+  const marker = h.state.observations.find(o => o.status === 'rebroadcast-attempt')!;
+  assert.equal(marker.signature, h.sends[0].signature); assert.equal(marker.eventId, h.sends[0].id);
+  assert.equal(marker.wireSha256, bufferImageHash(Buffer.from(h.sends[0].wireBase64, 'base64')));
+  assert.equal((await h.run({rebroadcastRetainedWrites: true})).status, 'bufferReady');
+  assert.equal(h.sends.length, 2); assert.equal(h.signatureCount, 1);
+});
+
+test('rebroadcast defaults off, excludes create, and does not replace an expired write', async () => {
+  for (const variant of ['default', 'create', 'expired']) {
+    const h = await liveRebroadcastFixture(900, variant !== 'create'); h.sendMode = 'accepted-no-effect';
+    assert.equal((await h.run()).status, 'stopped'); h.height = variant === 'expired' ? 101n : 10n;
+    assert.equal((await h.run(variant === 'default' ? {} : {rebroadcastRetainedWrites: true})).status, 'stopped');
+    assert.equal(h.sends.length, 1, variant); assert.equal(h.signatureCount, 1);
+    assert.equal(h.state.observations.filter(o => o.status === 'rebroadcast-attempt').length, 0);
+  }
+});
+
+test('fresh status, account, blockhash and remaining-lifetime checks can prevent rebroadcast', async () => {
+  for (const variant of ['processed', 'confirmed', 'failed', 'effect', 'owner', 'invalid', 'margin', 'stale']) {
+    const h = await liveRebroadcastFixture(); h.sendMode = 'accepted-no-effect'; await h.run();
+    let statusCalls = 0; const request = h.rpc.request.bind(h.rpc);
+    h.rpc.request = async <T>(method: string, params: readonly unknown[], signal: AbortSignal) => {
+      if (method === 'getSignatureStatuses' && ++statusCalls === 3 && ['processed','confirmed','failed'].includes(variant))
+        return {value: [{err: variant === 'failed' ? {InstructionError: [0, 'invalid']} : null, confirmationStatus: variant === 'processed' ? 'processed' : 'confirmed', slot: 55n}]} as T;
+      if (method === 'isBlockhashValid' && variant === 'invalid') return {context: {slot: 55n}, value: false} as T;
+      if (method === 'isBlockhashValid' && variant === 'stale') return {context: {slot: 54n}, value: true} as T;
+      if (method === 'getBlockHeight' && variant === 'margin') return 95n as T;
+      const result = await request<T>(method, params, signal);
+      if (method === 'getAccountInfo' && (params[1] as {commitment: string}).commitment === 'confirmed') {
+        const account = (result as {value: {owner: string; data: [string, string]}}).value;
+        if (variant === 'owner') account.owner = h.authority.address;
+        if (variant === 'effect') { const bytes = Buffer.from(account.data[0], 'base64'); bytes.set(h.image, BUFFER_HEADER_BYTES); account.data[0] = bytes.toString('base64'); }
+      }
+      return result;
+    };
+    const result = await h.run({rebroadcastRetainedWrites: true});
+    assert.equal(result.status, 'stopped', variant); assert.equal(h.sends.length, 1, variant); assert.equal(h.signatureCount, 1);
+    assert.equal(h.state.observations.filter(o => o.status === 'rebroadcast-attempt').length, 0, variant);
+  }
+});
+
+test('rebroadcast durable marker consumes the permission even after a crash before relay', async () => {
+  const h = await liveRebroadcastFixture(); h.sendMode = 'accepted-no-effect'; await h.run();
+  const original = structuredClone(h.state.signed[0]), record = h.journal.recordObservation.bind(h.journal);
+  h.journal.recordObservation = observation => { record(observation); if (observation.status === 'rebroadcast-attempt') throw Error('CRASH_AFTER_FSYNC'); };
+  assert.equal((await h.run({rebroadcastRetainedWrites: true})).status, 'stopped');
+  assert.equal(h.sends.length, 1); h.journal.recordObservation = record;
+  assert.equal((await h.run({rebroadcastRetainedWrites: true})).status, 'stopped');
+  assert.equal(h.sends.length, 1); assert.equal(h.signatureCount, 1); assert.deepEqual(h.state.signed[0], original);
+  assert.equal(h.state.observations.filter(o => o.status === 'rebroadcast-attempt').length, 1);
+});
+
+test('missing durable marker barrier prevents relay and marker tampering is rejected on restart', async () => {
+  const h = await liveRebroadcastFixture(); h.sendMode = 'accepted-no-effect'; await h.run();
+  const record = h.journal.recordObservation.bind(h.journal);
+  h.journal.recordObservation = observation => { if (observation.status !== 'rebroadcast-attempt') record(observation); };
+  assert.equal((await h.run({rebroadcastRetainedWrites: true})).reason, 'JOURNAL_REBROADCAST_BARRIER');
+  assert.equal(h.sends.length, 1); h.journal.recordObservation = record;
+  assert.equal((await h.run({rebroadcastRetainedWrites: true})).status, 'bufferReady');
+  const marker = h.state.observations.find(o => o.status === 'rebroadcast-attempt')!;
+  marker.wireSha256 = '0'.repeat(64);
+  assert.equal((await h.run({rebroadcastRetainedWrites: true})).reason, 'INVALID_REBROADCAST_MARKER');
+  assert.equal(h.sends.length, 2); assert.equal(h.signatureCount, 1);
+});
+
+test('rebroadcast transport failures stop immediately and never permit a third relay', async () => {
+  for (const mode of ['429', '403', 'unknown-no-effect'] as const) {
+    const h = await liveRebroadcastFixture(); h.sendMode = 'accepted-no-effect'; await h.run(); h.sendMode = mode;
+    const result = await h.run({rebroadcastRetainedWrites: true});
+    assert.equal(result.reason, mode === '429' ? 'RPC_RATE_LIMITED' : mode === '403' ? 'RPC_FORBIDDEN' : 'REBROADCAST_OUTCOME_UNKNOWN');
+    assert.equal(h.sends.length, 2); assert.equal(h.signatureCount, 1); assert.equal(result.feesReservedLamports, '5000');
+    assert.equal((await h.run({rebroadcastRetainedWrites: true})).status, 'stopped');
+    assert.equal(h.sends.length, 2); assert.equal(h.state.signed.length, 1);
+  }
+});
+
+test('rebroadcast does not bypass cumulative budget or final byte verification', async () => {
+  const capped = await liveRebroadcastFixture(); capped.sendMode = 'accepted-no-effect'; await capped.run(); capped.limits.maxTotalFeeLamports = 4999n;
+  assert.equal((await capped.run({rebroadcastRetainedWrites: true})).reason, 'CUMULATIVE_BUDGET_EXCEEDED');
+  assert.equal(capped.sends.length, 1);
+  const corrupt = await liveRebroadcastFixture(); corrupt.sendMode = 'accepted-no-effect'; corrupt.corruptFinal = true;
+  assert.equal((await corrupt.run({rebroadcastRetainedWrites: true})).reason, 'FINAL_BUFFER_HASH_MISMATCH');
+  assert.equal(corrupt.signatureCount, 1); assert.equal(corrupt.sends.length, 2);
+});
+
+test('a duplicate rebroadcast marker is invalid even when its original wire and signature match', async () => {
+  const h=await liveRebroadcastFixture();h.sendMode='accepted-no-effect';
+  assert.equal((await h.run({rebroadcastRetainedWrites:true})).status,'bufferReady');
+  h.state.observations.push(structuredClone(h.state.observations.find(o=>o.status==='rebroadcast-attempt')!));
+  assert.equal((await h.run({rebroadcastRetainedWrites:true})).reason,'INVALID_REBROADCAST_MARKER');
+  assert.equal(h.sends.length,2);assert.equal(h.signatureCount,1);
 });

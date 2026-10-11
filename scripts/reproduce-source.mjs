@@ -34,18 +34,21 @@ if (flags.has('--verify') && process.platform !== 'win32') throw new Error('Run 
 
 // Explicit source allowlist: no Git/owner state, toolchain configuration, compiled
 // output, old fixtures, evidence archives, or account credentials are copied.
-const rootFiles = new Set(['package.json','package-lock.json','Cargo.toml','Cargo.lock','rust-toolchain.toml','Anchor.toml','tsconfig.json','tsconfig.web.json','vite.config.ts','index.html','.gitignore','.gitattributes','.dockerignore','Dockerfile','render.yaml','AGENTS.md','CODEX_SOLANA_WORLDSFAIR_START.md','README.md','README.ru.md','TECHNICAL.md','PRODUCT.md','DESIGN.md','brand.md']);
+const rootFiles = new Set(['package.json','package-lock.json','Cargo.toml','Cargo.lock','rust-toolchain.toml','Anchor.toml','tsconfig.json','tsconfig.web.json','vite.config.ts','.gitignore','.gitattributes','.dockerignore','Dockerfile','render.yaml','AGENTS.md','CODEX_SOLANA_WORLDSFAIR_START.md','README.md','README.ru.md','TECHNICAL.md','PRODUCT.md','DESIGN.md','brand.md']);
 const trees = ['apps/web','packages/client','programs/bondtrace','server','scripts','tests'];
 const documents = ['docs/00-STATE.md','docs/21-BACKEND-FOCUS.md','docs/29-BACKEND-STRENGTHENING.md','docs/31-HOSTING.md','docs/11-SECURITY.md','docs/15-API-CONTRACT.md','docs/34-PAGED-SERVICING.md','docs/LOCALNET-SETUP.md'];
 const excludedDirectories = new Set(['.local','.git','.agents','.codex','.claude','.impeccable','node_modules','target','dist','build','coverage','artifacts','fixtures','wallets','keys','credentials']);
 const codeExtensions = new Set(['.ts','.tsx','.js','.mjs','.cjs','.mts','.cts','.css','.html','.rs','.toml','.sh','.ps1']);
 const assetExtensions = new Set(['.svg','.png','.jpg','.jpeg','.webp','.ico','.woff','.woff2','.ttf','.otf']);
 const publicProgramJson = new Set(['programs/bondtrace/bondtrace-idl.json','programs/bondtrace/release.json']);
+// Only shipped catalogs, not arbitrary JSON next to frontend source or owner state.
+const publicLocaleJson = new Set(['ru.json','ru-runtime.json','kk-core.json','kk-issuer.json','kk-extra.json','kk-runtime.json']
+  .map(name => 'apps/web/src/locales/' + name));
 function allowed(relative) {
   const normalized = relative.replaceAll('\\','/');
   const base = path.posix.basename(normalized);
   if (base.toLowerCase().startsWith('.env') || /(?:keypair|credential|secret|wallet|signer).*\.json$/i.test(base)) return false;
-  if (rootFiles.has(normalized) || documents.includes(normalized) || publicProgramJson.has(normalized)) return true;
+  if (rootFiles.has(normalized) || documents.includes(normalized) || publicProgramJson.has(normalized) || publicLocaleJson.has(normalized)) return true;
   const extension = path.posix.extname(normalized).toLowerCase();
   return codeExtensions.has(extension) || (normalized.startsWith('apps/web/public/') && assetExtensions.has(extension));
 }
@@ -94,7 +97,7 @@ function copyTree(relative) {
     else copyFile(child);
   }
 }
-for (const relative of rootFiles) copyFile(relative,['package.json','package-lock.json','Cargo.toml','Cargo.lock','Anchor.toml','tsconfig.json','vite.config.ts','index.html'].includes(relative));
+for (const relative of rootFiles) copyFile(relative,['package.json','package-lock.json','Cargo.toml','Cargo.lock','Anchor.toml','tsconfig.json','vite.config.ts'].includes(relative));
 for (const relative of documents) copyFile(relative);
 for (const relative of trees) copyTree(relative);
 files.sort((a,b)=>a.path.localeCompare(b.path));
