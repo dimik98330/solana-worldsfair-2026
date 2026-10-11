@@ -11,7 +11,7 @@ Start with [English README](../README.md) or [Русский README](../README.r
 | Windows/WSL or native Linux start | [LOCALNET-SETUP.md](LOCALNET-SETUP.md) |
 | Render/Neon operation, backup and one-writer policy | [31-HOSTING.md](31-HOSTING.md) |
 | Version-bound verification, skips and failures | [VERIFICATION-HISTORY.md](VERIFICATION-HISTORY.md) |
-| Current public v3 deployment evidence | [33-HOSTED-DEPLOYMENT.md](33-HOSTED-DEPLOYMENT.md) |
+| Current public v4 deployment and earlier cohorts | [33-HOSTED-DEPLOYMENT.md](33-HOSTED-DEPLOYMENT.md) |
 | Current source/technical readiness boundaries | [35-READINESS.md](35-READINESS.md) |
 | Signed shadow registry/settlement adapter | [IMPLEMENTED-ADAPTER.md](integrations/IMPLEMENTED-ADAPTER.md) |
 | Future external pilot acceptance/operations | [PILOT-CONTRACT.md](integrations/PILOT-CONTRACT.md), [PILOT-RUNBOOK.md](integrations/PILOT-RUNBOOK.md) |

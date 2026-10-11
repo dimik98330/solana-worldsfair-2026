@@ -1,19 +1,21 @@
-# Technical readiness —10October2026
+# Technical readiness and scoped evidence
 
 [English README](../README.md) · [Русский README](../README.ru.md)
 
 ProofPilot coach policy4 accepted the bounded technical report below after a fresh-context review. This is local evidence-checklist acceptance, not official judging, a perfect-product verdict or production certification. The frozen report covers source4e5dafa and the large localnet cohort; the later [37-transaction prepared launcher](evidence/servicing-v4-one-command-check-20261010.json) is a separate supplement.
 
+Current11OctoberUTC/12OctoberKazakhstan supplement: finalized v4 program/SHA257a and refreshed Render source8c22860 are deployed with exact asset/auth/storage readback. [Rollout](evidence/hosted-v4-rollout-20261011.json). The separate public cohort completed500coupon/10000principal/10burn/10yes votes, with18signatures observed finalized and17matching business proofs. [Execution](evidence/hosted-v4-lifecycle-20261011.json). [Actual restart/GET-only recovery](evidence/hosted-v4-recovery-20261011.json) preserved all17action IDs, financial rights/results and old v3 accounts. The historical report below retains its original version and cutoff.
+
 ## Четыре замечания и текущее состояние
 
 | Замечание | Что реализовано и проверено | Оставшаяся граница |
 |---|---|---|
-| Эмитент блокирует погашение | В v4 любой fee payer открывает/завершает наступившую фиксацию; держатель получает номинал и атомарно сжигает токены. Протестировано отсутствие эмитента в транзакции | Публичный devnet ещё на прежнем v3; обновление требует бесплатных test SOL |
+| Эмитент блокирует погашение | В v4 любой fee payer открывает/завершает наступившую фиксацию; держатель получает номинал и атомарно сжигает токены. Протестировано отсутствие эмитента в транзакции | Публичный v4 развёрнут; новый публичный финансовый цикл и восстановление проверены отдельно |
 | 16 держателей/8 купонов, закрытый реестр | Отдельные страницы по8/u32,33→34 держателя/9 купонов; нулевые новые получатели после активации не получают прошлых прав | API4096 account observations, browser16 coupons, controlled frozen SPL transfers; без обещаний unlimited/DEX |
 | Обычный Phantom | Исправлен sign-only путь, проверяются точные байты/Ed25519/кошелёк/срок; нет скрытого broadcast fallback | Успешная обычная подпись не подтверждена; код/тестовые подписанты не заменяют её |
 | Нет внешнего внедрения | Подписанные реестр/outbox/ACK, shadow reconciliation, actual HTTP/chain read и restart проверены | Реальные KASE/банк/кастодиан/клиентский пилот не подтверждены; dispatch disabled |
 
-Солана-ядро прототипа закрывает все8 функциональных требований в проверенных localnet-сценариях. Внешние рельсы — явно обозначенная sandbox/shadow граница. Eligibility, final submission и production approval здесь не присваиваются.
+Солана-ядро прототипа закрывает все8 функциональных требований в проверенных localnet и текущем публичном devnet-сценарии. Внешние рельсы — явно обозначенная sandbox/shadow граница. Eligibility, final submission и production approval здесь не присваиваются.
 
 ## Reviewed report — verbatim
 

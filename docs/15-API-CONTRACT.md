@@ -2,7 +2,7 @@
 
 [Overview](../TECHNICAL.md) · [Paged protocol](34-PAGED-SERVICING.md) · [Setup](LOCALNET-SETUP.md)
 
-This contract describes the current source. The recorded public deployment uses the separately identified v3 program; inspect `/api/program` and require the matching release before preparing financial operations. Whole bonds have decimals0; the mock settlement mint has decimals6. Money and quantities are exact decimal integer strings, never JSON floating-point amounts.
+This contract describes the current v4 source and matching public rollout. Earlier v3 financial cohorts retain their own account layouts and recorded scope. Inspect `/api/program` and require the matching release before preparing financial operations. Whole bonds have decimals0; the mock settlement mint has decimals6. Money and quantities are exact decimal integer strings, never JSON floating-point amounts.
 
 ## Read, reconcile and inspect
 

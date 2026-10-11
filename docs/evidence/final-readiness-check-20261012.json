@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-11T21:20:49.976Z",
+  "kind": "Final scoped ProofPilot coach artifact acceptance",
+  "status": "accepted",
+  "policyVersion": 4,
+  "decisionContext": "application",
+  "decision": {
+    "target": "artifact",
+    "decision": "complete"
+  },
+  "finalFiles": [
+    {
+      "path": "README.md",
+      "sha256": "2a44531dfc28dfb03bf131c71ddbd686ff2efb750f9320f07a0e728a30209dac",
+      "bytes": 10180
+    },
+    {
+      "path": "README.ru.md",
+      "sha256": "55fdbc7e7232eb48af25af6c281079f0ae7d02eb81459b887e27b271afb81bb5",
+      "bytes": 16445
+    },
+    {
+      "path": "TECHNICAL.md",
+      "sha256": "4113c55bb67cbe2a05206ae69ef8c2f4137fb1b299d5dbccdadbaf9ed1f738f3",
+      "bytes": 18737
+    },
+    {
+      "path": "docs/14-SUBMISSION.md",
+      "sha256": "38c3eeddcb2a9da852b11d96b1fb3c0a9987ed0d06bde09aac0366fa6005a31c",
+      "bytes": 4232
+    },
+    {
+      "path": "docs/33-HOSTED-DEPLOYMENT.md",
+      "sha256": "cef753965bd629b18d424e11e84cca87a63f9db07fb81afa116de66cee633d94",
+      "bytes": 18643
+    },
+    {
+      "path": "docs/35-READINESS.md",
+      "sha256": "3bad8cef90e2276d6c6d829e60182aa7fef9087bfc5873fb3403dd3411220c13",
+      "bytes": 5733
+    }
+  ],
+  "review": {
+    "mode": "separate_context",
+    "model": "GPT-6 (host label; exact variant unavailable)",
+    "independence": "Separate-context agent; labels are self-reported, not a formal third-party audit",
+    "checks": [
+      {
+        "id": "fact_fidelity",
+        "status": "pass",
+        "note": "FR3 fixed by exactly one TECHNICAL sentence: financial lifecycle/restart evidence uses799b2a6; current Render source8c22860 adds only reviewed UI captions and its served assets match the reviewed build. Own binding check confirms this sole sentence delta, unchanged other five files,61frozen sources intact,147exact claim quotes/references, same packetSHA and current draft2/assessment2 bindings. Historical v3/localnet/verbatim10October scopes and all unknown human/owner/institution outcomes remain explicit."
+      },
+      {
+        "id": "arithmetic",
+        "status": "pass",
+        "note": "Inspected source base units/decimals and sanitized lifecycle/recovery inputs. BigInt reproduction gives500000000coupon,10000000000principal,10500000000cash;17business+1aux=18unique signatures,17business proofs;18×5000=90000fees. Historical quick/scale/publicv3 totals and253=215+38 remain separate. Published rubric/prize context is not a project score."
+      },
+      {
+        "id": "evidence_support",
+        "status": "pass",
+        "note": "Inspected original task,50fact summaries/material-claim mappings,all six final documents, program payout/capture/redeem/vote/account constraints, journal-before-send and PG acknowledgement guards, wallet sign-only boundary, actual rollout/lifecycle/recovery and preserved historical evidence. New public screenshot was viewed; own public GET program/reconciliation supported current version and financial closure. Captured proof/provider/test artifacts are attributed to their observed cutoffs rather than claimed as this reviewer personally rerunning all tests or restarting provider. Final actual public screenshot SHAba0940…84e7f was visually inspected:500coupon,10000principal,10retired,10yes/0no and precise dates/timezone match separate financial evidence; captions retain observed confirmation scope. All262local Markdown link targets exist. Latest CI success was reported after freeze and is not used to amend this fixed packet or assert an unrecorded test pass."
+      },
+      {
+        "id": "constraints",
+        "status": "pass",
+        "note": "Coach/application/artifact-complete matches the requested participant materials review. The3scenarios/8prototype components correspond to the supplied KASE listing, independently refreshed read-only. Actual main registration/current submission window/material acceptance remain unknown apply gates. No mandatory human Phantom/bank integration requirement was invented for the test-prototype core; synthetic assets/shadow rails and protocol/API/browser budgets remain explicit."
+      },
+      {
+        "id": "verdict",
+        "status": "pass",
+        "note": "Completing a bounded source/material artifact is justified by implemented Solana logic plus actual separate public execution/restart evidence once the minor source-scope ambiguity is repaired. It does not declare eligible/accepted submission, production/security certification, guaranteed availability, unlimited scale, users/partners, perfect score or winning probability."
+      },
+      {
+        "id": "next_step",
+        "status": "pass",
+        "note": "The remaining change is one explicit financial-base/current-frontend sentence, followed by exact changed-file/draft/assessment hash review. Owner eligibility/form/consent/final submission and optional ordinary Phantom/institution trial remain separately observable steps. No new financial run is needed to repair this documentation ambiguity."
+      },
+      {
+        "id": "task_scope",
+        "status": "pass",
+        "note": "Reviewed EN/RU README, TECHNICAL, submission, hosted-deployment and readiness artifacts against owner request: usable concise entry links, real current screenshot/demo/source, architecture/record/math/settlement/Solana detail and honest evidence. No re-selection, redesign expansion, formal score or broad implementation was introduced. FR1/FR2 pre-freeze doc repairs are preserved in the critic own initial report."
+      },
+      {
+        "id": "action_bounds",
+        "status": "pass",
+        "note": "Reviewer used only read-only source/docs/public listing/GET evidence and wrote owned private review files. No source/config/Git/runtime/deployment/financial write, auth/key/signed-wire content read, account action, external message, paid service or final submission. Latest source CI was not silently promoted from running to passed."
+      }
+    ],
+    "openIssues": 0,
+    "repairs": [
+      {
+        "id": "FR1",
+        "status": "fixed",
+        "scope": "Removed stale current-v3 claims while preserving dated historical reports"
+      },
+      {
+        "id": "FR2",
+        "status": "fixed",
+        "scope": "Corrected ambiguous historical private-repository wording"
+      },
+      {
+        "id": "FR3",
+        "status": "fixed",
+        "scope": "Distinguished799b2a6 financial proof from8c22860 caption-only live UI"
+      }
+    ]
+  },
+  "packet": {
+    "sha256": "412c3c95a09c0227f1f15eaca999460233d83db8fcbe045ebeed838d2e49be68",
+    "draftSha256": "a74020a5ed3816bbe1b4b82f3001b33e6519b0f3c895d4327a932b58b7060676",
+    "assessmentSha256": "4eed4ce139aa01a5cc87e5cdeb6c925a6d51861ac7d8b229c7c79ad77818428c",
+    "sources": 61,
+    "facts": 50,
+    "materialClaims": 147,
+    "drafts": 2,
+    "maxDrafts": 3,
+    "diagnostics": []
+  },
+  "source": {
+    "commit": "8c22860f7be30de8cba755207ebfbedd979b5ad5",
+    "ciRun": 38174960943,
+    "ciConclusion": "success",
+    "ciUrl": "https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38174960943",
+    "localNodePassed": 412,
+    "localNodeOptionalPgSkipped": 10,
+    "localUiPassed": 110,
+    "buildTypecheckPassed": true,
+    "programUnitPassed": 3,
+    "programRuntimePassed": 22,
+    "scope": "Local source checks and separate CI cohorts; counts are not summed into a single suite"
+  },
+  "verification": {
+    "publicLifecycle": "hosted-v4-lifecycle-20261011.json",
+    "publicRecovery": "hosted-v4-recovery-20261011.json",
+    "currentRollout": "hosted-v4-rollout-20261011.json",
+    "cleanup": "publication-cleanup-20261011.json",
+    "continuousDemo": "../../artifacts/demo/one-take/provenance.json",
+    "publicScreenshot": "ui/workspace-20261012-devnet.png",
+    "publicScreenshotSha256": "ba0940ed906a6fd9a824c401677d2bc969af0a027eb6c261be0f813274984e7f",
+    "relativeLinks": 262,
+    "brokenLinks": 0,
+    "ownedTemporaryCredentialCopiesRemoved": 2
+  },
+  "boundaries": [
+    "Acceptance covers these exact artifact bytes and supplied evidence, not an official judging score or perfect-product guarantee",
+    "Main hackathon registration, final form/consent and accepted submission remain owner checkpoints",
+    "Ordinary human Phantom execution and real bank/KASE institutional pilot remain unverified",
+    "Synthetic devnet/localnet assets only; no production audit, SLA, real securities or mainnet claim",
+    "Original frozen proof JSON, failed attempts, journals, ledgers and signer files are preserved; private runtime material is not published"
+  ]
+}

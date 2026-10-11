@@ -1,6 +1,14 @@
-# Actual hosted deployment — 9 October 2026
+# Public hosted deployment and version history
 
-## Current supplement — 10 October 2026
+## Current v4 deployment — 11 October 2026
+
+Current Render deployment `dep-db5vkuflot8c738bk9j0` is Live at source `8c22860f7be30de8cba755207ebfbedd979b5ad5`, with the same external PostgreSQL namespace. It adds reviewed operation captions to the financial/backend release `799b2a6`. The finalized devnet program is960296bytes/SHA`257a89b28a427863b4ed8adf26eaaed868f15d8d7a290970200f9cc81a33106c`. Actual served JS/CSS match the reviewed local build; strict operator-auth, origin, storage read-write and advancing-chain checks passed. [Exact rollout evidence](evidence/hosted-v4-rollout-20261011.json).
+
+The old service was suspended/drained before controlled extension and upgrade; its metadata backup was verified. Authority and program ID remain unchanged. The new public v4 cohort completed:10bonds,500coupon,10000principal,10burned,10votes for/0against, zero supply/vault/obligations. All18signatures were observed finalized:17business actions and one separately declared synthetic-mint setup. All17business proofs match retained wires. [Execution evidence](evidence/hosted-v4-lifecycle-20261011.json).
+
+An actual Render restart at20:32UTC was followed by GET-only recovery at20:39:49UTC:the same17action IDs,18finalized signatures/proofs, exact financial projection and unchanged old v3 accounts. No new signature, financial POST or rebroadcast occurred. [Restart evidence](evidence/hosted-v4-recovery-20261011.json). The subsequent caption-only deployment preserves the same backend/program. Ordinary human-wallet execution remains unverified; earlier v3/localnet cohorts below remain independently versioned.
+
+## Historical wallet supplement — 10 October 2026
 
 The service received a **wallet-only v3 deployment**, source `e658553632a8289c575494b0691e6c36ab92e7f0`, Render `dep-db4urvqd0e5s73dj3qbg`. Actual HTML/JS asset `index-DRI4xkk7.js`, PostgreSQL, program SHA `761b993d…077bdfd` and the previous completed issue were read back on 10 October. [Versioned supplement](evidence/wallet-buffer-check-20261010.json). The older observations below retain their original cutoff.
 

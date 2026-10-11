@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "kind": "Current public v4 deployment verification",
+  "observedAt": "2026-10-11T19:48:20.077Z",
+  "source": {
+    "commit": "799b2a6e0f297d27315d796c36b4d359df2489a1",
+    "ciRun": 38166413399,
+    "ciConclusion": "success",
+    "ciUrl": "https://github.com/dimik98330/solana-worldsfair-2026/actions/runs/38166413399"
+  },
+  "hosting": {
+    "origin": "https://bondtrace-devnet.onrender.com",
+    "provider": "Render",
+    "plan": "Free",
+    "service": "srv-db4g7oqd0e5s73espfqg",
+    "deployment": "dep-db5uf5jbc2fs73a5r7tg",
+    "status": "Live",
+    "manualCommitVerified": true,
+    "automaticDeploys": false,
+    "namespace": "bondtrace-devnet",
+    "storage": "postgres",
+    "sameExternalDatabase": true,
+    "entryAssets": [
+      {
+        "path": "/assets/index-1nJS-TX2.js",
+        "type": "text/javascript",
+        "bytes": 593136,
+        "sha256": "72e2c9c94fbba0dbfefd42def7cf8f58ebdeada5dc1f40fbf937cd93948d7f03"
+      },
+      {
+        "path": "/assets/index-18WMjJAr.css",
+        "type": "text/css",
+        "bytes": 178036,
+        "sha256": "2b2ad07a97c1b54817eb99388e13341e653395236e035202faf6326d24ffda89"
+      }
+    ],
+    "reviewedLocalAssetsMatch": true,
+    "operatorAuthVerified": true,
+    "foreignOriginRejected": true,
+    "storageReadWriteVerified": true
+  },
+  "program": {
+    "network": "devnet",
+    "genesis": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+    "id": "B3aFCQ25iN3gjmvznAaY5RNnnw8J5ihFPsPoGgWXhmb8",
+    "programData": "uZzaw6cRtbnd2JWk9rEirz9g8hZNY6VmUPWBPxuFz2r",
+    "authority": "6fKVo5CPT2Ewm34ZLTTENPVdkcu9xv1ARTjiVz7t6GuD",
+    "authorityChanged": false,
+    "bytes": 960296,
+    "programDataBytes": 960341,
+    "sha256": "257a89b28a427863b4ed8adf26eaaed868f15d8d7a290970200f9cc81a33106c",
+    "status": "known-match",
+    "extension": {
+      "signature": "2ydC6S2pBDxt7cBFJ46VcJiFuYdfECK944oj7VXrJbBYXRfYkd3fnoK8581MXGSxQquDWdqaYJukgGLADzazNWdH",
+      "finality": "finalized",
+      "slot": 510009125,
+      "bytesAdded": 418840,
+      "rentLamports": "2127707200",
+      "feeLamports": "5000"
+    },
+    "upgrade": {
+      "signature": "2mKA7wsKzXqSuLv6Zi4GjEWAZM2KhJceBeqGBdXmSG7PTawheCCTvLSMtnumqNXoDQkqSKY3BfseEqLumm9t38oY",
+      "finality": "finalized",
+      "slot": 510011708,
+      "accountReadSlot": 510011715,
+      "feeLamports": "5000"
+    }
+  },
+  "cutover": {
+    "oldServiceSuspended": true,
+    "publicHealthDuringPause": 503,
+    "drainWaitSeconds": 35,
+    "metadataBackupVerified": true,
+    "backupBytes": 284696,
+    "backupSha256": "11f40d9b6143df94b3d3622dcd97f7ddb24190cd9efdaea167f083cf0bb5cd89",
+    "restorePerformed": false,
+    "ledgerReset": false
+  },
+  "maintenanceFailures": [
+    {
+      "kind": "Invalid Clock sysvar literal in private one-off upgrade helper",
+      "effect": "SDK rejection before an upgrade signature; no failed upgrade sent",
+      "fix": "Canonical32-byte Clock address plus independently checked exact message and live unsigned simulation",
+      "status": "closed"
+    },
+    {
+      "kind": "Missing local operator-auth path in private smoke planner",
+      "effect": "Stopped before creating a new issue or signature",
+      "fix": "Private copy of existing validated operator credentials; no new credential or access",
+      "status": "closed"
+    }
+  ],
+  "lifecycle": {
+    "status": "completed",
+    "id": "public-v4-40f92bd0-982d-449b-93d5-bfdecfa1630d",
+    "bond": "9AcsZYk2WhSKzuK8m6gwy26Tb4JcWiQ9MpTyaYbfmqqh",
+    "completedAt": "2026-10-11T20:20:46.141Z",
+    "evidence": "hosted-v4-lifecycle-20261011.json",
+    "scope": "Separate new synthetic devnet cohort;18signatures observedfinalized/17matchingbusinessproofs"
+  },
+  "local": {
+    "origin": "http://127.0.0.1:4430",
+    "currentBackendAndBuild": true,
+    "liveChain": "localnet",
+    "scope": "GET-only isolated metadata clone and read-only RPC fence; original API, ledger and keys preserved"
+  },
+  "limits": [
+    "Synthetic test assets and delegated test signers only",
+    "Ordinary human Phantom execution, real bank/KASE integration, main eligibility and accepted final submission are unverified",
+    "Original signed wires, keys, provider auth and database backup stay private"
+  ],
+  "currentFrontendSupplement": {
+    "source": "8c22860f7be30de8cba755207ebfbedd979b5ad5",
+    "deployment": "dep-db5vkuflot8c738bk9j0",
+    "status": "Live",
+    "checkedAt": "2026-10-11T21:10:27.968Z",
+    "entryAssets": [
+      {
+        "path": "/assets/index-B9ToRDHP.js",
+        "type": "text/javascript",
+        "bytes": 593978,
+        "sha256": "0dba6d3718014de81f4b732cc4cea1d441b71f5d336257acc61ff8d17932399b"
+      },
+      {
+        "path": "/assets/index-18WMjJAr.css",
+        "type": "text/css",
+        "bytes": 178036,
+        "sha256": "2b2ad07a97c1b54817eb99388e13341e653395236e035202faf6326d24ffda89"
+      }
+    ],
+    "reviewedLocalAssetsMatch": true,
+    "backendAndProgramUnchanged": true,
+    "buildTypecheckPassed": true,
+    "uiTestsPassed": 110,
+    "realLocalLanguageWidthChecks": 12,
+    "publicLanguageWidthChecks": 9,
+    "financialWritesDuringUiQa": 0,
+    "publicScreenshot": {
+      "path": "ui/workspace-20261012-devnet.png",
+      "sha256": "ba0940ed906a6fd9a824c401677d2bc969af0a027eb6c261be0f813274984e7f"
+    },
+    "scope": "Caption-only current UI; financial lifecycle/restart belongs to unchanged799b2a6 backend/program"
+  },
+  "restartRecovery": {
+    "status": "passed",
+    "evidence": "hosted-v4-recovery-20261011.json",
+    "operationIdsPreserved": 17,
+    "finalizedSignatures": 18,
+    "financialWrites": 0
+  }
+}

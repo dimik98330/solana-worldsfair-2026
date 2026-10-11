@@ -4,7 +4,7 @@ Read [AGENTS.md](AGENTS.md), [current status](docs/00-STATE.md), and the [docume
 
 The owner selected Superteam Kazakhstan × KASE corporate actions on7October2026 and authorized implementation, verification and submission-material preparation. The original idea-selection/Prompt1 gate was superseded. Do not restart idea selection, reinstall working skill/tool bundles or recreate archived planning files.
 
-Current source has paged v4 servicing; the separately recorded public deployment is v3. Require the actual matching program hash before financial preparation/relay. Review [TECHNICAL.md](TECHNICAL.md), [API contract](docs/15-API-CONTRACT.md) and [security model](docs/11-SECURITY.md) for the implemented boundaries.
+Current source and public deployment have paged v4 servicing. [The11OctoberUTC rollout](docs/evidence/hosted-v4-rollout-20261011.json) verifies finalized program SHA257a and matching Render source8c22860/assets. [The completed public financial cohort](docs/evidence/hosted-v4-lifecycle-20261011.json) and [same-ID restart recovery](docs/evidence/hosted-v4-recovery-20261011.json) are verified separately. Require the actual matching program hash before financial preparation/relay. Review [TECHNICAL.md](TECHNICAL.md), [API contract](docs/15-API-CONTRACT.md) and [security model](docs/11-SECURITY.md) for the implemented boundaries.
 
 Use ProofPilot in coach mode for product/readiness decisions and relevant installed Solana/security/testing/browser skills for implementation. Existing project-local skills are development tooling, not application dependencies or evidence that a connector is live. Root installation details remain in [environment notes](docs/02-ENVIRONMENT.md).
 

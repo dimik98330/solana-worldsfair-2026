@@ -7,7 +7,7 @@ The form was inspected7October at [KASE listing](https://superteam.fun/earn/list
 | Material | Destination / boundary |
 |---|---|
 | Source | [GitHub](https://github.com/dimik98330/solana-worldsfair-2026), already public at10October publication |
-| Hosted application | [Render devnet](https://bondtrace-devnet.onrender.com/), recorded v3; free service may sleep |
+| Hosted application | [Render devnet](https://bondtrace-devnet.onrender.com/), current v4 rollout verified; [versioned record](33-HOSTED-DEPLOYMENT.md), free service may sleep |
 | Architecture | [TECHNICAL](../TECHNICAL.md), [protocol](34-PAGED-SERVICING.md), [API](15-API-CONTRACT.md) |
 | Reproduction | [English](../README.md) / [Russian](../README.ru.md), [setup](LOCALNET-SETUP.md) |
 | Evidence | [Verification history](VERIFICATION-HISTORY.md), source-bound CI and JSON receipts |
@@ -21,13 +21,13 @@ BondTrace services permissioned tokenized test bonds on Solana: identify holders
 
 The additive v4 protocol has paged holder/schedule/action accounts. Any fee payer can advance due coupon/maturity capture; holders sign principal retirement. Post-activation receivers gain no historical rights. Durable IDs, exact signed messages, transactional metadata and reconciliation support recovery.
 
-The prepared localnet run retained37transactions independently observed finalized:1,800coupon,18,000principal,18burned and zero remaining supply/vault/obligations. A separate33→34holder/9coupon run retained253proofs, with archived finality and later missing history disclosed. Public devnet demonstrates the earlier v3 program with26recorded finalized transactions and restart/backup checks.
+The public v4 run completed500coupon,10000principal,10bonds burned and a10/0vote. All18signatures were observed finalized;17business proofs match their original signed wires. An actual service restart preserved the same IDs and financial projection. The prepared localnet run and larger33→34holder/9coupon run remain separate capacity/lifecycle evidence. [Current public results](evidence/hosted-v4-lifecycle-20261011.json), [recovery](evidence/hosted-v4-recovery-20261011.json).
 
-All assets are test tokens. Ordinary Phantom success and public v4 upgrade remain unverified. Registry/settlement adapters operate in sandbox/shadow mode; no real bank/KASE partner, customers, regulated securities or production audit is claimed.
+The matching public v4 program and refreshed workspace are now deployed and verified. All assets are test tokens; ordinary human Phantom success remains unverified. Registry/settlement adapters operate in sandbox/shadow mode; no real bank/KASE partner, customers, regulated securities or production audit is claimed.
 
 ## Русское описание
 
-BondTrace обслуживает тестовые токенизированные облигации в Solana: реестр → неизменяемые права → точный расчёт → купон/погашение с burn → проверяемый результат. Дополнительное действие — голосование. Исходники v4 и реальные localnet-проверки опубликованы; публичный devnet пока использует v3. Тестовые подписанты, обычный Phantom и внешние интеграции описаны раздельно.
+BondTrace обслуживает тестовые токенизированные облигации в Solana: реестр → неизменяемые права → точный расчёт → купон/погашение с burn → проверяемый результат. Дополнительное действие — голосование. Исходники v4 и localnet-доказательства опубликованы; совпадающие программа v4 и обновлённый интерфейс развёрнуты в публичном devnet. Тестовые подписанты, обычный Phantom и внешние интеграции описаны раздельно.
 
 ## Final owner checklist
 

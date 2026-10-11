@@ -6,7 +6,9 @@
 
 BondTrace is a working corporate-actions prototype on **Solana**, built for **Superteam Kazakhstan × KASE**. It services the bond after issuance: coupon payments, maturity redemption with atomic token burns, and bondholder voting.
 
-**[Open application](https://bondtrace-devnet.onrender.com/)** · **[Inspect a completed issue](https://bondtrace-devnet.onrender.com/?view=payments&instrument=2KWpyE9mQWS6VTviCJFi1b4Zh55rti9xeDS6yk37sU7Y)** · **[Technical overview](TECHNICAL.md)** · **[Demo materials](docs/13-DEMO.md)**
+**[Open application](https://bondtrace-devnet.onrender.com/)** · **[Inspect the completed v4 issue](https://bondtrace-devnet.onrender.com/?view=overview&instrument=9AcsZYk2WhSKzuK8m6gwy26Tb4JcWiQ9MpTyaYbfmqqh)** · **[Technical overview](TECHNICAL.md)** · **[Watch the continuous demo](artifacts/demo/one-take/bondtrace-demo.mp4)**
+
+**Verified on public devnet:** 10 test bonds → **500 coupon + 10,000 principal + 10 bonds burned**, with a recorded holder vote. Eighteen signatures were observed finalized; the same records survived a service restart. [Transactions](docs/evidence/hosted-v4-lifecycle-20261011.json) · [Recovery](docs/evidence/hosted-v4-recovery-20261011.json).
 
 ## Why it matters
 
@@ -16,20 +18,20 @@ BondTrace ties these steps together with on-chain record-date rights, exact inte
 
 ## Try it
 
-Open the application and inspect payments, holders, voting and transaction receipts. Public inspection requires no password. The current source/local build supports **English, Russian and Kazakh**, desktop and phone layouts, and local time-zone display; the public release is identified below. Receipt links open the corresponding Solana Explorer transaction.
+Open the application and inspect payments, holders, voting and transaction receipts. Public inspection requires no password. The application supports **English, Russian and Kazakh**, desktop and phone layouts, and local time-zone display. Receipt links open the corresponding Solana Explorer transaction.
 
 All assets are **synthetic test SPL tokens**, with no fiat value. Render Free can sleep between visits. A connected wallet proves connection; it does not prove a completed transaction.
 
 | Surface | Verified scope |
 |---|---|
-| Public application | Recorded v3 devnet lifecycle: 26 finalized transactions, coupon payment, principal payment/burn, voting and same-ID recovery after a service restart. [Deployment record](docs/33-HOSTED-DEPLOYMENT.md). |
+| Public application | Current v4 program and workspace are deployed; public JS/CSS match the reviewed build. Coupon 500, principal 10,000, burn 10 and voting passed through the public API, with 18 finalized signatures and same-ID recovery after restart. [Deployment record](docs/33-HOSTED-DEPLOYMENT.md). |
 | Current source | Paged v4 program, current multilingual workspace, permissionless due servicing and signed shadow adapters. Source and deployment versions are tracked separately. [Readiness](docs/35-READINESS.md). |
 | Ordinary Phantom | Full-wire v0 sign-only path and signature checks are implemented. A successful ordinary human-wallet transaction remains unverified. |
 | Institutional connections | Registry attestations, settlement outbox and signed acknowledgements work in a sandbox/shadow flow. No live KASE, bank or custodian integration is claimed. |
 
-![Current workspace reading localnet](docs/evidence/ui/workspace-20261011-localnet.png)
+![Current public devnet workspace](docs/evidence/ui/workspace-20261012-devnet.png)
 
-*Current workspace reading a completed localnet issue, 11 October 2026. Generated test signers; this screenshot is not evidence of public deployment or human-wallet signing.*
+*Current public workspace reading the completed v4 test issue, 12 October 2026 in Kazakhstan. Financial execution is established by the linked receipts; this screenshot does not establish human-wallet signing.*
 
 ## The three required scenarios
 
@@ -78,7 +80,7 @@ flowchart LR
 For **Windows x64 + PowerShell 7 + Node 22.14.0 + WSL2/Ubuntu 24.04**:
 
 ```powershell
-git clone https://github.com/dimik98330/solana-worldsfair-2026.git
+git clone --depth 1 https://github.com/dimik98330/solana-worldsfair-2026.git
 cd solana-worldsfair-2026
 npm ci --ignore-scripts
 npm run setup:judge
@@ -93,6 +95,7 @@ First-time toolchain installation takes longer than a prepared run. [Setup and n
 
 | Recorded run | Result | Evidence |
 |---|---|---|
+| Public devnet v4 | 500 coupon units, 10,000 principal, 10 bonds burned; 10 votes for/0 against; 18 signatures observed finalized; same 17 action IDs and results after restart | [Transaction packet](docs/evidence/hosted-v4-lifecycle-20261011.json), [restart recovery](docs/evidence/hosted-v4-recovery-20261011.json) |
 | Public devnet v3 | 900 coupon units, 18,000 principal, 18 bonds burned; 26 finalized signatures; restart recovery | [Public transaction packet](docs/evidence/hosted-devnet-20261009.json) |
 | Prepared localnet v4 launcher | 1,800 coupon units, 18,000 principal, 18 burned; 37 signatures observed finalized at the recorded cutoff | [Independent result](docs/evidence/servicing-v4-one-command-check-20261010.json) |
 | Larger localnet v4 scenario | 33 initial holders, a later receiver, 9 coupons; 21,600 coupon units and 48,000 principal; late coupon after burn | [Results and exact scope](docs/evidence/servicing-v4-localnet-summary-20261010.json) |
@@ -115,7 +118,7 @@ Tests cover exact entitlements, overflow/remainders, record locks, wrong authori
 
 This is a permissioned test-bond servicing prototype, not a production securities venue. Ordinary SPL/DEX transfers, legal ownership/KYC, fiat custody, a real institutional pilot and production availability are outside the demonstrated scope. Protocol pages hold 8 entries; the browser accepts up to 16 coupons, and complete API reads have a 4,096-account budget. These are explicit limits, not unlimited-scale claims.
 
-Main hackathon registration, the final accessible demo-video URL and accepted contest submission are separate owner checkpoints. No official score, prize outcome or KASE endorsement is asserted. [Submission checklist](docs/14-SUBMISSION.md).
+The [2:30 continuous narrated demo](artifacts/demo/one-take/bondtrace-demo.mp4) is published with verified bytes and explicit localnet scope. Main hackathon registration and accepted contest submission remain owner checkpoints. No official score, prize outcome or KASE endorsement is asserted. [Submission checklist](docs/14-SUBMISSION.md).
 
 ## Repository map
 
