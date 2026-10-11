@@ -6,6 +6,7 @@ import { useDisplayPreferences } from './display-preferences';
 import { timeZoneLabel } from './time-zone';
 import type { ChainState, View } from './types';
 import { useUiLanguage } from './ui-language';
+import { receiptLabels } from './ReceiptDetails';
 import './overview-clarity.css';
 
 export interface JudgeOverviewProps {
@@ -44,7 +45,8 @@ export function JudgeOverview({ state, onNavigate, onReceipts, onCreate }: Judge
     : instrument?.status === 'redeeming' ? tr('Redemption open', 'Погашение открыто')
       : instrument?.status === 'active' ? tr('Active', 'Активен') : tr('Draft', 'Черновик');
   const recentActivity = state.activity.slice(0, 3);
-  const activityNames: Record<string, string> = {
+  const isConfirmed = (status: string) => status === 'confirmed' || status === 'finalized';
+  const neutralActivityNames: Record<string, string> = {
     capture_coupon: tr('Record coupon rights', 'Фиксация купонных прав'),
     claim_coupon: tr('Coupon payment', 'Купонная выплата'),
     settle_coupon: tr('Coupon payment', 'Купонная выплата'),
@@ -58,6 +60,14 @@ export function JudgeOverview({ state, onNavigate, onReceipts, onCreate }: Judge
     register_holder: tr('Register holder', 'Регистрация держателя'),
     issue_units: tr('Place bonds', 'Размещение облигаций'),
     seal_issue: tr('Activate issue', 'Активация выпуска'),
+    capture_action_page: tr('Capture page', 'Фиксация страницы'),
+    finalize_action: tr('Snapshot', 'Снимок'),
+  };
+  const activityName = (kind: string, status: string) => {
+    if (isConfirmed(status) && receiptLabels[kind]) return tr(receiptLabels[kind][0], receiptLabels[kind][1]);
+    const base = kind.replace(/_v2$/, '');
+    const aliases: Record<string, string> = {begin_coupon:'capture_coupon',create_proposal:'create_vote',transfer_units:'transfer_bonds',register_receiver:'register_holder'};
+    return neutralActivityNames[aliases[base] || base] || kind.replaceAll('_', ' ');
   };
 
 
@@ -82,7 +92,7 @@ export function JudgeOverview({ state, onNavigate, onReceipts, onCreate }: Judge
     </section>
     <div className="clear-secondary-grid">
       <section className="clear-vote-panel"><header><Vote size={20} aria-hidden="true" /><h2>{tr('Holder voting', 'Голосование держателей')}</h2>{proposal && <Badge tone={proposal.status === 'open' ? 'blue' : 'neutral'}>{proposal.status === 'closed' ? tr('Closed', 'Завершено') : proposal.status === 'capturing' ? tr('Recording rights', 'Фиксируются права') : tr('Open', 'Открыто')}</Badge>}</header>{proposal ? <><h3 translate="no">{proposal.title}</h3><dl className="clear-vote-values"><div><dt>{tr('For', 'За')}</dt><dd className="number">{units(proposal.yesWeight)}</dd></div><div><dt>{tr('Against', 'Против')}</dt><dd className="number">{units(proposal.noWeight)}</dd></div><div><dt>{tr('Total voting rights', 'Всего прав голоса')}</dt><dd className="number">{units(eligibleWeight)}</dd></div></dl></> : <p>{tr('No proposal yet.', 'Предложений пока нет.')}</p>}<Button variant="ghost" onClick={() => onNavigate('voting')}>{tr('Voting details', 'Результаты голосования')}<ArrowRight size={17} aria-hidden="true" /></Button></section>
-      <section className="clear-activity-panel"><header><ReceiptText size={20} aria-hidden="true" /><h2>{tr('Recent operations', 'Последние операции')}</h2></header>{recentActivity.length ? <ul>{recentActivity.map((item,index) => <li key={item.signature + '-' + index}><div><strong>{activityNames[item.kind] || item.kind}</strong><DisplayDate value={item.time} /></div><Badge tone={item.status === 'confirmed' ? 'success' : item.status === 'error' ? 'error' : 'neutral'}>{item.status === 'confirmed' ? tr('Confirmed', 'Подтверждено') : item.status === 'error' ? tr('Failed', 'Ошибка') : item.status}</Badge></li>)}</ul> : <p>{tr('No operations yet.', 'Операций пока нет.')}</p>}<Button variant="ghost" onClick={onReceipts}>{tr('Activity log', 'История операций')}<ArrowRight size={17} aria-hidden="true" /></Button></section>
+      <section className="clear-activity-panel"><header><ReceiptText size={20} aria-hidden="true" /><h2>{tr('Recent operations', 'Последние операции')}</h2></header>{recentActivity.length ? <ul>{recentActivity.map((item,index) => <li key={item.signature + '-' + index}><div><strong>{activityName(item.kind, item.status)}</strong>{isConfirmed(item.status) && <span className="muted">{tr('Observed confirmation', 'Подтверждение отмечено')}</span>}<DisplayDate value={item.time} /></div><Badge tone={item.status === 'confirmed' ? 'success' : item.status === 'error' ? 'error' : 'neutral'}>{item.status === 'confirmed' ? tr('Confirmed', 'Подтверждено') : item.status === 'error' ? tr('Failed', 'Ошибка') : item.status}</Badge></li>)}</ul> : <p>{tr('No operations yet.', 'Операций пока нет.')}</p>}<Button variant="ghost" onClick={onReceipts}>{tr('Activity log', 'История операций')}<ArrowRight size={17} aria-hidden="true" /></Button></section>
     </div>
     {instrument && <details className="clear-issue-details"><summary>{tr('Issue terms and accounts', 'Условия и реквизиты выпуска')}</summary><div><ol className="clear-lifecycle" aria-label={tr('Issue lifecycle', 'Этапы выпуска')}>{lifeStage.map((stage,index) => <li key={stage.label} aria-current={index === currentLife ? 'step' : undefined}><span>{index+1}</span>{stage.label}</li>)}</ol><dl className="clear-issue-facts"><div><dt>{tr('Face value per bond', 'Номинал одной облигации')}</dt><dd><Money value={instrument.faceValueMinor} unit /></dd></div><div><dt>{tr('Bonds issued', 'Облигаций размещено')}</dt><dd>{units(instrument.issuedSupply)}</dd></div><div><dt>{tr('Bonds outstanding', 'Облигаций в обращении')}</dt><dd>{units(outstandingUnits)}</dd></div><div><dt>{tr('Issue address', 'Адрес выпуска')}</dt><dd><Address value={instrument.address} /></dd></div><div><dt>{tr('Issuer account', 'Кошелёк эмитента')}</dt><dd><Address value={instrument.issuer} /></dd></div></dl><Button onClick={() => onNavigate('issuer')}>{tr('Manage issue', 'Управление выпуском')}<ArrowRight size={17} aria-hidden="true" /></Button></div></details>}
   </div>;
