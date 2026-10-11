@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "title": "BondTrace — continuous workspace walkthrough with owner narration",
+  "recordedAt": "2026-10-11T18:04:36.541Z",
+  "frontendSourceCommit": "1322f3bb1a72f6829417aee38135c4447f2e4144",
+  "network": "localnet",
+  "assets": "synthetic test SPL tokens",
+  "scope": "Current React workspace reading the completed paged-v4 localnet issue. Real browser navigation and retained payment receipts; no new financial operation or human-wallet signature during this recording.",
+  "file": "bondtrace-demo.mp4",
+  "bytes": 9700894,
+  "sha256": "8c0bc976f496321a2617a15fdc14443341085265feb7695215c7131614088e03",
+  "durationSeconds": 150.08,
+  "resolution": {
+    "width": 1440,
+    "height": 1000
+  },
+  "codec": {
+    "video": "H.264",
+    "audio": "AAC"
+  },
+  "continuity": {
+    "nativeBrowserVideoSources": 1,
+    "imageInputs": 0,
+    "cuts": 0,
+    "concatenations": 0,
+    "speedChanges": 0,
+    "frames": 3752,
+    "maximumFrameTimestampChangeSeconds": 0
+  },
+  "interaction": {
+    "actualClicks": 37,
+    "readOnlyHttpRequests": 29,
+    "nonReadRequests": 0,
+    "visibleCursor": true
+  },
+  "narration": {
+    "providedBy": "project owner",
+    "completeOriginalRecording": true,
+    "decodedSourceSeconds": 144.82
+  },
+  "checks": {
+    "fullDecode": true,
+    "chromiumPlayback": true,
+    "independentContinuityAndPixelReview": true,
+    "scope": "Local media/source verification; no official judging, production or public-v4 acceptance claim"
+  }
+}
