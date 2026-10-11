@@ -1,3 +1,9 @@
+## Release closure —12October2026 Kazakhstan
+
+Authorized release work is complete. Accepted materials published as1452ab69d0ea4c8eb485edef26a792da164f407b; live remote readback confirmed all6accepted document SHA values,30planned obsolete paths absent,693files/37Markdown/0private-runtime paths. Current source/deployment8c22860 has successful CI38174960943; program257a/lifecycle500+10000/burn10/vote10 and same-ID restart recovery are verified. ProofPilot coach policy4accepted draft2,all8checksPASS/0openissues. Clean managed checkout is authoritative; originalRootWIP/ledgers/signers preserved. Temporary provider/authcopies removed. No outstanding authorized code, README, demo or deployment fix remains; eligibility/ordinaryhumanwallet/realinstitution/finalorganizersubmission are disclosed separateowner checkpoints. Final source/docs/evidence:README anddocs/evidence/final-readiness-check-20261012.json.
+
+---
+
 # BondTrace — release checkpoint, 11 October 2026 UTC / 12 October locally
 
 ## Current stage
