@@ -1,6 +1,14 @@
 # Demonstration
 
-**[Watch the 2:30 continuous demo](../artifacts/demo/one-take/bondtrace-demo.mp4)** · [Recording provenance](../artifacts/demo/one-take/provenance.json)
+**[English public-devnet demo · 2:43](https://youtu.be/arOCHtruN_Q)** · **[Separate project pitch · 1:56](https://youtu.be/3t2nP0fGRtI)** · [Published media record](evidence/colosseum-submission-20261012.json)
+
+The English demo continuously records the actual public application reading the completed v4 issue: terms, a coupon payment of 500, principal repayment of 10,000 and 10 burned bonds, historical rights versus a zero current balance, a vote of 10 for / 0 against, and a Solana transaction receipt. It contains 21 real clicks and 22 GET requests, with no attempted financial write. The initial live loading is retained. No new payment or ordinary human-wallet signature is demonstrated.
+
+Both videos use explicitly disclosed synthetic English narration, without cloning the owner's voice. The pitch is a separate authored presentation. The uploaded source MP4s are 1920×1080, H.264/AAC: demo 162.48 seconds / 4,062 frames; pitch 116.04 seconds / 2,901 frames. All native frames and timestamps are retained; no video cuts, crop, screenshot montage or speed change were used. Independent decode, continuity, audio alignment and visual checks passed. YouTube may transcode these source files; their hashes describe the uploaded originals. Both watch pages were opened and playback observed outside Studio.
+
+## Earlier owner-narrated localnet walkthrough
+
+**[Original 2:30 continuous demo](../artifacts/demo/one-take/bondtrace-demo.mp4)** · [Original recording provenance](../artifacts/demo/one-take/provenance.json)
 
 The owner-narrated video follows the actual interface in one continuous take: languages and time zone, issue creation fields, coupon500 with its exact receipt, recorded holder rights and portfolio, principal10000, voting and transaction history. The cursor moves smoothly and remains visible inside dialogs. No cuts, screenshots, stitched clips or speed changes are used; the complete original narration is included.
 

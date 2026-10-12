@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "kind": "Owner submission observed in Colosseum and published English media",
+  "observedAt": "2026-10-12T09:47:14Z",
+  "project": {
+    "name": "BondTrace",
+    "id": 16242,
+    "url": "https://colosseum.com/arena/projects/bondtrace",
+    "program": "Colosseum Crypto World's Fair 2026",
+    "submissionActor": "owner",
+    "portalStatus": "Submitted",
+    "portalMessage": "Your project is entered for judging.",
+    "displayedSubmissionTime": "October 12, 2026 at 2:45 AM PDT",
+    "submittedAtMinuteUtc": "2026-10-12T09:45Z",
+    "requiredMaterialsComplete": true,
+    "participantProfilesComplete": "1 of 1",
+    "acceleratorApplication": false,
+    "kaseSideTrackSubmission": "separate, pending",
+    "judgingOutcome": "unknown"
+  },
+  "demo": {
+    "url": "https://youtu.be/arOCHtruN_Q",
+    "visibility": "unlisted",
+    "sourceSha256": "1a1ab27d74a8c7f0157979c750b02b2dded60ff8d137ac0f7051e8e28aa294b1",
+    "sourceBytes": 7520880,
+    "sourceDurationSeconds": 162.48,
+    "sourceFrames": 4062,
+    "actualClicks": 21,
+    "httpsGetRequests": 22,
+    "nonGetAttempts": 0,
+    "scope": "Continuous inspection of the completed public devnet v4 issue, synthetic test assets; no new financial execution or ordinary human-wallet signing",
+    "bond": "9AcsZYk2WhSKzuK8m6gwy26Tb4JcWiQ9MpTyaYbfmqqh",
+    "initialLiveLoadingRetained": true,
+    "observedYouTubeDurationSeconds": 162.521,
+    "observedPlayingTimeSeconds": 65.001395,
+    "observedPlayerError": null
+  },
+  "pitch": {
+    "url": "https://youtu.be/3t2nP0fGRtI",
+    "visibility": "unlisted",
+    "sourceSha256": "965897c3c8e2091b3941f521381233beacd3f04e78153c2dbdb31d2add800f6b",
+    "sourceBytes": 5917180,
+    "sourceDurationSeconds": 116.04,
+    "sourceFrames": 2901,
+    "scope": "Separate authored project presentation; founder background supplied by owner",
+    "observedYouTubeDurationSeconds": 116.061,
+    "observedPlaybackEnded": true,
+    "observedPlayerError": null
+  },
+  "mediaChecks": {
+    "dimensions": "1920x1080",
+    "sourceCodecs": "H.264/AAC",
+    "narration": "Synthetic English voice, explicitly disclosed; no owner voice cloning",
+    "nativeFramesAndTimestampsRetained": true,
+    "cutsCropMontageOrSpeedChanges": false,
+    "independentDecodeContinuityAudioAlignmentVisualReview": "passed",
+    "youtubePublicationObserved": true,
+    "youtubeWatchPagePlaybackObserved": true,
+    "anonymousAccountState": "not independently verified",
+    "subjectiveHumanListening": "not claimed",
+    "youtubeTranscodeSourceHashEquality": "not claimed"
+  },
+  "logo": {
+    "publicUrl": "https://static.narrative-violation.com/fsJ4rtL4IhRf680F6_vB1",
+    "bytes": 33164,
+    "sha256": "b77f206f2d65507264257991b858bdd886d8f6b80bde01ced516b7a645207be3",
+    "publicReadbackMatchedSource": true
+  },
+  "boundaries": [
+    "Portal submission is not an official score, prize, eligibility audit or KASE endorsement",
+    "Main Colosseum and KASE side-track submissions are separate",
+    "No new payment, program upgrade, mainnet, real asset or paid service was used in this submission task",
+    "Private profile and survey answers, authentication and source voice files are excluded"
+  ]
+}

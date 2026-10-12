@@ -1,6 +1,8 @@
 # KASE materials and owner gates
 
-Preparation checklist, **not an accepted submission**. The owner-supplied challenge requires coupon, maturity redemption, one additional action and verifiable Solana logic; external fiat rails may be simulated. See [acceptance](08-SPEC.md) and [bounded readiness](35-READINESS.md).
+**Colosseum main hackathon: submitted.** On 12 October 2026 at 02:45 PDT (09:45 UTC, 14:45 Kazakhstan), the owner completed the final survey and submitted [BondTrace, project 16242](https://colosseum.com/arena/projects/bondtrace). The authenticated portal subsequently showed **Submitted** and **Your project is entered for judging**; all required materials and the sole participant profile were complete. This is portal submission status, not a judging result. [Evidence](evidence/colosseum-submission-20261012.json).
+
+**KASE side track: separate submission pending.** The owner-supplied challenge requires coupon, maturity redemption, one additional action and verifiable Solana logic; external fiat rails may be simulated. See [acceptance](08-SPEC.md) and [bounded readiness](35-READINESS.md).
 
 The form was inspected7October at [KASE listing](https://superteam.fun/earn/listing/superteam-kazakhstan-x-kase-side-track-corporate-actions-on-blockchain). Recheck actual fields/deadlines at submission; old logins are not current acceptance.
 
@@ -11,9 +13,9 @@ The form was inspected7October at [KASE listing](https://superteam.fun/earn/list
 | Architecture | [TECHNICAL](../TECHNICAL.md), [protocol](34-PAGED-SERVICING.md), [API](15-API-CONTRACT.md) |
 | Reproduction | [English](../README.md) / [Russian](../README.ru.md), [setup](LOCALNET-SETUP.md) |
 | Evidence | [Verification history](VERIFICATION-HISTORY.md), source-bound CI and JSON receipts |
-| Video | [Current 150-second continuous v4 localnet walkthrough](../artifacts/demo/one-take/bondtrace-demo.mp4), [scope/provenance](13-DEMO.md); final platform acceptance and owner submission remain separate |
-| Main registration/project/profile | Unverified; use actual URLs only |
-| Binding consent / final send | Owner action; accepted submission ID unverified |
+| Videos | [English public-devnet demo (162.48 s)](https://youtu.be/arOCHtruN_Q), [separate English pitch (116.04 s)](https://youtu.be/3t2nP0fGRtI); both published unlisted, linked in the submitted form, playback observed; [scope/provenance](13-DEMO.md) |
+| Main registration/project/profile | [BondTrace 16242](https://colosseum.com/arena/projects/bondtrace); sole participant profile complete, submitted 12 October |
+| Binding consent / final send | Owner completed final survey and submission; agent observed portal confirmation. Accelerator application remained off. |
 
 ## English description draft
 

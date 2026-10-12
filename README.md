@@ -6,7 +6,7 @@
 
 BondTrace is a working corporate-actions prototype on **Solana**, built for **Superteam Kazakhstan × KASE**. It services the bond after issuance: coupon payments, maturity redemption with atomic token burns, and bondholder voting.
 
-**[Open application](https://bondtrace-devnet.onrender.com/)** · **[Inspect the completed v4 issue](https://bondtrace-devnet.onrender.com/?view=overview&instrument=9AcsZYk2WhSKzuK8m6gwy26Tb4JcWiQ9MpTyaYbfmqqh)** · **[Technical overview](TECHNICAL.md)** · **[Watch the continuous demo](artifacts/demo/one-take/bondtrace-demo.mp4)**
+**[Open application](https://bondtrace-devnet.onrender.com/)** · **[Inspect the completed v4 issue](https://bondtrace-devnet.onrender.com/?view=overview&instrument=9AcsZYk2WhSKzuK8m6gwy26Tb4JcWiQ9MpTyaYbfmqqh)** · **[Technical overview](TECHNICAL.md)** · **[English demo · 2:43](https://youtu.be/arOCHtruN_Q)** · **[Project pitch · 1:56](https://youtu.be/3t2nP0fGRtI)**
 
 **Verified on public devnet:** 10 test bonds → **500 coupon + 10,000 principal + 10 bonds burned**, with a recorded holder vote. Eighteen signatures were observed finalized; the same records survived a service restart. [Transactions](docs/evidence/hosted-v4-lifecycle-20261011.json) · [Recovery](docs/evidence/hosted-v4-recovery-20261011.json).
 
@@ -118,7 +118,9 @@ Tests cover exact entitlements, overflow/remainders, record locks, wrong authori
 
 This is a permissioned test-bond servicing prototype, not a production securities venue. Ordinary SPL/DEX transfers, legal ownership/KYC, fiat custody, a real institutional pilot and production availability are outside the demonstrated scope. Protocol pages hold 8 entries; the browser accepts up to 16 coupons, and complete API reads have a 4,096-account budget. These are explicit limits, not unlimited-scale claims.
 
-The [2:30 continuous narrated demo](artifacts/demo/one-take/bondtrace-demo.mp4) is published with verified bytes and explicit localnet scope. Main hackathon registration and accepted contest submission remain owner checkpoints. No official score, prize outcome or KASE endorsement is asserted. [Submission checklist](docs/14-SUBMISSION.md).
+The [English demo](https://youtu.be/arOCHtruN_Q) continuously inspects the completed **public devnet** issue with real browser input. The [separate pitch](https://youtu.be/3t2nP0fGRtI) explains the product and founder background. Both use disclosed synthetic English narration; the demo executes no new payment or human-wallet signature. [Video provenance and scope](docs/13-DEMO.md).
+
+The owner submitted BondTrace to **Colosseum Crypto World's Fair** on 12 October 2026; the portal records **Submitted / entered for judging**. The KASE side-track submission remains separate. No official score, prize outcome or KASE endorsement is asserted. [Submission record](docs/14-SUBMISSION.md).
 
 ## Repository map
 
