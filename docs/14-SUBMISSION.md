@@ -2,9 +2,9 @@
 
 **Colosseum main hackathon: submitted.** On 12 October 2026 at 02:45 PDT (09:45 UTC, 14:45 Kazakhstan), the owner completed the final survey and submitted [BondTrace, project 16242](https://colosseum.com/arena/projects/bondtrace). The authenticated portal subsequently showed **Submitted** and **Your project is entered for judging**; all required materials and the sole participant profile were complete. This is portal submission status, not a judging result. [Evidence](evidence/colosseum-submission-20261012.json).
 
-**KASE side track: separate submission pending.** The owner-supplied challenge requires coupon, maturity redemption, one additional action and verifiable Solana logic; external fiat rails may be simulated. See [acceptance](08-SPEC.md) and [bounded readiness](35-READINESS.md).
+**KASE side track: submitted.** On12October2026 the owner personally completed the final consents and submitted the separate entry. The authenticated listing changed to **Edit Submission**; reopening the saved entry confirmed all12 content fields, including the original X post and Russian video. No submission ID was exposed in the observed UI. [Observed record](evidence/kase-submission-20261012.json). The challenge requires coupon, maturity redemption, one additional action and verifiable Solana logic; external fiat rails may be simulated. See [acceptance](08-SPEC.md) and [bounded readiness](35-READINESS.md).
 
-The form was inspected7October at [KASE listing](https://superteam.fun/earn/listing/superteam-kazakhstan-x-kase-side-track-corporate-actions-on-blockchain). Recheck actual fields/deadlines at submission; old logins are not current acceptance.
+The actual [KASE listing and form](https://superteam.fun/earn/listing/superteam-kazakhstan-x-kase-side-track-corporate-actions-on-blockchain) were inspected again12October. Independent ProofPilot coach application review found no material defects; actual saved-field readback is separate from that review. Submission is not an organizer eligibility decision, score, prize or endorsement. Anonymous access was not independently established.
 
 | Material | Destination / boundary |
 |---|---|
@@ -14,8 +14,10 @@ The form was inspected7October at [KASE listing](https://superteam.fun/earn/list
 | Reproduction | [English](../README.md) / [Russian](../README.ru.md), [setup](LOCALNET-SETUP.md) |
 | Evidence | [Verification history](VERIFICATION-HISTORY.md), source-bound CI and JSON receipts |
 | Videos | [English public-devnet demo (162.48 s)](https://youtu.be/arOCHtruN_Q), [separate English pitch (116.04 s)](https://youtu.be/3t2nP0fGRtI); both published unlisted, linked in the submitted form, playback observed; [scope/provenance](13-DEMO.md) |
+| Russian KASE video | [Owner-narrated continuous localnet demo (source 150.08 s)](https://youtu.be/Izo33Mry-hc), uploaded unchanged, unlisted; playback reached the end without a media error |
+| X project explanation | [Original submitted post](https://x.com/dimasmitth/status/2109590809221943540) with a connected [three-part English explanation](https://x.com/dimasmitth/status/2109595448805835134); the submitted URL remains intact |
 | Main registration/project/profile | [BondTrace 16242](https://colosseum.com/arena/projects/bondtrace); sole participant profile complete, submitted 12 October |
-| Binding consent / final send | Owner completed final survey and submission; agent observed portal confirmation. Accelerator application remained off. |
+| Binding consent / final send | Owner completed both portals' final consents/submissions; agent observed submitted state and retained fields. Colosseum accelerator application remained off. KASE states Kazakhstan KYC is required if the entrant wins; no KYC completion is claimed. |
 
 ## English description draft
 
@@ -31,12 +33,8 @@ The matching public v4 program and refreshed workspace are now deployed and veri
 
 BondTrace обслуживает тестовые токенизированные облигации в Solana: реестр → неизменяемые права → точный расчёт → купон/погашение с burn → проверяемый результат. Дополнительное действие — голосование. Исходники v4 и localnet-доказательства опубликованы; совпадающие программа v4 и обновлённый интерфейс развёрнуты в публичном devnet. Тестовые подписанты, обычный Phantom и внешние интеграции описаны раздельно.
 
-## Final owner checklist
+## Submission boundaries
 
-1. Confirm main eligibility/registration and actual project/profile URLs.
-2. Choose/upload a video within the required limit; match footage to version/network claims.
-3. Inspect public links anonymously and disclose wallet/deployment limits.
-4. Recheck live form/deadlines; personally confirm binding consent.
-5. Submit only when authorized; retain accepted submission ID/state.
+Both portals' submitted states were observed after owner actions. Ordinary human Phantom success, live institutional integrations, organizer eligibility approval and judging outcomes remain unverified. The Russian film reads localnet; the English demo and public transaction receipts cover devnet. Historical records retain their original timestamped pending states; the KASE record above is the later update.
 
-No social post, organizer message, visibility change, paid hosting, mainnet or real-money action is authorized here.
+The owner separately authorized the published X post and its explanatory thread. No organizer message, repository visibility change, paid hosting, mainnet or real-money action was performed in this submission work.

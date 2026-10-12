@@ -8,13 +8,13 @@ Both videos use explicitly disclosed synthetic English narration, without clonin
 
 ## Earlier owner-narrated localnet walkthrough
 
-**[Original 2:30 continuous demo](../artifacts/demo/one-take/bondtrace-demo.mp4)** · [Original recording provenance](../artifacts/demo/one-take/provenance.json)
+**[Russian owner-narrated demo · 2:30](https://youtu.be/Izo33Mry-hc)** · [Original MP4](../artifacts/demo/one-take/bondtrace-demo.mp4) · [Original recording provenance](../artifacts/demo/one-take/provenance.json) · [Publication record](evidence/kase-submission-20261012.json)
 
 The owner-narrated video follows the actual interface in one continuous take: languages and time zone, issue creation fields, coupon500 with its exact receipt, recorded holder rights and portfolio, principal10000, voting and transaction history. The cursor moves smoothly and remains visible inside dialogs. No cuts, screenshots, stitched clips or speed changes are used; the complete original narration is included.
 
 It reads a completed **localnet v4 test issue** with synthetic SPL assets. No new financial transaction or human-wallet signature occurs during this walkthrough. Program execution is established separately by the lifecycle receipts; public deployment has its own [versioned record](33-HOSTED-DEPLOYMENT.md).
 
-The MP4 is1440×1000,H.264/AAC,150.08seconds,9,700,894bytes. All3752native frames keep their original timestamps. Full decode, Chromium playback, complete audio and independent visual/continuity review passed.
+The MP4 is1440×1000,H.264/AAC,150.08seconds,9,700,894bytes. All3752native frames keep their original timestamps. Full decode, Chromium playback, complete audio and independent visual/continuity review passed. The unchanged source was uploaded unlisted to the same BONDTRACE channel on12October. The public watch player reached its end at150.101seconds without a media error. This does not assert anonymous access or equality between YouTube's transcode and the source hash.
 
 ## Reproduce the complete lifecycle
 

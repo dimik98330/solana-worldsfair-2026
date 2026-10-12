@@ -120,7 +120,9 @@ This is a permissioned test-bond servicing prototype, not a production securitie
 
 The [English demo](https://youtu.be/arOCHtruN_Q) continuously inspects the completed **public devnet** issue with real browser input. The [separate pitch](https://youtu.be/3t2nP0fGRtI) explains the product and founder background. Both use disclosed synthetic English narration; the demo executes no new payment or human-wallet signature. [Video provenance and scope](docs/13-DEMO.md).
 
-The owner submitted BondTrace to **Colosseum Crypto World's Fair** on 12 October 2026; the portal records **Submitted / entered for judging**. The KASE side-track submission remains separate. No official score, prize outcome or KASE endorsement is asserted. [Submission record](docs/14-SUBMISSION.md).
+The [Russian owner-narrated demo · 2:30](https://youtu.be/Izo33Mry-hc) is also available on YouTube: one continuous take of a completed **localnet** test issue. The [English project thread](https://x.com/dimasmitth/status/2109595448805835134) explains the purpose, workflow and inspection links.
+
+The owner submitted BondTrace to **Colosseum Crypto World's Fair** and the separate **Superteam Kazakhstan × KASE side track** on 12 October 2026. Colosseum records **Submitted / entered for judging**; the KASE portal shows **Edit Submission**, with all 12 saved content fields read back. No official score, prize outcome or KASE endorsement is asserted. [Submission records](docs/14-SUBMISSION.md).
 
 ## Repository map
 

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "kind": "Owner KASE submission and published Russian media observed",
+  "observedOn": "2026-10-12",
+  "listing": "https://superteam.fun/earn/listing/superteam-kazakhstan-x-kase-side-track-corporate-actions-on-blockchain",
+  "project": "BondTrace",
+  "submissionActor": "owner",
+  "observedPortalControl": "Edit Submission",
+  "savedContentFieldsReadBack": 12,
+  "submissionId": null,
+  "submissionIdScope": "not exposed in observed UI",
+  "colosseumProject": "https://colosseum.com/arena/projects/bondtrace",
+  "originalSubmittedXPost": "https://x.com/dimasmitth/status/2109590809221943540",
+  "explanatoryThread": [
+    "https://x.com/dimasmitth/status/2109595448805835134",
+    "https://x.com/dimasmitth/status/2109595646898700469",
+    "https://x.com/dimasmitth/status/2109595926105125024"
+  ],
+  "threadScope": "Three connected self-replies explain purpose, mechanism and inspection links; original submitted post remains intact",
+  "russianDemo": {
+    "url": "https://youtu.be/Izo33Mry-hc",
+    "channel": "BONDTRACE",
+    "visibility": "unlisted",
+    "narration": "Original owner's Russian voice",
+    "scope": "One continuous inspection of a completed localnet v4 issue; synthetic test assets; no new financial execution or ordinary human-wallet signature",
+    "sourceBytes": 9700894,
+    "sourceDurationSeconds": 150.08,
+    "sourceFrames": 3752,
+    "sourceDimensions": "1440x1000",
+    "sourceSha256": "8c0bc976f496321a2617a15fdc14443341085265feb7695215c7131614088e03",
+    "sourceUploadedWithoutEditing": true,
+    "publicationObserved": true,
+    "observedWatchDurationSeconds": 150.101,
+    "observedWatchCurrentTimeSeconds": 150.101,
+    "observedPlaybackEnded": true,
+    "observedPlayerError": null,
+    "anonymousAccountState": "not independently verified",
+    "youtubeTranscodeSourceHashEquality": "not claimed"
+  },
+  "boundaries": [
+    "Portal submission is not an official score, prize, eligibility approval or KASE endorsement",
+    "KASE and Colosseum are separate submitted entries; earlier timestamped pending records remain historical",
+    "Kazakhstan KYC is required by the form if the entrant wins; no KYC completion is claimed",
+    "No new financial action, program upgrade, deployment, mainnet, real asset or paid service in this task",
+    "Private profile, survey answers, OAuth credentials and browser auth state are excluded",
+    "Live bank, KASE or custodian integration and ordinary human Phantom signing remain unverified"
+  ]
+}
