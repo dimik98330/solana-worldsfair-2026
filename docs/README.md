@@ -1,6 +1,17 @@
 # Documentation / Документация
 
-Start with [English README](../README.md) or [Русский README](../README.ru.md). Those guides identify implemented functionality, real launch commands, current evidence and unresolved acceptance.
+Start with [English README](../README.md) or [Русский README](../README.ru.md) for the product, videos, launch commands and explicit prototype boundaries.
+
+## Start here
+
+| What you want to inspect | Open |
+|---|---|
+| Product and completed public test issue | [Devnet application](https://bondtrace-devnet.onrender.com/?view=overview&instrument=9AcsZYk2WhSKzuK8m6gwy26Tb4JcWiQ9MpTyaYbfmqqh) |
+| Architecture, record dates, calculations and settlement | [Technical overview](../TECHNICAL.md) |
+| Public v4 execution and recovery | [Transaction packet](evidence/hosted-v4-lifecycle-20261011.json), [same-ID restart](evidence/hosted-v4-recovery-20261011.json), [deployment](33-HOSTED-DEPLOYMENT.md) |
+| Videos and submitted entries | [Demo scope and provenance](13-DEMO.md), [Colosseum/KASE submission records](14-SUBMISSION.md) |
+
+## Technical guides
 
 | Need / Задача | Canonical document |
 |---|---|
@@ -23,9 +34,13 @@ Start with [English README](../README.md) or [Русский README](../README.r
 
 ## Evidence and history
 
-The [evidence directory](evidence) retains transaction receipts, normalized execution proofs, original failures, source/manifest hashes and reviewed UI captures. Compact v4 entry points: [37-transaction launcher](evidence/servicing-v4-one-command-check-20261010.json), [33→34-holder/9-coupon scale run](evidence/servicing-v4-localnet-summary-20261010.json), [program/CI/shadow adapter](evidence/servicing-v4-verification-20261010.json).
+The current completed **public devnet v4** entry points are the [lifecycle packet](evidence/hosted-v4-lifecycle-20261011.json), [restart recovery](evidence/hosted-v4-recovery-20261011.json) and [matching-program rollout](evidence/hosted-v4-rollout-20261011.json). These distinguish source versions, finalized observations and service recovery. They do not establish ordinary human-wallet signing or live institutional connections.
 
-[10October wallet/BUFFER supplement](evidence/wallet-buffer-check-20261010.json) records the actual wallet-only service deployment, PR3 CI, bounded localnet BUFFER rehearsal and independent repair1 review. It preserves the unresolved human-wallet/public-v4 scopes and publishes no signed wire or key material.
+The [evidence directory](evidence) also retains transaction receipts, normalized execution proofs, original failures, source/manifest hashes and reviewed UI captures. Separate localnet cohorts: [37-transaction launcher](evidence/servicing-v4-one-command-check-20261010.json), [33→34-holder/9-coupon run](evidence/servicing-v4-localnet-summary-20261010.json), [program/CI/shadow adapter](evidence/servicing-v4-verification-20261010.json).
+
+### Historical checkpoints
+
+[10October wallet/BUFFER supplement](evidence/wallet-buffer-check-20261010.json) records the then-current wallet-only service deployment, PR3 CI, bounded localnet BUFFER rehearsal and independent repair1 review. Its pending public-v4 scope belongs to that earlier cutoff; the later rollout above establishes the public v4 deployment. Ordinary human-wallet success remains unverified. No signed wire or key material is published.
 
 [Same-ledger recovery check](evidence/localnet-recovery-check-20261010.json) distinguishes preserved37 operation receipts and verified current financial accounts from unavailable fresh historical signature statuses. It uses the existing chain and sends no replacement financial transaction.
 
